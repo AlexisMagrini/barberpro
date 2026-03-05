@@ -687,10 +687,10 @@ td { vertical-align:middle; }
         <div class="table-card" style="margin-bottom:0">
           <div class="table-header"><div class="table-title">Resumen del Día</div></div>
           <div class="stat-grid" style="grid-template-columns:1fr 1fr;margin-bottom:0">
-            <div class="stat-card" style="padding:14px"><div class="stat-label">Turnos</div><div class="stat-value" style="font-size:22px">8</div></div>
-            <div class="stat-card" style="padding:14px"><div class="stat-label">Confirmados</div><div class="stat-value" style="font-size:22px;color:var(--green)">5</div></div>
-            <div class="stat-card" style="padding:14px"><div class="stat-label">Pendientes</div><div class="stat-value" style="font-size:22px;color:var(--amber)">2</div></div>
-            <div class="stat-card" style="padding:14px"><div class="stat-label">Realizados</div><div class="stat-value" style="font-size:22px;color:var(--blue)">1</div></div>
+            <div class="stat-card" style="padding:14px"><div class="stat-label">Turnos</div><div class="stat-value" style="font-size:22px" id="agenda-stat-total">0</div></div>
+            <div class="stat-card" style="padding:14px"><div class="stat-label">Confirmados</div><div class="stat-value" style="font-size:22px;color:var(--green)" id="agenda-stat-conf">0</div></div>
+            <div class="stat-card" style="padding:14px"><div class="stat-label">Pendientes</div><div class="stat-value" style="font-size:22px;color:var(--amber)" id="agenda-stat-pend">0</div></div>
+            <div class="stat-card" style="padding:14px"><div class="stat-label">Realizados</div><div class="stat-value" style="font-size:22px;color:var(--blue)" id="agenda-stat-real">0</div></div>
           </div>
         </div>
       </div>
@@ -698,18 +698,15 @@ td { vertical-align:middle; }
         <div class="table-header">
           <div class="table-title">Turnos de Hoy</div>
           <div class="tabs-pill">
-            <div class="tab-pill active">Todos</div>
-            <div class="tab-pill">Pendientes</div>
-            <div class="tab-pill">Realizados</div>
+            <div class="tab-pill active" onclick="filterAgenda(this,'todos')">Todos</div>
+            <div class="tab-pill" onclick="filterAgenda(this,'pendiente')">Pendientes</div>
+            <div class="tab-pill" onclick="filterAgenda(this,'realizado')">Realizados</div>
           </div>
         </div>
         <table>
           <thead><tr><th>Hora</th><th>Cliente</th><th>Tel.</th><th>Servicio</th><th>Empleado</th><th>Estado</th><th>Acción</th></tr></thead>
-          <tbody>
-            <tr><td class="fw7">09:00</td><td>Ariel F.</td><td>11-5555-0001</td><td>Corte</td><td>Franco</td><td><span class="badge b-blue"><span class="b-dot"></span>Realizado</span></td><td><button class="action-btn ab-blue">📋</button></td></tr>
-            <tr><td class="fw7">10:00</td><td>Juan M.</td><td>11-5555-0002</td><td>Corte y barba</td><td>Franco</td><td><span class="badge b-amb"><span class="b-dot"></span>En curso</span></td><td><button class="action-btn ab-blue" onclick="openModal('modal-cobro')">💰</button></td></tr>
-            <tr><td class="fw7">11:30</td><td>Pedro L.</td><td>11-5555-0003</td><td>Corte + Perfilado</td><td>Simón</td><td><span class="badge b-gray"><span class="b-dot"></span>Pendiente</span></td><td><button class="action-btn ab-green">✓</button></td></tr>
-            <tr><td class="fw7">13:00</td><td>Carlos V.</td><td>11-5555-0004</td><td>Corte y barba VIP</td><td>Tomás</td><td><span class="badge b-gray"><span class="b-dot"></span>Pendiente</span></td><td><button class="action-btn ab-green">✓</button></td></tr>
+          <tbody id="agenda-tbody">
+            <tr><td colspan="7" style="text-align:center;padding:28px;color:var(--text-light)">Sin turnos registrados hoy</td></tr>
           </tbody>
         </table>
       </div>
@@ -2491,6 +2488,7 @@ async function loadAllData(){
     loadCobros(),
     loadEgresos(),
     loadCursos(),
+    loadAgenda(),
   ]);
 }
 
@@ -2696,10 +2694,80 @@ async function loadEgresos(){
 async function loadCursos(){
   var { data } = await supa.from('cursos').select('*').eq('activo',true);
   if(data){
-    // Update ACADEMIA data if needed
-    // For now just render if function exists
     if(typeof renderAcademia === 'function') renderAcademia();
   }
+}
+
+// ── AGENDA ────────────────────────────────────────────────────
+var TURNOS_HOY = [];
+var agendaFiltro = 'todos';
+
+async function loadAgenda(){
+  var today = new Date().toISOString().split('T')[0];
+  var { data } = await supa.from('turnos')
+    .select('*')
+    .eq('fecha', today)
+    .order('hora');
+  TURNOS_HOY = data || [];
+  renderAgenda();
+}
+
+function renderAgenda(){
+  var tb = document.getElementById('agenda-tbody');
+  if(!tb) return;
+  var lista = agendaFiltro === 'todos'
+    ? TURNOS_HOY
+    : TURNOS_HOY.filter(function(t){ return t.estado === agendaFiltro; });
+
+  var total  = TURNOS_HOY.length;
+  var conf   = TURNOS_HOY.filter(function(t){ return t.estado==='confirmado'; }).length;
+  var pend   = TURNOS_HOY.filter(function(t){ return t.estado==='pendiente'; }).length;
+  var real   = TURNOS_HOY.filter(function(t){ return t.estado==='realizado'; }).length;
+  s('agenda-stat-total', total+'');
+  s('agenda-stat-conf',  conf+'');
+  s('agenda-stat-pend',  pend+'');
+  s('agenda-stat-real',  real+'');
+
+  if(lista.length === 0){
+    tb.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:28px;color:var(--text-light)">Sin turnos para este filtro</td></tr>';
+    return;
+  }
+
+  var estadoBadge = {
+    'confirmado': 'b-green', 'pendiente': 'b-gray',
+    'realizado': 'b-blue', 'en curso': 'b-amb'
+  };
+  tb.innerHTML = lista.map(function(t){
+    var badge = estadoBadge[t.estado] || 'b-gray';
+    var accion = t.estado === 'realizado'
+      ? '<button class="action-btn ab-blue" title="Ver">📋</button>'
+      : t.estado === 'confirmado'
+        ? '<button class="action-btn ab-blue" onclick="openModal(\'modal-cobro\')" title="Cobrar">💰</button>'
+        : '<button class="action-btn ab-green" onclick="confirmarTurno(\''+t.id+'\')" title="Confirmar">✓</button>';
+    return '<tr>'+
+      '<td class="fw7">'+(t.hora||'—')+'</td>'+
+      '<td>'+(t.cliente_nombre||'—')+'</td>'+
+      '<td style="color:var(--text-light);font-size:12px">'+(t.cliente_tel||'—')+'</td>'+
+      '<td>'+(t.servicio||'—')+'</td>'+
+      '<td>'+(t.empleado_nombre||'—')+'</td>'+
+      '<td><span class="badge '+badge+'"><span class="b-dot"></span>'+t.estado+'</span></td>'+
+      '<td>'+accion+'</td>'+
+    '</tr>';
+  }).join('');
+}
+
+function filterAgenda(el, filtro){
+  agendaFiltro = filtro;
+  var pills = document.querySelectorAll('#page-agenda .tab-pill');
+  pills.forEach(function(p){ p.classList.remove('active'); });
+  el.classList.add('active');
+  renderAgenda();
+}
+
+async function confirmarTurno(id){
+  await supa.from('turnos').update({ estado: 'confirmado' }).eq('id', id);
+  await loadAgenda();
+  showToast('Turno confirmado ✓');
 }
 function applyRole(){
   var isAdmin=currentRole==='admin';
