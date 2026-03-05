@@ -496,9 +496,6 @@ tr:hover td{background:var(--blue-faint);}
 
     <div class="nav-group-label">Academia</div>
     <div class="nav-item" onclick="goTo('academia')"><i class="fa-solid fa-graduation-cap"></i><span class="sb-item-label">Academia MK</span></div>
-
-    <div class="nav-group-label admin-only">Sistema</div>
-    <div class="nav-item admin-only" onclick="goTo('configuracion')"><i class="fa-solid fa-gear"></i><span class="sb-item-label">Configuración</span></div>
   </div>
 </nav>
 
@@ -1199,41 +1196,47 @@ tr:hover td{background:var(--blue-faint);}
           <div class="page-title">🎓 Academia MK</div>
           <div class="page-sub">Cursos de barbería con Marcos</div>
         </div>
-        <button class="btn btn-primary" onclick="openModal('modal-cobro')">+ Registrar inscripción</button>
       </div>
 
-      <!-- Stats -->
-      <div class="stat-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:20px">
-        <div class="stat-card featured"><div class="stat-label">Inscriptos este mes</div><div class="stat-value">0</div></div>
+      <!-- Stats — 3 tarjetas, sin "Próximo curso" -->
+      <div class="stat-grid" style="grid-template-columns:repeat(3,1fr);margin-bottom:20px">
+        <div class="stat-card featured"><div class="stat-label">Inscriptos este mes</div><div class="stat-value" id="acad-stat-mes">0</div></div>
         <div class="stat-card"><div class="stat-label">Cursos activos</div><div class="stat-value">4</div></div>
-        <div class="stat-card"><div class="stat-label">Ingresos Academia</div><div class="stat-value">$0</div></div>
-        <div class="stat-card"><div class="stat-label">Próximo curso</div><div class="stat-value" style="font-size:14px;font-weight:700">A confirmar</div></div>
+        <div class="stat-card"><div class="stat-label">Ingresos Academia</div><div class="stat-value" id="acad-stat-ingresos">$0</div></div>
       </div>
 
       <!-- Cursos disponibles -->
       <div class="table-card" style="margin-bottom:20px">
         <div class="table-header"><div class="table-title">Cursos disponibles</div><div style="font-size:11px;color:var(--text-light)">Dictados por Marcos</div></div>
         <table>
-          <thead><tr><th>Curso</th><th>💵 Efectivo</th><th>📱 QR / Transfer</th><th></th></tr></thead>
+          <thead><tr><th>Curso</th><th>💵 1 persona</th><th>📱 1 persona QR</th><th>💵 2 personas</th><th>📱 2 personas QR</th><th></th></tr></thead>
           <tbody id="tbody-cursos"></tbody>
         </table>
       </div>
 
-      <!-- Info cards -->
-      <div class="two-col">
-        <div class="chart-card" style="margin-bottom:0">
-          <div class="chart-title" style="margin-bottom:14px">📋 ¿Cómo funciona?</div>
-          <div style="display:flex;flex-direction:column;gap:10px;font-size:13px;color:var(--text-mid)">
-            <div style="display:flex;gap:10px;align-items:flex-start"><span style="font-size:18px">✂️</span><div><strong>Corte inicial / intensivo</strong><br>Fundamentos del corte masculino profesional. 1 o 2 personas.</div></div>
-            <div style="display:flex;gap:10px;align-items:flex-start"><span style="font-size:18px">⭐</span><div><strong>Perfeccionamiento</strong><br>Técnicas avanzadas para barberos con experiencia previa.</div></div>
-            <div style="display:flex;gap:10px;align-items:flex-start"><span style="font-size:18px">🪒</span><div><strong>Curso de barba</strong><br>Perfilado, afeitado y cuidado de barba. 1 o 2 personas.</div></div>
-          </div>
+      <!-- Inscriptos -->
+      <div class="table-card" style="margin-bottom:20px">
+        <div class="table-header">
+          <div class="table-title">Inscriptos</div>
+          <button class="btn btn-primary btn-sm" onclick="openModal('modal-inscripcion')"><i class="fa-solid fa-user-plus"></i> Nueva inscripción</button>
         </div>
-        <div class="sum-box" style="align-self:start;margin-bottom:0">
-          <div style="font-size:12px;font-weight:700;color:var(--text-light);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px">Inscriptos recientes</div>
-          <div style="text-align:center;padding:20px;color:var(--text-light);font-size:13px">
-            Sin inscriptos registrados.<br>Los datos se cargarán con Supabase.
-          </div>
+        <div id="acad-inscriptos-empty" style="text-align:center;padding:28px;color:var(--text-light);font-size:13px">
+          <i class="fa-solid fa-graduation-cap" style="font-size:28px;opacity:.2;display:block;margin-bottom:10px"></i>
+          Sin inscriptos aún. Las inscripciones registradas aparecerán aquí.
+        </div>
+        <table id="acad-inscriptos-table" style="display:none">
+          <thead><tr><th>Alumno</th><th>Teléfono</th><th>Curso</th><th>Personas</th><th>Pago</th><th>Fecha</th><th>Total</th></tr></thead>
+          <tbody id="tbody-inscriptos"></tbody>
+        </table>
+      </div>
+
+      <!-- Info cursos -->
+      <div class="chart-card">
+        <div class="chart-title" style="margin-bottom:14px">📋 ¿Cómo funciona?</div>
+        <div style="display:flex;flex-direction:column;gap:10px;font-size:13px;color:var(--text-mid)">
+          <div style="display:flex;gap:10px;align-items:flex-start"><span style="font-size:18px">✂️</span><div><strong>Corte inicial / intensivo</strong><br>Fundamentos del corte masculino profesional. 1 o 2 personas.</div></div>
+          <div style="display:flex;gap:10px;align-items:flex-start"><span style="font-size:18px">⭐</span><div><strong>Perfeccionamiento</strong><br>Técnicas avanzadas para barberos con experiencia previa.</div></div>
+          <div style="display:flex;gap:10px;align-items:flex-start"><span style="font-size:18px">🪒</span><div><strong>Curso de barba</strong><br>Perfilado, afeitado y cuidado de barba. 1 o 2 personas.</div></div>
         </div>
       </div>
     </div>
@@ -1627,8 +1630,8 @@ tr:hover td{background:var(--blue-faint);}
           <button class="tab-pill" onclick="setClienteFilter('nuevo',this)">Nuevo</button>
         </div>
         <div class="view-toggle" id="cl-view-toggle">
-          <button class="view-toggle-btn active" onclick="setClienteView('cards',this)" title="Tarjetas"><i class="fa-solid fa-table-cells-large"></i></button>
-          <button class="view-toggle-btn" onclick="setClienteView('list',this)" title="Lista"><i class="fa-solid fa-list"></i></button>
+          <button class="view-toggle-btn" onclick="setClienteView('cards',this)" title="Tarjetas"><i class="fa-solid fa-table-cells-large"></i></button>
+          <button class="view-toggle-btn active" onclick="setClienteView('list',this)" title="Lista"><i class="fa-solid fa-list"></i></button>
         </div>
       </div>
 
@@ -1768,6 +1771,51 @@ tr:hover td{background:var(--blue-faint);}
       </button>
     </div>
 
+  </div>
+</div>
+
+<!-- Modal Inscripción Academia -->
+<div class="modal-overlay" id="modal-inscripcion">
+  <div class="modal" style="max-width:480px">
+    <button class="modal-close" onclick="closeModal('modal-inscripcion')"><i class="fa-solid fa-xmark"></i></button>
+    <div class="modal-title"><i class="fa-solid fa-graduation-cap" style="color:var(--blue);margin-right:8px"></i>Inscripción Academia MK</div>
+    <div class="form-grid" style="margin-bottom:12px">
+      <div class="fg"><label>Nombre del alumno</label><input type="text" id="ins-nombre" placeholder="Nombre completo"></div>
+      <div class="fg"><label>Teléfono</label><input type="text" id="ins-tel" placeholder="11-XXXX-XXXX"></div>
+    </div>
+    <div class="form-grid" style="margin-bottom:12px">
+      <div class="fg"><label>Curso</label>
+        <select id="ins-curso">
+          <option value="">— Seleccionar —</option>
+          <option>Curso inicial extendido</option>
+          <option>Curso inicial intensivo</option>
+          <option>Curso perfeccionamiento</option>
+          <option>Curso barba</option>
+        </select>
+      </div>
+      <div class="fg"><label>Personas</label>
+        <select id="ins-personas" onchange="inscripcionRecalc()">
+          <option value="1">1 persona — $55.000</option>
+          <option value="2">2 personas — $90.000</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-grid" style="margin-bottom:14px">
+      <div class="fg"><label>Método de pago</label>
+        <select id="ins-pago">
+          <option value="ef">Efectivo</option>
+          <option value="qr">QR / Transfer</option>
+        </select>
+      </div>
+      <div class="fg"><label>Fecha de inicio</label><input type="date" id="ins-fecha"></div>
+    </div>
+    <div style="background:var(--blue-faint);border-radius:12px;padding:12px 15px;margin-bottom:16px;border:1px solid var(--border)">
+      <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:800;color:var(--blue)"><span>Total</span><span id="ins-total">$55.000</span></div>
+    </div>
+    <div style="display:flex;gap:10px">
+      <button class="btn btn-outline" style="flex:1;justify-content:center" onclick="closeModal('modal-inscripcion')">Cancelar</button>
+      <button class="btn btn-primary" style="flex:1;justify-content:center" onclick="saveInscripcion()"><i class="fa-solid fa-check"></i> Confirmar inscripción</button>
+    </div>
   </div>
 </div>
 
@@ -2002,14 +2050,10 @@ var SERVICIOS = [
 ];
 
 var CURSOS = [
-  {nombre:'Curso inicial extendido (1 persona)',  ef:55000, qr:57000},
-  {nombre:'Curso inicial extendido (2 personas)', ef:90000, qr:92000},
-  {nombre:'Curso inicial intensivo (1 persona)',  ef:55000, qr:57000},
-  {nombre:'Curso inicial intensivo (2 personas)', ef:90000, qr:92000},
-  {nombre:'Curso perfeccionamiento (1 persona)',  ef:55000, qr:57000},
-  {nombre:'Curso perfeccionamiento (2 personas)', ef:90000, qr:92000},
-  {nombre:'Curso barba (1 persona)',              ef:55000, qr:57000},
-  {nombre:'Curso barba (2 personas)',             ef:90000, qr:92000},
+  {nombre:'Curso inicial extendido',  ef:55000, qr:57000, ef2:90000, qr2:92000},
+  {nombre:'Curso inicial intensivo',  ef:55000, qr:57000, ef2:90000, qr2:92000},
+  {nombre:'Curso perfeccionamiento',  ef:55000, qr:57000, ef2:90000, qr2:92000},
+  {nombre:'Curso barba',              ef:55000, qr:57000, ef2:90000, qr2:92000},
 ];
 
 var BEBIDAS = [
@@ -2557,7 +2601,8 @@ function cobroUpdatePrices() {
     sel.innerHTML += '<optgroup label="── Academia MK ──"></optgroup>';
     for (var j=0;j<CURSOS.length;j++) {
       var c = CURSOS[j];
-      sel.innerHTML += '<option value="'+c.ef+'">'+c.nombre+'</option>';
+      sel.innerHTML += '<option value="'+c.ef+'">'+c.nombre+' (1 persona)</option>';
+      sel.innerHTML += '<option value="'+c.ef2+'">'+c.nombre+' (2 personas)</option>';
     }
   }
   cobroRecalc();
@@ -2625,7 +2670,14 @@ function renderServiciosPage() {
     tCurs.innerHTML = '';
     for (var j=0;j<CURSOS.length;j++) {
       var c = CURSOS[j];
-      tCurs.innerHTML += '<tr><td class="fw7">'+c.nombre+'</td><td class="fw7 v-blue">$'+fmtN(c.ef)+'</td><td class="fw7" style="color:var(--text-mid)">$'+fmtN(c.qr)+'</td><td><button class="btn btn-outline btn-sm" onclick="openModal(\'modal-cobro\')">Inscribir</button></td></tr>';
+      tCurs.innerHTML += '<tr>'+
+        '<td class="fw7">'+c.nombre+'</td>'+
+        '<td class="fw7 v-blue">$'+fmtN(c.ef)+'</td>'+
+        '<td class="fw7" style="color:var(--text-mid)">$'+fmtN(c.qr)+'</td>'+
+        '<td class="fw7 v-blue">$'+fmtN(c.ef2)+'</td>'+
+        '<td class="fw7" style="color:var(--text-mid)">$'+fmtN(c.qr2)+'</td>'+
+        '<td><button class="btn btn-outline btn-sm" onclick="openModal(\'modal-inscripcion\')"><i class="fa-solid fa-user-plus"></i> Inscribir</button></td>'+
+      '</tr>';
     }
   }
   for (var k=0;k<CURSOS.length;k++) {
@@ -2705,7 +2757,7 @@ var CLIENTES = [
   {id:6, nombre:'Diego Romero',     tel:'11-3390-2244', email:'',                   birthday:'2000-05-30', barbero:'Franco',  cat:'nuevo',   visitas:1,  ultimaVisita:'hace 3 días',    notas:'Primera visita — le gustó el ambiente.'},
 ];
 var clienteFilter = 'todos';
-var clienteView = 'cards';
+var clienteView = 'list';
 var currentEditEmpKey = null;
 var empPhotoMap = {};
 var empAvatarMap = {franco:'✂️', simon:'💈', tomas:'🪒', marcos:'💇'};
@@ -2777,11 +2829,11 @@ function renderClientes() {
         '<td class="fw7 v-blue">'+c.visitas+'</td>'+
         '<td>'+(c.birthday?formatBirthday(c.birthday):'—')+'</td>'+
         '<td>'+c.ultimaVisita+'</td>'+
-        '<td style="white-space:nowrap">'+
+        '<td><div style="display:flex;align-items:center;gap:5px">'+
           '<button class="action-btn ab-blue" onclick="openModal(\'modal-cobro\')" title="Agendar turno"><i class="fa-solid fa-calendar-plus"></i></button>'+
-          '<button class="action-btn ab-blue" style="margin-left:4px" title="Editar"><i class="fa-solid fa-pen"></i></button>'+
-          '<a href="https://wa.me/549'+c.tel.replace(/\D/g,'')+'" target="_blank" class="action-btn" style="background:none;border:1px solid #25D36633;color:#25D366;margin-left:4px;display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;text-decoration:none" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>'+
-        '</td>'+
+          '<button class="action-btn ab-blue" title="Editar"><i class="fa-solid fa-pen"></i></button>'+
+          '<a href="https://wa.me/549'+c.tel.replace(/\D/g,'')+'" target="_blank" class="action-btn" style="background:none;border:1px solid #25D36633;color:#25D366;display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;text-decoration:none" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>'+
+        '</div></td>'+
       '</tr>';
     }).join('');
     grid.innerHTML='<table class="list-view-table">'+
@@ -2958,6 +3010,66 @@ function renderEmpList(){
       '</td>'+
     '</tr>';
   });
+}
+
+var INSCRIPCIONES = [];
+
+function inscripcionRecalc(){
+  var personas=parseInt((document.getElementById('ins-personas')||{value:'1'}).value)||1;
+  var pago=((document.getElementById('ins-pago')||{}).value)||'ef';
+  var precio=personas===2?(pago==='qr'?92000:90000):(pago==='qr'?57000:55000);
+  var el=document.getElementById('ins-total');if(el)el.textContent='$'+fmtN(precio);
+  var sel=document.getElementById('ins-personas');
+  if(sel){
+    sel.options[0].text='1 persona — $'+(pago==='qr'?'57.000':'55.000');
+    sel.options[1].text='2 personas — $'+(pago==='qr'?'92.000':'90.000');
+  }
+}
+
+function saveInscripcion(){
+  var nombre=((document.getElementById('ins-nombre')||{}).value||'').trim();
+  var curso=((document.getElementById('ins-curso')||{}).value||'').trim();
+  if(!nombre||!curso){showToast('Completá nombre y curso');return;}
+  var tel=((document.getElementById('ins-tel')||{}).value||'').trim();
+  var personas=parseInt(((document.getElementById('ins-personas')||{}).value)||1);
+  var pago=((document.getElementById('ins-pago')||{}).value||'ef');
+  var fecha=((document.getElementById('ins-fecha')||{}).value||'');
+  var precio=personas===2?(pago==='qr'?92000:90000):(pago==='qr'?57000:55000);
+  INSCRIPCIONES.push({nombre:nombre,tel:tel,curso:curso,personas:personas,pago:pago==='qr'?'QR':'Efectivo',fecha:fecha||'—',total:precio});
+  renderInscriptos();
+  closeModal('modal-inscripcion');
+  ['ins-nombre','ins-tel','ins-fecha'].forEach(function(id){var e=document.getElementById(id);if(e)e.value='';});
+  showToast('Inscripción de "'+nombre+'" registrada ✓');
+}
+
+function renderInscriptos(){
+  var empty=document.getElementById('acad-inscriptos-empty');
+  var table=document.getElementById('acad-inscriptos-table');
+  var tbody=document.getElementById('tbody-inscriptos');
+  if(!tbody) return;
+  if(!INSCRIPCIONES.length){
+    if(empty)empty.style.display='';
+    if(table)table.style.display='none';
+    return;
+  }
+  if(empty)empty.style.display='none';
+  if(table)table.style.display='';
+  var totalIngresos=0;
+  tbody.innerHTML='';
+  INSCRIPCIONES.forEach(function(ins){
+    totalIngresos+=ins.total;
+    tbody.innerHTML+='<tr>'+
+      '<td class="fw7">'+ins.nombre+'</td>'+
+      '<td>'+ins.tel+'</td>'+
+      '<td>'+ins.curso+'</td>'+
+      '<td style="text-align:center">'+ins.personas+'</td>'+
+      '<td><span class="badge '+(ins.pago==='QR'?'b-blue':'b-green')+'"><span class="b-dot"></span>'+ins.pago+'</span></td>'+
+      '<td>'+ins.fecha+'</td>'+
+      '<td class="fw7 v-blue">$'+fmtN(ins.total)+'</td>'+
+    '</tr>';
+  });
+  var sm=document.getElementById('acad-stat-mes');if(sm)sm.textContent=INSCRIPCIONES.length;
+  var si=document.getElementById('acad-stat-ingresos');if(si)si.textContent='$'+fmtN(totalIngresos);
 }
 
 // Run on load
