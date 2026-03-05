@@ -4,239 +4,312 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BarberPro — Sistema de Gestión</title>
-<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
-  :root {
-    --blue:#1B3A6B;--blue-mid:#2A4F8F;--blue-light:#3A6CC8;
-    --blue-pale:#E8EEF8;--blue-faint:#F2F5FC;--accent:#4C7EF0;--accent2:#2D5DC8;
-    --white:#FFFFFF;--off-white:#F7F9FF;--text:#1A2540;--text-mid:#3D4F6E;--text-light:#7A8BAA;
-    --border:#D6DFF0;--border-mid:#C0CEEA;--green:#1E8C5A;--green-bg:#E6F4EE;
-    --red:#C0392B;--red-bg:#FDECEA;--amber:#B8860B;--amber-bg:#FEF7E0;
-    --radius:12px;--sidebar-w:240px;
-    --shadow:0 4px 24px rgba(27,58,107,.10);--shadow-sm:0 2px 8px rgba(27,58,107,.08);
-  }
-  *{margin:0;padding:0;box-sizing:border-box;}
-  body{font-family:'Outfit',sans-serif;background:var(--off-white);color:var(--text);min-height:100vh;display:flex;}
+:root {
+  --blue:       #1B3A6B;
+  --blue-mid:   #2A4F8F;
+  --blue-light: #3A6CC8;
+  --blue-pale:  #E8EEF8;
+  --blue-faint: #F2F5FC;
+  --accent:     #4C7EF0;
+  --white:      #FFFFFF;
+  --bg:         #F4F6FB;
+  --text:       #1A2540;
+  --text-mid:   #4A5568;
+  --text-light: #9AA5B4;
+  --border:     #E8EDF5;
+  --green:      #1E8C5A;
+  --green-bg:   #E6F4EE;
+  --red:        #E53E3E;
+  --red-bg:     #FFF0F0;
+  --amber:      #D97706;
+  --amber-bg:   #FFFBEB;
+  --sidebar-w:  230px;
+  --radius:     16px;
+  --radius-sm:  10px;
+  --shadow:     0 4px 24px rgba(27,58,107,.08);
+  --shadow-md:  0 8px 32px rgba(27,58,107,.12);
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex;}
 
-  /* ── LOGIN ── */
-  #login-screen{position:fixed;inset:0;z-index:999;background:var(--blue);display:flex;align-items:center;justify-content:center;padding:20px;}
-  .login-box{background:var(--white);border-radius:20px;padding:40px 36px;width:100%;max-width:400px;box-shadow:0 30px 80px rgba(0,0,0,.35);animation:slideUp .3s ease;}
-  .login-logo{display:flex;align-items:center;gap:13px;margin-bottom:30px;}
-  .login-logo-icon{width:46px;height:46px;background:var(--blue);border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:22px;color:white;flex-shrink:0;}
-  .login-logo .brand{font-family:'Libre Baskerville',serif;font-size:22px;color:var(--blue);font-weight:700;}
-  .login-logo .sub{font-size:11px;color:var(--text-light);text-transform:uppercase;letter-spacing:2px;margin-top:2px;}
-  .login-divider{height:1px;background:var(--border);margin:0 0 24px;}
-  .login-error{background:var(--red-bg);border:1px solid rgba(192,57,43,.2);border-radius:8px;padding:10px 13px;font-size:13px;color:var(--red);margin-bottom:14px;display:none;}
-  .login-hint{background:var(--blue-faint);border:1px solid var(--border);border-radius:8px;padding:11px 13px;margin-top:16px;}
-  .login-hint-title{font-size:11px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:.8px;margin-bottom:7px;}
-  .login-hint-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;}
-  .login-hint-row:last-child{margin-bottom:0;}
-  .login-hint-label{font-size:12px;color:var(--text-light);}
-  .login-hint-creds{font-size:12px;color:var(--text-mid);font-weight:600;font-family:monospace;background:var(--white);padding:2px 8px;border-radius:5px;border:1px solid var(--border);}
+/* ── LOGIN ── */
+#login-screen{position:fixed;inset:0;z-index:999;background:var(--blue);display:flex;align-items:center;justify-content:center;padding:20px;}
+#login-screen::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");}
+.login-box{position:relative;background:var(--white);border-radius:24px;padding:44px 40px;width:100%;max-width:420px;box-shadow:0 40px 100px rgba(0,0,0,.4);animation:fadeUp .35s ease;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+.login-logo{display:flex;align-items:center;gap:12px;margin-bottom:32px;}
+.login-logo-icon{width:48px;height:48px;background:var(--blue);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;color:white;box-shadow:0 8px 20px rgba(27,58,107,.3);}
+.login-logo .brand{font-size:22px;color:var(--blue);font-weight:800;letter-spacing:-.5px;}
+.login-logo .sub{font-size:11px;color:var(--text-light);letter-spacing:1.5px;text-transform:uppercase;margin-top:1px;}
+.login-label{font-size:10px;font-weight:600;color:var(--text-light);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;display:block;}
+.login-input{width:100%;background:var(--bg);border:2px solid var(--border);border-radius:12px;color:var(--text);padding:12px 14px;font-size:14px;font-family:'Poppins',sans-serif;outline:none;transition:all .2s;margin-bottom:14px;}
+.login-input:focus{border-color:var(--accent);background:#fff;box-shadow:0 0 0 4px rgba(76,126,240,.1);}
+.pw-wrap{position:relative;margin-bottom:22px;}
+.pw-wrap .login-input{margin-bottom:0;padding-right:44px;}
+.pw-eye{position:absolute;right:13px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--text-light);font-size:16px;}
+.login-btn{width:100%;padding:13px;background:var(--blue);color:#fff;border:none;border-radius:12px;font-family:'Poppins',sans-serif;font-size:14px;font-weight:600;cursor:pointer;transition:all .2s;letter-spacing:.3px;}
+.login-btn:hover{background:var(--blue-mid);transform:translateY(-1px);box-shadow:0 8px 20px rgba(27,58,107,.3);}
+.login-error{background:var(--red-bg);border:1px solid rgba(229,62,62,.2);border-radius:10px;padding:10px 13px;font-size:13px;color:var(--red);margin-bottom:14px;display:none;font-weight:500;}
+.login-hint{margin-top:20px;background:var(--blue-faint);border-radius:12px;padding:14px 16px;}
+.login-hint-title{font-size:10px;font-weight:700;color:var(--blue);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;}
+.login-hint-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;}
+.login-hint-row:last-child{margin-bottom:0;}
+.login-hint-label{font-size:12px;color:var(--text-mid);}
+.login-hint-val{font-size:11px;font-weight:600;font-family:monospace;background:var(--white);color:var(--blue);padding:3px 9px;border-radius:6px;border:1px solid var(--border);}
 
-  /* ── SIDEBAR ── */
-  #sidebar{width:var(--sidebar-w);background:var(--blue);display:flex;flex-direction:column;position:fixed;top:0;left:0;height:100vh;z-index:100;transition:transform .3s cubic-bezier(.4,0,.2,1);overflow-y:auto;}
-  .sidebar-logo{padding:20px 20px 16px;border-bottom:1px solid rgba(255,255,255,.1);}
-  .logo-mark{display:flex;align-items:center;gap:10px;}
-  .logo-icon{width:33px;height:33px;background:rgba(255,255,255,.15);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;}
-  .logo-text .brand{font-family:'Libre Baskerville',serif;font-size:16px;color:#fff;letter-spacing:.5px;}
-  .logo-text .sub{font-size:10px;color:rgba(255,255,255,.4);letter-spacing:2px;text-transform:uppercase;margin-top:1px;}
-  .sidebar-user{margin:10px 14px 0;background:rgba(255,255,255,.1);border-radius:8px;padding:9px 12px;display:flex;align-items:center;gap:9px;}
-  .sidebar-user .u-avatar{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;}
-  .sidebar-user .u-name{font-size:13px;color:#fff;font-weight:600;}
-  .sidebar-user .u-role{font-size:10px;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:1px;}
-  .nav-section{padding:15px 0 5px 20px;font-size:9px;letter-spacing:2.5px;color:rgba(255,255,255,.3);text-transform:uppercase;}
-  .nav-item{display:flex;align-items:center;gap:11px;padding:10px 20px;cursor:pointer;font-size:13px;color:rgba(255,255,255,.65);transition:all .2s;position:relative;margin:1px 0;}
-  .nav-item:hover{color:#fff;background:rgba(255,255,255,.08);}
-  .nav-item.active{color:#fff;background:rgba(255,255,255,.14);font-weight:600;}
-  .nav-item.active::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);height:60%;width:3px;background:rgba(255,255,255,.8);border-radius:0 3px 3px 0;}
-  .nav-icon{font-size:14px;width:20px;text-align:center;opacity:.85;}
-  .nav-badge{margin-left:auto;background:rgba(255,255,255,.2);color:#fff;font-size:10px;font-weight:600;padding:2px 7px;border-radius:20px;}
-  .sidebar-bottom{margin-top:auto;padding:13px 18px;border-top:1px solid rgba(255,255,255,.1);font-size:11px;color:rgba(255,255,255,.3);display:flex;align-items:center;justify-content:space-between;}
-  .logout-btn{background:rgba(255,255,255,.1);border:none;color:rgba(255,255,255,.6);padding:4px 10px;border-radius:6px;font-size:11px;cursor:pointer;font-family:'Outfit',sans-serif;transition:all .2s;}
-  .logout-btn:hover{background:rgba(255,255,255,.2);color:#fff;}
+/* ── SIDEBAR ── */
+#sidebar{width:var(--sidebar-w);background:var(--white);display:flex;flex-direction:column;position:fixed;top:0;left:0;height:100vh;z-index:100;box-shadow:0 0 40px rgba(27,58,107,.06);transition:transform .3s cubic-bezier(.4,0,.2,1);overflow-y:auto;border-right:1px solid var(--border);}
+.sb-logo{padding:26px 22px 20px;border-bottom:1px solid var(--border);}
+.sb-logo-inner{display:flex;align-items:center;gap:11px;}
+.sb-logo-icon{width:38px;height:38px;background:var(--blue);border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:18px;color:#fff;box-shadow:0 4px 12px rgba(27,58,107,.25);}
+.sb-logo-text .brand{font-size:17px;font-weight:800;color:var(--blue);letter-spacing:-.3px;}
+.sb-logo-text .sub{font-size:10px;color:var(--text-light);letter-spacing:1.5px;text-transform:uppercase;}
 
-  /* ── MAIN ── */
-  #main{margin-left:var(--sidebar-w);flex:1;min-height:100vh;background:var(--off-white);}
-  .topbar{height:58px;background:var(--white);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;gap:11px;position:sticky;top:0;z-index:50;box-shadow:var(--shadow-sm);}
-  .topbar h1{font-family:'Libre Baskerville',serif;font-size:15px;color:var(--blue);flex:1;font-weight:700;}
-  .topbar-date{font-size:12px;color:var(--text-light);}
-  .topbar-user{display:flex;align-items:center;gap:8px;}
-  .topbar-avatar{width:30px;height:30px;border-radius:50%;background:var(--blue-pale);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:14px;}
-  .topbar-uname{font-size:13px;font-weight:600;color:var(--text-mid);}
-  .topbar-role-badge{padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;background:var(--blue-pale);color:var(--blue);}
-  .topbar-role-badge.emp{background:var(--green-bg);color:var(--green);}
-  .btn-menu{display:none;background:none;border:none;color:var(--blue);font-size:22px;cursor:pointer;}
-  .content{padding:22px 24px;}
+.sb-user{margin:14px 14px 0;background:var(--blue-faint);border-radius:12px;padding:10px 13px;display:flex;align-items:center;gap:10px;}
+.sb-user-avatar{width:34px;height:34px;border-radius:50%;background:var(--blue-pale);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+.sb-user-name{font-size:13px;font-weight:600;color:var(--text);}
+.sb-user-role{font-size:10px;color:var(--text-light);font-weight:500;text-transform:uppercase;letter-spacing:.8px;}
 
-  /* ── STAT CARDS ── */
-  .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:12px;margin-bottom:22px;}
-  .stat-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:17px;box-shadow:var(--shadow-sm);position:relative;overflow:hidden;transition:box-shadow .2s;}
-  .stat-card:hover{box-shadow:var(--shadow);}
-  .stat-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--accent);}
-  .stat-card.card-green::after{background:var(--green);}
-  .stat-card.card-red::after{background:var(--red);}
-  .stat-card.card-blue::after{background:var(--blue-light);}
-  .stat-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;margin-bottom:10px;}
-  .stat-icon.blue-i{background:var(--blue-pale);}
-  .stat-icon.green-i{background:var(--green-bg);}
-  .stat-icon.red-i{background:var(--red-bg);}
-  .stat-label{font-size:10px;color:var(--text-light);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;}
-  .stat-value{font-family:'Libre Baskerville',serif;font-size:22px;color:var(--text);line-height:1;}
-  .stat-value.v-blue{color:var(--blue);}
-  .stat-value.v-green{color:var(--green);}
-  .stat-value.v-red{color:var(--red);}
-  .stat-sub{font-size:11px;color:var(--text-light);margin-top:3px;}
-  .stat-sub.up{color:var(--green);}
+.nav-group-label{padding:18px 22px 6px;font-size:9px;font-weight:700;color:var(--text-light);text-transform:uppercase;letter-spacing:2px;}
+.nav-item{display:flex;align-items:center;gap:11px;margin:2px 12px;padding:10px 13px;cursor:pointer;font-size:13px;font-weight:500;color:var(--text-mid);border-radius:12px;transition:all .18s;position:relative;}
+.nav-item:hover{background:var(--blue-faint);color:var(--blue);}
+.nav-item.active{background:var(--blue);color:#fff;font-weight:600;box-shadow:0 4px 14px rgba(27,58,107,.25);}
+.nav-item .nav-ico{font-size:16px;width:22px;text-align:center;flex-shrink:0;}
+.nav-badge{margin-left:auto;background:rgba(255,255,255,.25);color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;min-width:22px;text-align:center;}
+.nav-item:not(.active) .nav-badge{background:var(--blue-pale);color:var(--blue);}
 
-  /* ── SECTION TITLE ── */
-  .section-title{font-family:'Libre Baskerville',serif;font-size:14px;color:var(--blue);margin-bottom:12px;display:flex;align-items:center;gap:10px;}
-  .section-title::after{content:'';flex:1;height:1px;background:var(--border);}
+.sb-help{margin:auto 14px 14px;background:linear-gradient(135deg,var(--blue) 0%,var(--blue-light) 100%);border-radius:16px;padding:18px;position:relative;overflow:hidden;}
+.sb-help::before{content:'';position:absolute;top:-20px;right:-20px;width:80px;height:80px;background:rgba(255,255,255,.08);border-radius:50%;}
+.sb-help::after{content:'';position:absolute;bottom:-30px;left:-10px;width:100px;height:100px;background:rgba(255,255,255,.05);border-radius:50%;}
+.sb-help-icon{width:32px;height:32px;background:rgba(255,255,255,.2);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:16px;margin-bottom:10px;position:relative;z-index:1;}
+.sb-help-title{font-size:12px;font-weight:700;color:#fff;margin-bottom:3px;position:relative;z-index:1;}
+.sb-help-sub{font-size:10px;color:rgba(255,255,255,.7);margin-bottom:12px;position:relative;z-index:1;}
+.sb-help-btn{background:rgba(255,255,255,.95);color:var(--blue);border:none;border-radius:8px;padding:7px 14px;font-family:'Poppins',sans-serif;font-size:11px;font-weight:700;cursor:pointer;width:100%;position:relative;z-index:1;transition:all .2s;}
+.sb-help-btn:hover{background:#fff;box-shadow:0 4px 12px rgba(0,0,0,.1);}
 
-  /* ── TABLE ── */
-  .table-wrap{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:18px;box-shadow:var(--shadow-sm);}
-  table{width:100%;border-collapse:collapse;font-size:13px;}
-  th{background:var(--blue-faint);color:var(--text-mid);font-weight:600;text-align:left;padding:10px 14px;font-size:11px;letter-spacing:.7px;text-transform:uppercase;border-bottom:1px solid var(--border);}
-  td{padding:10px 14px;border-top:1px solid var(--border);color:var(--text-mid);font-size:13px;}
-  tr:hover td{background:var(--blue-faint);}
+.sb-logout{padding:14px 22px;border-top:1px solid var(--border);display:flex;align-items:center;gap:9px;cursor:pointer;font-size:13px;font-weight:500;color:var(--text-light);transition:all .2s;}
+.sb-logout:hover{color:var(--red);}
 
-  /* ── BADGES ── */
-  .badge{display:inline-block;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600;}
-  .b-green{background:var(--green-bg);color:var(--green);}
-  .b-blue{background:var(--blue-pale);color:var(--blue-mid);}
-  .b-red{background:var(--red-bg);color:var(--red);}
-  .b-amb{background:var(--amber-bg);color:var(--amber);}
-  .b-gray{background:#F0F2F5;color:#7A8BAA;}
+/* ── MAIN ── */
+#main{margin-left:var(--sidebar-w);flex:1;min-height:100vh;background:var(--bg);}
 
-  /* ── BUTTONS ── */
-  .btn{padding:8px 16px;border-radius:8px;border:none;cursor:pointer;font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;transition:all .2s;display:inline-flex;align-items:center;gap:6px;}
-  .btn-primary{background:var(--blue);color:#fff;}
-  .btn-primary:hover{background:var(--blue-mid);}
-  .btn-outline{background:transparent;border:1.5px solid var(--border-mid);color:var(--text-mid);}
-  .btn-outline:hover{border-color:var(--blue);color:var(--blue);}
-  .btn-ghost{background:var(--blue-faint);color:var(--blue);}
-  .btn-ghost:hover{background:var(--blue-pale);}
-  .btn-sm{padding:6px 12px;font-size:12px;}
+/* ── TOPBAR ── */
+.topbar{height:68px;background:var(--white);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 28px;gap:14px;position:sticky;top:0;z-index:50;box-shadow:0 2px 12px rgba(27,58,107,.04);}
+.topbar-title{font-size:16px;font-weight:700;color:var(--text);letter-spacing:-.3px;}
+.topbar-search{flex:1;max-width:340px;position:relative;}
+.topbar-search input{width:100%;background:var(--bg);border:2px solid transparent;border-radius:12px;padding:9px 14px 9px 40px;font-family:'Poppins',sans-serif;font-size:13px;color:var(--text);outline:none;transition:all .2s;}
+.topbar-search input:focus{border-color:var(--accent);background:#fff;box-shadow:0 0 0 4px rgba(76,126,240,.08);}
+.topbar-search input::placeholder{color:var(--text-light);}
+.search-ico{position:absolute;left:13px;top:50%;transform:translateY(-50%);font-size:15px;color:var(--text-light);pointer-events:none;}
+.topbar-right{margin-left:auto;display:flex;align-items:center;gap:10px;}
+.topbar-notif{width:38px;height:38px;background:var(--bg);border-radius:11px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:17px;position:relative;border:1px solid var(--border);transition:all .2s;}
+.topbar-notif:hover{background:var(--blue-pale);border-color:var(--blue-pale);}
+.notif-dot{position:absolute;top:7px;right:7px;width:7px;height:7px;background:var(--red);border-radius:50%;border:2px solid #fff;}
+.topbar-role-pill{padding:5px 13px;border-radius:20px;font-size:11px;font-weight:600;background:var(--blue-pale);color:var(--blue);}
+.topbar-role-pill.emp{background:var(--green-bg);color:var(--green);}
+.topbar-user-chip{display:flex;align-items:center;gap:9px;background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:5px 13px 5px 7px;cursor:pointer;transition:all .2s;}
+.topbar-user-chip:hover{border-color:var(--blue-pale);}
+.user-chip-avatar{width:28px;height:28px;border-radius:8px;background:var(--blue-pale);display:flex;align-items:center;justify-content:center;font-size:14px;}
+.user-chip-name{font-size:13px;font-weight:600;color:var(--text);}
+.btn-menu{display:none;background:none;border:none;color:var(--blue);font-size:22px;cursor:pointer;padding:4px;}
 
-  /* ── FORMS ── */
-  .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:11px;margin-bottom:11px;}
-  .form-group{display:flex;flex-direction:column;gap:5px;}
-  .form-group label{font-size:11px;color:var(--text-light);text-transform:uppercase;letter-spacing:.8px;font-weight:600;}
-  .form-group input,.form-group select,.form-group textarea{background:var(--off-white);border:1.5px solid var(--border);border-radius:8px;color:var(--text);padding:9px 11px;font-size:13px;font-family:'Outfit',sans-serif;outline:none;transition:border-color .2s;}
-  .form-group input:focus,.form-group select:focus{border-color:var(--accent);background:#fff;}
-  .input-pw-wrap{position:relative;}
-  .input-pw-wrap input{width:100%;padding-right:40px;}
-  .pw-toggle{position:absolute;right:11px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;color:var(--text-light);font-size:15px;padding:0;}
-  .pw-toggle:hover{color:var(--blue);}
+.content{padding:26px 28px;}
 
-  /* ── MODAL ── */
-  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(10,20,45,.45);backdrop-filter:blur(3px);z-index:200;align-items:center;justify-content:center;padding:20px;}
-  .modal-overlay.open{display:flex;}
-  .modal{background:var(--white);border:1px solid var(--border);border-radius:16px;width:100%;max-width:500px;padding:24px;position:relative;box-shadow:0 20px 60px rgba(27,58,107,.2);animation:slideUp .25s ease;}
-  @keyframes slideUp{from{transform:translateY(16px);opacity:0;}to{transform:translateY(0);opacity:1;}}
-  .modal-title{font-family:'Libre Baskerville',serif;font-size:16px;color:var(--blue);margin-bottom:17px;padding-right:28px;}
-  .modal-close{position:absolute;top:14px;right:14px;background:var(--blue-faint);border:none;color:var(--text-mid);cursor:pointer;font-size:13px;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;}
-  .modal-close:hover{background:var(--blue-pale);}
+/* ── PAGE HEADER ── */
+.page-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:24px;flex-wrap:wrap;gap:12px;}
+.page-header-left .page-title{font-size:22px;font-weight:800;color:var(--text);letter-spacing:-.5px;margin-bottom:3px;}
+.page-header-left .page-sub{font-size:13px;color:var(--text-light);font-weight:400;}
+.page-header-right{display:flex;gap:10px;flex-wrap:wrap;}
 
-  /* ── CALENDAR ── */
-  .calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
-  .cal-header{text-align:center;font-size:10px;color:var(--text-light);padding:5px 0;font-weight:600;letter-spacing:1px;}
-  .cal-day{background:var(--off-white);border:1px solid var(--border);border-radius:7px;padding:6px 4px;text-align:center;cursor:pointer;min-height:50px;transition:all .18s;position:relative;}
-  .cal-day:hover{border-color:var(--accent);background:var(--blue-faint);}
-  .cal-day.today{background:var(--blue);border-color:var(--blue);}
-  .cal-day.today .cal-day-num{color:#fff;font-weight:700;}
-  .cal-day.has-turns::after{content:'';position:absolute;bottom:4px;left:50%;transform:translateX(-50%);width:5px;height:5px;background:var(--accent);border-radius:50%;}
-  .cal-day.today.has-turns::after{background:rgba(255,255,255,.7);}
-  .cal-day-num{font-size:12px;color:var(--text-mid);}
+/* ── BUTTONS ── */
+.btn{padding:9px 18px;border-radius:10px;border:none;cursor:pointer;font-family:'Poppins',sans-serif;font-size:13px;font-weight:600;transition:all .2s;display:inline-flex;align-items:center;gap:7px;letter-spacing:.1px;}
+.btn-primary{background:var(--blue);color:#fff;box-shadow:0 4px 12px rgba(27,58,107,.2);}
+.btn-primary:hover{background:var(--blue-mid);transform:translateY(-1px);box-shadow:0 6px 18px rgba(27,58,107,.28);}
+.btn-outline{background:var(--white);border:1.5px solid var(--border);color:var(--text-mid);}
+.btn-outline:hover{border-color:var(--blue);color:var(--blue);background:var(--blue-faint);}
+.btn-ghost{background:var(--blue-faint);color:var(--blue);}
+.btn-ghost:hover{background:var(--blue-pale);}
+.btn-sm{padding:7px 13px;font-size:12px;border-radius:8px;}
+.btn-icon{padding:8px;width:36px;height:36px;border-radius:9px;justify-content:center;}
 
-  /* ── TABS ── */
-  .tabs{display:flex;gap:3px;background:var(--blue-faint);padding:4px;border-radius:10px;border:1px solid var(--border);width:fit-content;}
-  .tab{padding:7px 15px;border-radius:7px;cursor:pointer;font-size:13px;color:var(--text-light);font-weight:500;transition:all .18s;}
-  .tab.active{background:var(--blue);color:#fff;font-weight:600;box-shadow:0 2px 8px rgba(27,58,107,.2);}
+/* ── STAT CARDS ── */
+.stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:24px;}
+.stat-card{background:var(--white);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow);border:1px solid var(--border);transition:all .22s;position:relative;overflow:hidden;}
+.stat-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md);}
+.stat-card.featured{background:var(--blue);border-color:var(--blue);color:#fff;}
+.stat-card.featured .stat-label{color:rgba(255,255,255,.65);}
+.stat-card.featured .stat-value{color:#fff;}
+.stat-card.featured .stat-sub{color:rgba(255,255,255,.7);}
+.stat-card.featured .stat-icon-wrap{background:rgba(255,255,255,.15);}
+.stat-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:16px;}
+.stat-icon-wrap{width:44px;height:44px;border-radius:12px;background:var(--blue-faint);display:flex;align-items:center;justify-content:center;font-size:20px;}
+.stat-icon-wrap.green{background:var(--green-bg);}
+.stat-icon-wrap.red{background:var(--red-bg);}
+.stat-icon-wrap.amber{background:var(--amber-bg);}
+.stat-trend{display:flex;align-items:center;gap:4px;font-size:11px;font-weight:600;padding:4px 9px;border-radius:20px;}
+.stat-trend.up{background:var(--green-bg);color:var(--green);}
+.stat-trend.down{background:var(--red-bg);color:var(--red);}
+.stat-trend.neutral{background:var(--blue-faint);color:var(--blue-mid);}
+.stat-card.featured .stat-trend.up{background:rgba(255,255,255,.15);color:rgba(255,255,255,.9);}
+.stat-label{font-size:11px;font-weight:600;color:var(--text-light);text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;}
+.stat-value{font-size:28px;font-weight:800;color:var(--text);letter-spacing:-1px;line-height:1;}
+.stat-sub{font-size:12px;color:var(--text-light);margin-top:5px;font-weight:400;}
 
-  /* ── EMP CARDS ── */
-  .emp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-bottom:18px;}
-  .emp-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:17px;transition:all .2s;box-shadow:var(--shadow-sm);}
-  .emp-card:hover{box-shadow:var(--shadow);border-color:var(--border-mid);}
-  .emp-avatar{width:44px;height:44px;border-radius:50%;background:var(--blue-pale);border:2px solid var(--border-mid);display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:10px;}
-  .emp-name{font-family:'Libre Baskerville',serif;font-size:14px;color:var(--blue);margin-bottom:2px;}
-  .emp-role{font-size:11px;color:var(--text-light);text-transform:uppercase;letter-spacing:1px;margin-bottom:11px;}
-  .emp-stat-row{display:flex;justify-content:space-between;margin-bottom:6px;}
-  .emp-stat-label{font-size:12px;color:var(--text-light);}
-  .emp-stat-val{font-size:13px;color:var(--text-mid);font-weight:600;}
-  .emp-stat-val.hi{color:var(--blue);}
+/* ── CHART CARD ── */
+.chart-card{background:var(--white);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);border:1px solid var(--border);margin-bottom:24px;}
+.chart-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:24px;}
+.chart-title{font-size:15px;font-weight:700;color:var(--text);letter-spacing:-.3px;}
+.chart-meta{font-size:12px;color:var(--text-light);}
+.chart-select{background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:6px 12px;font-family:'Poppins',sans-serif;font-size:12px;font-weight:600;color:var(--text-mid);outline:none;cursor:pointer;}
+.bar-chart{display:flex;align-items:flex-end;gap:10px;height:130px;padding:0 4px;}
+.bar-group{flex:1;display:flex;flex-direction:column;align-items:center;gap:7px;}
+.bar-wrap{width:100%;flex:1;display:flex;align-items:flex-end;justify-content:center;}
+.bar{width:100%;border-radius:8px 8px 0 0;transition:all .3s;cursor:pointer;position:relative;max-width:40px;}
+.bar.active{background:var(--blue)!important;box-shadow:0 4px 14px rgba(27,58,107,.3);}
+.bar:not(.active){background:var(--blue-pale);}
+.bar:hover:not(.active){background:var(--blue-light)!important;}
+.bar-label{font-size:10px;font-weight:600;color:var(--text-light);letter-spacing:.5px;}
 
-  /* ── COMPARE ── */
-  .compare-bar{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
-  .compare-label{font-size:12px;color:var(--text-light);width:100px;}
-  .compare-track{flex:1;height:6px;background:var(--blue-faint);border-radius:3px;overflow:hidden;border:1px solid var(--border);}
-  .compare-fill{height:100%;border-radius:3px;background:var(--blue);}
-  .compare-fill.prev{background:var(--border-mid);}
-  .compare-val{font-size:12px;color:var(--text-mid);width:72px;text-align:right;font-weight:600;}
+/* ── TABLE CARD ── */
+.table-card{background:var(--white);border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);border:1px solid var(--border);margin-bottom:22px;}
+.table-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px;flex-wrap:wrap;gap:10px;}
+.table-title{font-size:15px;font-weight:700;color:var(--text);letter-spacing:-.3px;}
+.table-actions{display:flex;align-items:center;gap:9px;flex-wrap:wrap;}
+.search-sm{position:relative;}
+.search-sm input{background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:7px 12px 7px 34px;font-family:'Poppins',sans-serif;font-size:12px;color:var(--text);outline:none;width:180px;transition:all .2s;}
+.search-sm input:focus{border-color:var(--accent);background:#fff;}
+.search-sm .si{position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:13px;color:var(--text-light);}
 
-  /* ── REPORT ── */
-  .report-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:17px;margin-bottom:13px;box-shadow:var(--shadow-sm);}
-  .divider{height:1px;background:var(--border);margin:11px 0;}
-  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:15px;}
+/* ── TABS ── */
+.tabs-pill{display:flex;gap:4px;background:var(--bg);padding:4px;border-radius:12px;border:1px solid var(--border);width:fit-content;}
+.tab-pill{padding:7px 16px;border-radius:9px;cursor:pointer;font-size:12px;font-weight:600;color:var(--text-light);transition:all .18s;white-space:nowrap;}
+.tab-pill.active{background:var(--white);color:var(--blue);box-shadow:var(--shadow);}
+.tab-pill:hover:not(.active){color:var(--text);}
 
-  /* ── FILTER BAR ── */
-  .filter-bar{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:13px 16px;display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:18px;box-shadow:var(--shadow-sm);}
-  .filter-input{background:var(--off-white);border:1.5px solid var(--border);border-radius:8px;color:var(--text);padding:7px 11px;font-size:13px;font-family:'Outfit',sans-serif;outline:none;transition:border-color .2s;}
-  .filter-input:focus{border-color:var(--accent);background:#fff;}
-  .emp-tab{padding:5px 12px;border-radius:20px;border:1.5px solid var(--border);background:transparent;font-family:'Outfit',sans-serif;font-size:12px;font-weight:600;color:var(--text-light);cursor:pointer;transition:all .18s;}
-  .emp-tab:hover{border-color:var(--blue);color:var(--blue);}
-  .emp-tab.active{background:var(--blue);color:#fff;border-color:var(--blue);}
+/* ── DATA TABLE ── */
+table{width:100%;border-collapse:collapse;font-size:13px;}
+th{background:transparent;color:var(--text-light);font-weight:600;text-align:left;padding:10px 14px;font-size:11px;letter-spacing:.7px;text-transform:uppercase;border-bottom:2px solid var(--border);}
+th .sort-ico{opacity:.4;font-size:10px;margin-left:4px;}
+td{padding:13px 14px;border-bottom:1px solid var(--border);color:var(--text-mid);font-size:13px;vertical-align:middle;}
+tr:last-child td{border-bottom:none;}
+tr:hover td{background:var(--blue-faint);}
+.emp-cell{display:flex;align-items:center;gap:10px;}
+.emp-avatar-sm{width:32px;height:32px;border-radius:10px;background:var(--blue-pale);display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0;border:2px solid var(--border);}
+.emp-cell-name{font-weight:600;color:var(--text);}
 
-  /* ── STOCK ── */
-  .stock-bar{height:5px;background:var(--blue-faint);border-radius:3px;margin-top:5px;overflow:hidden;}
-  .stock-fill{height:100%;border-radius:3px;}
-  .stock-ok{background:var(--green);}
-  .stock-low{background:var(--amber);}
-  .stock-crit{background:var(--red);}
+/* ── BADGES ── */
+.badge{display:inline-flex;align-items:center;gap:4px;padding:4px 11px;border-radius:20px;font-size:11px;font-weight:600;}
+.b-green{background:var(--green-bg);color:var(--green);}
+.b-blue{background:var(--blue-pale);color:var(--blue-mid);}
+.b-red{background:var(--red-bg);color:var(--red);}
+.b-amb{background:var(--amber-bg);color:var(--amber);}
+.b-gray{background:#F0F3F8;color:#7A8BAA;}
+.b-dot{width:5px;height:5px;border-radius:50%;background:currentColor;}
 
-  /* ── PAY SPLIT ── */
-  .pay-split{display:flex;gap:7px;margin-top:7px;flex-wrap:wrap;}
-  .pay-method{flex:1;min-width:80px;background:var(--off-white);border:1.5px solid var(--border);border-radius:8px;padding:8px;text-align:center;cursor:pointer;transition:all .18s;font-size:12px;color:var(--text-light);font-weight:500;}
-  .pay-method:hover{border-color:var(--accent);color:var(--blue);}
-  .pay-method.selected{border-color:var(--blue);color:var(--blue);background:var(--blue-pale);font-weight:600;}
+/* ── ACTION BUTTON (table) ── */
+.action-btn{width:32px;height:32px;border-radius:9px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:all .18s;}
+.ab-blue{background:var(--blue-pale);color:var(--blue);}
+.ab-blue:hover{background:var(--blue);color:#fff;}
+.ab-red{background:var(--red-bg);color:var(--red);}
+.ab-red:hover{background:var(--red);color:#fff;}
+.ab-green{background:var(--green-bg);color:var(--green);}
+.ab-green:hover{background:var(--green);color:#fff;}
 
-  /* ── SUM ROW ── */
-  .pdf-section{background:var(--blue-faint);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:14px;}
-  .sum-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);font-size:13px;}
-  .sum-row:last-child{border:none;font-weight:700;color:var(--blue);font-size:14px;}
-  .sum-label{color:var(--text-mid);}
-  .sum-val{font-weight:600;}
+/* ── CARDS GRID ── */
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-bottom:22px;}
+.emp-card{background:var(--white);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);border:1px solid var(--border);transition:all .22s;}
+.emp-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md);}
+.emp-card-top{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
+.emp-big-avatar{width:48px;height:48px;border-radius:14px;background:var(--blue-pale);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+.emp-card-name{font-size:14px;font-weight:700;color:var(--text);letter-spacing:-.2px;}
+.emp-card-role{font-size:11px;color:var(--text-light);font-weight:500;}
+.emp-stat-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border);}
+.emp-stat-row:last-of-type{border-bottom:none;}
+.emp-stat-key{font-size:12px;color:var(--text-light);font-weight:500;}
+.emp-stat-val{font-size:13px;font-weight:700;color:var(--text);}
+.emp-stat-val.hi{color:var(--blue);}
 
-  /* ── ACCESS DENIED ── */
-  .access-denied{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:55vh;text-align:center;}
-  .access-denied .icon{font-size:46px;margin-bottom:14px;}
-  .access-denied h2{font-family:'Libre Baskerville',serif;color:var(--blue);margin-bottom:7px;}
-  .access-denied p{color:var(--text-light);font-size:14px;}
+/* ── STOCK BAR ── */
+.stock-bar{height:5px;background:var(--bg);border-radius:3px;margin-top:5px;overflow:hidden;border:1px solid var(--border);}
+.stock-fill{height:100%;border-radius:3px;}
+.s-ok{background:var(--green);}
+.s-low{background:var(--amber);}
+.s-crit{background:var(--red);}
 
-  /* ── HELPERS ── */
-  .flex-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
-  .ml-auto{margin-left:auto;}
-  .page{display:none;}
-  .page.active{display:block;}
-  .v-blue{color:var(--blue);}
-  .v-green{color:var(--green);}
-  .v-red{color:var(--red);}
-  .fw6{font-weight:600;}
-  #overlay{display:none;position:fixed;inset:0;background:rgba(10,20,45,.4);z-index:90;backdrop-filter:blur(2px);}
-  #overlay.open{display:block;}
+/* ── PAY METHODS ── */
+.pay-split{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;}
+.pay-m{flex:1;min-width:78px;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:9px;text-align:center;cursor:pointer;transition:all .18s;font-size:12px;color:var(--text-light);font-weight:600;}
+.pay-m:hover{border-color:var(--accent);color:var(--blue);}
+.pay-m.selected{border-color:var(--blue);color:var(--blue);background:var(--blue-faint);font-weight:700;}
 
-  @media(max-width:768px){
-    #sidebar{transform:translateX(-100%);}
-    #sidebar.open{transform:translateX(0);}
-    #main{margin-left:0;}
-    .btn-menu{display:block;}
-    .two-col{grid-template-columns:1fr;}
-    .stat-grid{grid-template-columns:1fr 1fr;}
-    .content{padding:14px;}
-    .topbar{padding:0 13px;}
-    .topbar-date{display:none;}
-  }
+/* ── CALENDAR ── */
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;}
+.cal-head{text-align:center;font-size:10px;color:var(--text-light);padding:6px 0;font-weight:700;letter-spacing:1px;}
+.cal-day{background:var(--bg);border:1.5px solid transparent;border-radius:10px;padding:6px 4px;text-align:center;cursor:pointer;min-height:52px;transition:all .18s;position:relative;}
+.cal-day:hover{border-color:var(--accent);background:var(--blue-faint);}
+.cal-day.today{background:var(--blue);border-color:var(--blue);}
+.cal-day.today .cal-day-num{color:#fff;font-weight:700;}
+.cal-day.has-t::after{content:'';position:absolute;bottom:5px;left:50%;transform:translateX(-50%);width:5px;height:5px;background:var(--accent);border-radius:50%;}
+.cal-day.today.has-t::after{background:rgba(255,255,255,.8);}
+.cal-day-num{font-size:12px;color:var(--text-mid);font-weight:500;}
+
+/* ── MODAL ── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(10,20,45,.5);backdrop-filter:blur(4px);z-index:200;align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.open{display:flex;}
+.modal{background:var(--white);border-radius:20px;width:100%;max-width:500px;padding:28px;position:relative;box-shadow:0 30px 80px rgba(27,58,107,.2);animation:fadeUp .25s ease;border:1px solid var(--border);}
+.modal-title{font-size:17px;font-weight:700;color:var(--text);margin-bottom:20px;padding-right:30px;letter-spacing:-.3px;}
+.modal-close{position:absolute;top:16px;right:16px;background:var(--bg);border:none;color:var(--text-light);cursor:pointer;font-size:13px;width:28px;height:28px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-weight:700;transition:all .18s;}
+.modal-close:hover{background:var(--red-bg);color:var(--red);}
+
+/* ── FORMS ── */
+.form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:12px;margin-bottom:12px;}
+.fg{display:flex;flex-direction:column;gap:6px;}
+.fg label{font-size:11px;color:var(--text-light);text-transform:uppercase;letter-spacing:.8px;font-weight:700;}
+.fg input,.fg select,.fg textarea{background:var(--bg);border:1.5px solid var(--border);border-radius:10px;color:var(--text);padding:10px 12px;font-size:13px;font-family:'Poppins',sans-serif;outline:none;transition:all .2s;}
+.fg input:focus,.fg select:focus{border-color:var(--accent);background:#fff;box-shadow:0 0 0 3px rgba(76,126,240,.08);}
+
+/* ── SUMMARY BOX ── */
+.sum-box{background:var(--blue-faint);border:1px solid var(--border);border-radius:14px;padding:16px;margin-bottom:14px;}
+.sum-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);font-size:13px;}
+.sum-row:last-child{border:none;font-weight:700;font-size:14px;color:var(--blue);}
+.sum-lbl{color:var(--text-mid);}
+.sum-val{font-weight:600;}
+
+/* ── ACCESS DENIED ── */
+.access-denied{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:50vh;text-align:center;}
+.access-denied .icon{font-size:52px;margin-bottom:16px;}
+.access-denied h2{font-size:20px;font-weight:700;color:var(--text);margin-bottom:7px;letter-spacing:-.3px;}
+.access-denied p{color:var(--text-light);font-size:14px;}
+
+/* ── HELPERS ── */
+.flex-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+.ml-auto{margin-left:auto;}
+.page{display:none;}
+.page.active{display:block;}
+.v-blue{color:var(--blue);}
+.v-green{color:var(--green);}
+.v-red{color:var(--red);}
+.fw7{font-weight:700;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+.divider{height:1px;background:var(--border);margin:12px 0;}
+
+#overlay{display:none;position:fixed;inset:0;background:rgba(10,20,45,.3);z-index:90;backdrop-filter:blur(2px);}
+#overlay.open{display:block;}
+
+@media(max-width:768px){
+  #sidebar{transform:translateX(-100%);}
+  #sidebar.open{transform:translateX(0);}
+  #main{margin-left:0;}
+  .btn-menu{display:block;}
+  .two-col{grid-template-columns:1fr;}
+  .stat-grid{grid-template-columns:1fr 1fr;}
+  .content{padding:16px;}
+  .topbar{padding:0 16px;}
+  .topbar-search{display:none;}
+}
 </style>
 </head>
 <body>
@@ -251,72 +324,66 @@
         <div class="sub">Sistema de Gestión</div>
       </div>
     </div>
-    <div class="login-divider"></div>
     <div class="login-error" id="login-error">Usuario o contraseña incorrectos.</div>
-    <div class="form-group" style="margin-bottom:13px">
-      <label>Usuario</label>
-      <input type="text" id="login-user" placeholder="Ingresá tu usuario" autocomplete="username">
+    <label class="login-label">Usuario</label>
+    <input type="text" class="login-input" id="login-user" placeholder="Ingresá tu usuario" autocomplete="username">
+    <label class="login-label">Contraseña</label>
+    <div class="pw-wrap">
+      <input type="password" class="login-input" id="login-pass" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
+      <button class="pw-eye" onclick="togglePw()">👁</button>
     </div>
-    <div class="form-group" style="margin-bottom:20px">
-      <label>Contraseña</label>
-      <div class="input-pw-wrap">
-        <input type="password" id="login-pass" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
-        <button class="pw-toggle" onclick="togglePw()" tabindex="-1" id="pw-toggle-btn">👁</button>
-      </div>
-    </div>
-    <button class="btn btn-primary" style="width:100%;padding:12px;justify-content:center;font-size:14px" onclick="doLogin()">
-      Ingresar →
-    </button>
+    <button class="login-btn" onclick="doLogin()">Ingresar al sistema →</button>
     <div class="login-hint">
       <div class="login-hint-title">Credenciales de prueba</div>
-      <div class="login-hint-row">
-        <span class="login-hint-label">👑 Administrador</span>
-        <span class="login-hint-creds">admin / admin123</span>
-      </div>
-      <div class="login-hint-row">
-        <span class="login-hint-label">✂️ Empleado</span>
-        <span class="login-hint-creds">empleado / emp123</span>
-      </div>
+      <div class="login-hint-row"><span class="login-hint-label">👑 Administrador</span><span class="login-hint-val">admin / admin123</span></div>
+      <div class="login-hint-row"><span class="login-hint-label">✂️ Empleado</span><span class="login-hint-val">empleado / emp123</span></div>
     </div>
   </div>
 </div>
 
 <!-- ══ SIDEBAR ══ -->
 <nav id="sidebar">
-  <div class="sidebar-logo">
-    <div class="logo-mark">
-      <div class="logo-icon">✂</div>
-      <div class="logo-text">
+  <div class="sb-logo">
+    <div class="sb-logo-inner">
+      <div class="sb-logo-icon">✂</div>
+      <div class="sb-logo-text">
         <div class="brand">BarberPro</div>
         <div class="sub">Gestión</div>
       </div>
     </div>
   </div>
-  <div class="sidebar-user">
-    <div class="u-avatar" id="sb-avatar">👑</div>
+
+  <div class="sb-user">
+    <div class="sb-user-avatar" id="sb-avatar">👑</div>
     <div>
-      <div class="u-name" id="sb-name">Administrador</div>
-      <div class="u-role" id="sb-role">Admin</div>
+      <div class="sb-user-name" id="sb-name">Administrador</div>
+      <div class="sb-user-role" id="sb-role">Admin</div>
     </div>
   </div>
 
-  <div class="nav-section">Principal</div>
-  <div class="nav-item active" onclick="goTo('dashboard')"><span class="nav-icon">📊</span> Dashboard</div>
-  <div class="nav-item" onclick="goTo('agenda')"><span class="nav-icon">📅</span> Agenda <span class="nav-badge">3</span></div>
-  <div class="nav-item" onclick="goTo('cobros')"><span class="nav-icon">💰</span> Cobros</div>
+  <div class="nav-group-label">Principal</div>
+  <div class="nav-item active" onclick="goTo('dashboard')"><span class="nav-ico">📊</span> Dashboard</div>
+  <div class="nav-item" onclick="goTo('agenda')"><span class="nav-ico">📅</span> Agenda <span class="nav-badge">3</span></div>
+  <div class="nav-item" onclick="goTo('cobros')"><span class="nav-ico">💰</span> Cobros</div>
 
-  <div class="nav-section">Gestión</div>
-  <div class="nav-item admin-only" onclick="goTo('empleados')"><span class="nav-icon">👤</span> Empleados</div>
-  <div class="nav-item" onclick="goTo('servicios')"><span class="nav-icon">✂️</span> Servicios</div>
-  <div class="nav-item" onclick="goTo('stock')"><span class="nav-icon">📦</span> Stock</div>
-  <div class="nav-item" onclick="goTo('egresos')"><span class="nav-icon">📤</span> Egresos</div>
+  <div class="nav-group-label">Gestión</div>
+  <div class="nav-item admin-only" onclick="goTo('empleados')"><span class="nav-ico">👤</span> Empleados</div>
+  <div class="nav-item" onclick="goTo('servicios')"><span class="nav-ico">✂️</span> Servicios</div>
+  <div class="nav-item" onclick="goTo('stock')"><span class="nav-ico">📦</span> Stock</div>
+  <div class="nav-item" onclick="goTo('egresos')"><span class="nav-ico">📤</span> Egresos</div>
 
-  <div class="nav-section admin-only">Reportes</div>
-  <div class="nav-item admin-only" onclick="goTo('reportes')"><span class="nav-icon">📋</span> Reportes</div>
+  <div class="nav-group-label admin-only">Análisis</div>
+  <div class="nav-item admin-only" onclick="goTo('reportes')"><span class="nav-ico">📋</span> Reportes</div>
 
-  <div class="sidebar-bottom">
-    <span>v1.0</span>
-    <button class="logout-btn" onclick="doLogout()">Cerrar sesión</button>
+  <div class="sb-help">
+    <div class="sb-help-icon">💡</div>
+    <div class="sb-help-title">Base de datos</div>
+    <div class="sb-help-sub">Próxima etapa: datos reales con Supabase</div>
+    <button class="sb-help-btn">Ver hoja de ruta</button>
+  </div>
+
+  <div class="sb-logout" onclick="doLogout()">
+    <span style="font-size:16px">⏻</span> Cerrar sesión
   </div>
 </nav>
 
@@ -326,377 +393,513 @@
 <div id="main">
   <div class="topbar">
     <button class="btn-menu" onclick="toggleSidebar()">☰</button>
-    <h1 id="page-title">Dashboard</h1>
-    <span class="topbar-date" id="today-date"></span>
-    <div class="topbar-user">
-      <div class="topbar-avatar" id="tb-avatar">👑</div>
-      <span class="topbar-uname" id="tb-name">Admin</span>
-      <span class="topbar-role-badge" id="tb-role-badge">Administrador</span>
+    <div class="topbar-search">
+      <span class="search-ico">🔍</span>
+      <input type="text" placeholder="Buscar clientes, turnos...">
     </div>
-    <button class="btn btn-primary btn-sm" onclick="openModal('modal-cobro')">+ Cobro</button>
+    <div class="topbar-right">
+      <div class="topbar-notif">🔔<div class="notif-dot"></div></div>
+      <span class="topbar-role-pill" id="tb-role-pill">Administrador</span>
+      <div class="topbar-user-chip">
+        <div class="user-chip-avatar" id="tb-avatar">👑</div>
+        <span class="user-chip-name" id="tb-name">Admin</span>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="openModal('modal-cobro')">+ Cobro</button>
+    </div>
   </div>
+
   <div class="content">
 
-    <!-- DASHBOARD -->
+    <!-- ══ DASHBOARD ══ -->
     <div class="page active" id="page-dashboard">
+      <div class="page-header">
+        <div class="page-header-left">
+          <div class="page-title">Dashboard</div>
+          <div class="page-sub" id="today-date">Cargando fecha...</div>
+        </div>
+        <div class="page-header-right">
+          <button class="btn btn-primary" onclick="generatePDF()">📥 Generar Reporte</button>
+        </div>
+      </div>
+
+      <!-- Stats -->
       <div class="stat-grid">
-        <div class="stat-card"><div class="stat-icon blue-i">💰</div><div class="stat-label">Ingresos Hoy</div><div class="stat-value v-blue">$48.500</div><div class="stat-sub up">↑ 12% vs ayer</div></div>
-        <div class="stat-card card-red"><div class="stat-icon red-i">📤</div><div class="stat-label">Egresos Hoy</div><div class="stat-value v-red">$8.200</div><div class="stat-sub">2 gastos</div></div>
-        <div class="stat-card card-green"><div class="stat-icon green-i">📈</div><div class="stat-label">Ganancia Neta</div><div class="stat-value v-green">$40.300</div><div class="stat-sub up">↑ 18% vs ayer</div></div>
-        <div class="stat-card card-blue"><div class="stat-icon blue-i">📅</div><div class="stat-label">Turnos Hoy</div><div class="stat-value v-blue">8</div><div class="stat-sub">3 pendientes</div></div>
+        <div class="stat-card featured">
+          <div class="stat-top">
+            <div class="stat-icon-wrap">💰</div>
+            <div class="stat-trend up">↑ 12%</div>
+          </div>
+          <div class="stat-label">Ingresos Hoy</div>
+          <div class="stat-value">$48.500</div>
+          <div class="stat-sub">vs $43.200 ayer</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-top">
+            <div class="stat-icon-wrap">📅</div>
+            <div class="stat-trend neutral">3 pend.</div>
+          </div>
+          <div class="stat-label">Turnos Hoy</div>
+          <div class="stat-value">8</div>
+          <div class="stat-sub">5 confirmados</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-top">
+            <div class="stat-icon-wrap green">📈</div>
+            <div class="stat-trend up">↑ 18%</div>
+          </div>
+          <div class="stat-label">Ganancia Neta</div>
+          <div class="stat-value">$40.300</div>
+          <div class="stat-sub">después de egresos</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-top">
+            <div class="stat-icon-wrap red">📤</div>
+            <div class="stat-trend down">2 gastos</div>
+          </div>
+          <div class="stat-label">Egresos Hoy</div>
+          <div class="stat-value">$8.200</div>
+          <div class="stat-sub">Insumos + Servicios</div>
+        </div>
       </div>
-      <div class="section-title">Empleados — Resumen de Hoy</div>
-      <div class="table-wrap">
-        <table>
-          <thead><tr><th>Empleado</th><th>Rol</th><th>Servicios</th><th>Total Facturado</th><th>Propinas</th><th>Sueldo (40%)</th></tr></thead>
-          <tbody>
-            <tr><td class="fw6">Marcos Rodríguez</td><td><span class="badge b-blue">Senior</span></td><td>3</td><td>$18.000</td><td class="v-blue fw6">$1.500</td><td class="v-blue fw6">$7.200</td></tr>
-            <tr><td class="fw6">Lucas Pereyra</td><td><span class="badge b-gray">Barbero</span></td><td>2</td><td>$14.500</td><td class="v-blue fw6">$500</td><td class="v-blue fw6">$5.800</td></tr>
-            <tr><td class="fw6">Tomás García</td><td><span class="badge b-gray">Barbero</span></td><td>3</td><td>$16.000</td><td class="v-blue fw6">$1.000</td><td class="v-blue fw6">$6.400</td></tr>
-          </tbody>
-        </table>
+
+      <!-- Chart + Employees -->
+      <div class="two-col" style="margin-bottom:24px">
+        <div class="chart-card" style="margin-bottom:0">
+          <div class="chart-header">
+            <div>
+              <div class="chart-title">Balance Mensual</div>
+              <div class="chart-meta">Ingresos por mes — 2026</div>
+            </div>
+            <select class="chart-select"><option>2026</option><option>2025</option></select>
+          </div>
+          <div class="bar-chart" id="bar-chart"></div>
+          <div style="display:flex;justify-content:center;gap:18px;margin-top:14px">
+            <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-light);font-weight:600">
+              <div style="width:10px;height:10px;background:var(--blue);border-radius:3px"></div>Mes actual
+            </div>
+            <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:var(--text-light);font-weight:600">
+              <div style="width:10px;height:10px;background:var(--blue-pale);border-radius:3px"></div>Otros meses
+            </div>
+          </div>
+        </div>
+
+        <div class="table-card" style="margin-bottom:0">
+          <div class="table-header">
+            <div class="table-title">Empleados Hoy</div>
+          </div>
+          <table>
+            <thead><tr><th>Empleado</th><th>Serv.</th><th>Total</th></tr></thead>
+            <tbody>
+              <tr>
+                <td><div class="emp-cell"><div class="emp-avatar-sm">💈</div><div class="emp-cell-name">Marcos R.</div></div></td>
+                <td>3</td><td class="fw7 v-blue">$18.000</td>
+              </tr>
+              <tr>
+                <td><div class="emp-cell"><div class="emp-avatar-sm">✂️</div><div class="emp-cell-name">Lucas P.</div></div></td>
+                <td>2</td><td class="fw7 v-blue">$14.500</td>
+              </tr>
+              <tr>
+                <td><div class="emp-cell"><div class="emp-avatar-sm">🪒</div><div class="emp-cell-name">Tomás G.</div></div></td>
+                <td>3</td><td class="fw7 v-blue">$16.000</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
-      <div class="section-title">Próximos Turnos</div>
-      <div class="table-wrap">
+
+      <!-- Recent Bookings -->
+      <div class="table-card">
+        <div class="table-header">
+          <div class="table-title">Turnos Recientes</div>
+          <div class="table-actions">
+            <div class="search-sm"><span class="si">🔍</span><input type="text" placeholder="Buscar turno..."></div>
+            <div class="tabs-pill">
+              <div class="tab-pill active" onclick="setBookingTab(this,'upcoming')">Próximos</div>
+              <div class="tab-pill" onclick="setBookingTab(this,'all')">Todos</div>
+              <div class="tab-pill" onclick="setBookingTab(this,'done')">Realizados</div>
+            </div>
+          </div>
+        </div>
         <table>
-          <thead><tr><th>Hora</th><th>Cliente</th><th>Servicio</th><th>Empleado</th><th>Estado</th><th></th></tr></thead>
-          <tbody>
-            <tr><td>10:00</td><td>Juan M.</td><td>Corte + Barba</td><td>Marcos R.</td><td><span class="badge b-green">Confirmado</span></td><td><button class="btn btn-primary btn-sm" onclick="openModal('modal-cobro')">Cobrar</button></td></tr>
-            <tr><td>11:30</td><td>Pedro L.</td><td>Corte</td><td>Lucas P.</td><td><span class="badge b-amb">Pendiente</span></td><td><button class="btn btn-primary btn-sm" onclick="openModal('modal-cobro')">Cobrar</button></td></tr>
-            <tr><td>13:00</td><td>Carlos V.</td><td>Barba + Fade</td><td>Tomás G.</td><td><span class="badge b-gray">Sin confirmar</span></td><td><button class="btn btn-outline btn-sm">Ver</button></td></tr>
+          <thead>
+            <tr>
+              <th>Barbero <span class="sort-ico">↕</span></th>
+              <th>Servicio <span class="sort-ico">↕</span></th>
+              <th>Hora inicio <span class="sort-ico">↕</span></th>
+              <th>Hora fin <span class="sort-ico">↕</span></th>
+              <th>Cliente <span class="sort-ico">↕</span></th>
+              <th>Estado</th>
+              <th>Acción</th>
+            </tr>
+          </thead>
+          <tbody id="bookings-tbody">
+            <tr>
+              <td><div class="emp-cell"><div class="emp-avatar-sm">💈</div><div class="emp-cell-name">Marcos R.</div></div></td>
+              <td>Corte + Barba</td><td>10:00</td><td>10:45</td><td>Juan M.</td>
+              <td><span class="badge b-green"><span class="b-dot"></span>Confirmado</span></td>
+              <td><button class="action-btn ab-blue" onclick="openModal('modal-cobro')">💰</button></td>
+            </tr>
+            <tr>
+              <td><div class="emp-cell"><div class="emp-avatar-sm">✂️</div><div class="emp-cell-name">Lucas P.</div></div></td>
+              <td>Corte Clásico</td><td>11:30</td><td>12:00</td><td>Pedro L.</td>
+              <td><span class="badge b-amb"><span class="b-dot"></span>Pendiente</span></td>
+              <td><button class="action-btn ab-green">✓</button></td>
+            </tr>
+            <tr>
+              <td><div class="emp-cell"><div class="emp-avatar-sm">🪒</div><div class="emp-cell-name">Tomás G.</div></div></td>
+              <td>Barba + Fade</td><td>13:00</td><td>14:00</td><td>Carlos V.</td>
+              <td><span class="badge b-gray"><span class="b-dot"></span>Sin confirmar</span></td>
+              <td><button class="action-btn ab-blue">👁</button></td>
+            </tr>
+            <tr>
+              <td><div class="emp-cell"><div class="emp-avatar-sm">💈</div><div class="emp-cell-name">Marcos R.</div></div></td>
+              <td>Corte Clásico</td><td>09:00</td><td>09:30</td><td>Ariel F.</td>
+              <td><span class="badge b-blue"><span class="b-dot"></span>Realizado</span></td>
+              <td><button class="action-btn ab-blue">📋</button></td>
+            </tr>
           </tbody>
         </table>
       </div>
     </div>
 
-    <!-- AGENDA -->
+    <!-- ══ AGENDA ══ -->
     <div class="page" id="page-agenda">
-      <div class="flex-row" style="margin-bottom:15px">
-        <div class="tabs"><div class="tab active">Mes</div><div class="tab">Semana</div><div class="tab">Día</div></div>
-        <button class="btn btn-primary ml-auto" onclick="openModal('modal-turno')">+ Nuevo Turno</button>
-      </div>
-      <div class="report-card">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:13px">
-          <button class="btn btn-outline btn-sm">◀</button>
-          <span style="font-family:'Libre Baskerville',serif;font-size:14px;color:var(--blue)">Marzo 2026</span>
-          <button class="btn btn-outline btn-sm">▶</button>
+      <div class="page-header">
+        <div class="page-header-left">
+          <div class="page-title">Agenda de Turnos</div>
+          <div class="page-sub">Gestión completa de citas</div>
         </div>
-        <div class="calendar-grid" style="margin-bottom:5px">
-          <div class="cal-header">DOM</div><div class="cal-header">LUN</div><div class="cal-header">MAR</div>
-          <div class="cal-header">MIÉ</div><div class="cal-header">JUE</div><div class="cal-header">VIE</div><div class="cal-header">SÁB</div>
-        </div>
-        <div class="calendar-grid" id="cal-days"></div>
+        <button class="btn btn-primary" onclick="openModal('modal-turno')">+ Nuevo Turno</button>
       </div>
-      <div class="section-title">Turnos de Hoy</div>
-      <div class="table-wrap">
+      <div class="two-col" style="margin-bottom:22px">
+        <div class="chart-card" style="margin-bottom:0">
+          <div class="chart-header">
+            <div class="chart-title">Marzo 2026</div>
+            <div style="display:flex;gap:8px">
+              <button class="btn btn-outline btn-sm">◀</button>
+              <button class="btn btn-outline btn-sm">▶</button>
+            </div>
+          </div>
+          <div class="cal-grid" style="margin-bottom:6px">
+            <div class="cal-head">DOM</div><div class="cal-head">LUN</div><div class="cal-head">MAR</div>
+            <div class="cal-head">MIÉ</div><div class="cal-head">JUE</div><div class="cal-head">VIE</div><div class="cal-head">SÁB</div>
+          </div>
+          <div class="cal-grid" id="cal-days"></div>
+        </div>
+        <div class="table-card" style="margin-bottom:0">
+          <div class="table-header"><div class="table-title">Resumen del Día</div></div>
+          <div class="stat-grid" style="grid-template-columns:1fr 1fr;margin-bottom:0">
+            <div class="stat-card" style="padding:14px"><div class="stat-label">Turnos</div><div class="stat-value" style="font-size:22px">8</div></div>
+            <div class="stat-card" style="padding:14px"><div class="stat-label">Confirmados</div><div class="stat-value" style="font-size:22px;color:var(--green)">5</div></div>
+            <div class="stat-card" style="padding:14px"><div class="stat-label">Pendientes</div><div class="stat-value" style="font-size:22px;color:var(--amber)">2</div></div>
+            <div class="stat-card" style="padding:14px"><div class="stat-label">Realizados</div><div class="stat-value" style="font-size:22px;color:var(--blue)">1</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="table-card">
+        <div class="table-header">
+          <div class="table-title">Turnos de Hoy</div>
+          <div class="tabs-pill">
+            <div class="tab-pill active">Todos</div>
+            <div class="tab-pill">Pendientes</div>
+            <div class="tab-pill">Realizados</div>
+          </div>
+        </div>
         <table>
           <thead><tr><th>Hora</th><th>Cliente</th><th>Tel.</th><th>Servicio</th><th>Empleado</th><th>Estado</th><th>Acción</th></tr></thead>
           <tbody>
-            <tr><td>09:00</td><td>Ariel F.</td><td>11-5555-0001</td><td>Corte Clásico</td><td>Marcos R.</td><td><span class="badge b-green">Realizado</span></td><td><button class="btn btn-outline btn-sm">Ver</button></td></tr>
-            <tr><td>10:00</td><td>Juan M.</td><td>11-5555-0002</td><td>Corte + Barba</td><td>Marcos R.</td><td><span class="badge b-amb">En curso</span></td><td><button class="btn btn-primary btn-sm" onclick="openModal('modal-cobro')">Cobrar</button></td></tr>
-            <tr><td>11:30</td><td>Pedro L.</td><td>11-5555-0003</td><td>Corte</td><td>Lucas P.</td><td><span class="badge b-gray">Pendiente</span></td><td><button class="btn btn-outline btn-sm">Confirmar</button></td></tr>
-            <tr><td>13:00</td><td>Carlos V.</td><td>11-5555-0004</td><td>Barba + Fade</td><td>Tomás G.</td><td><span class="badge b-gray">Pendiente</span></td><td><button class="btn btn-outline btn-sm">Confirmar</button></td></tr>
+            <tr><td class="fw7">09:00</td><td>Ariel F.</td><td>11-5555-0001</td><td>Corte Clásico</td><td>Marcos R.</td><td><span class="badge b-blue"><span class="b-dot"></span>Realizado</span></td><td><button class="action-btn ab-blue">📋</button></td></tr>
+            <tr><td class="fw7">10:00</td><td>Juan M.</td><td>11-5555-0002</td><td>Corte + Barba</td><td>Marcos R.</td><td><span class="badge b-amb"><span class="b-dot"></span>En curso</span></td><td><button class="action-btn ab-blue" onclick="openModal('modal-cobro')">💰</button></td></tr>
+            <tr><td class="fw7">11:30</td><td>Pedro L.</td><td>11-5555-0003</td><td>Corte</td><td>Lucas P.</td><td><span class="badge b-gray"><span class="b-dot"></span>Pendiente</span></td><td><button class="action-btn ab-green">✓</button></td></tr>
+            <tr><td class="fw7">13:00</td><td>Carlos V.</td><td>11-5555-0004</td><td>Barba + Fade</td><td>Tomás G.</td><td><span class="badge b-gray"><span class="b-dot"></span>Pendiente</span></td><td><button class="action-btn ab-green">✓</button></td></tr>
           </tbody>
         </table>
       </div>
     </div>
 
-    <!-- COBROS -->
+    <!-- ══ COBROS ══ -->
     <div class="page" id="page-cobros">
-      <div class="flex-row" style="margin-bottom:15px">
-        <div class="stat-card" style="flex:1;min-width:130px"><div class="stat-label">Total Hoy</div><div class="stat-value v-blue" style="font-size:19px">$48.500</div></div>
-        <div class="stat-card" style="flex:1;min-width:130px"><div class="stat-label">Efectivo</div><div class="stat-value" style="font-size:17px">$22.000</div></div>
-        <div class="stat-card" style="flex:1;min-width:130px"><div class="stat-label">Digital</div><div class="stat-value" style="font-size:17px">$26.500</div></div>
-        <button class="btn btn-primary ml-auto" onclick="openModal('modal-cobro')">+ Registrar Cobro</button>
+      <div class="page-header">
+        <div class="page-header-left">
+          <div class="page-title">Registro de Cobros</div>
+          <div class="page-sub">Movimientos del día</div>
+        </div>
+        <button class="btn btn-primary" onclick="openModal('modal-cobro')">+ Registrar Cobro</button>
       </div>
-      <div class="section-title">Cobros del Día</div>
-      <div class="table-wrap">
+      <div class="stat-grid" style="grid-template-columns:repeat(3,1fr)">
+        <div class="stat-card featured"><div class="stat-label">Total Hoy</div><div class="stat-value">$48.500</div></div>
+        <div class="stat-card"><div class="stat-label">Efectivo</div><div class="stat-value">$22.000</div><div class="stat-sub">45% del total</div></div>
+        <div class="stat-card"><div class="stat-label">Digital</div><div class="stat-value">$26.500</div><div class="stat-sub">55% del total</div></div>
+      </div>
+      <div class="table-card">
+        <div class="table-header"><div class="table-title">Cobros del Día</div>
+          <div class="tabs-pill">
+            <div class="tab-pill active">Todos</div>
+            <div class="tab-pill">Efectivo</div>
+            <div class="tab-pill">Digital</div>
+          </div>
+        </div>
         <table>
           <thead><tr><th>Hora</th><th>Cliente</th><th>Servicio</th><th>Empleado</th><th>Monto</th><th>Método</th><th>Propina</th></tr></thead>
           <tbody>
-            <tr><td>09:15</td><td>Ariel F.</td><td>Corte Clásico</td><td>Marcos R.</td><td class="fw6">$7.500</td><td><span class="badge b-green">Efectivo</span></td><td class="v-blue fw6">$500</td></tr>
-            <tr><td>09:50</td><td>Mateo S.</td><td>Barba</td><td>Lucas P.</td><td class="fw6">$5.000</td><td><span class="badge b-blue">Transfer.</span></td><td>—</td></tr>
-            <tr><td>10:30</td><td>Rodrigo T.</td><td>Corte + Barba</td><td>Tomás G.</td><td class="fw6">$12.000</td><td><span class="badge b-amb">Mixto</span></td><td class="v-blue fw6">$1.000</td></tr>
-            <tr><td>11:15</td><td>Pablo N.</td><td>Fade + Barba</td><td>Marcos R.</td><td class="fw6">$14.000</td><td><span class="badge b-blue">Tarjeta</span></td><td>—</td></tr>
-            <tr><td>12:00</td><td>Ignacio M.</td><td>Corte Clásico</td><td>Lucas P.</td><td class="fw6">$10.000</td><td><span class="badge b-green">Efectivo</span></td><td class="v-blue fw6">$500</td></tr>
+            <tr><td class="fw7">09:15</td><td>Ariel F.</td><td>Corte Clásico</td><td>Marcos R.</td><td class="fw7 v-blue">$7.500</td><td><span class="badge b-green">Efectivo</span></td><td class="fw7 v-blue">$500</td></tr>
+            <tr><td class="fw7">09:50</td><td>Mateo S.</td><td>Barba</td><td>Lucas P.</td><td class="fw7 v-blue">$5.000</td><td><span class="badge b-blue">Transfer.</span></td><td>—</td></tr>
+            <tr><td class="fw7">10:30</td><td>Rodrigo T.</td><td>Corte + Barba</td><td>Tomás G.</td><td class="fw7 v-blue">$12.000</td><td><span class="badge b-amb">Mixto</span></td><td class="fw7 v-blue">$1.000</td></tr>
+            <tr><td class="fw7">11:15</td><td>Pablo N.</td><td>Fade + Barba</td><td>Marcos R.</td><td class="fw7 v-blue">$14.000</td><td><span class="badge b-blue">Tarjeta</span></td><td>—</td></tr>
+            <tr><td class="fw7">12:00</td><td>Ignacio M.</td><td>Corte Clásico</td><td>Lucas P.</td><td class="fw7 v-blue">$10.000</td><td><span class="badge b-green">Efectivo</span></td><td class="fw7 v-blue">$500</td></tr>
           </tbody>
         </table>
       </div>
     </div>
 
-    <!-- EMPLEADOS — solo admin -->
+    <!-- ══ EMPLEADOS ══ -->
     <div class="page" id="page-empleados">
-      <div id="emp-denied" style="display:none">
-        <div class="access-denied"><div class="icon">🔒</div><h2>Acceso Restringido</h2><p>Solo el Administrador puede gestionar empleados.</p></div>
-      </div>
+      <div id="emp-denied" style="display:none"><div class="access-denied"><div class="icon">🔒</div><h2>Acceso Restringido</h2><p>Solo el Administrador puede gestionar empleados.</p></div></div>
       <div id="emp-content">
-        <div class="flex-row" style="margin-bottom:15px">
-          <button class="btn btn-primary ml-auto" onclick="openModal('modal-empleado')">+ Agregar Empleado</button>
+        <div class="page-header">
+          <div class="page-header-left"><div class="page-title">Empleados</div><div class="page-sub">Equipo del salón</div></div>
+          <button class="btn btn-primary" onclick="openModal('modal-empleado')">+ Agregar Empleado</button>
         </div>
-        <div class="emp-grid">
+        <div class="stat-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:22px">
+          <div class="stat-card featured"><div class="stat-label">Total Empleados</div><div class="stat-value">3</div></div>
+          <div class="stat-card"><div class="stat-label">Activos Hoy</div><div class="stat-value">3</div></div>
+          <div class="stat-card"><div class="stat-label">Servicios Hoy</div><div class="stat-value">8</div></div>
+          <div class="stat-card"><div class="stat-label">Sueldos a Pagar</div><div class="stat-value" style="font-size:20px">$19.400</div></div>
+        </div>
+        <div class="cards-grid">
           <div class="emp-card">
-            <div class="emp-avatar">💈</div><div class="emp-name">Marcos Rodríguez</div><div class="emp-role">Barbero Senior</div>
-            <div class="emp-stat-row"><span class="emp-stat-label">Ingresos hoy</span><span class="emp-stat-val">$18.000</span></div>
-            <div class="emp-stat-row"><span class="emp-stat-label">Sueldo (40%)</span><span class="emp-stat-val hi">$7.200</span></div>
-            <div class="emp-stat-row"><span class="emp-stat-label">Propinas hoy</span><span class="emp-stat-val hi">$1.500</span></div>
-            <div class="emp-stat-row"><span class="emp-stat-label">Servicios</span><span class="emp-stat-val">3</span></div>
-            <div class="divider"></div>
-            <div class="emp-stat-row"><span class="emp-stat-label">Total mes</span><span class="emp-stat-val hi">$210.000</span></div>
-            <button class="btn btn-ghost btn-sm" style="width:100%;margin-top:9px;justify-content:center" onclick="goTo('reportes')">Ver reporte</button>
+            <div class="emp-card-top">
+              <div class="emp-big-avatar">💈</div>
+              <div><div class="emp-card-name">Marcos Rodríguez</div><div class="emp-card-role">Barbero Senior</div></div>
+            </div>
+            <div class="emp-stat-row"><span class="emp-stat-key">Ingresos hoy</span><span class="emp-stat-val hi">$18.000</span></div>
+            <div class="emp-stat-row"><span class="emp-stat-key">Sueldo (40%)</span><span class="emp-stat-val hi">$7.200</span></div>
+            <div class="emp-stat-row"><span class="emp-stat-key">Propinas hoy</span><span class="emp-stat-val hi">$1.500</span></div>
+            <div class="emp-stat-row"><span class="emp-stat-key">Total mes</span><span class="emp-stat-val hi">$210.000</span></div>
+            <div style="margin-top:12px"><button class="btn btn-ghost btn-sm" style="width:100%;justify-content:center" onclick="goTo('reportes')">Ver reporte completo →</button></div>
           </div>
           <div class="emp-card">
-            <div class="emp-avatar">✂️</div><div class="emp-name">Lucas Pereyra</div><div class="emp-role">Barbero</div>
-            <div class="emp-stat-row"><span class="emp-stat-label">Ingresos hoy</span><span class="emp-stat-val">$14.500</span></div>
-            <div class="emp-stat-row"><span class="emp-stat-label">Sueldo (40%)</span><span class="emp-stat-val hi">$5.800</span></div>
-            <div class="emp-stat-row"><span class="emp-stat-label">Propinas hoy</span><span class="emp-stat-val hi">$500</span></div>
-            <div class="emp-stat-row"><span class="emp-stat-label">Servicios</span><span class="emp-stat-val">2</span></div>
-            <div class="divider"></div>
-            <div class="emp-stat-row"><span class="emp-stat-label">Total mes</span><span class="emp-stat-val hi">$168.000</span></div>
-            <button class="btn btn-ghost btn-sm" style="width:100%;margin-top:9px;justify-content:center" onclick="goTo('reportes')">Ver reporte</button>
+            <div class="emp-card-top">
+              <div class="emp-big-avatar">✂️</div>
+              <div><div class="emp-card-name">Lucas Pereyra</div><div class="emp-card-role">Barbero</div></div>
+            </div>
+            <div class="emp-stat-row"><span class="emp-stat-key">Ingresos hoy</span><span class="emp-stat-val hi">$14.500</span></div>
+            <div class="emp-stat-row"><span class="emp-stat-key">Sueldo (40%)</span><span class="emp-stat-val hi">$5.800</span></div>
+            <div class="emp-stat-row"><span class="emp-stat-key">Propinas hoy</span><span class="emp-stat-val hi">$500</span></div>
+            <div class="emp-stat-row"><span class="emp-stat-key">Total mes</span><span class="emp-stat-val hi">$168.000</span></div>
+            <div style="margin-top:12px"><button class="btn btn-ghost btn-sm" style="width:100%;justify-content:center" onclick="goTo('reportes')">Ver reporte completo →</button></div>
           </div>
           <div class="emp-card">
-            <div class="emp-avatar">🪒</div><div class="emp-name">Tomás García</div><div class="emp-role">Barbero</div>
-            <div class="emp-stat-row"><span class="emp-stat-label">Ingresos hoy</span><span class="emp-stat-val">$16.000</span></div>
-            <div class="emp-stat-row"><span class="emp-stat-label">Sueldo (40%)</span><span class="emp-stat-val hi">$6.400</span></div>
-            <div class="emp-stat-row"><span class="emp-stat-label">Propinas hoy</span><span class="emp-stat-val hi">$1.000</span></div>
-            <div class="emp-stat-row"><span class="emp-stat-label">Servicios</span><span class="emp-stat-val">3</span></div>
-            <div class="divider"></div>
-            <div class="emp-stat-row"><span class="emp-stat-label">Total mes</span><span class="emp-stat-val hi">$185.000</span></div>
-            <button class="btn btn-ghost btn-sm" style="width:100%;margin-top:9px;justify-content:center" onclick="goTo('reportes')">Ver reporte</button>
+            <div class="emp-card-top">
+              <div class="emp-big-avatar">🪒</div>
+              <div><div class="emp-card-name">Tomás García</div><div class="emp-card-role">Barbero</div></div>
+            </div>
+            <div class="emp-stat-row"><span class="emp-stat-key">Ingresos hoy</span><span class="emp-stat-val hi">$16.000</span></div>
+            <div class="emp-stat-row"><span class="emp-stat-key">Sueldo (40%)</span><span class="emp-stat-val hi">$6.400</span></div>
+            <div class="emp-stat-row"><span class="emp-stat-key">Propinas hoy</span><span class="emp-stat-val hi">$1.000</span></div>
+            <div class="emp-stat-row"><span class="emp-stat-key">Total mes</span><span class="emp-stat-val hi">$185.000</span></div>
+            <div style="margin-top:12px"><button class="btn btn-ghost btn-sm" style="width:100%;justify-content:center" onclick="goTo('reportes')">Ver reporte completo →</button></div>
           </div>
-          <div class="emp-card" style="border-style:dashed;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:170px;box-shadow:none" onclick="openModal('modal-empleado')">
-            <div style="font-size:26px;color:var(--border-mid);margin-bottom:7px">+</div>
-            <div style="color:var(--text-light);font-size:13px">Agregar Empleado</div>
+          <div class="emp-card" style="border:2px dashed var(--border);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:200px;box-shadow:none;background:transparent" onclick="openModal('modal-empleado')">
+            <div style="font-size:28px;color:var(--border);margin-bottom:8px">+</div>
+            <div style="color:var(--text-light);font-size:13px;font-weight:600">Agregar Empleado</div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- SERVICIOS -->
+    <!-- ══ SERVICIOS ══ -->
     <div class="page" id="page-servicios">
-      <div class="flex-row" style="margin-bottom:15px">
-        <button class="btn btn-primary ml-auto" onclick="openModal('modal-servicio')">+ Agregar Servicio</button>
+      <div class="page-header">
+        <div class="page-header-left"><div class="page-title">Servicios</div><div class="page-sub">Catálogo del salón</div></div>
+        <button class="btn btn-primary" onclick="openModal('modal-servicio')">+ Agregar Servicio</button>
       </div>
-      <div class="table-wrap">
+      <div class="table-card">
         <table>
           <thead><tr><th>Servicio</th><th>Descripción</th><th>Precio</th><th>Duración</th><th>Estado</th><th></th></tr></thead>
           <tbody>
-            <tr><td class="fw6">Corte Clásico</td><td>Corte con tijera y máquina</td><td class="v-blue fw6">$7.500</td><td>30 min</td><td><span class="badge b-green">Activo</span></td><td><button class="btn btn-outline btn-sm">Editar</button></td></tr>
-            <tr><td class="fw6">Barba</td><td>Perfilado y afeitado</td><td class="v-blue fw6">$5.000</td><td>20 min</td><td><span class="badge b-green">Activo</span></td><td><button class="btn btn-outline btn-sm">Editar</button></td></tr>
-            <tr><td class="fw6">Corte + Barba</td><td>Combo completo</td><td class="v-blue fw6">$11.500</td><td>45 min</td><td><span class="badge b-green">Activo</span></td><td><button class="btn btn-outline btn-sm">Editar</button></td></tr>
-            <tr><td class="fw6">Fade + Barba</td><td>Degradado con barba</td><td class="v-blue fw6">$14.000</td><td>60 min</td><td><span class="badge b-green">Activo</span></td><td><button class="btn btn-outline btn-sm">Editar</button></td></tr>
-            <tr><td class="fw6">Corte Niño</td><td>Hasta 12 años</td><td class="v-blue fw6">$5.000</td><td>25 min</td><td><span class="badge b-green">Activo</span></td><td><button class="btn btn-outline btn-sm">Editar</button></td></tr>
-            <tr><td class="fw6">Tratamiento Capilar</td><td>Hidratación + peinado</td><td class="v-blue fw6">$9.000</td><td>40 min</td><td><span class="badge b-gray">Inactivo</span></td><td><button class="btn btn-outline btn-sm">Editar</button></td></tr>
+            <tr><td class="fw7">Corte Clásico</td><td>Corte con tijera y máquina</td><td class="fw7 v-blue">$7.500</td><td>30 min</td><td><span class="badge b-green"><span class="b-dot"></span>Activo</span></td><td><button class="btn btn-outline btn-sm">Editar</button></td></tr>
+            <tr><td class="fw7">Barba</td><td>Perfilado y afeitado</td><td class="fw7 v-blue">$5.000</td><td>20 min</td><td><span class="badge b-green"><span class="b-dot"></span>Activo</span></td><td><button class="btn btn-outline btn-sm">Editar</button></td></tr>
+            <tr><td class="fw7">Corte + Barba</td><td>Combo completo</td><td class="fw7 v-blue">$11.500</td><td>45 min</td><td><span class="badge b-green"><span class="b-dot"></span>Activo</span></td><td><button class="btn btn-outline btn-sm">Editar</button></td></tr>
+            <tr><td class="fw7">Fade + Barba</td><td>Degradado con barba</td><td class="fw7 v-blue">$14.000</td><td>60 min</td><td><span class="badge b-green"><span class="b-dot"></span>Activo</span></td><td><button class="btn btn-outline btn-sm">Editar</button></td></tr>
+            <tr><td class="fw7">Corte Niño</td><td>Hasta 12 años</td><td class="fw7 v-blue">$5.000</td><td>25 min</td><td><span class="badge b-green"><span class="b-dot"></span>Activo</span></td><td><button class="btn btn-outline btn-sm">Editar</button></td></tr>
+            <tr><td class="fw7">Tratamiento Capilar</td><td>Hidratación + peinado</td><td class="fw7 v-blue">$9.000</td><td>40 min</td><td><span class="badge b-gray"><span class="b-dot"></span>Inactivo</span></td><td><button class="btn btn-outline btn-sm">Editar</button></td></tr>
           </tbody>
         </table>
       </div>
     </div>
 
-    <!-- STOCK -->
+    <!-- ══ STOCK ══ -->
     <div class="page" id="page-stock">
-      <div class="flex-row" style="margin-bottom:15px">
-        <div class="stat-card" style="flex:1"><div class="stat-label">Productos</div><div class="stat-value v-blue" style="font-size:19px">12</div></div>
-        <div class="stat-card card-red" style="flex:1"><div class="stat-label">Stock Bajo</div><div class="stat-value v-red" style="font-size:19px">2</div></div>
-        <div class="stat-card" style="flex:1"><div class="stat-label">Val. Inventario</div><div class="stat-value v-blue" style="font-size:19px">$84.500</div></div>
-        <button class="btn btn-primary ml-auto" onclick="openModal('modal-producto')">+ Agregar</button>
+      <div class="page-header">
+        <div class="page-header-left"><div class="page-title">Stock</div><div class="page-sub">Control de inventario</div></div>
+        <button class="btn btn-primary" onclick="openModal('modal-producto')">+ Agregar Producto</button>
       </div>
-      <div class="table-wrap">
+      <div class="stat-grid" style="grid-template-columns:repeat(3,1fr)">
+        <div class="stat-card"><div class="stat-label">Total Productos</div><div class="stat-value">12</div></div>
+        <div class="stat-card"><div class="stat-top"><div class="stat-icon-wrap red">⚠️</div></div><div class="stat-label">Stock Bajo</div><div class="stat-value v-red">2</div></div>
+        <div class="stat-card featured"><div class="stat-label">Valor Inventario</div><div class="stat-value">$84.500</div></div>
+      </div>
+      <div class="table-card">
         <table>
           <thead><tr><th>Producto</th><th>Categoría</th><th>Stock</th><th>Mínimo</th><th>Precio</th><th>Estado</th></tr></thead>
           <tbody>
-            <tr><td class="fw6">Pomada Fijadora Premium</td><td>Cera/Pomada</td><td><div>8 unid.<div class="stock-bar"><div class="stock-fill stock-ok" style="width:80%"></div></div></div></td><td>3</td><td>$4.500</td><td><span class="badge b-green">OK</span></td></tr>
-            <tr><td class="fw6">Shampoo Anticaspa</td><td>Cabello</td><td><div>2 unid.<div class="stock-bar"><div class="stock-fill stock-crit" style="width:20%"></div></div></div></td><td>3</td><td>$3.200</td><td><span class="badge b-red">⚠ Bajo</span></td></tr>
-            <tr><td class="fw6">Aceite de Barba</td><td>Barba</td><td><div>5 unid.<div class="stock-bar"><div class="stock-fill stock-low" style="width:50%"></div></div></div></td><td>4</td><td>$5.800</td><td><span class="badge b-amb">Regular</span></td></tr>
-            <tr><td class="fw6">Cera Mate</td><td>Cera/Pomada</td><td><div>12 unid.<div class="stock-bar"><div class="stock-fill stock-ok" style="width:100%"></div></div></div></td><td>3</td><td>$3.900</td><td><span class="badge b-green">OK</span></td></tr>
-            <tr><td class="fw6">Crema de Afeitar</td><td>Barba</td><td><div>1 unid.<div class="stock-bar"><div class="stock-fill stock-crit" style="width:10%"></div></div></div></td><td>2</td><td>$2.800</td><td><span class="badge b-red">⚠ Bajo</span></td></tr>
+            <tr><td class="fw7">Pomada Fijadora Premium</td><td>Cera/Pomada</td><td><div>8 unid.<div class="stock-bar"><div class="stock-fill s-ok" style="width:80%"></div></div></div></td><td>3</td><td>$4.500</td><td><span class="badge b-green"><span class="b-dot"></span>OK</span></td></tr>
+            <tr><td class="fw7">Shampoo Anticaspa</td><td>Cabello</td><td><div>2 unid.<div class="stock-bar"><div class="stock-fill s-crit" style="width:20%"></div></div></div></td><td>3</td><td>$3.200</td><td><span class="badge b-red"><span class="b-dot"></span>Bajo</span></td></tr>
+            <tr><td class="fw7">Aceite de Barba</td><td>Barba</td><td><div>5 unid.<div class="stock-bar"><div class="stock-fill s-low" style="width:50%"></div></div></div></td><td>4</td><td>$5.800</td><td><span class="badge b-amb"><span class="b-dot"></span>Regular</span></td></tr>
+            <tr><td class="fw7">Cera Mate</td><td>Cera/Pomada</td><td><div>12 unid.<div class="stock-bar"><div class="stock-fill s-ok" style="width:100%"></div></div></div></td><td>3</td><td>$3.900</td><td><span class="badge b-green"><span class="b-dot"></span>OK</span></td></tr>
+            <tr><td class="fw7">Crema de Afeitar</td><td>Barba</td><td><div>1 unid.<div class="stock-bar"><div class="stock-fill s-crit" style="width:10%"></div></div></div></td><td>2</td><td>$2.800</td><td><span class="badge b-red"><span class="b-dot"></span>Bajo</span></td></tr>
           </tbody>
         </table>
       </div>
     </div>
 
-    <!-- EGRESOS -->
+    <!-- ══ EGRESOS ══ -->
     <div class="page" id="page-egresos">
-      <div class="flex-row" style="margin-bottom:15px">
-        <div class="stat-card card-red" style="flex:1"><div class="stat-label">Egresos Hoy</div><div class="stat-value v-red" style="font-size:19px">$8.200</div></div>
-        <div class="stat-card card-red" style="flex:1"><div class="stat-label">Egresos Mes</div><div class="stat-value v-red" style="font-size:19px">$94.500</div></div>
-        <button class="btn btn-primary ml-auto" onclick="openModal('modal-egreso')">+ Registrar Egreso</button>
+      <div class="page-header">
+        <div class="page-header-left"><div class="page-title">Egresos</div><div class="page-sub">Gastos del salón</div></div>
+        <button class="btn btn-primary" onclick="openModal('modal-egreso')">+ Registrar Egreso</button>
       </div>
-      <div class="section-title">Egresos del Día</div>
-      <div class="table-wrap">
+      <div class="stat-grid" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr))">
+        <div class="stat-card"><div class="stat-label">Egresos Hoy</div><div class="stat-value v-red">$8.200</div></div>
+        <div class="stat-card"><div class="stat-label">Egresos Mes</div><div class="stat-value v-red">$94.500</div></div>
+        <div class="stat-card"><div class="stat-label">Alquiler</div><div class="stat-value v-red" style="font-size:20px">$35.000</div></div>
+        <div class="stat-card"><div class="stat-label">Insumos</div><div class="stat-value v-red" style="font-size:20px">$18.500</div></div>
+        <div class="stat-card"><div class="stat-label">Servicios</div><div class="stat-value v-red" style="font-size:20px">$22.000</div></div>
+        <div class="stat-card"><div class="stat-label">Marketing</div><div class="stat-value v-red" style="font-size:20px">$12.000</div></div>
+      </div>
+      <div class="table-card">
+        <div class="table-header"><div class="table-title">Egresos del Día</div></div>
         <table>
           <thead><tr><th>Hora</th><th>Categoría</th><th>Descripción</th><th>Monto</th><th>Método</th></tr></thead>
           <tbody>
-            <tr><td>09:30</td><td><span class="badge b-blue">Insumos</span></td><td>Compra hojas de afeitar x50</td><td class="v-red fw6">-$3.200</td><td>Efectivo</td></tr>
-            <tr><td>11:00</td><td><span class="badge b-amb">Servicios</span></td><td>Limpieza del local</td><td class="v-red fw6">-$5.000</td><td>Transferencia</td></tr>
+            <tr><td class="fw7">09:30</td><td><span class="badge b-blue">Insumos</span></td><td>Compra hojas de afeitar x50</td><td class="fw7 v-red">-$3.200</td><td>Efectivo</td></tr>
+            <tr><td class="fw7">11:00</td><td><span class="badge b-amb">Servicios</span></td><td>Limpieza del local</td><td class="fw7 v-red">-$5.000</td><td>Transferencia</td></tr>
           </tbody>
         </table>
       </div>
-      <div class="section-title">Por Categoría — Mes</div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px">
-        <div class="stat-card card-red"><div class="stat-label">Alquiler</div><div class="stat-value v-red" style="font-size:17px">$35.000</div></div>
-        <div class="stat-card card-red"><div class="stat-label">Insumos</div><div class="stat-value v-red" style="font-size:17px">$18.500</div></div>
-        <div class="stat-card card-red"><div class="stat-label">Servicios</div><div class="stat-value v-red" style="font-size:17px">$22.000</div></div>
-        <div class="stat-card card-red"><div class="stat-label">Marketing</div><div class="stat-value v-red" style="font-size:17px">$12.000</div></div>
-        <div class="stat-card card-red"><div class="stat-label">Otros</div><div class="stat-value v-red" style="font-size:17px">$7.000</div></div>
-      </div>
     </div>
 
-    <!-- REPORTES — solo admin -->
+    <!-- ══ REPORTES ══ -->
     <div class="page" id="page-reportes">
-      <div id="reportes-denied" style="display:none">
-        <div class="access-denied"><div class="icon">🔒</div><h2>Acceso Restringido</h2><p>Los reportes son exclusivos del Administrador.</p></div>
-      </div>
+      <div id="reportes-denied" style="display:none"><div class="access-denied"><div class="icon">🔒</div><h2>Acceso Restringido</h2><p>Los reportes son exclusivos del Administrador.</p></div></div>
       <div id="reportes-content">
-        <div class="filter-bar">
-          <div class="tabs" id="rp-tabs">
-            <div class="tab active" onclick="setReportPeriod('dia',this)">Día</div>
-            <div class="tab" onclick="setReportPeriod('mes',this)">Mes</div>
-            <div class="tab" onclick="setReportPeriod('anio',this)">Año</div>
-          </div>
-          <input type="date" id="filter-dia" class="filter-input">
-          <select id="filter-mes" class="filter-input" style="display:none"><option>Marzo 2026</option><option>Febrero 2026</option><option>Enero 2026</option></select>
-          <select id="filter-anio" class="filter-input" style="display:none"><option>2026</option><option>2025</option></select>
-          <div style="height:24px;width:1px;background:var(--border)"></div>
-          <span style="font-size:12px;color:var(--text-light);font-weight:600">Vista:</span>
-          <div style="display:flex;gap:5px;flex-wrap:wrap">
-            <button class="emp-tab active" onclick="setReportView('local',this)">🏪 Local</button>
-            <button class="emp-tab" onclick="setReportView('marcos',this)">Marcos R.</button>
-            <button class="emp-tab" onclick="setReportView('lucas',this)">Lucas P.</button>
-            <button class="emp-tab" onclick="setReportView('tomas',this)">Tomás G.</button>
-          </div>
-          <button class="btn btn-primary btn-sm ml-auto" onclick="generatePDF()">📥 Generar PDF</button>
+        <div class="page-header">
+          <div class="page-header-left"><div class="page-title">Reportes</div><div class="page-sub">Análisis del negocio</div></div>
+          <button class="btn btn-primary" onclick="generatePDF()">📥 Generar PDF</button>
         </div>
+        <!-- Period + View Filters -->
+        <div class="chart-card" style="padding:16px 20px;margin-bottom:20px">
+          <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+            <div class="tabs-pill" id="rp-tabs">
+              <div class="tab-pill active" onclick="setReportPeriod('dia',this)">Día</div>
+              <div class="tab-pill" onclick="setReportPeriod('mes',this)">Mes</div>
+              <div class="tab-pill" onclick="setReportPeriod('anio',this)">Año</div>
+            </div>
+            <input type="date" id="filter-dia" style="background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:7px 12px;font-family:'Poppins',sans-serif;font-size:13px;outline:none;">
+            <select id="filter-mes" style="display:none;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:7px 12px;font-family:'Poppins',sans-serif;font-size:13px;outline:none;"><option>Marzo 2026</option><option>Febrero 2026</option><option>Enero 2026</option></select>
+            <select id="filter-anio" style="display:none;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:7px 12px;font-family:'Poppins',sans-serif;font-size:13px;outline:none;"><option>2026</option><option>2025</option></select>
+            <div style="width:1px;height:24px;background:var(--border)"></div>
+            <span style="font-size:12px;color:var(--text-light);font-weight:600">Vista:</span>
+            <div style="display:flex;gap:6px;flex-wrap:wrap" id="view-tabs">
+              <button class="btn btn-primary btn-sm" onclick="setReportView('local',this)">🏪 Local</button>
+              <button class="btn btn-outline btn-sm" onclick="setReportView('marcos',this)">Marcos R.</button>
+              <button class="btn btn-outline btn-sm" onclick="setReportView('lucas',this)">Lucas P.</button>
+              <button class="btn btn-outline btn-sm" onclick="setReportView('tomas',this)">Tomás G.</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- LOCAL VIEW -->
         <div id="report-local">
           <div id="rep-dia-local">
             <div class="stat-grid">
-              <div class="stat-card"><div class="stat-label">Ingresos</div><div class="stat-value v-blue">$48.500</div><div class="stat-sub up">↑ 12% vs ayer</div></div>
-              <div class="stat-card card-red"><div class="stat-label">Egresos</div><div class="stat-value v-red">$8.200</div></div>
-              <div class="stat-card card-green"><div class="stat-label">Ganancia Neta</div><div class="stat-value v-green">$40.300</div></div>
-              <div class="stat-card card-blue"><div class="stat-label">Servicios</div><div class="stat-value v-blue">8</div></div>
+              <div class="stat-card featured"><div class="stat-top"><div class="stat-icon-wrap">💰</div><div class="stat-trend up">↑ 12%</div></div><div class="stat-label">Ingresos</div><div class="stat-value">$48.500</div></div>
+              <div class="stat-card"><div class="stat-label">Egresos</div><div class="stat-value v-red">$8.200</div></div>
+              <div class="stat-card"><div class="stat-top"><div class="stat-icon-wrap green">📈</div></div><div class="stat-label">Ganancia Neta</div><div class="stat-value v-green">$40.300</div></div>
+              <div class="stat-card"><div class="stat-label">Servicios</div><div class="stat-value">8</div></div>
             </div>
             <div class="two-col">
-              <div>
-                <div class="section-title">Ingresos por Método</div>
-                <div class="report-card">
-                  <div class="compare-bar"><span class="compare-label">Efectivo</span><div class="compare-track"><div class="compare-fill" style="width:45%"></div></div><span class="compare-val">$22.000</span></div>
-                  <div class="compare-bar"><span class="compare-label">Tarjeta</span><div class="compare-track"><div class="compare-fill" style="width:35%"></div></div><span class="compare-val">$17.000</span></div>
-                  <div class="compare-bar"><span class="compare-label">Transferencia</span><div class="compare-track"><div class="compare-fill" style="width:20%"></div></div><span class="compare-val">$9.500</span></div>
+              <div class="chart-card">
+                <div class="chart-title" style="margin-bottom:16px">Ingresos por Método</div>
+                <div style="display:flex;flex-direction:column;gap:12px">
+                  <div><div style="display:flex;justify-content:space-between;font-size:12px;font-weight:600;margin-bottom:6px"><span>Efectivo</span><span class="v-blue">$22.000</span></div><div class="stock-bar" style="height:7px"><div class="stock-fill s-ok" style="width:45%"></div></div></div>
+                  <div><div style="display:flex;justify-content:space-between;font-size:12px;font-weight:600;margin-bottom:6px"><span>Tarjeta</span><span class="v-blue">$17.000</span></div><div class="stock-bar" style="height:7px"><div class="stock-fill s-low" style="width:35%"></div></div></div>
+                  <div><div style="display:flex;justify-content:space-between;font-size:12px;font-weight:600;margin-bottom:6px"><span>Transferencia</span><span class="v-blue">$9.500</span></div><div class="stock-bar" style="height:7px"><div class="stock-fill" style="width:20%;background:var(--blue)"></div></div></div>
                 </div>
               </div>
-              <div>
-                <div class="section-title">Propinas del Día</div>
-                <div class="report-card">
-                  <div class="compare-bar"><span class="compare-label">Marcos R.</span><div class="compare-track"><div class="compare-fill" style="width:60%"></div></div><span class="compare-val">$1.500</span></div>
-                  <div class="compare-bar"><span class="compare-label">Tomás G.</span><div class="compare-track"><div class="compare-fill" style="width:40%"></div></div><span class="compare-val">$1.000</span></div>
-                  <div class="compare-bar"><span class="compare-label">Lucas P.</span><div class="compare-track"><div class="compare-fill" style="width:20%"></div></div><span class="compare-val">$500</span></div>
-                </div>
+              <div class="sum-box" style="align-self:start">
+                <div class="sum-row"><span class="sum-lbl">Total Ingresos</span><span class="sum-val">$48.500</span></div>
+                <div class="sum-row"><span class="sum-lbl">Total Egresos</span><span class="sum-val v-red">-$8.200</span></div>
+                <div class="sum-row"><span class="sum-lbl">Sueldos (40%)</span><span class="sum-val">-$19.400</span></div>
+                <div class="sum-row"><span class="sum-lbl">Propinas</span><span class="sum-val">-$3.000</span></div>
+                <div class="sum-row"><span>Ganancia del Salón</span><span class="v-green">$17.900</span></div>
               </div>
             </div>
-            <div class="section-title">Detalle por Empleado</div>
-            <div class="table-wrap">
+            <div class="table-card">
+              <div class="table-header"><div class="table-title">Detalle por Empleado</div></div>
               <table>
                 <thead><tr><th>Empleado</th><th>Servicios</th><th>Ingresos</th><th>Propinas</th><th>Sueldo 40%</th><th>Total a Cobrar</th></tr></thead>
                 <tbody>
-                  <tr><td>Marcos Rodríguez</td><td>3</td><td>$18.000</td><td class="v-blue fw6">$1.500</td><td class="v-blue fw6">$7.200</td><td class="v-blue fw6">$8.700</td></tr>
-                  <tr><td>Lucas Pereyra</td><td>2</td><td>$14.500</td><td class="v-blue fw6">$500</td><td class="v-blue fw6">$5.800</td><td class="v-blue fw6">$6.300</td></tr>
-                  <tr><td>Tomás García</td><td>3</td><td>$16.000</td><td class="v-blue fw6">$1.000</td><td class="v-blue fw6">$6.400</td><td class="v-blue fw6">$7.400</td></tr>
+                  <tr><td><div class="emp-cell"><div class="emp-avatar-sm">💈</div><div class="emp-cell-name">Marcos Rodríguez</div></div></td><td>3</td><td>$18.000</td><td class="fw7 v-blue">$1.500</td><td class="fw7 v-blue">$7.200</td><td class="fw7 v-blue">$8.700</td></tr>
+                  <tr><td><div class="emp-cell"><div class="emp-avatar-sm">✂️</div><div class="emp-cell-name">Lucas Pereyra</div></div></td><td>2</td><td>$14.500</td><td class="fw7 v-blue">$500</td><td class="fw7 v-blue">$5.800</td><td class="fw7 v-blue">$6.300</td></tr>
+                  <tr><td><div class="emp-cell"><div class="emp-avatar-sm">🪒</div><div class="emp-cell-name">Tomás García</div></div></td><td>3</td><td>$16.000</td><td class="fw7 v-blue">$1.000</td><td class="fw7 v-blue">$6.400</td><td class="fw7 v-blue">$7.400</td></tr>
                 </tbody>
               </table>
-            </div>
-            <div class="pdf-section">
-              <div class="sum-row"><span class="sum-label">Total Ingresos</span><span class="sum-val">$48.500</span></div>
-              <div class="sum-row"><span class="sum-label">Total Egresos</span><span class="sum-val v-red">-$8.200</span></div>
-              <div class="sum-row"><span class="sum-label">Sueldos a pagar (40%)</span><span class="sum-val">-$19.400</span></div>
-              <div class="sum-row"><span class="sum-label">Propinas distribuidas</span><span class="sum-val">-$3.000</span></div>
-              <div class="sum-row"><span>Ganancia del Salón</span><span class="v-green fw6">$17.900</span></div>
             </div>
           </div>
           <div id="rep-mes-local" style="display:none">
             <div class="stat-grid">
-              <div class="stat-card"><div class="stat-label">Ingresos Mes</div><div class="stat-value v-blue">$1.245.000</div></div>
-              <div class="stat-card card-red"><div class="stat-label">Egresos Mes</div><div class="stat-value v-red">$94.500</div></div>
-              <div class="stat-card card-green"><div class="stat-label">Ganancia Neta</div><div class="stat-value v-green">$1.150.500</div></div>
-              <div class="stat-card card-blue"><div class="stat-label">Servicios</div><div class="stat-value v-blue">186</div></div>
+              <div class="stat-card featured"><div class="stat-label">Ingresos Mes</div><div class="stat-value">$1.245.000</div></div>
+              <div class="stat-card"><div class="stat-label">Egresos Mes</div><div class="stat-value v-red">$94.500</div></div>
+              <div class="stat-card"><div class="stat-label">Ganancia Neta</div><div class="stat-value v-green">$1.150.500</div></div>
+              <div class="stat-card"><div class="stat-label">Servicios</div><div class="stat-value">186</div><div class="stat-sub v-green">↑ +17.7% vs feb</div></div>
             </div>
-            <div class="section-title">Comparativa vs Mes Anterior</div>
-            <div class="report-card">
-              <div style="display:flex;gap:14px;margin-bottom:12px;font-size:12px">
-                <span style="display:flex;align-items:center;gap:5px"><span style="width:12px;height:4px;background:var(--blue);display:inline-block;border-radius:2px"></span>Marzo 2026</span>
-                <span style="display:flex;align-items:center;gap:5px"><span style="width:12px;height:4px;background:var(--border-mid);display:inline-block;border-radius:2px"></span>Febrero 2026</span>
-              </div>
-              <div class="compare-bar"><span class="compare-label">Ingresos</span><div class="compare-track"><div class="compare-fill" style="width:85%"></div></div><span class="compare-val">$1.245k</span></div>
-              <div class="compare-bar"><span class="compare-label" style="opacity:.6">Febrero</span><div class="compare-track"><div class="compare-fill prev" style="width:72%"></div></div><span class="compare-val" style="color:var(--text-light)">$1.050k</span></div>
-              <div class="compare-bar"><span class="compare-label">Servicios</span><div class="compare-track"><div class="compare-fill" style="width:80%"></div></div><span class="compare-val">186</span></div>
-              <div class="compare-bar"><span class="compare-label" style="opacity:.6">Febrero</span><div class="compare-track"><div class="compare-fill prev" style="width:65%"></div></div><span class="compare-val" style="color:var(--text-light)">158</span></div>
-              <div style="margin-top:8px;font-size:12px;color:var(--green);font-weight:600">↑ +18.6% ingresos · +17.7% servicios vs mes anterior</div>
-            </div>
-            <div class="section-title">Resumen por Empleado</div>
-            <div class="table-wrap">
+            <div class="table-card">
+              <div class="table-header"><div class="table-title">Resumen por Empleado</div></div>
               <table>
                 <thead><tr><th>Empleado</th><th>Servicios</th><th>Ingresos</th><th>Propinas</th><th>Sueldo</th><th>Promedio/día</th></tr></thead>
                 <tbody>
-                  <tr><td>Marcos Rodríguez</td><td>68</td><td>$480.000</td><td class="v-blue fw6">$28.000</td><td class="v-blue fw6">$220.000</td><td>$15.500</td></tr>
-                  <tr><td>Lucas Pereyra</td><td>55</td><td>$390.000</td><td class="v-blue fw6">$18.000</td><td class="v-blue fw6">$174.000</td><td>$12.600</td></tr>
-                  <tr><td>Tomás García</td><td>63</td><td>$375.000</td><td class="v-blue fw6">$22.000</td><td class="v-blue fw6">$172.000</td><td>$12.100</td></tr>
+                  <tr><td><div class="emp-cell"><div class="emp-avatar-sm">💈</div><div class="emp-cell-name">Marcos Rodríguez</div></div></td><td>68</td><td>$480.000</td><td class="fw7 v-blue">$28.000</td><td class="fw7 v-blue">$220.000</td><td>$15.500</td></tr>
+                  <tr><td><div class="emp-cell"><div class="emp-avatar-sm">✂️</div><div class="emp-cell-name">Lucas Pereyra</div></div></td><td>55</td><td>$390.000</td><td class="fw7 v-blue">$18.000</td><td class="fw7 v-blue">$174.000</td><td>$12.600</td></tr>
+                  <tr><td><div class="emp-cell"><div class="emp-avatar-sm">🪒</div><div class="emp-cell-name">Tomás García</div></div></td><td>63</td><td>$375.000</td><td class="fw7 v-blue">$22.000</td><td class="fw7 v-blue">$172.000</td><td>$12.100</td></tr>
                 </tbody>
               </table>
             </div>
           </div>
           <div id="rep-anio-local" style="display:none">
             <div class="stat-grid">
-              <div class="stat-card"><div class="stat-label">Ingresos Año</div><div class="stat-value v-blue" style="font-size:19px">$3.810.000</div></div>
-              <div class="stat-card card-red"><div class="stat-label">Egresos Año</div><div class="stat-value v-red" style="font-size:19px">$285.000</div></div>
-              <div class="stat-card card-green"><div class="stat-label">Ganancia Neta</div><div class="stat-value v-green" style="font-size:19px">$3.525.000</div></div>
-              <div class="stat-card card-blue"><div class="stat-label">Mejor Mes</div><div class="stat-value v-blue" style="font-size:16px">Marzo</div></div>
-            </div>
-            <div class="section-title">Comparativa Anual</div>
-            <div class="report-card">
-              <div class="compare-bar"><span class="compare-label">2026 (Ene-Mar)</span><div class="compare-track"><div class="compare-fill" style="width:30%"></div></div><span class="compare-val">$3.810k</span></div>
-              <div class="compare-bar"><span class="compare-label" style="opacity:.6">2025 completo</span><div class="compare-track"><div class="compare-fill prev" style="width:80%"></div></div><span class="compare-val" style="color:var(--text-light)">$11.2M</span></div>
-              <div style="margin-top:8px;font-size:12px;color:var(--blue);font-weight:600">Proyección 2026: $15.2M ↑ +35% vs 2025</div>
+              <div class="stat-card featured"><div class="stat-label">Ingresos Año</div><div class="stat-value">$3.810.000</div></div>
+              <div class="stat-card"><div class="stat-label">Egresos Año</div><div class="stat-value v-red">$285.000</div></div>
+              <div class="stat-card"><div class="stat-label">Ganancia Neta</div><div class="stat-value v-green">$3.525.000</div></div>
+              <div class="stat-card"><div class="stat-label">Proyección 2026</div><div class="stat-value v-blue" style="font-size:18px">$15.2M</div><div class="stat-sub v-green">↑ +35%</div></div>
             </div>
           </div>
         </div>
+
+        <!-- EMPLOYEE VIEW -->
         <div id="report-empleado" style="display:none">
           <div class="stat-grid">
-            <div class="stat-card"><div class="stat-label">Ingresos <span id="emp-period-label">Hoy</span></div><div class="stat-value v-blue" id="emp-stat-ing">$18.000</div></div>
-            <div class="stat-card card-blue"><div class="stat-label">Servicios</div><div class="stat-value v-blue" id="emp-stat-serv">3</div></div>
-            <div class="stat-card card-green"><div class="stat-label">Sueldo 40%</div><div class="stat-value v-green" id="emp-stat-sueldo">$7.200</div></div>
+            <div class="stat-card featured"><div class="stat-label">Ingresos <span id="emp-period-label">Hoy</span></div><div class="stat-value" id="emp-stat-ing">$18.000</div></div>
+            <div class="stat-card"><div class="stat-label">Servicios</div><div class="stat-value" id="emp-stat-serv">3</div></div>
+            <div class="stat-card"><div class="stat-label">Sueldo 40%</div><div class="stat-value v-green" id="emp-stat-sueldo">$7.200</div></div>
             <div class="stat-card"><div class="stat-label">Propinas</div><div class="stat-value v-blue" id="emp-stat-prop">$1.500</div></div>
           </div>
-          <div class="two-col">
-            <div>
-              <div class="section-title">Servicios realizados</div>
-              <div class="report-card">
-                <div class="compare-bar"><span class="compare-label">Corte Clásico</span><div class="compare-track"><div class="compare-fill" style="width:40%"></div></div><span class="compare-val">2 veces</span></div>
-                <div class="compare-bar"><span class="compare-label">Corte + Barba</span><div class="compare-track"><div class="compare-fill" style="width:60%"></div></div><span class="compare-val">3 veces</span></div>
-                <div class="compare-bar"><span class="compare-label">Fade + Barba</span><div class="compare-track"><div class="compare-fill" style="width:30%"></div></div><span class="compare-val">1 vez</span></div>
-              </div>
-            </div>
-            <div>
-              <div class="section-title">Comparativa vs período anterior</div>
-              <div class="report-card">
-                <div class="compare-bar"><span class="compare-label">Ingresos</span><div class="compare-track"><div class="compare-fill" style="width:75%"></div></div><span class="compare-val" id="emp-cmp-ing">$18.000</span></div>
-                <div class="compare-bar"><span class="compare-label" style="opacity:.6">Anterior</span><div class="compare-track"><div class="compare-fill prev" style="width:60%"></div></div><span class="compare-val" style="color:var(--text-light)">$15.000</span></div>
-                <div style="margin-top:8px;font-size:12px;color:var(--green);font-weight:600">↑ +20% vs período anterior</div>
-              </div>
-            </div>
-          </div>
-          <div class="section-title">Historial de Cobros</div>
-          <div class="table-wrap">
+          <div class="table-card">
+            <div class="table-header"><div class="table-title">Historial de Cobros</div></div>
             <table>
               <thead><tr><th>Hora</th><th>Cliente</th><th>Servicio</th><th>Monto</th><th>Propina</th><th>Método</th></tr></thead>
               <tbody>
-                <tr><td>09:00</td><td>Ariel F.</td><td>Corte Clásico</td><td>$7.500</td><td class="v-blue fw6">$500</td><td><span class="badge b-green">Efectivo</span></td></tr>
-                <tr><td>11:00</td><td>Pablo N.</td><td>Fade + Barba</td><td>$14.000</td><td>—</td><td><span class="badge b-blue">Tarjeta</span></td></tr>
-                <tr><td>13:30</td><td>Ramiro S.</td><td>Corte + Barba</td><td>$11.500</td><td class="v-blue fw6">$1.000</td><td><span class="badge b-amb">Mixto</span></td></tr>
+                <tr><td class="fw7">09:00</td><td>Ariel F.</td><td>Corte Clásico</td><td>$7.500</td><td class="fw7 v-blue">$500</td><td><span class="badge b-green">Efectivo</span></td></tr>
+                <tr><td class="fw7">11:00</td><td>Pablo N.</td><td>Fade + Barba</td><td>$14.000</td><td>—</td><td><span class="badge b-blue">Tarjeta</span></td></tr>
+                <tr><td class="fw7">13:30</td><td>Ramiro S.</td><td>Corte + Barba</td><td>$11.500</td><td class="fw7 v-blue">$1.000</td><td><span class="badge b-amb">Mixto</span></td></tr>
               </tbody>
             </table>
           </div>
-          <div class="pdf-section">
-            <div class="sum-row"><span class="sum-label">Total facturado</span><span class="sum-val" id="emp-sum-ing">$18.000</span></div>
-            <div class="sum-row"><span class="sum-label">Propinas recibidas</span><span class="sum-val" id="emp-sum-prop">$1.500</span></div>
-            <div class="sum-row"><span>Sueldo total a cobrar</span><span class="v-green fw6" id="emp-sum-total">$8.700</span></div>
+          <div class="sum-box">
+            <div class="sum-row"><span class="sum-lbl">Total facturado</span><span class="sum-val" id="emp-sum-ing">$18.000</span></div>
+            <div class="sum-row"><span class="sum-lbl">Propinas recibidas</span><span class="sum-val" id="emp-sum-prop">$1.500</span></div>
+            <div class="sum-row"><span>Total a cobrar</span><span class="v-green" id="emp-sum-total">$8.700</span></div>
           </div>
         </div>
       </div>
@@ -705,33 +908,33 @@
   </div>
 </div>
 
-<!-- MODALS -->
+<!-- ══ MODALS ══ -->
 <div class="modal-overlay" id="modal-cobro">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('modal-cobro')">✕</button>
     <div class="modal-title">💰 Registrar Cobro</div>
     <div class="form-grid">
-      <div class="form-group"><label>Cliente</label><input type="text" placeholder="Nombre del cliente"></div>
-      <div class="form-group"><label>Empleado</label><select><option>Marcos Rodríguez</option><option>Lucas Pereyra</option><option>Tomás García</option></select></div>
+      <div class="fg"><label>Cliente</label><input type="text" placeholder="Nombre del cliente"></div>
+      <div class="fg"><label>Empleado</label><select><option>Marcos Rodríguez</option><option>Lucas Pereyra</option><option>Tomás García</option></select></div>
     </div>
     <div class="form-grid">
-      <div class="form-group"><label>Servicio</label><select><option>Corte Clásico — $7.500</option><option>Barba — $5.000</option><option>Corte + Barba — $11.500</option><option>Fade + Barba — $14.000</option></select></div>
-      <div class="form-group"><label>Monto Total</label><input type="number" value="7500"></div>
+      <div class="fg"><label>Servicio</label><select><option>Corte Clásico — $7.500</option><option>Barba — $5.000</option><option>Corte + Barba — $11.500</option><option>Fade + Barba — $14.000</option></select></div>
+      <div class="fg"><label>Monto Total</label><input type="number" value="7500"></div>
     </div>
-    <div class="form-group" style="margin-bottom:11px"><label>Propina</label><input type="number" placeholder="0"></div>
-    <div class="form-group" style="margin-bottom:11px">
+    <div class="fg" style="margin-bottom:12px"><label>Propina</label><input type="number" placeholder="0"></div>
+    <div class="fg" style="margin-bottom:12px">
       <label>Método de Pago</label>
       <div class="pay-split">
-        <div class="pay-method selected" onclick="selectPay(this)">💵 Efectivo</div>
-        <div class="pay-method" onclick="selectPay(this)">💳 Tarjeta</div>
-        <div class="pay-method" onclick="selectPay(this)">📱 Transfer.</div>
-        <div class="pay-method" onclick="selectPay(this)">🔀 Mixto</div>
+        <div class="pay-m selected" onclick="selectPay(this)">💵 Efectivo</div>
+        <div class="pay-m" onclick="selectPay(this)">💳 Tarjeta</div>
+        <div class="pay-m" onclick="selectPay(this)">📱 Transfer.</div>
+        <div class="pay-m" onclick="selectPay(this)">🔀 Mixto</div>
       </div>
     </div>
-    <div id="pago-mixto" style="display:none;margin-bottom:11px">
+    <div id="pago-mixto" style="display:none;margin-bottom:12px">
       <div class="form-grid">
-        <div class="form-group"><label>Efectivo</label><input type="number" placeholder="0"></div>
-        <div class="form-group"><label>Tarjeta / Transfer.</label><input type="number" placeholder="0"></div>
+        <div class="fg"><label>Efectivo</label><input type="number" placeholder="0"></div>
+        <div class="fg"><label>Tarjeta / Transfer.</label><input type="number" placeholder="0"></div>
       </div>
     </div>
     <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="closeModal('modal-cobro')">✓ Registrar Cobro</button>
@@ -743,18 +946,18 @@
     <button class="modal-close" onclick="closeModal('modal-turno')">✕</button>
     <div class="modal-title">📅 Nuevo Turno</div>
     <div class="form-grid">
-      <div class="form-group"><label>Cliente</label><input type="text" placeholder="Nombre"></div>
-      <div class="form-group"><label>Teléfono</label><input type="text" placeholder="11-XXXX-XXXX"></div>
+      <div class="fg"><label>Cliente</label><input type="text" placeholder="Nombre"></div>
+      <div class="fg"><label>Teléfono</label><input type="text" placeholder="11-XXXX-XXXX"></div>
     </div>
     <div class="form-grid">
-      <div class="form-group"><label>Fecha</label><input type="date"></div>
-      <div class="form-group"><label>Hora</label><input type="time"></div>
+      <div class="fg"><label>Fecha</label><input type="date"></div>
+      <div class="fg"><label>Hora</label><input type="time"></div>
     </div>
     <div class="form-grid">
-      <div class="form-group"><label>Servicio</label><select><option>Corte Clásico</option><option>Barba</option><option>Corte + Barba</option><option>Fade + Barba</option></select></div>
-      <div class="form-group"><label>Empleado</label><select><option>Marcos Rodríguez</option><option>Lucas Pereyra</option><option>Tomás García</option></select></div>
+      <div class="fg"><label>Servicio</label><select><option>Corte Clásico</option><option>Barba</option><option>Corte + Barba</option><option>Fade + Barba</option></select></div>
+      <div class="fg"><label>Empleado</label><select><option>Marcos Rodríguez</option><option>Lucas Pereyra</option><option>Tomás García</option></select></div>
     </div>
-    <div class="form-group" style="margin-bottom:13px"><label>Notas</label><textarea rows="2" placeholder="Observaciones..."></textarea></div>
+    <div class="fg" style="margin-bottom:14px"><label>Notas</label><textarea rows="2" placeholder="Observaciones..."></textarea></div>
     <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="closeModal('modal-turno')">✓ Guardar Turno</button>
   </div>
 </div>
@@ -763,11 +966,11 @@
   <div class="modal">
     <button class="modal-close" onclick="closeModal('modal-egreso')">✕</button>
     <div class="modal-title">📤 Registrar Egreso</div>
-    <div class="form-group" style="margin-bottom:11px"><label>Categoría</label><select><option>Alquiler</option><option>Insumos</option><option>Servicios</option><option>Marketing</option><option>Sueldos</option><option>Otros</option></select></div>
-    <div class="form-group" style="margin-bottom:11px"><label>Descripción</label><input type="text" placeholder="Ej: Compra de insumos"></div>
+    <div class="fg" style="margin-bottom:12px"><label>Categoría</label><select><option>Alquiler</option><option>Insumos</option><option>Servicios</option><option>Marketing</option><option>Sueldos</option><option>Otros</option></select></div>
+    <div class="fg" style="margin-bottom:12px"><label>Descripción</label><input type="text" placeholder="Ej: Compra de insumos"></div>
     <div class="form-grid">
-      <div class="form-group"><label>Monto</label><input type="number" placeholder="0"></div>
-      <div class="form-group"><label>Método</label><select><option>Efectivo</option><option>Tarjeta</option><option>Transferencia</option></select></div>
+      <div class="fg"><label>Monto</label><input type="number" placeholder="0"></div>
+      <div class="fg"><label>Método</label><select><option>Efectivo</option><option>Tarjeta</option><option>Transferencia</option></select></div>
     </div>
     <button class="btn btn-primary" style="width:100%;margin-top:6px;justify-content:center" onclick="closeModal('modal-egreso')">✓ Registrar Egreso</button>
   </div>
@@ -778,17 +981,14 @@
     <button class="modal-close" onclick="closeModal('modal-empleado')">✕</button>
     <div class="modal-title">👤 Agregar Empleado</div>
     <div class="form-grid">
-      <div class="form-group"><label>Nombre</label><input type="text" placeholder="Nombre completo"></div>
-      <div class="form-group"><label>Rol</label><select><option>Barbero</option><option>Barbero Senior</option><option>Encargado</option></select></div>
+      <div class="fg"><label>Nombre</label><input type="text" placeholder="Nombre completo"></div>
+      <div class="fg"><label>Rol</label><select><option>Barbero</option><option>Barbero Senior</option><option>Encargado</option></select></div>
     </div>
     <div class="form-grid">
-      <div class="form-group"><label>Usuario</label><input type="text" placeholder="nombre.apellido"></div>
-      <div class="form-group"><label>% Comisión</label><input type="number" value="40"></div>
+      <div class="fg"><label>Usuario</label><input type="text" placeholder="nombre.apellido"></div>
+      <div class="fg"><label>% Comisión</label><input type="number" value="40"></div>
     </div>
-    <div class="form-group" style="margin-bottom:13px">
-      <label>Contraseña inicial</label>
-      <div class="input-pw-wrap"><input type="password" placeholder="••••••••"><button class="pw-toggle" onclick="togglePwModal(this)" tabindex="-1">👁</button></div>
-    </div>
+    <div class="fg" style="margin-bottom:14px"><label>Contraseña inicial</label><input type="password" placeholder="••••••••"></div>
     <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="closeModal('modal-empleado')">✓ Guardar</button>
   </div>
 </div>
@@ -797,12 +997,12 @@
   <div class="modal">
     <button class="modal-close" onclick="closeModal('modal-servicio')">✕</button>
     <div class="modal-title">✂️ Agregar Servicio</div>
-    <div class="form-group" style="margin-bottom:11px"><label>Nombre</label><input type="text" placeholder="Ej: Corte + Barba"></div>
+    <div class="fg" style="margin-bottom:12px"><label>Nombre</label><input type="text" placeholder="Ej: Corte + Barba"></div>
     <div class="form-grid">
-      <div class="form-group"><label>Precio</label><input type="number" placeholder="0"></div>
-      <div class="form-group"><label>Duración (min)</label><input type="number" placeholder="30"></div>
+      <div class="fg"><label>Precio</label><input type="number" placeholder="0"></div>
+      <div class="fg"><label>Duración (min)</label><input type="number" placeholder="30"></div>
     </div>
-    <div class="form-group" style="margin-bottom:13px"><label>Descripción</label><textarea rows="2" placeholder="Descripción..."></textarea></div>
+    <div class="fg" style="margin-bottom:14px"><label>Descripción</label><textarea rows="2" placeholder="Descripción..."></textarea></div>
     <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="closeModal('modal-servicio')">✓ Guardar</button>
   </div>
 </div>
@@ -811,228 +1011,202 @@
   <div class="modal">
     <button class="modal-close" onclick="closeModal('modal-producto')">✕</button>
     <div class="modal-title">📦 Agregar Producto</div>
-    <div class="form-group" style="margin-bottom:11px"><label>Nombre</label><input type="text" placeholder="Nombre del producto"></div>
+    <div class="fg" style="margin-bottom:12px"><label>Nombre</label><input type="text" placeholder="Nombre del producto"></div>
     <div class="form-grid">
-      <div class="form-group"><label>Categoría</label><select><option>Cera/Pomada</option><option>Cabello</option><option>Barba</option><option>Herramientas</option></select></div>
-      <div class="form-group"><label>Precio de Venta</label><input type="number" placeholder="0"></div>
+      <div class="fg"><label>Categoría</label><select><option>Cera/Pomada</option><option>Cabello</option><option>Barba</option><option>Herramientas</option></select></div>
+      <div class="fg"><label>Precio de Venta</label><input type="number" placeholder="0"></div>
     </div>
     <div class="form-grid">
-      <div class="form-group"><label>Stock Inicial</label><input type="number" placeholder="0"></div>
-      <div class="form-group"><label>Stock Mínimo</label><input type="number" placeholder="2"></div>
+      <div class="fg"><label>Stock Inicial</label><input type="number" placeholder="0"></div>
+      <div class="fg"><label>Stock Mínimo</label><input type="number" placeholder="2"></div>
     </div>
     <button class="btn btn-primary" style="width:100%;margin-top:6px;justify-content:center" onclick="closeModal('modal-producto')">✓ Guardar</button>
   </div>
 </div>
 
 <script>
-// ── USUARIOS (en la base de datos esto vendrá de Supabase) ──
 var USERS = {
-  'admin':    { pass: 'admin123',  role: 'admin',    name: 'Administrador', avatar: '👑' },
-  'empleado': { pass: 'emp123',    role: 'empleado', name: 'Empleado',      avatar: '✂️' },
-  'marcos':   { pass: 'marcos123', role: 'empleado', name: 'Marcos R.',     avatar: '💈' },
-  'lucas':    { pass: 'lucas123',  role: 'empleado', name: 'Lucas P.',      avatar: '✂️' },
-  'tomas':    { pass: 'tomas123',  role: 'empleado', name: 'Tomás G.',      avatar: '🪒' }
+  'admin':    {pass:'admin123', role:'admin',    name:'Administrador', avatar:'👑'},
+  'empleado': {pass:'emp123',   role:'empleado', name:'Empleado',      avatar:'✂️'},
+  'marcos':   {pass:'marcos123',role:'empleado', name:'Marcos R.',     avatar:'💈'},
+  'lucas':    {pass:'lucas123', role:'empleado', name:'Lucas P.',      avatar:'✂️'},
+  'tomas':    {pass:'tomas123', role:'empleado', name:'Tomás G.',      avatar:'🪒'}
 };
 
-var currentRole = 'admin';
-var currentUser = null;
-var currentPeriod = 'dia';
-var currentView   = 'local';
-var currentEmp    = 'marcos';
+var currentRole='admin', currentUser=null, currentPeriod='dia', currentView='local', currentEmp='marcos';
 
-var empData = {
-  marcos:{ name:'Marcos Rodríguez', dia:{ing:'$18.000',serv:'3',sueldo:'$7.200',prop:'$1.500',total:'$8.700'}, mes:{ing:'$210.000',serv:'68',sueldo:'$84.000',prop:'$28.000',total:'$112.000'}, anio:{ing:'$630.000',serv:'204',sueldo:'$252.000',prop:'$84.000',total:'$336.000'} },
-  lucas: { name:'Lucas Pereyra',    dia:{ing:'$14.500',serv:'2',sueldo:'$5.800',prop:'$500',total:'$6.300'},   mes:{ing:'$168.000',serv:'55',sueldo:'$67.200',prop:'$18.000',total:'$85.200'},   anio:{ing:'$504.000',serv:'165',sueldo:'$201.600',prop:'$54.000',total:'$255.600'} },
-  tomas: { name:'Tomás García',     dia:{ing:'$16.000',serv:'3',sueldo:'$6.400',prop:'$1.000',total:'$7.400'}, mes:{ing:'$185.000',serv:'63',sueldo:'$74.000',prop:'$22.000',total:'$96.000'},   anio:{ing:'$555.000',serv:'189',sueldo:'$222.000',prop:'$66.000',total:'$288.000'} }
+var empData={
+  marcos:{name:'Marcos Rodríguez',dia:{ing:'$18.000',serv:'3',sueldo:'$7.200',prop:'$1.500',total:'$8.700'},mes:{ing:'$210.000',serv:'68',sueldo:'$84.000',prop:'$28.000',total:'$112.000'},anio:{ing:'$630.000',serv:'204',sueldo:'$252.000',prop:'$84.000',total:'$336.000'}},
+  lucas: {name:'Lucas Pereyra',   dia:{ing:'$14.500',serv:'2',sueldo:'$5.800',prop:'$500',total:'$6.300'},  mes:{ing:'$168.000',serv:'55',sueldo:'$67.200',prop:'$18.000',total:'$85.200'},  anio:{ing:'$504.000',serv:'165',sueldo:'$201.600',prop:'$54.000',total:'$255.600'}},
+  tomas: {name:'Tomás García',    dia:{ing:'$16.000',serv:'3',sueldo:'$6.400',prop:'$1.000',total:'$7.400'},mes:{ing:'$185.000',serv:'63',sueldo:'$74.000',prop:'$22.000',total:'$96.000'},  anio:{ing:'$555.000',serv:'189',sueldo:'$222.000',prop:'$66.000',total:'$288.000'}}
 };
-var periodLabel = {dia:'Hoy',mes:'Este Mes',anio:'Este Año'};
+var periodLabel={dia:'Hoy',mes:'Este Mes',anio:'Este Año'};
 
 // FECHA
-var d = new Date();
-document.getElementById('today-date').textContent = d.toLocaleDateString('es-AR',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
-var todayVal = d.toISOString().split('T')[0];
-document.getElementById('filter-dia').value = todayVal;
+var d=new Date();
+var el=document.getElementById('today-date');
+if(el) el.textContent=d.toLocaleDateString('es-AR',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+var todayVal=d.toISOString().split('T')[0];
+var fdi=document.getElementById('filter-dia'); if(fdi) fdi.value=todayVal;
 
-// PW TOGGLE login
-function togglePw() {
-  var inp = document.getElementById('login-pass');
-  inp.type = inp.type === 'password' ? 'text' : 'password';
+// BAR CHART
+var chartData=[
+  {m:'Ene',v:980},  {m:'Feb',v:1050}, {m:'Mar',v:1245},
+  {m:'Abr',v:0},    {m:'May',v:0},    {m:'Jun',v:0},    {m:'Jul',v:0}
+];
+var maxV=Math.max.apply(null, chartData.map(function(x){return x.v||1;}));
+var currentMonth=d.getMonth();
+var bc=document.getElementById('bar-chart');
+if(bc){
+  chartData.forEach(function(item,i){
+    var pct=item.v?Math.round((item.v/maxV)*100):0;
+    var isActive=(i===currentMonth);
+    bc.innerHTML+='<div class="bar-group">'+
+      '<div class="bar-wrap">'+
+        '<div class="bar'+(isActive?' active':'')+'" style="height:'+(pct||4)+'%"></div>'+
+      '</div>'+
+      '<div class="bar-label">'+item.m+'</div>'+
+    '</div>';
+  });
 }
-function togglePwModal(btn) {
-  var inp = btn.previousElementSibling;
-  inp.type = inp.type === 'password' ? 'text' : 'password';
-}
+
+// PW TOGGLE
+function togglePw(){var i=document.getElementById('login-pass');i.type=i.type==='password'?'text':'password';}
 
 // LOGIN
-function doLogin() {
-  var user = document.getElementById('login-user').value.trim().toLowerCase();
-  var pass = document.getElementById('login-pass').value;
-  var err  = document.getElementById('login-error');
-  if (!USERS[user] || USERS[user].pass !== pass) {
-    err.style.display = 'block';
-    document.getElementById('login-pass').value = '';
-    return;
-  }
-  err.style.display = 'none';
-  currentUser = USERS[user];
-  currentRole = currentUser.role;
-  document.getElementById('login-screen').style.display = 'none';
-  applyRole();
-  goTo('dashboard');
+function doLogin(){
+  var user=document.getElementById('login-user').value.trim().toLowerCase();
+  var pass=document.getElementById('login-pass').value;
+  var err=document.getElementById('login-error');
+  if(!USERS[user]||USERS[user].pass!==pass){err.style.display='block';document.getElementById('login-pass').value='';return;}
+  err.style.display='none';
+  currentUser=USERS[user];currentRole=currentUser.role;
+  document.getElementById('login-screen').style.display='none';
+  applyRole(); goTo('dashboard');
+}
+function doLogout(){
+  document.getElementById('login-screen').style.display='flex';
+  document.getElementById('login-user').value='';document.getElementById('login-pass').value='';
+  document.getElementById('login-error').style.display='none';
+}
+function applyRole(){
+  var isAdmin=currentRole==='admin';
+  var name=currentUser?currentUser.name:'Admin';
+  var avatar=currentUser?currentUser.avatar:'👑';
+  document.getElementById('sb-avatar').textContent=avatar;
+  document.getElementById('sb-name').textContent=name;
+  document.getElementById('sb-role').textContent=isAdmin?'Administrador':'Empleado';
+  document.getElementById('tb-avatar').textContent=avatar;
+  document.getElementById('tb-name').textContent=name;
+  var pill=document.getElementById('tb-role-pill');
+  pill.textContent=isAdmin?'Administrador':'Empleado';
+  pill.className=isAdmin?'topbar-role-pill':'topbar-role-pill emp';
+  var adminEls=document.querySelectorAll('.admin-only');
+  for(var i=0;i<adminEls.length;i++) adminEls[i].style.display=isAdmin?'':'none';
 }
 
-function doLogout() {
-  document.getElementById('login-screen').style.display = 'flex';
-  document.getElementById('login-user').value = '';
-  document.getElementById('login-pass').value = '';
-  document.getElementById('login-error').style.display = 'none';
-}
-
-function applyRole() {
-  var isAdmin = currentRole === 'admin';
-  var name    = currentUser ? currentUser.name   : 'Admin';
-  var avatar  = currentUser ? currentUser.avatar : '👑';
-  var roleLabel = isAdmin ? 'Administrador' : 'Empleado';
-
-  // Sidebar
-  document.getElementById('sb-avatar').textContent = avatar;
-  document.getElementById('sb-name').textContent   = name;
-  document.getElementById('sb-role').textContent   = roleLabel;
-
-  // Topbar
-  document.getElementById('tb-avatar').textContent    = avatar;
-  document.getElementById('tb-name').textContent      = name;
-  var badge = document.getElementById('tb-role-badge');
-  badge.textContent = roleLabel;
-  badge.className   = isAdmin ? 'topbar-role-badge' : 'topbar-role-badge emp';
-
-  // Mostrar/ocultar items admin-only en sidebar
-  var adminEls = document.querySelectorAll('.admin-only');
-  for (var i = 0; i < adminEls.length; i++) {
-    adminEls[i].style.display = isAdmin ? '' : 'none';
+// NAV
+var pageTitles={dashboard:'Dashboard',agenda:'Agenda',cobros:'Cobros',empleados:'Empleados',servicios:'Servicios',stock:'Stock',egresos:'Egresos',reportes:'Reportes'};
+function goTo(id){
+  var pages=document.querySelectorAll('.page');
+  for(var i=0;i<pages.length;i++) pages[i].classList.remove('active');
+  var pg=document.getElementById('page-'+id);
+  if(pg) pg.classList.add('active');
+  if(id==='reportes'){
+    var dn=document.getElementById('reportes-denied'),ct=document.getElementById('reportes-content');
+    if(currentRole!=='admin'){dn.style.display='flex';ct.style.display='none';}
+    else{dn.style.display='none';ct.style.display='block';}
   }
-}
-
-// NAVEGACIÓN
-var pageTitles = {dashboard:'Dashboard',agenda:'Agenda de Turnos',cobros:'Registro de Cobros',empleados:'Empleados',servicios:'Servicios',stock:'Stock',egresos:'Egresos',reportes:'Reportes'};
-
-function goTo(id) {
-  var pages = document.querySelectorAll('.page');
-  for (var i = 0; i < pages.length; i++) pages[i].classList.remove('active');
-  var pg = document.getElementById('page-' + id);
-  if (pg) pg.classList.add('active');
-  document.getElementById('page-title').textContent = pageTitles[id] || id;
-
-  // Control de acceso por sección
-  if (id === 'reportes') {
-    var denied  = document.getElementById('reportes-denied');
-    var content = document.getElementById('reportes-content');
-    if (currentRole !== 'admin') { denied.style.display='flex'; content.style.display='none'; }
-    else { denied.style.display='none'; content.style.display='block'; }
+  if(id==='empleados'){
+    var ed=document.getElementById('emp-denied'),ec=document.getElementById('emp-content');
+    if(currentRole!=='admin'){ed.style.display='flex';ec.style.display='none';}
+    else{ed.style.display='none';ec.style.display='block';}
   }
-  if (id === 'empleados') {
-    var empD = document.getElementById('emp-denied');
-    var empC = document.getElementById('emp-content');
-    if (currentRole !== 'admin') { empD.style.display='flex'; empC.style.display='none'; }
-    else { empD.style.display='none'; empC.style.display='block'; }
-  }
-
-  var items = document.querySelectorAll('.nav-item');
-  for (var j = 0; j < items.length; j++) {
-    var oc = items[j].getAttribute('onclick') || '';
-    if (oc.indexOf("'" + id + "'") !== -1) items[j].classList.add('active');
+  var items=document.querySelectorAll('.nav-item');
+  for(var j=0;j<items.length;j++){
+    var oc=items[j].getAttribute('onclick')||'';
+    if(oc.indexOf("'"+id+"'")!==-1) items[j].classList.add('active');
     else items[j].classList.remove('active');
   }
   closeSidebar();
 }
 
 // MODALS
-function openModal(id)  { document.getElementById(id).classList.add('open'); }
-function closeModal(id) { document.getElementById(id).classList.remove('open'); }
-var overlays = document.querySelectorAll('.modal-overlay');
-for (var oi = 0; oi < overlays.length; oi++) {
-  overlays[oi].addEventListener('click', function(e){ if(e.target===this) this.classList.remove('open'); });
-}
+function openModal(id){document.getElementById(id).classList.add('open');}
+function closeModal(id){document.getElementById(id).classList.remove('open');}
+var ovs=document.querySelectorAll('.modal-overlay');
+for(var oi=0;oi<ovs.length;oi++) ovs[oi].addEventListener('click',function(e){if(e.target===this)this.classList.remove('open');});
 
-// SIDEBAR MOBILE
-function toggleSidebar() {
-  document.getElementById('sidebar').classList.toggle('open');
-  document.getElementById('overlay').classList.toggle('open');
-}
-function closeSidebar() {
-  document.getElementById('sidebar').classList.remove('open');
-  document.getElementById('overlay').classList.remove('open');
-}
+// SIDEBAR
+function toggleSidebar(){document.getElementById('sidebar').classList.toggle('open');document.getElementById('overlay').classList.toggle('open');}
+function closeSidebar(){document.getElementById('sidebar').classList.remove('open');document.getElementById('overlay').classList.remove('open');}
 
-// PAY METHOD
-function selectPay(el) {
-  var ms = el.closest('.pay-split').querySelectorAll('.pay-method');
-  for (var i = 0; i < ms.length; i++) ms[i].classList.remove('selected');
+// PAY
+function selectPay(el){
+  var ms=el.closest('.pay-split').querySelectorAll('.pay-m');
+  for(var i=0;i<ms.length;i++) ms[i].classList.remove('selected');
   el.classList.add('selected');
-  document.getElementById('pago-mixto').style.display = el.textContent.indexOf('Mixto') !== -1 ? 'block' : 'none';
+  document.getElementById('pago-mixto').style.display=el.textContent.indexOf('Mixto')!==-1?'block':'none';
 }
 
-// TABS
-var tabGroups = document.querySelectorAll('.tabs');
-for (var tg = 0; tg < tabGroups.length; tg++) {
-  (function(group){
-    var tabs = group.querySelectorAll('.tab');
-    for (var ti = 0; ti < tabs.length; ti++) {
-      tabs[ti].addEventListener('click', function(){
-        var all = group.querySelectorAll('.tab');
-        for (var ai = 0; ai < all.length; ai++) all[ai].classList.remove('active');
-        this.classList.add('active');
-      });
-    }
-  })(tabGroups[tg]);
+// BOOKING TABS
+function setBookingTab(el,type){
+  var tabs=document.querySelectorAll('.tab-pill');
+  // reset only siblings
+  var parent=el.closest('.tabs-pill');
+  var sibs=parent.querySelectorAll('.tab-pill');
+  for(var i=0;i<sibs.length;i++) sibs[i].classList.remove('active');
+  el.classList.add('active');
 }
 
-// REPORT
-function setReportPeriod(period, el) {
-  currentPeriod = period;
-  document.getElementById('filter-dia').style.display  = period==='dia'  ? 'block':'none';
-  document.getElementById('filter-mes').style.display  = period==='mes'  ? 'block':'none';
-  document.getElementById('filter-anio').style.display = period==='anio' ? 'block':'none';
-  var rpTabs = document.querySelectorAll('#rp-tabs .tab');
-  for (var i = 0; i < rpTabs.length; i++) rpTabs[i].classList.remove('active');
-  if (el) el.classList.add('active');
+// REPORT PERIOD
+function setReportPeriod(period,el){
+  currentPeriod=period;
+  document.getElementById('filter-dia').style.display=period==='dia'?'block':'none';
+  document.getElementById('filter-mes').style.display=period==='mes'?'block':'none';
+  document.getElementById('filter-anio').style.display=period==='anio'?'block':'none';
+  var tabs=document.querySelectorAll('#rp-tabs .tab-pill');
+  for(var i=0;i<tabs.length;i++) tabs[i].classList.remove('active');
+  if(el) el.classList.add('active');
   updateReportView();
 }
-function setReportView(view, el) {
-  currentView = view;
-  var empTabs = document.querySelectorAll('.emp-tab');
-  for (var i = 0; i < empTabs.length; i++) empTabs[i].classList.remove('active');
-  if (el) el.classList.add('active');
-  if (view !== 'local') currentEmp = view;
+
+// REPORT VIEW
+function setReportView(view,el){
+  currentView=view;
+  var btns=document.querySelectorAll('#view-tabs button');
+  for(var i=0;i<btns.length;i++){btns[i].className='btn btn-outline btn-sm';}
+  if(el) el.className='btn btn-primary btn-sm';
+  if(view!=='local') currentEmp=view;
   updateReportView();
 }
-function updateReportView() {
-  var isLocal = currentView === 'local';
-  document.getElementById('report-local').style.display    = isLocal ? 'block':'none';
-  document.getElementById('report-empleado').style.display = isLocal ? 'none':'block';
-  if (isLocal) {
-    document.getElementById('rep-dia-local').style.display  = currentPeriod==='dia'  ? 'block':'none';
-    document.getElementById('rep-mes-local').style.display  = currentPeriod==='mes'  ? 'block':'none';
-    document.getElementById('rep-anio-local').style.display = currentPeriod==='anio' ? 'block':'none';
+
+function updateReportView(){
+  var isLocal=currentView==='local';
+  document.getElementById('report-local').style.display=isLocal?'block':'none';
+  document.getElementById('report-empleado').style.display=isLocal?'none':'block';
+  if(isLocal){
+    document.getElementById('rep-dia-local').style.display=currentPeriod==='dia'?'block':'none';
+    document.getElementById('rep-mes-local').style.display=currentPeriod==='mes'?'block':'none';
+    document.getElementById('rep-anio-local').style.display=currentPeriod==='anio'?'block':'none';
   } else {
-    var data = empData[currentEmp][currentPeriod];
-    document.getElementById('emp-period-label').textContent = periodLabel[currentPeriod];
-    document.getElementById('emp-stat-ing').textContent     = data.ing;
-    document.getElementById('emp-stat-serv').textContent    = data.serv;
-    document.getElementById('emp-stat-sueldo').textContent  = data.sueldo;
-    document.getElementById('emp-stat-prop').textContent    = data.prop;
-    document.getElementById('emp-cmp-ing').textContent      = data.ing;
-    document.getElementById('emp-sum-ing').textContent      = data.ing;
-    document.getElementById('emp-sum-prop').textContent     = data.prop;
-    document.getElementById('emp-sum-total').textContent    = data.total;
+    var data=empData[currentEmp][currentPeriod];
+    document.getElementById('emp-period-label').textContent=periodLabel[currentPeriod];
+    document.getElementById('emp-stat-ing').textContent=data.ing;
+    document.getElementById('emp-stat-serv').textContent=data.serv;
+    document.getElementById('emp-stat-sueldo').textContent=data.sueldo;
+    document.getElementById('emp-stat-prop').textContent=data.prop;
+    document.getElementById('emp-sum-ing').textContent=data.ing;
+    document.getElementById('emp-sum-prop').textContent=data.prop;
+    document.getElementById('emp-sum-total').textContent=data.total;
   }
 }
 
 // PDF
-function generatePDF() {
-  try {
-    var jsPDF = window.jspdf.jsPDF;
-    var doc = new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
+function generatePDF(){
+  try{
+    var jsPDF=window.jspdf.jsPDF;
+    var doc=new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
     var W=210,M=18,y=0;
     doc.setFillColor(27,58,107);doc.rect(0,0,W,36,'F');
     doc.setTextColor(255,255,255);doc.setFontSize(20);doc.setFont('helvetica','bold');doc.text('BarberPro',M,15);
@@ -1048,63 +1222,39 @@ function generatePDF() {
     function sum(label,val,isT,r,g,b){doc.setDrawColor(214,223,240);doc.line(M,y,W-M,y);y+=6;doc.setFontSize(9);doc.setFont('helvetica',isT?'bold':'normal');if(isT){doc.setTextColor(27,58,107);}else{doc.setTextColor(120,135,160);}doc.text(label,M+3,y);doc.setFont('helvetica','bold');if(r!==undefined){doc.setTextColor(r,g,b);}else if(isT){doc.setTextColor(27,58,107);}else{doc.setTextColor(120,135,160);}doc.text(val,W-M-3,y,{align:'right'});y+=3;}
     var bw=(W-2*M-6)/4;
     if(currentView==='local'){
-      if(currentPeriod==='dia'){
-        box('Ingresos','$48.500',27,58,107,M,bw);box('Egresos','$8.200',192,57,43,M+bw+2,bw);box('Ganancia','$40.300',30,140,90,M+2*(bw+2),bw);box('Servicios','8',27,58,107,M+3*(bw+2),bw);y+=25;
-        sec('Ingresos por Metodo');
-        var r1=[['Metodo','Monto'],['Efectivo','$22.000'],['Tarjeta','$17.000'],['Transferencia','$9.500']];
-        for(var i=0;i<r1.length;i++){row(r1[i],[80,50],y+2,i===0);if(i>0){doc.setDrawColor(230,235,245);doc.line(M,y-2,W-M,y-2);}y+=7;}y+=4;
-        sec('Detalle por Empleado');
-        var ec=['Empleado','Serv.','Ingresos','Propinas','Sueldo 40%','Total'],ew=[45,15,28,22,28,22];
-        row(ec,ew,y+2,true);y+=10;
-        var er=[['Marcos Rodriguez','3','$18.000','$1.500','$7.200','$8.700'],['Lucas Pereyra','2','$14.500','$500','$5.800','$6.300'],['Tomas Garcia','3','$16.000','$1.000','$6.400','$7.400']];
-        for(var j=0;j<er.length;j++){doc.setDrawColor(230,235,245);doc.line(M,y-4,W-M,y-4);row(er[j],ew,y+2,false);y+=8;}y+=6;
-        sec('Resumen');sum('Total Ingresos','$48.500',false);sum('Total Egresos','-$8.200',false,192,57,43);sum('Sueldos','-$19.400',false);sum('Propinas','-$3.000',false);sum('Ganancia del Salon','$17.900',true,30,140,90);
-      } else if(currentPeriod==='mes'){
-        box('Ingresos','$1.245.000',27,58,107,M,bw);box('Egresos','$94.500',192,57,43,M+bw+2,bw);box('Ganancia','$1.150.500',30,140,90,M+2*(bw+2),bw);box('Servicios','186',27,58,107,M+3*(bw+2),bw);y+=25;
-        sec('Resumen por Empleado');
-        var mc=['Empleado','Serv.','Ingresos','Propinas','Sueldo'],mw=[50,15,32,25,30];
-        row(mc,mw,y+2,true);y+=10;
-        var mr=[['Marcos Rodriguez','68','$480.000','$28.000','$220.000'],['Lucas Pereyra','55','$390.000','$18.000','$174.000'],['Tomas Garcia','63','$375.000','$22.000','$172.000']];
-        for(var k=0;k<mr.length;k++){doc.setDrawColor(230,235,245);doc.line(M,y-4,W-M,y-4);row(mr[k],mw,y+2,false);y+=8;}y+=6;
-        sec('Comparativa');sum('Marzo 2026','$1.245.000',false);sum('Febrero 2026','$1.050.000',false);sum('Variacion','+18.6%',true,30,140,90);
-      } else {
-        box('Ingresos','$3.810.000',27,58,107,M,bw);box('Egresos','$285.000',192,57,43,M+bw+2,bw);box('Ganancia','$3.525.000',30,140,90,M+2*(bw+2),bw);box('Mejor Mes','Marzo',27,58,107,M+3*(bw+2),bw);y+=25;
-        sec('Ingresos por Mes');
-        var ac=['Mes','Ingresos','Servicios'],aw=[60,60,40];
-        row(ac,aw,y+2,true);y+=10;
-        var ar=[['Enero','$980.000','142'],['Febrero','$1.050.000','158'],['Marzo','$1.245.000','186'],['Abr-Dic','Pendiente','—']];
-        for(var l=0;l<ar.length;l++){doc.setDrawColor(230,235,245);doc.line(M,y-4,W-M,y-4);row(ar[l],aw,y+2,false);y+=7;}y+=6;
-        sec('Proyeccion');sum('Acumulado Ene-Mar','$3.275.000',false);sum('Promedio mensual','$1.091.667',false);sum('Proyeccion 12 meses','$13.100.000',true,30,140,90);
-      }
+      box('Ingresos','$48.500',27,58,107,M,bw);box('Egresos','$8.200',192,57,43,M+bw+2,bw);box('Ganancia','$40.300',30,140,90,M+2*(bw+2),bw);box('Servicios','8',27,58,107,M+3*(bw+2),bw);y+=25;
+      sec('Detalle por Empleado');
+      var ec=['Empleado','Serv.','Ingresos','Propinas','Sueldo 40%','Total'],ew=[45,15,28,22,28,22];
+      row(ec,ew,y+2,true);y+=10;
+      var er=[['Marcos Rodriguez','3','$18.000','$1.500','$7.200','$8.700'],['Lucas Pereyra','2','$14.500','$500','$5.800','$6.300'],['Tomas Garcia','3','$16.000','$1.000','$6.400','$7.400']];
+      for(var j=0;j<er.length;j++){doc.setDrawColor(230,235,245);doc.line(M,y-4,W-M,y-4);row(er[j],ew,y+2,false);y+=8;}y+=6;
+      sec('Resumen');sum('Total Ingresos','$48.500',false);sum('Total Egresos','-$8.200',false,192,57,43);sum('Sueldos','-$19.400',false);sum('Propinas','-$3.000',false);sum('Ganancia del Salon','$17.900',true,30,140,90);
     } else {
       var emp=empData[currentEmp],data=emp[currentPeriod];
       box('Ingresos',data.ing,27,58,107,M,bw);box('Servicios',data.serv,27,58,107,M+bw+2,bw);box('Sueldo',data.sueldo,30,140,90,M+2*(bw+2),bw);box('Propinas',data.prop,27,58,107,M+3*(bw+2),bw);y+=25;
-      sec('Historial — '+emp.name);
-      var hc=['Hora','Cliente','Servicio','Monto','Propina'],hw=[20,40,50,25,25];
-      row(hc,hw,y+2,true);y+=10;
-      var hr=[['09:00','Ariel F.','Corte Clasico','$7.500','$500'],['11:00','Pablo N.','Fade + Barba','$14.000','—'],['13:30','Ramiro S.','Corte + Barba','$11.500','$1.000']];
-      for(var m=0;m<hr.length;m++){doc.setDrawColor(230,235,245);doc.line(M,y-4,W-M,y-4);row(hr[m],hw,y+2,false);y+=8;}y+=6;
-      sec('Liquidacion');sum('Total facturado',data.ing,false);sum('Propinas',data.prop,false);sum('Total a cobrar',data.total,true,30,140,90);
+      sec('Liquidacion — '+emp.name);
+      sum('Total facturado',data.ing,false);sum('Propinas',data.prop,false);sum('Total a cobrar',data.total,true,30,140,90);
     }
     var pH=doc.internal.pageSize.getHeight();
     doc.setFillColor(27,58,107);doc.rect(0,pH-13,W,13,'F');
     doc.setFontSize(8);doc.setFont('helvetica','normal');doc.setTextColor(200,210,235);
     doc.text('BarberPro — Sistema de Gestion Profesional',M,pH-4);
     doc.text('Generado: '+new Date().toLocaleString('es-AR'),W-M,pH-4,{align:'right'});
-    var empN=empData[currentEmp]?empData[currentEmp].name.replace(/ /g,'_'):'emp';
-    doc.save('BarberPro_'+(currentView==='local'?'Local':empN)+'_'+currentPeriod+'_'+todayVal+'.pdf');
-  } catch(e){alert('Error generando PDF. Verificá tu conexión.');console.error(e);}
+    doc.save('BarberPro_'+currentPeriod+'_'+todayVal+'.pdf');
+  }catch(e){alert('Error generando PDF.');console.error(e);}
 }
 
 // CALENDARIO
-var calDays=document.getElementById('cal-days');
-var yr=d.getFullYear(),mo=d.getMonth();
-var fd=new Date(yr,mo,1).getDay(),dim=new Date(yr,mo+1,0).getDate();
-var tDays=[3,5,7,10,12,15,17,20,22,25,d.getDate()];
-for(var fi=0;fi<fd;fi++) calDays.innerHTML+='<div></div>';
-for(var di=1;di<=dim;di++){
-  var isT=di===d.getDate(),hasT=tDays.indexOf(di)!==-1;
-  calDays.innerHTML+='<div class="cal-day'+(isT?' today':'')+(hasT?' has-turns':'')+'" onclick="goTo(\'agenda\')"><div class="cal-day-num">'+di+'</div></div>';
+var cd=document.getElementById('cal-days');
+if(cd){
+  var yr=d.getFullYear(),mo=d.getMonth();
+  var fd=new Date(yr,mo,1).getDay(),dim=new Date(yr,mo+1,0).getDate();
+  var tDays=[3,5,7,10,12,15,17,20,22,25,d.getDate()];
+  for(var fi=0;fi<fd;fi++) cd.innerHTML+='<div></div>';
+  for(var di=1;di<=dim;di++){
+    var isT=di===d.getDate(),hasT=tDays.indexOf(di)!==-1;
+    cd.innerHTML+='<div class="cal-day'+(isT?' today':'')+(hasT?' has-t':'')+'" onclick="goTo(\'agenda\')"><div class="cal-day-num">'+di+'</div></div>';
+  }
 }
 </script>
 </body>
