@@ -299,6 +299,55 @@ tr:hover td{background:var(--blue-faint);}
 #overlay{display:none;position:fixed;inset:0;background:rgba(10,20,45,.3);z-index:90;backdrop-filter:blur(2px);}
 #overlay.open{display:block;}
 
+/* ── SETTINGS ── */
+.cfg-tabs{display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:28px;}
+.cfg-tab{padding:10px 20px;cursor:pointer;font-size:13px;font-weight:600;color:var(--text-light);border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .18s;}
+.cfg-tab:hover{color:var(--text);}
+.cfg-tab.active{color:var(--blue);border-bottom-color:var(--blue);}
+.cfg-panel{display:none;}
+.cfg-panel.active{display:block;}
+.cfg-section{background:var(--white);border-radius:var(--radius);border:1px solid var(--border);box-shadow:var(--shadow);margin-bottom:20px;overflow:hidden;}
+.cfg-section-header{padding:18px 22px 16px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.cfg-section-title{font-size:14px;font-weight:700;color:var(--text);letter-spacing:-.2px;}
+.cfg-section-sub{font-size:12px;color:var(--text-light);margin-top:2px;}
+.cfg-body{padding:20px 22px;}
+.cfg-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--border);}
+.cfg-row:last-child{border-bottom:none;}
+.cfg-row-label{font-size:13px;font-weight:600;color:var(--text);}
+.cfg-row-sub{font-size:11px;color:var(--text-light);margin-top:2px;}
+.cfg-row-control{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+.color-swatch{width:34px;height:34px;border-radius:9px;border:2px solid var(--border);cursor:pointer;transition:all .18s;}
+.color-swatch:hover{transform:scale(1.1);border-color:var(--accent);}
+.color-input{width:0;height:0;opacity:0;position:absolute;}
+.color-label{font-size:12px;font-weight:600;color:var(--text-mid);font-family:monospace;background:var(--bg);padding:5px 10px;border-radius:7px;border:1px solid var(--border);}
+.cfg-select{background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:8px 13px;font-family:'Poppins',sans-serif;font-size:13px;font-weight:600;color:var(--text);outline:none;cursor:pointer;transition:all .2s;min-width:160px;}
+.cfg-select:focus{border-color:var(--accent);}
+.cfg-input{background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:8px 13px;font-family:'Poppins',sans-serif;font-size:13px;color:var(--text);outline:none;transition:all .2s;min-width:200px;}
+.cfg-input:focus{border-color:var(--accent);background:#fff;}
+/* toggle */
+.toggle{width:44px;height:24px;background:var(--border);border-radius:12px;position:relative;cursor:pointer;transition:background .2s;flex-shrink:0;}
+.toggle.on{background:var(--green);}
+.toggle::after{content:'';position:absolute;width:18px;height:18px;background:#fff;border-radius:50%;top:3px;left:3px;transition:transform .2s;box-shadow:0 1px 4px rgba(0,0,0,.15);}
+.toggle.on::after{transform:translateX(20px);}
+/* user table actions */
+.user-role-badge{padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;}
+.urb-admin{background:var(--blue-pale);color:var(--blue);}
+.urb-emp{background:var(--green-bg);color:var(--green);}
+/* preview box */
+.theme-preview{background:var(--bg);border:1.5px solid var(--border);border-radius:14px;padding:16px;display:flex;align-items:center;gap:14px;margin-top:14px;}
+.preview-sidebar-mock{width:44px;border-radius:9px;padding:8px 6px;display:flex;flex-direction:column;align-items:center;gap:6px;}
+.preview-dot{width:22px;height:5px;border-radius:3px;background:rgba(255,255,255,.3);}
+.preview-dot.active{background:#fff;width:26px;}
+.preview-content{flex:1;}
+.preview-card{border-radius:8px;padding:10px;margin-bottom:7px;}
+.preview-bar{height:7px;border-radius:4px;margin-bottom:5px;}
+/* color palette swatches */
+.palette-grid{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;}
+.palette-item{display:flex;flex-direction:column;align-items:center;gap:5px;cursor:pointer;}
+.palette-circle{width:34px;height:34px;border-radius:50%;border:3px solid transparent;transition:all .18s;box-shadow:0 2px 6px rgba(0,0,0,.12);}
+.palette-item.selected .palette-circle{border-color:var(--text);transform:scale(1.1);}
+.palette-item-label{font-size:9px;font-weight:600;color:var(--text-light);text-transform:uppercase;letter-spacing:.5px;}
+
 @media(max-width:768px){
   #sidebar{transform:translateX(-100%);}
   #sidebar.open{transform:translateX(0);}
@@ -375,12 +424,8 @@ tr:hover td{background:var(--blue-faint);}
   <div class="nav-group-label admin-only">Análisis</div>
   <div class="nav-item admin-only" onclick="goTo('reportes')"><span class="nav-ico">📋</span> Reportes</div>
 
-  <div class="sb-help">
-    <div class="sb-help-icon">💡</div>
-    <div class="sb-help-title">Base de datos</div>
-    <div class="sb-help-sub">Próxima etapa: datos reales con Supabase</div>
-    <button class="sb-help-btn">Ver hoja de ruta</button>
-  </div>
+  <div class="nav-group-label admin-only">Sistema</div>
+  <div class="nav-item admin-only" onclick="goTo('configuracion')"><span class="nav-ico">⚙️</span> Configuración</div>
 
   <div class="sb-logout" onclick="doLogout()">
     <span style="font-size:16px">⏻</span> Cerrar sesión
@@ -905,6 +950,386 @@ tr:hover td{background:var(--blue-faint);}
       </div>
     </div>
 
+    <!-- ══ CONFIGURACIÓN ══ -->
+    <div class="page" id="page-configuracion">
+      <div id="cfg-denied" style="display:none"><div class="access-denied"><div class="icon">🔒</div><h2>Acceso Restringido</h2><p>Solo el Administrador puede acceder a la configuración.</p></div></div>
+      <div id="cfg-content">
+        <div class="page-header">
+          <div class="page-header-left">
+            <div class="page-title">Configuración</div>
+            <div class="page-sub">Gestión del sistema y personalización</div>
+          </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="cfg-tabs">
+          <div class="cfg-tab active" onclick="setCfgTab('usuarios',this)">👥 Usuarios</div>
+          <div class="cfg-tab" onclick="setCfgTab('tema',this)">🎨 Tema & Apariencia</div>
+          <div class="cfg-tab" onclick="setCfgTab('negocio',this)">🏪 Datos del Negocio</div>
+          <div class="cfg-tab" onclick="setCfgTab('sistema',this)">⚙️ Sistema</div>
+        </div>
+
+        <!-- ── PANEL: USUARIOS ── -->
+        <div class="cfg-panel active" id="cfg-usuarios">
+          <div class="cfg-section">
+            <div class="cfg-section-header">
+              <div>
+                <div class="cfg-section-title">Usuarios del sistema</div>
+                <div class="cfg-section-sub">Gestioná quién tiene acceso y con qué permisos</div>
+              </div>
+              <button class="btn btn-primary btn-sm" onclick="openModal('modal-nuevo-usuario')">+ Nuevo Usuario</button>
+            </div>
+            <div class="cfg-body" style="padding:0">
+              <table style="margin-bottom:0">
+                <thead><tr><th>Usuario</th><th>Nombre</th><th>Rol</th><th>Comisión</th><th>Estado</th><th>Acciones</th></tr></thead>
+                <tbody id="users-table-body"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="cfg-section">
+            <div class="cfg-section-header">
+              <div>
+                <div class="cfg-section-title">Permisos por rol</div>
+                <div class="cfg-section-sub">Qué puede ver y hacer cada tipo de usuario</div>
+              </div>
+            </div>
+            <div class="cfg-body" style="padding:0">
+              <table style="margin-bottom:0">
+                <thead><tr><th>Sección</th><th style="text-align:center">👑 Admin</th><th style="text-align:center">✂️ Empleado</th></tr></thead>
+                <tbody>
+                  <tr><td>Dashboard</td><td style="text-align:center"><span class="badge b-green">✓ Sí</span></td><td style="text-align:center"><span class="badge b-green">✓ Sí</span></td></tr>
+                  <tr><td>Agenda</td><td style="text-align:center"><span class="badge b-green">✓ Sí</span></td><td style="text-align:center"><span class="badge b-green">✓ Sí</span></td></tr>
+                  <tr><td>Cobros</td><td style="text-align:center"><span class="badge b-green">✓ Sí</span></td><td style="text-align:center"><span class="badge b-green">✓ Sí</span></td></tr>
+                  <tr><td>Empleados</td><td style="text-align:center"><span class="badge b-green">✓ Sí</span></td><td style="text-align:center"><span class="badge b-red">✗ No</span></td></tr>
+                  <tr><td>Servicios</td><td style="text-align:center"><span class="badge b-green">✓ Sí</span></td><td style="text-align:center"><span class="badge b-green">✓ Sí</span></td></tr>
+                  <tr><td>Stock</td><td style="text-align:center"><span class="badge b-green">✓ Sí</span></td><td style="text-align:center"><span class="badge b-green">✓ Sí</span></td></tr>
+                  <tr><td>Egresos</td><td style="text-align:center"><span class="badge b-green">✓ Sí</span></td><td style="text-align:center"><span class="badge b-green">✓ Sí</span></td></tr>
+                  <tr><td>Reportes</td><td style="text-align:center"><span class="badge b-green">✓ Sí</span></td><td style="text-align:center"><span class="badge b-red">✗ No</span></td></tr>
+                  <tr><td>Configuración</td><td style="text-align:center"><span class="badge b-green">✓ Sí</span></td><td style="text-align:center"><span class="badge b-red">✗ No</span></td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── PANEL: TEMA ── -->
+        <div class="cfg-panel" id="cfg-tema">
+          <!-- Paletas rápidas -->
+          <div class="cfg-section">
+            <div class="cfg-section-header">
+              <div>
+                <div class="cfg-section-title">Paletas de color</div>
+                <div class="cfg-section-sub">Elegí una paleta predefinida o personalizá cada color</div>
+              </div>
+            </div>
+            <div class="cfg-body">
+              <div class="palette-grid" id="palette-grid">
+                <div class="palette-item selected" onclick="applyPalette('azul',this)">
+                  <div class="palette-circle" style="background:linear-gradient(135deg,#1B3A6B,#4C7EF0)"></div>
+                  <div class="palette-item-label">Azul Pro</div>
+                </div>
+                <div class="palette-item" onclick="applyPalette('verde',this)">
+                  <div class="palette-circle" style="background:linear-gradient(135deg,#0D4F3C,#1E8C5A)"></div>
+                  <div class="palette-item-label">Verde</div>
+                </div>
+                <div class="palette-item" onclick="applyPalette('negro',this)">
+                  <div class="palette-circle" style="background:linear-gradient(135deg,#111827,#374151)"></div>
+                  <div class="palette-item-label">Dark</div>
+                </div>
+                <div class="palette-item" onclick="applyPalette('rojo',this)">
+                  <div class="palette-circle" style="background:linear-gradient(135deg,#7B1D1D,#C53030)"></div>
+                  <div class="palette-item-label">Rojo</div>
+                </div>
+                <div class="palette-item" onclick="applyPalette('violeta',this)">
+                  <div class="palette-circle" style="background:linear-gradient(135deg,#4A1D96,#7C3AED)"></div>
+                  <div class="palette-item-label">Violeta</div>
+                </div>
+                <div class="palette-item" onclick="applyPalette('naranja',this)">
+                  <div class="palette-circle" style="background:linear-gradient(135deg,#92400E,#D97706)"></div>
+                  <div class="palette-item-label">Ámbar</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Colores individuales -->
+          <div class="cfg-section">
+            <div class="cfg-section-header">
+              <div>
+                <div class="cfg-section-title">Colores personalizados</div>
+                <div class="cfg-section-sub">Ajustá cada color de manera individual</div>
+              </div>
+              <button class="btn btn-outline btn-sm" onclick="resetColors()">↺ Restaurar</button>
+            </div>
+            <div class="cfg-body">
+              <div class="cfg-row">
+                <div><div class="cfg-row-label">Color principal</div><div class="cfg-row-sub">Sidebar, botones y encabezados</div></div>
+                <div class="cfg-row-control">
+                  <div class="color-swatch" id="swatch-blue" style="background:#1B3A6B" onclick="document.getElementById('pick-blue').click()"></div>
+                  <input type="color" class="color-input" id="pick-blue" value="#1B3A6B" oninput="applyColor('--blue',this.value,'swatch-blue','lbl-blue')">
+                  <span class="color-label" id="lbl-blue">#1B3A6B</span>
+                </div>
+              </div>
+              <div class="cfg-row">
+                <div><div class="cfg-row-label">Color de acento</div><div class="cfg-row-sub">Íconos activos y destacados</div></div>
+                <div class="cfg-row-control">
+                  <div class="color-swatch" id="swatch-accent" style="background:#4C7EF0" onclick="document.getElementById('pick-accent').click()"></div>
+                  <input type="color" class="color-input" id="pick-accent" value="#4C7EF0" oninput="applyColor('--accent',this.value,'swatch-accent','lbl-accent')">
+                  <span class="color-label" id="lbl-accent">#4C7EF0</span>
+                </div>
+              </div>
+              <div class="cfg-row">
+                <div><div class="cfg-row-label">Fondo del sistema</div><div class="cfg-row-sub">Color de fondo general</div></div>
+                <div class="cfg-row-control">
+                  <div class="color-swatch" id="swatch-bg" style="background:#F4F6FB" onclick="document.getElementById('pick-bg').click()"></div>
+                  <input type="color" class="color-input" id="pick-bg" value="#F4F6FB" oninput="applyColor('--bg',this.value,'swatch-bg','lbl-bg')">
+                  <span class="color-label" id="lbl-bg">#F4F6FB</span>
+                </div>
+              </div>
+              <div class="cfg-row">
+                <div><div class="cfg-row-label">Color del texto</div><div class="cfg-row-sub">Texto principal en todo el sistema</div></div>
+                <div class="cfg-row-control">
+                  <div class="color-swatch" id="swatch-text" style="background:#1A2540" onclick="document.getElementById('pick-text').click()"></div>
+                  <input type="color" class="color-input" id="pick-text" value="#1A2540" oninput="applyColor('--text',this.value,'swatch-text','lbl-text')">
+                  <span class="color-label" id="lbl-text">#1A2540</span>
+                </div>
+              </div>
+              <div class="cfg-row">
+                <div><div class="cfg-row-label">Color de éxito</div><div class="cfg-row-sub">Ingresos, confirmados, OK</div></div>
+                <div class="cfg-row-control">
+                  <div class="color-swatch" id="swatch-green" style="background:#1E8C5A" onclick="document.getElementById('pick-green').click()"></div>
+                  <input type="color" class="color-input" id="pick-green" value="#1E8C5A" oninput="applyColor('--green',this.value,'swatch-green','lbl-green')">
+                  <span class="color-label" id="lbl-green">#1E8C5A</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tipografía -->
+          <div class="cfg-section">
+            <div class="cfg-section-header">
+              <div>
+                <div class="cfg-section-title">Tipografía</div>
+                <div class="cfg-section-sub">Fuente para toda la interfaz</div>
+              </div>
+            </div>
+            <div class="cfg-body">
+              <div class="cfg-row">
+                <div><div class="cfg-row-label">Fuente del sistema</div><div class="cfg-row-sub" id="font-preview-sub" style="font-size:13px;margin-top:4px">Así se ve este texto con la fuente elegida</div></div>
+                <div class="cfg-row-control">
+                  <select class="cfg-select" id="font-select" onchange="applyFont(this.value)">
+                    <option value="Poppins">Poppins (actual)</option>
+                    <option value="Inter">Inter</option>
+                    <option value="Montserrat">Montserrat</option>
+                    <option value="Raleway">Raleway</option>
+                    <option value="DM Sans">DM Sans</option>
+                    <option value="Nunito">Nunito</option>
+                    <option value="Outfit">Outfit</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Logo & nombre -->
+          <div class="cfg-section">
+            <div class="cfg-section-header">
+              <div>
+                <div class="cfg-section-title">Logo & Nombre</div>
+                <div class="cfg-section-sub">Personalizá la identidad del sistema</div>
+              </div>
+              <button class="btn btn-primary btn-sm" onclick="saveIdentity()">Guardar cambios</button>
+            </div>
+            <div class="cfg-body">
+              <div class="cfg-row">
+                <div><div class="cfg-row-label">Ícono del sistema</div><div class="cfg-row-sub">Emoji que aparece en sidebar y login</div></div>
+                <div class="cfg-row-control">
+                  <input class="cfg-input" id="logo-emoji" value="✂" style="font-size:20px;width:80px;text-align:center">
+                </div>
+              </div>
+              <div class="cfg-row">
+                <div><div class="cfg-row-label">Nombre del sistema</div><div class="cfg-row-sub">Reemplaza "BarberPro" en todo el sistema</div></div>
+                <div class="cfg-row-control">
+                  <input class="cfg-input" id="app-name" value="BarberPro" placeholder="Nombre del sistema">
+                </div>
+              </div>
+              <div class="cfg-row">
+                <div><div class="cfg-row-label">Subtítulo</div><div class="cfg-row-sub">Aparece debajo del nombre</div></div>
+                <div class="cfg-row-control">
+                  <input class="cfg-input" id="app-sub" value="Sistema de Gestión" placeholder="Subtítulo">
+                </div>
+              </div>
+              <!-- Preview -->
+              <div class="theme-preview">
+                <div class="preview-sidebar-mock" id="preview-sb" style="background:#1B3A6B">
+                  <div style="font-size:18px;margin-bottom:4px" id="preview-ico">✂</div>
+                  <div class="preview-dot active"></div>
+                  <div class="preview-dot"></div>
+                  <div class="preview-dot"></div>
+                  <div class="preview-dot"></div>
+                </div>
+                <div class="preview-content">
+                  <div style="font-size:13px;font-weight:800;color:var(--blue);letter-spacing:-.3px" id="preview-name">BarberPro</div>
+                  <div style="font-size:10px;color:var(--text-light);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px" id="preview-sub">Sistema de Gestión</div>
+                  <div class="preview-card" style="background:var(--blue)">
+                    <div class="preview-bar" style="background:rgba(255,255,255,.4);width:60%"></div>
+                    <div class="preview-bar" style="background:rgba(255,255,255,.2);width:40%"></div>
+                  </div>
+                  <div class="preview-card" style="background:var(--white);border:1px solid var(--border)">
+                    <div class="preview-bar" style="background:var(--blue-pale);width:80%"></div>
+                    <div class="preview-bar" style="background:var(--bg);width:55%"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── PANEL: NEGOCIO ── -->
+        <div class="cfg-panel" id="cfg-negocio">
+          <div class="cfg-section">
+            <div class="cfg-section-header">
+              <div>
+                <div class="cfg-section-title">Datos del salón</div>
+                <div class="cfg-section-sub">Información que aparece en reportes y PDF</div>
+              </div>
+              <button class="btn btn-primary btn-sm" onclick="showToast('Datos guardados ✓')">Guardar</button>
+            </div>
+            <div class="cfg-body">
+              <div class="form-grid">
+                <div class="fg"><label>Nombre del salón</label><input class="cfg-input" type="text" value="Barbershop Classic" placeholder="Nombre"></div>
+                <div class="fg"><label>Propietario</label><input class="cfg-input" type="text" value="Alexis Magrini" placeholder="Nombre del dueño"></div>
+              </div>
+              <div class="form-grid" style="margin-top:12px">
+                <div class="fg"><label>Teléfono</label><input class="cfg-input" type="text" value="11-XXXX-XXXX" placeholder="Teléfono"></div>
+                <div class="fg"><label>Email</label><input class="cfg-input" type="email" value="contacto@barbershop.com" placeholder="Email"></div>
+              </div>
+              <div class="form-grid" style="margin-top:12px">
+                <div class="fg"><label>Dirección</label><input class="cfg-input" type="text" value="Av. Corrientes 1234, CABA" placeholder="Dirección"></div>
+                <div class="fg"><label>Instagram</label><input class="cfg-input" type="text" value="@barbershop_classic" placeholder="@usuario"></div>
+              </div>
+            </div>
+          </div>
+          <div class="cfg-section">
+            <div class="cfg-section-header">
+              <div>
+                <div class="cfg-section-title">Configuración de comisiones</div>
+                <div class="cfg-section-sub">Porcentaje base de sueldo para nuevos empleados</div>
+              </div>
+            </div>
+            <div class="cfg-body">
+              <div class="cfg-row">
+                <div><div class="cfg-row-label">Comisión base</div><div class="cfg-row-sub">Se aplica al registrar un nuevo empleado (editable por empleado)</div></div>
+                <div class="cfg-row-control">
+                  <input class="cfg-input" type="number" value="40" style="width:80px;text-align:center"> <span style="font-size:14px;font-weight:700;color:var(--text-mid)">%</span>
+                </div>
+              </div>
+              <div class="cfg-row">
+                <div><div class="cfg-row-label">Propinas incluidas en sueldo</div><div class="cfg-row-sub">Las propinas suman al total a cobrar del empleado</div></div>
+                <div class="cfg-row-control"><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── PANEL: SISTEMA ── -->
+        <div class="cfg-panel" id="cfg-sistema">
+          <div class="cfg-section">
+            <div class="cfg-section-header">
+              <div>
+                <div class="cfg-section-title">Preferencias generales</div>
+                <div class="cfg-section-sub">Comportamiento del sistema</div>
+              </div>
+            </div>
+            <div class="cfg-body">
+              <div class="cfg-row">
+                <div><div class="cfg-row-label">Idioma</div><div class="cfg-row-sub">Idioma de la interfaz</div></div>
+                <div class="cfg-row-control"><select class="cfg-select"><option>Español (Argentina)</option><option>Español (España)</option><option>English</option></select></div>
+              </div>
+              <div class="cfg-row">
+                <div><div class="cfg-row-label">Formato de moneda</div><div class="cfg-row-sub">Cómo se muestran los precios</div></div>
+                <div class="cfg-row-control"><select class="cfg-select"><option>$ (Pesos ARS)</option><option>USD ($)</option><option>€ (Euro)</option></select></div>
+              </div>
+              <div class="cfg-row">
+                <div><div class="cfg-row-label">Formato de fecha</div><div class="cfg-row-sub">Orden de visualización de fechas</div></div>
+                <div class="cfg-row-control"><select class="cfg-select"><option>DD/MM/AAAA</option><option>MM/DD/AAAA</option><option>AAAA-MM-DD</option></select></div>
+              </div>
+              <div class="cfg-row">
+                <div><div class="cfg-row-label">Notificaciones en pantalla</div><div class="cfg-row-sub">Mostrar alertas de stock bajo y turnos próximos</div></div>
+                <div class="cfg-row-control"><div class="toggle on" onclick="this.classList.toggle('on')"></div></div>
+              </div>
+              <div class="cfg-row">
+                <div><div class="cfg-row-label">Cerrar sesión automático</div><div class="cfg-row-sub">Desconectar tras 30 min de inactividad</div></div>
+                <div class="cfg-row-control"><div class="toggle" onclick="this.classList.toggle('on')"></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="cfg-section">
+            <div class="cfg-section-header">
+              <div>
+                <div class="cfg-section-title">Seguridad</div>
+                <div class="cfg-section-sub">Estado actual del sistema de autenticación</div>
+              </div>
+            </div>
+            <div class="cfg-body">
+              <div class="cfg-row">
+                <div><div class="cfg-row-label">Autenticación</div><div class="cfg-row-sub">Método actual de login</div></div>
+                <div class="cfg-row-control"><span class="badge b-amb">Demo local</span></div>
+              </div>
+              <div class="cfg-row">
+                <div><div class="cfg-row-label">Contraseñas encriptadas</div><div class="cfg-row-sub">Actualmente visibles en el código — se resuelve con Supabase Auth</div></div>
+                <div class="cfg-row-control"><span class="badge b-red">⚠ Pendiente</span></div>
+              </div>
+              <div class="cfg-row">
+                <div><div class="cfg-row-label">Base de datos</div><div class="cfg-row-sub">Conexión con Supabase para datos reales</div></div>
+                <div class="cfg-row-control"><span class="badge b-amb">Próxima etapa</span></div>
+              </div>
+              <div style="background:var(--amber-bg);border:1px solid rgba(217,119,6,.2);border-radius:12px;padding:14px 16px;margin-top:14px">
+                <div style="font-size:13px;font-weight:700;color:var(--amber);margin-bottom:4px">⚠️ Nota sobre seguridad</div>
+                <div style="font-size:12px;color:var(--text-mid);line-height:1.6">En la versión actual las credenciales están en el código JavaScript (visible en el navegador). Cuando conectemos <strong>Supabase Auth</strong> en la próxima etapa, los usuarios y contraseñas estarán almacenados de forma segura en la base de datos, encriptados con bcrypt, y nunca expuestos al cliente.</div>
+              </div>
+            </div>
+          </div>
+          <div class="cfg-section">
+            <div class="cfg-section-header">
+              <div>
+                <div class="cfg-section-title">Información del sistema</div>
+              </div>
+            </div>
+            <div class="cfg-body">
+              <div class="cfg-row"><div class="cfg-row-label">Versión</div><div class="cfg-row-control"><span class="badge b-blue">v1.0.0</span></div></div>
+              <div class="cfg-row"><div class="cfg-row-label">Desarrollado por</div><div class="cfg-row-control" style="font-size:13px;font-weight:600;color:var(--blue)">AlexisDigital</div></div>
+              <div class="cfg-row"><div class="cfg-row-label">Hosting</div><div class="cfg-row-control"><span class="badge b-green">Vercel ✓</span></div></div>
+              <div class="cfg-row"><div class="cfg-row-label">Base de datos</div><div class="cfg-row-control"><span class="badge b-amb">Supabase — próximamente</span></div></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- TOAST -->
+<div id="toast" style="position:fixed;bottom:24px;right:24px;background:var(--text);color:#fff;padding:11px 20px;border-radius:12px;font-size:13px;font-weight:600;z-index:999;opacity:0;transform:translateY(8px);transition:all .25s;pointer-events:none;box-shadow:0 8px 24px rgba(0,0,0,.2)"></div>
+
+<!-- Modal Nuevo Usuario -->
+<div class="modal-overlay" id="modal-nuevo-usuario">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('modal-nuevo-usuario')">✕</button>
+    <div class="modal-title">👤 Nuevo Usuario</div>
+    <div class="form-grid">
+      <div class="fg"><label>Nombre completo</label><input type="text" id="nu-nombre" placeholder="Ej: Juan López"></div>
+      <div class="fg"><label>Rol</label><select id="nu-rol"><option value="empleado">✂️ Empleado</option><option value="admin">👑 Administrador</option></select></div>
+    </div>
+    <div class="form-grid">
+      <div class="fg"><label>Usuario</label><input type="text" id="nu-user" placeholder="juan.lopez"></div>
+      <div class="fg"><label>Contraseña</label><input type="password" id="nu-pass" placeholder="••••••••"></div>
+    </div>
+    <div class="fg" style="margin-bottom:16px"><label>Comisión (%)</label><input type="number" id="nu-comision" value="40" style="max-width:120px"></div>
+    <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="addUser()">✓ Crear Usuario</button>
   </div>
 </div>
 
@@ -1255,6 +1680,198 @@ if(cd){
     var isT=di===d.getDate(),hasT=tDays.indexOf(di)!==-1;
     cd.innerHTML+='<div class="cal-day'+(isT?' today':'')+(hasT?' has-t':'')+'" onclick="goTo(\'agenda\')"><div class="cal-day-num">'+di+'</div></div>';
   }
+}
+
+// ── CONFIGURACIÓN ──
+
+// CFG TABS
+function setCfgTab(id, el) {
+  var panels = document.querySelectorAll('.cfg-panel');
+  for (var i = 0; i < panels.length; i++) panels[i].classList.remove('active');
+  var tabs = document.querySelectorAll('.cfg-tab');
+  for (var j = 0; j < tabs.length; j++) tabs[j].classList.remove('active');
+  document.getElementById('cfg-' + id).classList.add('active');
+  if (el) el.classList.add('active');
+}
+
+// ACCESS CHECK for configuracion in goTo (patch)
+var _origGoTo = goTo;
+goTo = function(id) {
+  _origGoTo(id);
+  if (id === 'configuracion') {
+    var dn = document.getElementById('cfg-denied');
+    var ct = document.getElementById('cfg-content');
+    if (currentRole !== 'admin') { dn.style.display='flex'; ct.style.display='none'; }
+    else { dn.style.display='none'; ct.style.display='block'; renderUsersTable(); }
+  }
+};
+
+// USERS TABLE
+function renderUsersTable() {
+  var tbody = document.getElementById('users-table-body');
+  if (!tbody) return;
+  tbody.innerHTML = '';
+  var keys = Object.keys(USERS);
+  for (var i = 0; i < keys.length; i++) {
+    var u = USERS[keys[i]];
+    var isAdmin = u.role === 'admin';
+    var canDelete = keys[i] !== 'admin'; // protect main admin
+    tbody.innerHTML +=
+      '<tr>' +
+        '<td><span style="font-family:monospace;font-size:13px;font-weight:700;background:var(--bg);padding:3px 9px;border-radius:7px;border:1px solid var(--border)">' + keys[i] + '</span></td>' +
+        '<td><div class="emp-cell"><div class="emp-avatar-sm">' + u.avatar + '</div><div class="emp-cell-name">' + u.name + '</div></div></td>' +
+        '<td><span class="user-role-badge ' + (isAdmin ? 'urb-admin' : 'urb-emp') + '">' + (isAdmin ? '👑 Admin' : '✂️ Empleado') + '</span></td>' +
+        '<td>' + (isAdmin ? '—' : '40%') + '</td>' +
+        '<td><span class="badge b-green"><span class="b-dot"></span>Activo</span></td>' +
+        '<td>' +
+          '<div style="display:flex;gap:6px">' +
+            (canDelete ? '<button class="action-btn ab-red" onclick="deleteUser(\'' + keys[i] + '\')">🗑</button>' : '<span style="font-size:11px;color:var(--text-light)">—</span>') +
+          '</div>' +
+        '</td>' +
+      '</tr>';
+  }
+}
+
+function addUser() {
+  var nombre = document.getElementById('nu-nombre').value.trim();
+  var user   = document.getElementById('nu-user').value.trim().toLowerCase();
+  var pass   = document.getElementById('nu-pass').value;
+  var rol    = document.getElementById('nu-rol').value;
+  if (!nombre || !user || !pass) { showToast('Completá todos los campos'); return; }
+  if (USERS[user]) { showToast('Ese usuario ya existe'); return; }
+  var avatars = {admin:'👑', empleado:'✂️'};
+  USERS[user] = { pass: pass, role: rol, name: nombre, avatar: rol === 'admin' ? '👑' : '✂️' };
+  closeModal('modal-nuevo-usuario');
+  document.getElementById('nu-nombre').value = '';
+  document.getElementById('nu-user').value = '';
+  document.getElementById('nu-pass').value = '';
+  renderUsersTable();
+  showToast('Usuario "' + user + '" creado ✓');
+}
+
+function deleteUser(username) {
+  if (!confirm('¿Eliminar al usuario "' + username + '"?')) return;
+  delete USERS[username];
+  renderUsersTable();
+  showToast('Usuario eliminado');
+}
+
+// COLORS
+function applyColor(variable, value, swatchId, labelId) {
+  document.documentElement.style.setProperty(variable, value);
+  var sw = document.getElementById(swatchId);
+  if (sw) sw.style.background = value;
+  var lb = document.getElementById(labelId);
+  if (lb) lb.textContent = value.toUpperCase();
+  // live preview sidebar
+  if (variable === '--blue') {
+    var prevSb = document.getElementById('preview-sb');
+    if (prevSb) prevSb.style.background = value;
+  }
+}
+
+function resetColors() {
+  var defaults = {
+    '--blue':'#1B3A6B','--accent':'#4C7EF0','--bg':'#F4F6FB','--text':'#1A2540','--green':'#1E8C5A'
+  };
+  var map = {'--blue':['swatch-blue','lbl-blue','pick-blue'],'--accent':['swatch-accent','lbl-accent','pick-accent'],'--bg':['swatch-bg','lbl-bg','pick-bg'],'--text':['swatch-text','lbl-text','pick-text'],'--green':['swatch-green','lbl-green','pick-green']};
+  for (var v in defaults) {
+    document.documentElement.style.setProperty(v, defaults[v]);
+    var ids = map[v];
+    if (ids) {
+      var sw = document.getElementById(ids[0]); if (sw) sw.style.background = defaults[v];
+      var lb = document.getElementById(ids[1]); if (lb) lb.textContent = defaults[v].toUpperCase();
+      var pk = document.getElementById(ids[2]); if (pk) pk.value = defaults[v];
+    }
+  }
+  showToast('Colores restaurados ✓');
+}
+
+// PALETTES
+var PALETTES = {
+  azul:    {'--blue':'#1B3A6B','--blue-mid':'#2A4F8F','--blue-light':'#3A6CC8','--blue-pale':'#E8EEF8','--blue-faint':'#F2F5FC','--accent':'#4C7EF0'},
+  verde:   {'--blue':'#0D4F3C','--blue-mid':'#145C47','--blue-light':'#1E8C5A','--blue-pale':'#E6F4EE','--blue-faint':'#F0FAF5','--accent':'#22C55E'},
+  negro:   {'--blue':'#111827','--blue-mid':'#1F2937','--blue-light':'#374151','--blue-pale':'#F3F4F6','--blue-faint':'#F9FAFB','--accent':'#6B7280'},
+  rojo:    {'--blue':'#7B1D1D','--blue-mid':'#9B2C2C','--blue-light':'#C53030','--blue-pale':'#FFF5F5','--blue-faint':'#FFFAFA','--accent':'#F56565'},
+  violeta: {'--blue':'#4A1D96','--blue-mid':'#5B21B6','--blue-light':'#7C3AED','--blue-pale':'#EDE9FE','--blue-faint':'#F5F3FF','--accent':'#8B5CF6'},
+  naranja: {'--blue':'#92400E','--blue-mid':'#B45309','--blue-light':'#D97706','--blue-pale':'#FFFBEB','--blue-faint':'#FFFFF0','--accent':'#F59E0B'},
+};
+
+function applyPalette(name, el) {
+  var p = PALETTES[name]; if (!p) return;
+  for (var v in p) document.documentElement.style.setProperty(v, p[v]);
+  // update swatches
+  var blueVal = p['--blue'];
+  var accentVal = p['--accent'];
+  var bsw = document.getElementById('swatch-blue'); if (bsw) bsw.style.background = blueVal;
+  var blb = document.getElementById('lbl-blue'); if (blb) blb.textContent = blueVal.toUpperCase();
+  var pk = document.getElementById('pick-blue'); if (pk) pk.value = blueVal;
+  var asw = document.getElementById('swatch-accent'); if (asw) asw.style.background = accentVal;
+  var alb = document.getElementById('lbl-accent'); if (alb) alb.textContent = accentVal.toUpperCase();
+  var apk = document.getElementById('pick-accent'); if (apk) apk.value = accentVal;
+  // preview sidebar
+  var prevSb = document.getElementById('preview-sb'); if (prevSb) prevSb.style.background = blueVal;
+  // mark selected
+  var items = document.querySelectorAll('.palette-item');
+  for (var i = 0; i < items.length; i++) items[i].classList.remove('selected');
+  if (el) el.classList.add('selected');
+  showToast('Paleta aplicada ✓');
+}
+
+// FONT
+function applyFont(font) {
+  // Load from Google Fonts if needed
+  var fontMap = {
+    'Inter':'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap',
+    'Montserrat':'https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap',
+    'Raleway':'https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700;800&display=swap',
+    'DM Sans':'https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap',
+    'Nunito':'https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&display=swap',
+    'Outfit':'https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap',
+  };
+  if (fontMap[font]) {
+    var link = document.createElement('link');
+    link.rel = 'stylesheet'; link.href = fontMap[font];
+    document.head.appendChild(link);
+  }
+  document.body.style.fontFamily = "'" + font + "', sans-serif";
+  var preview = document.getElementById('font-preview-sub');
+  if (preview) preview.style.fontFamily = "'" + font + "', sans-serif";
+  showToast('Fuente cambiada a ' + font + ' ✓');
+}
+
+// IDENTITY
+function saveIdentity() {
+  var emoji = document.getElementById('logo-emoji').value || '✂';
+  var name  = document.getElementById('app-name').value || 'BarberPro';
+  var sub   = document.getElementById('app-sub').value || 'Sistema de Gestión';
+  // Update sidebar logo
+  var sbIcon = document.querySelector('.sb-logo-icon'); if (sbIcon) sbIcon.textContent = emoji;
+  var brand = document.querySelector('.sb-logo-text .brand'); if (brand) brand.textContent = name;
+  // Update login
+  var liIcon = document.querySelector('.login-logo-icon'); if (liIcon) liIcon.textContent = emoji;
+  var liBrand = document.querySelector('.login-logo .brand'); if (liBrand) liBrand.textContent = name;
+  var liSub = document.querySelector('.login-logo .sub'); if (liSub) liSub.textContent = sub;
+  // Update page title
+  document.title = name + ' — Sistema de Gestión';
+  // Update preview
+  document.getElementById('preview-ico').textContent = emoji;
+  document.getElementById('preview-name').textContent = name;
+  document.getElementById('preview-sub').textContent = sub;
+  showToast('Identidad guardada ✓');
+}
+
+// TOAST
+function showToast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg;
+  t.style.opacity = '1';
+  t.style.transform = 'translateY(0)';
+  clearTimeout(window._toastTimer);
+  window._toastTimer = setTimeout(function() {
+    t.style.opacity = '0';
+    t.style.transform = 'translateY(8px)';
+  }, 2500);
 }
 </script>
 </body>
