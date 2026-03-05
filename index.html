@@ -543,6 +543,7 @@ td { vertical-align:middle; }
           <div class="page-sub" id="today-date">Cargando fecha...</div>
         </div>
         <div class="page-header-right">
+          <button class="btn btn-primary" onclick="openModal('modal-cobro')">💰 Registrar Cobro</button>
         </div>
       </div>
 
@@ -551,38 +552,36 @@ td { vertical-align:middle; }
         <div class="stat-card featured">
           <div class="stat-top">
             <div class="stat-icon-wrap">💰</div>
-            <div class="stat-trend up">↑ 12%</div>
+            <div class="stat-trend up" id="dash-trend-ing">—</div>
           </div>
           <div class="stat-label">Ingresos Hoy</div>
-          <div class="stat-value">$48.500</div>
-          <div class="stat-sub">vs $43.200 ayer</div>
+          <div class="stat-value" id="stat-ingresos">$0</div>
+          <div class="stat-sub" id="dash-sub-ing">sin cobros aún</div>
         </div>
         <div class="stat-card">
           <div class="stat-top">
-            <div class="stat-icon-wrap">📅</div>
-            <div class="stat-trend neutral">3 pend.</div>
+            <div class="stat-icon-wrap">✂️</div>
+            <div class="stat-trend neutral" id="dash-trend-serv">—</div>
           </div>
-          <div class="stat-label">Turnos Hoy</div>
-          <div class="stat-value">8</div>
-          <div class="stat-sub">5 confirmados</div>
+          <div class="stat-label">Servicios Hoy</div>
+          <div class="stat-value" id="stat-servicios">0</div>
+          <div class="stat-sub" id="dash-sub-serv">cobros registrados</div>
         </div>
         <div class="stat-card">
           <div class="stat-top">
             <div class="stat-icon-wrap green">📈</div>
-            <div class="stat-trend up">↑ 18%</div>
           </div>
           <div class="stat-label">Ganancia Neta</div>
-          <div class="stat-value">$40.300</div>
-          <div class="stat-sub">después de egresos</div>
+          <div class="stat-value" id="dash-ganancia">$0</div>
+          <div class="stat-sub">ingresos − egresos hoy</div>
         </div>
         <div class="stat-card">
           <div class="stat-top">
             <div class="stat-icon-wrap red">📤</div>
-            <div class="stat-trend down">2 gastos</div>
           </div>
           <div class="stat-label">Egresos Hoy</div>
-          <div class="stat-value">$8.200</div>
-          <div class="stat-sub">Insumos + Servicios</div>
+          <div class="stat-value" id="dash-egresos-hoy">$0</div>
+          <div class="stat-sub" id="dash-sub-egr">sin egresos hoy</div>
         </div>
       </div>
 
@@ -594,7 +593,6 @@ td { vertical-align:middle; }
               <div class="chart-title">Balance Mensual</div>
               <div class="chart-meta">Ingresos por mes — 2026</div>
             </div>
-            <select class="chart-select"><option>2026</option><option>2025</option></select>
           </div>
           <div class="bar-chart" id="bar-chart"></div>
           <div style="display:flex;justify-content:center;gap:18px;margin-top:14px">
@@ -613,68 +611,52 @@ td { vertical-align:middle; }
           </div>
           <table>
             <thead><tr><th>Empleado</th><th>%</th><th>Serv.</th><th>Total</th></tr></thead>
-            <tbody>
-              <tr><td><div class="emp-cell"><div class="emp-avatar-sm">✂️</div><div class="emp-cell-name">Franco</div></div></td><td class="fw7" style="color:var(--text-light)">40%</td><td>0</td><td class="fw7 v-blue">$0</td></tr>
-              <tr><td><div class="emp-cell"><div class="emp-avatar-sm">💈</div><div class="emp-cell-name">Simón</div></div></td><td class="fw7" style="color:var(--text-light)">40%</td><td>0</td><td class="fw7 v-blue">$0</td></tr>
-              <tr><td><div class="emp-cell"><div class="emp-avatar-sm">🪒</div><div class="emp-cell-name">Tomás</div></div></td><td class="fw7" style="color:var(--text-light)">40%</td><td>0</td><td class="fw7 v-blue">$0</td></tr>
-              <tr><td><div class="emp-cell"><div class="emp-avatar-sm">💇</div><div class="emp-cell-name">Marcos</div></div></td><td class="fw7" style="color:var(--text-light)">50%</td><td>0</td><td class="fw7 v-blue">$0</td></tr>
+            <tbody id="dash-emp-tbody">
+              <tr><td colspan="4" style="text-align:center;padding:20px;color:var(--text-light)">Cargando...</td></tr>
             </tbody>
           </table>
         </div>
       </div>
 
-      <!-- Recent Bookings -->
+      <!-- Historial cobros del día -->
       <div class="table-card">
         <div class="table-header">
-          <div class="table-title">Turnos Recientes</div>
+          <div class="table-title">Cobros de Hoy</div>
           <div class="table-actions">
-            <div class="search-sm"><span class="si">🔍</span><input type="text" placeholder="Buscar turno..."></div>
-            <div class="tabs-pill">
-              <div class="tab-pill active" onclick="setBookingTab(this,'upcoming')">Próximos</div>
-              <div class="tab-pill" onclick="setBookingTab(this,'all')">Todos</div>
-              <div class="tab-pill" onclick="setBookingTab(this,'done')">Realizados</div>
-            </div>
+            <button class="btn btn-outline btn-sm" onclick="loadCobros()">↻ Actualizar</button>
           </div>
         </div>
         <table>
           <thead>
             <tr>
-              <th>Barbero <span class="sort-ico">↕</span></th>
-              <th>Servicio <span class="sort-ico">↕</span></th>
-              <th>Hora inicio <span class="sort-ico">↕</span></th>
-              <th>Hora fin <span class="sort-ico">↕</span></th>
-              <th>Cliente <span class="sort-ico">↕</span></th>
-              <th>Estado</th>
-              <th>Acción</th>
+              <th>Hora</th><th>Cliente</th><th>Empleado</th><th>Servicios</th>
+              <th>Método</th><th>Total</th><th></th>
             </tr>
           </thead>
-          <tbody id="bookings-tbody">
-            <tr>
-              <td><div class="emp-cell"><div class="emp-avatar-sm">✂️</div><div class="emp-cell-name">Franco</div></div></td>
-              <td>Corte y barba</td><td>10:00</td><td>10:45</td><td>Juan M.</td>
-              <td><span class="badge b-green"><span class="b-dot"></span>Confirmado</span></td>
-              <td><button class="action-btn ab-blue" onclick="openModal('modal-cobro')">💰</button></td>
-            </tr>
-            <tr>
-              <td><div class="emp-cell"><div class="emp-avatar-sm">💈</div><div class="emp-cell-name">Simón</div></div></td>
-              <td>Corte + Perfilado</td><td>11:30</td><td>12:10</td><td>Pedro L.</td>
-              <td><span class="badge b-amb"><span class="b-dot"></span>Pendiente</span></td>
-              <td><button class="action-btn ab-green">✓</button></td>
-            </tr>
-            <tr>
-              <td><div class="emp-cell"><div class="emp-avatar-sm">🪒</div><div class="emp-cell-name">Tomás</div></div></td>
-              <td>Corte y barba VIP</td><td>13:00</td><td>14:00</td><td>Carlos V.</td>
-              <td><span class="badge b-gray"><span class="b-dot"></span>Sin confirmar</span></td>
-              <td><button class="action-btn ab-blue">👁</button></td>
-            </tr>
-            <tr>
-              <td><div class="emp-cell"><div class="emp-avatar-sm">💇</div><div class="emp-cell-name">Marcos</div></div></td>
-              <td>Corte</td><td>09:00</td><td>09:30</td><td>Ariel F.</td>
-              <td><span class="badge b-blue"><span class="b-dot"></span>Realizado</span></td>
-              <td><button class="action-btn ab-blue">📋</button></td>
-            </tr>
+          <tbody id="historial-tbody">
+            <tr><td colspan="7" style="text-align:center;padding:28px;color:var(--text-light)">Sin cobros hoy</td></tr>
           </tbody>
         </table>
+      </div>
+
+      <!-- Métricas de métodos de pago -->
+      <div class="stat-grid" style="margin-top:16px">
+        <div class="stat-card">
+          <div class="stat-label">💵 Efectivo</div>
+          <div class="stat-value" id="stat-ef">$0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">🏦 Santander</div>
+          <div class="stat-value" id="stat-san">$0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">📱 Personal Pay</div>
+          <div class="stat-value" id="stat-pp">$0</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">🎁 Propinas</div>
+          <div class="stat-value" id="stat-propinas">$0</div>
+        </div>
       </div>
     </div>
 
@@ -2573,27 +2555,103 @@ async function loadServicios(){
 
 async function loadCobros(){
   var today = new Date().toISOString().split('T')[0];
-  var { data } = await supa.from('cobros').select('*, cobro_items(*)').gte('fecha', today).order('created_at', {ascending:false});
-  if(data){
-    var totalIng=0, totalServ=0, ef=0, san=0, pp=0, propinas=0;
-    data.forEach(function(c){
-      totalIng += c.total || 0;
-      totalServ++;
-      propinas += c.propina || 0;
-      if(c.metodo_pago==='ef')  ef  += c.total;
-      if(c.metodo_pago==='san') san += c.total;
-      if(c.metodo_pago==='pp')  pp  += c.total;
-    });
-    var s=function(id,v){var e=document.getElementById(id);if(e)e.textContent=v;};
-    s('stat-ingresos','$'+fmtN(totalIng));
-    s('stat-servicios',totalServ+'');
-    s('stat-ef','$'+fmtN(ef));
-    s('stat-san','$'+fmtN(san));
-    s('stat-pp','$'+fmtN(pp));
-    s('stat-propinas','$'+fmtN(propinas));
-    // Render historial
-    renderHistorialCobros(data);
+  var { data: cobros } = await supa.from('cobros')
+    .select('*, cobro_items(*)')
+    .gte('fecha', today)
+    .lt('fecha', today + 'T23:59:59')
+    .order('created_at', {ascending:false});
+
+  var totalIng=0, totalServ=0, ef=0, san=0, pp=0, propinas=0;
+  var empMap = {}; // { nombreEmpleado: { serv, total } }
+
+  (cobros||[]).forEach(function(c){
+    totalIng += c.total || 0;
+    totalServ++;
+    propinas += c.propina || 0;
+    if(c.metodo_pago==='ef')  ef  += c.total||0;
+    if(c.metodo_pago==='san') san += c.total||0;
+    if(c.metodo_pago==='pp')  pp  += c.total||0;
+    // Acumular por empleado
+    var empNombre = c.empleado_nombre || '—';
+    if(!empMap[empNombre]) empMap[empNombre] = { serv:0, total:0 };
+    empMap[empNombre].serv++;
+    empMap[empNombre].total += c.total||0;
+  });
+
+  // Egresos del día
+  var { data: egresosHoy } = await supa.from('egresos').select('monto, concepto').eq('fecha', today);
+  var totalEgresosHoy = (egresosHoy||[]).reduce(function(s,e){ return s+e.monto; }, 0);
+  var ganancia = totalIng - totalEgresosHoy;
+
+  // Stats principales
+  s('stat-ingresos',  '$'+fmtN(totalIng));
+  s('stat-servicios', totalServ+'');
+  s('stat-ef',        '$'+fmtN(ef));
+  s('stat-san',       '$'+fmtN(san));
+  s('stat-pp',        '$'+fmtN(pp));
+  s('stat-propinas',  '$'+fmtN(propinas));
+  s('dash-ganancia',  '$'+fmtN(ganancia));
+  s('dash-egresos-hoy','$'+fmtN(totalEgresosHoy));
+  s('dash-sub-ing',   totalServ > 0 ? totalServ+' cobro'+(totalServ>1?'s':'') : 'sin cobros aún');
+  s('dash-sub-serv',  'cobros registrados');
+  s('dash-sub-egr',   egresosHoy&&egresosHoy.length>0 ? egresosHoy.length+' egreso'+(egresosHoy.length>1?'s':'') : 'sin egresos hoy');
+
+  // Tabla empleados hoy
+  var empTbody = document.getElementById('dash-emp-tbody');
+  if(empTbody){
+    var empKeys = Object.keys(empMap);
+    if(empKeys.length === 0){
+      // Mostrar empleados del sistema con $0
+      empTbody.innerHTML = Object.keys(empData).map(function(k){
+        var e = empData[k];
+        return '<tr><td><div class="emp-cell"><div class="emp-avatar-sm">✂️</div><div class="emp-cell-name">'+e.name+'</div></div></td>'+
+          '<td class="fw7" style="color:var(--text-light)">'+e.comision+'%</td><td>0</td><td class="fw7 v-blue">$0</td></tr>';
+      }).join('');
+    } else {
+      empTbody.innerHTML = empKeys.map(function(nombre){
+        var datos = empMap[nombre];
+        var comision = empData[nombre.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,'')];
+        var pct = comision ? comision.comision : '—';
+        return '<tr><td><div class="emp-cell"><div class="emp-avatar-sm">✂️</div><div class="emp-cell-name">'+nombre+'</div></div></td>'+
+          '<td class="fw7" style="color:var(--text-light)">'+pct+'%</td>'+
+          '<td>'+datos.serv+'</td>'+
+          '<td class="fw7 v-blue">$'+fmtN(datos.total)+'</td></tr>';
+      }).join('');
+    }
   }
+
+  // Historial de cobros
+  renderHistorialCobros(cobros||[]);
+
+  // Actualizar gráfico mensual con datos reales
+  await loadChartMensual();
+}
+
+async function loadChartMensual(){
+  var year = new Date().getFullYear();
+  var { data } = await supa.from('cobros')
+    .select('fecha, total')
+    .gte('fecha', year+'-01-01')
+    .lt('fecha', (year+1)+'-01-01');
+
+  var meses = ['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+  var totales = Array(12).fill(0);
+  (data||[]).forEach(function(c){
+    var mes = new Date(c.fecha).getMonth();
+    totales[mes] += c.total||0;
+  });
+  var maxV = Math.max.apply(null, totales.map(function(v){return v||1;}));
+  var mesActual = new Date().getMonth();
+  var bc = document.getElementById('bar-chart');
+  if(!bc) return;
+  bc.innerHTML = meses.map(function(m,i){
+    var pct = totales[i] ? Math.round((totales[i]/maxV)*100) : 0;
+    var isActive = (i===mesActual);
+    return '<div class="bar-group">'+
+      '<div class="bar-wrap"><div class="bar'+(isActive?' active':'')+'" style="height:'+(pct||4)+'%" title="$'+fmtN(totales[i])+'"></div></div>'+
+      '<div class="bar-label">'+m+'</div>'+
+    '</div>';
+  }).join('');
 }
 
 function renderHistorialCobros(cobros){
@@ -3925,14 +3983,7 @@ function initCobroModal() {
 }
 
 // ══ CLIENTES ══
-var CLIENTES = [
-  {id:1, nombre:'Juan Martínez',    tel:'11-4532-7891', email:'juan.m@gmail.com',   birthday:'1990-03-15', barbero:'Franco',  cat:'vip',     visitas:18, ultimaVisita:'hace 5 días',    notas:'Prefiere corte clásico, sin máquina en la nuca.'},
-  {id:2, nombre:'Pedro López',      tel:'11-6721-3344', email:'',                   birthday:'',           barbero:'Simón',   cat:'regular', visitas:7,  ultimaVisita:'hace 2 semanas', notas:''},
-  {id:3, nombre:'Carlos Vega',      tel:'11-2210-5509', email:'cvega@gmail.com',    birthday:'1985-11-22', barbero:'Marcos',  cat:'vip',     visitas:24, ultimaVisita:'hace 1 semana',  notas:'VIP — viene siempre los sábados a las 10.'},
-  {id:4, nombre:'Ariel Fernández',  tel:'11-8843-1102', email:'',                   birthday:'1995-07-04', barbero:'Tomás',   cat:'regular', visitas:4,  ultimaVisita:'hace 3 semanas', notas:''},
-  {id:5, nombre:'Martín Sánchez',   tel:'11-5567-9980', email:'martin.s@yahoo.com', birthday:'',           barbero:'',        cat:'regular', visitas:3,  ultimaVisita:'hace 1 mes',     notas:'Vino referido por Carlos.'},
-  {id:6, nombre:'Diego Romero',     tel:'11-3390-2244', email:'',                   birthday:'2000-05-30', barbero:'Franco',  cat:'nuevo',   visitas:1,  ultimaVisita:'hace 3 días',    notas:'Primera visita — le gustó el ambiente.'},
-];
+var CLIENTES = []; // Se carga desde Supabase en loadClientes()
 var clienteFilter = 'todos';
 var clienteView = 'list';
 var currentEditEmpKey = null;
