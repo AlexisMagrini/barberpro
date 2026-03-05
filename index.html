@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BarberPro — Sistema de Gestión</title>
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 <style>
 :root {
@@ -62,60 +63,58 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);min
 
 /* ── SIDEBAR ── */
 #sidebar{width:var(--sidebar-w);background:var(--white);display:flex;flex-direction:column;position:fixed;top:0;left:0;height:100vh;z-index:100;box-shadow:0 0 40px rgba(27,58,107,.06);transition:width .28s cubic-bezier(.4,0,.2,1),transform .28s cubic-bezier(.4,0,.2,1);overflow:hidden;border-right:1px solid var(--border);flex-shrink:0;}
-#sidebar.collapsed{width:64px;}
-#sidebar.collapsed .sb-logo-text,
-#sidebar.collapsed .sb-item-label,
-#sidebar.collapsed .nav-group-label,
-#sidebar.collapsed .nav-badge,
-#sidebar.collapsed .sb-logout-label{display:none!important;}
-#sidebar.collapsed .nav-item{justify-content:center;padding:11px 0;}
-#sidebar.collapsed .nav-item .nav-ico{width:auto;margin:0;}
-#sidebar.collapsed .sb-logo-inner{justify-content:center;}
-#sidebar.collapsed .sb-logout{justify-content:center;padding:14px 0;}
-#sidebar.collapsed .sb-toggle-btn{transform:rotate(180deg);}
+/* COLLAPSED — sólo muestra hamburguesa, sin nav ni logo */
+#sidebar.collapsed{width:60px;}
+#sidebar.collapsed .sb-logo-inner,
+#sidebar.collapsed .sb-nav,
+#sidebar.collapsed .sb-logout{display:none!important;}
+#sidebar.collapsed .sb-logo{justify-content:center;border-bottom-color:transparent;}
 #main{margin-left:var(--sidebar-w);flex:1;min-height:100vh;background:var(--bg);transition:margin-left .28s cubic-bezier(.4,0,.2,1);}
-#main.sb-collapsed{margin-left:64px;}
-.sb-toggle-btn{background:none;border:none;cursor:pointer;color:var(--text-light);font-size:16px;padding:4px;line-height:1;transition:transform .28s,color .18s;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.sb-toggle-btn:hover{color:var(--blue);}
+#main.sb-collapsed{margin-left:60px;}
+/* Toggle button */
+.sb-toggle-btn{background:none;border:none;cursor:pointer;color:var(--text-mid);font-size:17px;padding:6px;line-height:1;display:flex;align-items:center;justify-content:center;flex-shrink:0;border-radius:8px;transition:color .18s,background .18s;}
+.sb-toggle-btn:hover{color:var(--blue);background:var(--blue-faint);}
 .sb-logo{padding:0 14px;height:64px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
-.sb-logo-inner{display:flex;align-items:center;gap:11px;overflow:hidden;min-width:0;}
-.sb-logo-icon{width:36px;height:36px;background:var(--blue);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:17px;color:#fff;box-shadow:0 4px 12px rgba(27,58,107,.25);flex-shrink:0;}
-.sb-logo-text .brand{font-size:16px;font-weight:800;color:var(--blue);letter-spacing:-.3px;white-space:nowrap;}
-.sb-logo-text .sub{font-size:10px;color:var(--text-light);letter-spacing:1.5px;text-transform:uppercase;white-space:nowrap;}
+.sb-logo-inner{display:flex;align-items:center;gap:10px;overflow:hidden;min-width:0;}
+.sb-logo-icon{width:34px;height:34px;background:var(--blue);border-radius:10px;display:flex;align-items:center;justify-content:center;color:#fff;box-shadow:0 4px 12px rgba(27,58,107,.25);flex-shrink:0;font-size:15px;}
+.sb-logo-text .brand{font-size:15px;font-weight:800;color:var(--blue);letter-spacing:-.3px;white-space:nowrap;}
+.sb-logo-text .sub{font-size:9.5px;color:var(--text-light);letter-spacing:1.5px;text-transform:uppercase;white-space:nowrap;}
 .sb-nav{flex:1;overflow-y:auto;overflow-x:hidden;padding:8px 0;}
 .sb-nav::-webkit-scrollbar{width:3px;}
 .sb-nav::-webkit-scrollbar-track{background:transparent;}
 .sb-nav::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
-.nav-group-label{padding:14px 18px 5px;font-size:9px;font-weight:700;color:var(--text-light);text-transform:uppercase;letter-spacing:2px;white-space:nowrap;overflow:hidden;}
-.nav-item{display:flex;align-items:center;gap:10px;margin:1px 10px;padding:10px 12px;cursor:pointer;font-size:13px;font-weight:500;color:var(--text-mid);border-radius:11px;transition:all .18s;position:relative;white-space:nowrap;overflow:hidden;}
+.nav-group-label{padding:14px 18px 5px;font-size:9px;font-weight:700;color:var(--text-light);text-transform:uppercase;letter-spacing:2px;white-space:nowrap;}
+.nav-item{display:flex;align-items:center;gap:10px;margin:1px 10px;padding:10px 12px;cursor:pointer;font-size:13px;font-weight:500;color:var(--text-mid);border-radius:11px;transition:all .18s;white-space:nowrap;overflow:hidden;}
 .nav-item:hover{background:var(--blue-faint);color:var(--blue);}
-.nav-item.active{background:var(--blue);color:#fff;font-weight:600;box-shadow:0 4px 14px rgba(27,58,107,.25);}
-.nav-item .nav-ico{font-size:16px;width:22px;text-align:center;flex-shrink:0;}
+.nav-item.active{background:var(--blue);color:#fff;font-weight:600;box-shadow:0 4px 14px rgba(27,58,107,.22);}
+.nav-item i{font-size:14px;width:18px;text-align:center;flex-shrink:0;}
 .nav-badge{margin-left:auto;background:rgba(255,255,255,.25);color:#fff;font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;min-width:20px;text-align:center;}
 .nav-item:not(.active) .nav-badge{background:var(--blue-pale);color:var(--blue);}
-.sb-logout{padding:12px 20px;border-top:1px solid var(--border);display:flex;align-items:center;gap:9px;cursor:pointer;font-size:13px;font-weight:500;color:var(--text-light);transition:all .2s;flex-shrink:0;white-space:nowrap;overflow:hidden;}
+.sb-logout{padding:12px 18px;border-top:1px solid var(--border);display:flex;align-items:center;gap:10px;cursor:pointer;font-size:13px;font-weight:500;color:var(--text-light);transition:all .2s;flex-shrink:0;}
 .sb-logout:hover{color:var(--red);}
-.sb-logout-label{overflow:hidden;}
+.sb-logout i{font-size:14px;}
 
 /* ── TOPBAR ── */
-.topbar{height:68px;background:var(--white);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 28px;gap:14px;position:sticky;top:0;z-index:50;box-shadow:0 2px 12px rgba(27,58,107,.04);}
-.topbar-title{font-size:16px;font-weight:700;color:var(--text);letter-spacing:-.3px;}
+.topbar{height:64px;background:var(--white);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 26px;gap:14px;position:sticky;top:0;z-index:50;box-shadow:0 2px 12px rgba(27,58,107,.04);}
 .topbar-search{flex:1;max-width:340px;position:relative;}
 .topbar-search input{width:100%;background:var(--bg);border:2px solid transparent;border-radius:12px;padding:9px 14px 9px 40px;font-family:'Poppins',sans-serif;font-size:13px;color:var(--text);outline:none;transition:all .2s;}
 .topbar-search input:focus{border-color:var(--accent);background:#fff;box-shadow:0 0 0 4px rgba(76,126,240,.08);}
 .topbar-search input::placeholder{color:var(--text-light);}
-.search-ico{position:absolute;left:13px;top:50%;transform:translateY(-50%);font-size:15px;color:var(--text-light);pointer-events:none;}
-.topbar-right{margin-left:auto;display:flex;align-items:center;gap:10px;}
-.topbar-notif{width:38px;height:38px;background:var(--bg);border-radius:11px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:17px;position:relative;border:1px solid var(--border);transition:all .2s;}
-.topbar-notif:hover{background:var(--blue-pale);border-color:var(--blue-pale);}
-.notif-dot{position:absolute;top:7px;right:7px;width:7px;height:7px;background:var(--red);border-radius:50%;border:2px solid #fff;}
-.topbar-role-pill{padding:5px 13px;border-radius:20px;font-size:11px;font-weight:600;background:var(--blue-pale);color:var(--blue);}
-.topbar-role-pill.emp{background:var(--green-bg);color:var(--green);}
-.topbar-user-chip{display:flex;align-items:center;gap:9px;background:var(--bg);border:1px solid var(--border);border-radius:12px;padding:5px 13px 5px 7px;cursor:pointer;transition:all .2s;}
-.topbar-user-chip:hover{border-color:var(--blue-pale);}
-.user-chip-avatar{width:28px;height:28px;border-radius:8px;background:var(--blue-pale);display:flex;align-items:center;justify-content:center;font-size:14px;}
-.user-chip-name{font-size:13px;font-weight:600;color:var(--text);}
-.btn-menu{display:none;background:none;border:none;color:var(--blue);font-size:22px;cursor:pointer;padding:4px;}
+.search-ico{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--text-light);pointer-events:none;font-size:13px;}
+.topbar-right{margin-left:auto;display:flex;align-items:center;gap:8px;}
+/* Bell */
+.topbar-notif{width:36px;height:36px;background:var(--bg);border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;position:relative;border:1px solid var(--border);transition:all .2s;color:var(--text-mid);}
+.topbar-notif:hover{background:var(--blue-pale);border-color:var(--blue-pale);color:var(--blue);}
+.notif-dot{position:absolute;top:6px;right:6px;width:7px;height:7px;background:var(--red);border-radius:50%;border:2px solid #fff;}
+/* User chip — foto + nombre only */
+.topbar-user-chip{display:flex;align-items:center;gap:8px;background:var(--bg);border:1px solid var(--border);border-radius:11px;padding:5px 12px 5px 6px;cursor:pointer;transition:all .2s;}
+.topbar-user-chip:hover{border-color:var(--blue-pale);background:var(--blue-faint);}
+.user-chip-avatar{width:28px;height:28px;border-radius:8px;background:var(--blue);display:flex;align-items:center;justify-content:center;font-size:13px;color:#fff;font-weight:700;flex-shrink:0;overflow:hidden;}
+.user-chip-avatar img{width:100%;height:100%;object-fit:cover;}
+.user-chip-info{display:flex;flex-direction:column;line-height:1.2;}
+.user-chip-name{font-size:12px;font-weight:700;color:var(--text);}
+.user-chip-role{font-size:10px;color:var(--text-light);font-weight:500;}
+.btn-menu{display:none;background:none;border:none;color:var(--blue);font-size:20px;cursor:pointer;padding:4px;}
 
 .content{padding:26px 28px;}
 
@@ -353,7 +352,7 @@ tr:hover td{background:var(--blue-faint);}
   :root{--sidebar-w:260px;}
   #sidebar{transform:translateX(-100%);width:var(--sidebar-w)!important;box-shadow:none;}
   #sidebar.open{transform:translateX(0);box-shadow:0 0 50px rgba(10,20,45,.2);}
-  #sidebar.collapsed{transform:translateX(-100%);}
+  #sidebar.collapsed{transform:translateX(-100%)!important;}
   #main{margin-left:0!important;}
   #main.sb-collapsed{margin-left:0!important;}
   .btn-menu{display:flex!important;}
@@ -363,8 +362,7 @@ tr:hover td{background:var(--blue-faint);}
   .content{padding:12px;}
   .topbar{padding:0 14px;height:58px;}
   .topbar-search{display:none;}
-  .topbar-role-pill{display:none;}
-  .topbar-user-chip .user-chip-name{display:none;}
+  .user-chip-info{display:none;}
   .page-header{margin-bottom:16px;}
   .page-header-left .page-title{font-size:18px;}
   .stat-grid{gap:10px;}
@@ -373,12 +371,12 @@ tr:hover td{background:var(--blue-faint);}
   table{font-size:12px;}
   table th,table td{padding:9px 8px;}
   .cards-grid{grid-template-columns:1fr;}
-  .modal{width:100%!important;max-width:100%!important;max-height:90vh;overflow-y:auto;border-radius:20px 20px 0 0!important;position:fixed;bottom:0;left:0;right:0;margin:0!important;}
+  .modal{width:100%!important;max-width:100%!important;max-height:92vh;overflow-y:auto;border-radius:20px 20px 0 0!important;position:fixed;bottom:0;left:0;right:0;margin:0!important;}
   .modal-overlay{align-items:flex-end;padding:0;}
   .form-grid{grid-template-columns:1fr;}
   .cfg-tabs{overflow-x:auto;flex-wrap:nowrap;gap:0;padding-bottom:2px;}
   .cfg-tab{white-space:nowrap;padding:10px 14px;font-size:12px;}
-  .topbar-right{gap:8px;}
+  .topbar-right{gap:6px;}
   .chart-card{padding:16px;}
   .sum-box{padding:14px;}
   .table-card{padding:0;}
@@ -386,7 +384,6 @@ tr:hover td{background:var(--blue-faint);}
   .two-col{gap:12px;}
   .login-box{padding:28px 22px;border-radius:20px;}
 }
-
 @media(max-width:390px){
   .stat-grid{grid-template-columns:1fr 1fr;gap:8px;}
   .stat-value{font-size:19px;}
@@ -431,39 +428,42 @@ tr:hover td{background:var(--blue-faint);}
 <nav id="sidebar">
   <div class="sb-logo">
     <div class="sb-logo-inner">
-      <div class="sb-logo-icon" id="sb-logo-ico">✂</div>
+      <div class="sb-logo-icon"><i class="fa-solid fa-scissors"></i></div>
       <div class="sb-logo-text">
-        <div class="brand" id="sb-brand-name">BarberPro</div>
+        <div class="brand">BarberPro</div>
         <div class="sub">Gestión</div>
       </div>
     </div>
-    <button class="sb-toggle-btn" onclick="toggleCollapse()" title="Colapsar menú">◀</button>
+    <button class="sb-toggle-btn" onclick="toggleCollapse()" title="Colapsar menú">
+      <i class="fa-solid fa-bars-staggered" id="sb-toggle-ico"></i>
+    </button>
   </div>
 
   <div class="sb-nav">
     <div class="nav-group-label">Principal</div>
-    <div class="nav-item active" onclick="goTo('dashboard')"><span class="nav-ico">📊</span><span class="sb-item-label"> Dashboard</span></div>
-    <div class="nav-item" onclick="goTo('agenda')"><span class="nav-ico">📅</span><span class="sb-item-label"> Agenda</span><span class="nav-badge sb-item-label">3</span></div>
-    <div class="nav-item" onclick="goTo('cobros')"><span class="nav-ico">💰</span><span class="sb-item-label"> Cobros</span></div>
+    <div class="nav-item active" onclick="goTo('dashboard')"><i class="fa-solid fa-chart-line"></i><span class="sb-item-label">Dashboard</span></div>
+    <div class="nav-item" onclick="goTo('agenda')"><i class="fa-solid fa-calendar-days"></i><span class="sb-item-label">Agenda</span><span class="nav-badge sb-item-label">3</span></div>
+    <div class="nav-item" onclick="goTo('cobros')"><i class="fa-solid fa-dollar-sign"></i><span class="sb-item-label">Cobros</span></div>
 
     <div class="nav-group-label">Gestión</div>
-    <div class="nav-item admin-only" onclick="goTo('empleados')"><span class="nav-ico">👤</span><span class="sb-item-label"> Empleados</span></div>
-    <div class="nav-item" onclick="goTo('servicios')"><span class="nav-ico">✂️</span><span class="sb-item-label"> Servicios</span></div>
-    <div class="nav-item" onclick="goTo('stock')"><span class="nav-ico">📦</span><span class="sb-item-label"> Stock</span></div>
-    <div class="nav-item" onclick="goTo('egresos')"><span class="nav-ico">📤</span><span class="sb-item-label"> Egresos</span></div>
+    <div class="nav-item admin-only" onclick="goTo('empleados')"><i class="fa-solid fa-users"></i><span class="sb-item-label">Empleados</span></div>
+    <div class="nav-item" onclick="goTo('servicios')"><i class="fa-solid fa-scissors"></i><span class="sb-item-label">Servicios</span></div>
+    <div class="nav-item" onclick="goTo('stock')"><i class="fa-solid fa-boxes-stacked"></i><span class="sb-item-label">Stock</span></div>
+    <div class="nav-item" onclick="goTo('egresos')"><i class="fa-solid fa-arrow-trend-down"></i><span class="sb-item-label">Egresos</span></div>
 
     <div class="nav-group-label admin-only">Análisis</div>
-    <div class="nav-item admin-only" onclick="goTo('reportes')"><span class="nav-ico">📋</span><span class="sb-item-label"> Reportes</span></div>
+    <div class="nav-item admin-only" onclick="goTo('reportes')"><i class="fa-solid fa-file-chart-column"></i><span class="sb-item-label">Reportes</span></div>
 
     <div class="nav-group-label">Academia</div>
-    <div class="nav-item" onclick="goTo('academia')"><span class="nav-ico">🎓</span><span class="sb-item-label"> Academia MK</span></div>
+    <div class="nav-item" onclick="goTo('academia')"><i class="fa-solid fa-graduation-cap"></i><span class="sb-item-label">Academia MK</span></div>
 
     <div class="nav-group-label admin-only">Sistema</div>
-    <div class="nav-item admin-only" onclick="goTo('configuracion')"><span class="nav-ico">⚙️</span><span class="sb-item-label"> Configuración</span></div>
+    <div class="nav-item admin-only" onclick="goTo('configuracion')"><i class="fa-solid fa-gear"></i><span class="sb-item-label">Configuración</span></div>
   </div>
 
   <div class="sb-logout" onclick="doLogout()">
-    <span style="font-size:16px;flex-shrink:0">⏻</span><span class="sb-logout-label"> Cerrar sesión</span>
+    <i class="fa-solid fa-right-from-bracket"></i>
+    <span class="sb-logout-label">Cerrar sesión</span>
   </div>
 </nav>
 
@@ -472,19 +472,24 @@ tr:hover td{background:var(--blue-faint);}
 <!-- ══ MAIN ══ -->
 <div id="main">
   <div class="topbar">
-    <button class="btn-menu" onclick="toggleSidebar()" title="Abrir menú" style="display:none">☰</button>
+    <button class="btn-menu" onclick="toggleSidebar()" style="display:none"><i class="fa-solid fa-bars"></i></button>
     <div class="topbar-search">
-      <span class="search-ico">🔍</span>
+      <i class="fa-solid fa-magnifying-glass search-ico"></i>
       <input type="text" placeholder="Buscar clientes, turnos...">
     </div>
     <div class="topbar-right">
-      <div class="topbar-notif">🔔<div class="notif-dot"></div></div>
-      <span class="topbar-role-pill" id="tb-role-pill">Administrador</span>
-      <div class="topbar-user-chip">
-        <div class="user-chip-avatar" id="tb-avatar">👑</div>
-        <span class="user-chip-name" id="tb-name">Admin</span>
+      <div class="topbar-notif" title="Novedades de la plataforma">
+        <i class="fa-solid fa-bell"></i>
+        <div class="notif-dot"></div>
       </div>
-      <button class="btn btn-primary btn-sm" onclick="openModal('modal-cobro')">+ Cobro</button>
+      <div class="topbar-user-chip" onclick="doLogout()">
+        <div class="user-chip-avatar" id="tb-avatar">A</div>
+        <div class="user-chip-info">
+          <span class="user-chip-name" id="tb-name">Admin</span>
+          <span class="user-chip-role" id="tb-role-pill">Administrador</span>
+        </div>
+      </div>
+      <button class="btn btn-primary btn-sm" onclick="openModal('modal-cobro')"><i class="fa-solid fa-plus"></i> Cobro</button>
     </div>
   </div>
 
@@ -1556,9 +1561,9 @@ tr:hover td{background:var(--blue-faint);}
 
 <!-- ══ MODALS ══ -->
 <div class="modal-overlay" id="modal-cobro">
-  <div class="modal" style="max-width:520px">
-    <button class="modal-close" onclick="closeModal('modal-cobro')">✕</button>
-    <div class="modal-title">💰 Registrar Cobro</div>
+  <div class="modal" style="max-width:500px">
+    <button class="modal-close" onclick="closeModal('modal-cobro')"><i class="fa-solid fa-xmark"></i></button>
+    <div class="modal-title"><i class="fa-solid fa-dollar-sign" style="color:var(--blue);margin-right:8px"></i>Registrar Cobro</div>
 
     <!-- Empleado + Hora -->
     <div class="form-grid" style="margin-bottom:12px">
@@ -1581,70 +1586,74 @@ tr:hover td{background:var(--blue-faint);}
       </div>
     </div>
 
-    <!-- Método de pago (arriba para auto-actualizar precio) -->
-    <div class="fg" style="margin-bottom:14px">
-      <label>Método de pago</label>
-      <div class="pay-split">
-        <div class="pay-m selected" onclick="selectPayCobro(this,'ef')">💵 Efectivo</div>
-        <div class="pay-m" onclick="selectPayCobro(this,'qr')">🏦 Santander</div>
-        <div class="pay-m" onclick="selectPayCobro(this,'qr')">📱 Personal Pay</div>
-        <div class="pay-m" onclick="selectPayCobro(this,'mix')">🔀 Mixto</div>
-      </div>
-    </div>
-    <div id="cobro-mixto-wrap" style="display:none;margin-bottom:12px">
-      <div class="form-grid">
-        <div class="fg"><label>Efectivo $</label><input type="number" id="cobro-mix-ef" placeholder="0" oninput="cobroRecalc()"></div>
-        <div class="fg"><label>Digital $</label><input type="number" id="cobro-mix-qr" placeholder="0" oninput="cobroRecalc()"></div>
-      </div>
-    </div>
-
-    <!-- Servicio principal -->
-    <div class="fg" style="margin-bottom:8px">
+    <!-- Servicio -->
+    <div class="fg" style="margin-bottom:12px">
       <label>Servicio</label>
-      <select id="cobro-servicio" onchange="cobroUpdatePrices()">
+      <select id="cobro-servicio" onchange="cobroRecalc()">
         <option value="">— Seleccionar servicio —</option>
       </select>
     </div>
 
-    <!-- Extras: bebida -->
-    <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
-      <div class="fg" style="flex:1;margin:0"><label>+ Bebida (opcional)</label>
-        <select id="cobro-bebida" onchange="cobroRecalc()">
-          <option value="0">Sin bebida</option>
-        </select>
+    <!-- Extras en una fila -->
+    <div class="form-grid" style="margin-bottom:12px">
+      <div style="display:flex;gap:8px;align-items:flex-end">
+        <div class="fg" style="flex:1;margin:0"><label>+ Bebida</label>
+          <select id="cobro-bebida" onchange="cobroRecalc()"><option value="0">Sin bebida</option></select>
+        </div>
+        <div class="fg" style="width:60px;margin:0"><label>Cant.</label>
+          <input type="number" id="cobro-beb-qty" value="1" min="1" max="10" style="text-align:center" oninput="cobroRecalc()">
+        </div>
       </div>
-      <div class="fg" style="width:80px;margin:0;padding-top:20px"><label style="font-size:10px">Cant.</label>
-        <input type="number" id="cobro-beb-qty" value="1" min="1" max="10" style="text-align:center" oninput="cobroRecalc()">
-      </div>
-    </div>
-
-    <!-- Extras: producto -->
-    <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
-      <div class="fg" style="flex:1;margin:0"><label>+ Producto (opcional)</label>
-        <select id="cobro-producto" onchange="cobroRecalc()">
-          <option value="0">Sin producto</option>
-        </select>
-      </div>
-      <div class="fg" style="width:80px;margin:0;padding-top:20px"><label style="font-size:10px">Cant.</label>
-        <input type="number" id="cobro-prod-qty" value="1" min="1" max="10" style="text-align:center" oninput="cobroRecalc()">
+      <div style="display:flex;gap:8px;align-items:flex-end">
+        <div class="fg" style="flex:1;margin:0"><label>+ Producto</label>
+          <select id="cobro-producto" onchange="cobroRecalc()"><option value="0">Sin producto</option></select>
+        </div>
+        <div class="fg" style="width:60px;margin:0"><label>Cant.</label>
+          <input type="number" id="cobro-prod-qty" value="1" min="1" max="10" style="text-align:center" oninput="cobroRecalc()">
+        </div>
       </div>
     </div>
 
-    <!-- Propina -->
-    <div class="fg" style="margin-bottom:14px">
-      <label>Propina ($)</label>
-      <input type="number" id="cobro-propina" placeholder="0" oninput="cobroRecalc()">
+    <!-- Método de pago + propina en una fila -->
+    <div class="form-grid" style="margin-bottom:14px">
+      <div class="fg" style="margin:0">
+        <label>Método de pago</label>
+        <div class="pay-split" style="gap:6px">
+          <div class="pay-m selected" onclick="selectPayCobro(this,'ef')"><i class="fa-solid fa-money-bills"></i> Efectivo</div>
+          <div class="pay-m" onclick="selectPayCobro(this,'san')"><i class="fa-solid fa-building-columns"></i> Santander</div>
+          <div class="pay-m" onclick="selectPayCobro(this,'pp')"><i class="fa-solid fa-mobile-screen"></i> Personal Pay</div>
+          <div class="pay-m" onclick="selectPayCobro(this,'mix')"><i class="fa-solid fa-shuffle"></i> Mixto</div>
+        </div>
+      </div>
+      <div class="fg" style="margin:0"><label>Propina ($)</label>
+        <input type="number" id="cobro-propina" placeholder="0" oninput="cobroRecalc()">
+      </div>
     </div>
 
-    <!-- Resumen automático -->
-    <div style="background:var(--blue-faint);border-radius:12px;padding:14px 16px;margin-bottom:14px">
-      <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-light);margin-bottom:6px"><span>Servicio</span><span id="cobro-r-servicio" class="fw7">$0</span></div>
-      <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-light);margin-bottom:6px"><span>Extras</span><span id="cobro-r-extras" class="fw7">$0</span></div>
-      <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-light);margin-bottom:6px"><span>Propina</span><span id="cobro-r-propina" class="fw7">$0</span></div>
-      <div style="display:flex;justify-content:space-between;font-size:14px;font-weight:700;color:var(--blue);border-top:1px solid var(--border);padding-top:8px;margin-top:6px"><span>TOTAL</span><span id="cobro-r-total">$0</span></div>
+    <!-- Mixto -->
+    <div id="cobro-mixto-wrap" style="display:none;margin-bottom:12px">
+      <div class="form-grid">
+        <div class="fg"><label>Efectivo $</label><input type="number" id="cobro-mix-ef" placeholder="0"></div>
+        <div class="fg"><label>Digital $</label><input type="number" id="cobro-mix-qr" placeholder="0"></div>
+      </div>
     </div>
 
-    <button class="btn btn-primary" style="width:100%;justify-content:center;padding:13px" onclick="registrarCobro()">✓ Registrar Cobro</button>
+    <!-- Nota excedente QR (solo cuando no es efectivo) -->
+    <div id="cobro-excedente-wrap" style="display:none;background:var(--amber-bg);border:1px solid rgba(217,119,6,.2);border-radius:10px;padding:10px 13px;font-size:11px;color:var(--amber);margin-bottom:12px">
+      <i class="fa-solid fa-circle-info"></i> <strong>Excedente por método de pago:</strong> <span id="cobro-excedente-val">$0</span> — queda registrado como comisión del medio de pago.
+    </div>
+
+    <!-- Resumen -->
+    <div style="background:var(--blue-faint);border-radius:12px;padding:13px 15px;margin-bottom:14px;border:1px solid var(--border)">
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-light);margin-bottom:5px"><span>Servicio</span><span id="cobro-r-servicio" class="fw7" style="color:var(--text)">$0</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-light);margin-bottom:5px"><span>Extras</span><span id="cobro-r-extras" class="fw7" style="color:var(--text)">$0</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-light);margin-bottom:5px"><span>Propina</span><span id="cobro-r-propina" class="fw7" style="color:var(--text)">$0</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:14px;font-weight:800;color:var(--blue);border-top:1px solid var(--border);padding-top:8px;margin-top:5px"><span>TOTAL</span><span id="cobro-r-total">$0</span></div>
+    </div>
+
+    <button class="btn btn-primary" style="width:100%;justify-content:center;padding:12px;font-size:14px" onclick="registrarCobro()">
+      <i class="fa-solid fa-check"></i> Registrar Cobro
+    </button>
   </div>
 </div>
 
@@ -1920,12 +1929,13 @@ function doLogout(){
 function applyRole(){
   var isAdmin=currentRole==='admin';
   var name=currentUser?currentUser.name:'Admin';
-  var avatar=currentUser?currentUser.avatar:'👑';
-  document.getElementById('tb-avatar').textContent=avatar;
-  document.getElementById('tb-name').textContent=name;
-  var pill=document.getElementById('tb-role-pill');
-  pill.textContent=isAdmin?'Administrador':'Administrativo';
-  pill.className=isAdmin?'topbar-role-pill':'topbar-role-pill emp';
+  var initials = name.split(' ').map(function(w){return w[0];}).join('').substring(0,2).toUpperCase();
+  var avatarEl = document.getElementById('tb-avatar');
+  if(avatarEl){ avatarEl.textContent = initials; avatarEl.style.background = isAdmin ? 'var(--blue)' : 'var(--green)'; }
+  var nameEl = document.getElementById('tb-name');
+  if(nameEl) nameEl.textContent = name;
+  var roleEl = document.getElementById('tb-role-pill');
+  if(roleEl) roleEl.textContent = isAdmin ? 'Administrador' : 'Administrativo';
   var adminEls=document.querySelectorAll('.admin-only');
   for(var i=0;i<adminEls.length;i++) adminEls[i].style.display=isAdmin?'':'none';
 }
@@ -2117,10 +2127,9 @@ function setCfgTab(id, el) {
 function toggleCollapse(){
   var sb=document.getElementById('sidebar');
   var mn=document.getElementById('main');
-  sb.classList.toggle('collapsed');
+  var isCollapsed = sb.classList.toggle('collapsed');
   mn.classList.toggle('sb-collapsed');
-  var btn=sb.querySelector('.sb-toggle-btn');
-  if(btn) btn.textContent = sb.classList.contains('collapsed') ? '▶' : '◀';
+  // Icon stays as bars always — collapsed state hides everything except the button
 }
 
 // USERS TABLE
@@ -2313,7 +2322,9 @@ function setReportEmp(emp) {
 var egF = document.getElementById('eg-fecha'); if(egF) egF.value = todayVal;
 
 // ══ COBRO LOGIC ══
-var cobroPayMode = 'ef'; // 'ef' | 'qr' | 'mix'
+var cobroPayMode = 'ef'; // 'ef' | 'san' | 'pp' | 'mix'
+// Excedente por MP (referencia, no impacta en reporte)
+var QR_EXCEDENTE = { ef:0, san:200, pp:200, mix:100 }; // pesos fijos de referencia por servicio
 
 function selectPayCobro(el, mode) {
   cobroPayMode = mode;
@@ -2321,7 +2332,7 @@ function selectPayCobro(el, mode) {
   for (var i=0;i<ms.length;i++) ms[i].classList.remove('selected');
   el.classList.add('selected');
   document.getElementById('cobro-mixto-wrap').style.display = mode==='mix'?'block':'none';
-  cobroUpdatePrices();
+  cobroRecalc();
 }
 
 function cobroIsMarcos() {
@@ -2330,44 +2341,59 @@ function cobroIsMarcos() {
 }
 
 function cobroUpdatePrices() {
-  // Repopulate servicio select with correct prices
+  // Always use efectivo prices — the QR difference is excedente, not client price
   var sel = document.getElementById('cobro-servicio');
   if (!sel) return;
   var isMarcos = cobroIsMarcos();
-  var isQR = cobroPayMode === 'qr';
   sel.innerHTML = '<option value="">— Seleccionar servicio —</option>';
   for (var i=0;i<SERVICIOS.length;i++) {
     var s = SERVICIOS[i];
-    var price = isMarcos ? (isQR ? s.qr_m : s.ef_m) : (isQR ? s.qr : s.ef);
+    var price = isMarcos ? s.ef_m : s.ef;  // Always efectivo base price
     sel.innerHTML += '<option value="'+price+'">'+s.nombre+' — $'+fmtN(price)+'</option>';
   }
-  // If marcos, add cursos
   if (isMarcos) {
     sel.innerHTML += '<optgroup label="── Academia MK ──"></optgroup>';
     for (var j=0;j<CURSOS.length;j++) {
       var c = CURSOS[j];
-      var cp = isQR ? c.qr : c.ef;
-      sel.innerHTML += '<option value="'+cp+'">'+c.nombre+' — $'+fmtN(cp)+'</option>';
+      sel.innerHTML += '<option value="'+c.ef+'">'+c.nombre+' — $'+fmtN(c.ef)+'</option>';
     }
   }
   cobroRecalc();
 }
 
 function cobroRecalc() {
-  var servVal = parseFloat((document.getElementById('cobro-servicio')||{}).value) || 0;
-  var bebSel  = document.getElementById('cobro-bebida');
-  var prodSel = document.getElementById('cobro-producto');
-  var bebPrice  = bebSel  ? (parseFloat(bebSel.value)||0)  : 0;
-  var prodPrice = prodSel ? (parseFloat(prodSel.value)||0) : 0;
-  var bebQty    = parseInt((document.getElementById('cobro-beb-qty')||{}).value)||1;
-  var prodQty   = parseInt((document.getElementById('cobro-prod-qty')||{}).value)||1;
-  var propina   = parseFloat((document.getElementById('cobro-propina')||{}).value)||0;
-  var extras    = (bebPrice * bebQty) + (prodPrice * prodQty);
-  var total     = servVal + extras + propina;
+  var servVal  = parseFloat((document.getElementById('cobro-servicio')||{}).value) || 0;
+  var bebPrice = parseFloat((document.getElementById('cobro-bebida')||{}).value) || 0;
+  var prodPrice= parseFloat((document.getElementById('cobro-producto')||{}).value) || 0;
+  var bebQty   = parseInt((document.getElementById('cobro-beb-qty')||{}).value) || 1;
+  var prodQty  = parseInt((document.getElementById('cobro-prod-qty')||{}).value) || 1;
+  var propina  = parseFloat((document.getElementById('cobro-propina')||{}).value) || 0;
+  var extras   = (bebPrice * bebQty) + (prodPrice * prodQty);
+  var total    = servVal + extras + propina;
+
   set('cobro-r-servicio', '$'+fmtN(servVal));
   set('cobro-r-extras',   '$'+fmtN(extras));
   set('cobro-r-propina',  '$'+fmtN(propina));
   set('cobro-r-total',    '$'+fmtN(total));
+
+  // Excedente por método de pago (referencia para el administrativo)
+  var isMarcos = cobroIsMarcos();
+  var excW = document.getElementById('cobro-excedente-wrap');
+  var excV = document.getElementById('cobro-excedente-val');
+  if (cobroPayMode !== 'ef' && servVal > 0) {
+    // Calculate actual QR price difference
+    var sel = document.getElementById('cobro-servicio');
+    var selIdx = sel ? sel.selectedIndex - 1 : -1;
+    var excedente = 0;
+    if (selIdx >= 0 && selIdx < SERVICIOS.length) {
+      var s = SERVICIOS[selIdx];
+      excedente = isMarcos ? (s.qr_m - s.ef_m) : (s.qr - s.ef);
+    }
+    if (excW) excW.style.display = 'block';
+    if (excV) excV.textContent = '$'+fmtN(excedente);
+  } else {
+    if (excW) excW.style.display = 'none';
+  }
 }
 
 function registrarCobro() {
@@ -2454,19 +2480,17 @@ function stockFilter(el, tipo) { /* futuro */ }
 
 // ══ INIT COBRO MODAL ══
 function initCobroModal() {
-  // Populate bebida select
   var bSel = document.getElementById('cobro-bebida');
   if (bSel) {
     bSel.innerHTML = '<option value="0">Sin bebida</option>';
-    for (var i=0;i<BEBIDAS.length;i++) bSel.innerHTML += '<option value="'+BEBIDAS[i].precio+'">'+BEBIDAS[i].nombre+' $'+fmtN(BEBIDAS[i].precio)+'</option>';
+    for (var i=0;i<BEBIDAS.length;i++) bSel.innerHTML += '<option value="'+BEBIDAS[i].precio+'">'+BEBIDAS[i].nombre+' — $'+fmtN(BEBIDAS[i].precio)+'</option>';
   }
-  // Populate producto select
   var pSel = document.getElementById('cobro-producto');
   if (pSel) {
     pSel.innerHTML = '<option value="0">Sin producto</option>';
-    for (var j=0;j<PRODUCTOS_VENTA.length;j++) pSel.innerHTML += '<option value="'+PRODUCTOS_VENTA[j].precio+'">'+PRODUCTOS_VENTA[j].nombre+' $'+fmtN(PRODUCTOS_VENTA[j].precio)+'</option>';
+    for (var j=0;j<PRODUCTOS_VENTA.length;j++) pSel.innerHTML += '<option value="'+PRODUCTOS_VENTA[j].precio+'">'+PRODUCTOS_VENTA[j].nombre+' — $'+fmtN(PRODUCTOS_VENTA[j].precio)+'</option>';
   }
-  cobroUpdatePrices();
+  cobroUpdatePrices(); // populate services with efectivo prices
 }
 
 // Run on load
