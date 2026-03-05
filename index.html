@@ -488,7 +488,7 @@ td { vertical-align:middle; }
   <div class="sb-nav">
     <div class="nav-group-label">Principal</div>
     <div class="nav-item active" onclick="goTo('dashboard')"><i class="fa-solid fa-chart-line"></i><span class="sb-item-label">Dashboard</span></div>
-    <div class="nav-item" onclick="goTo('agenda')"><i class="fa-solid fa-calendar-days"></i><span class="sb-item-label">Agenda</span><span class="nav-badge sb-item-label">3</span></div>
+    <div class="nav-item" onclick="goTo('agenda')"><i class="fa-solid fa-calendar-days"></i><span class="sb-item-label">Agenda</span><span class="nav-badge sb-item-label" id="sidebar-agenda-badge" style="display:none"></span></div>
     <div class="nav-item" onclick="goTo('cobros')"><i class="fa-solid fa-dollar-sign"></i><span class="sb-item-label">Cobros</span></div>
 
     <div class="nav-group-label">Gestión</div>
@@ -667,7 +667,26 @@ td { vertical-align:middle; }
           <div class="page-title">Agenda de Turnos</div>
           <div class="page-sub" id="agenda-fecha-sel">Cargando...</div>
         </div>
-        <button class="btn btn-primary" onclick="openModal('modal-turno')">+ Nuevo Turno</button>
+        <div style="display:flex;gap:10px">
+          <button class="btn btn-outline" onclick="toggleRecordatorios(this)">🔔 Recordatorios mañana</button>
+          <button class="btn btn-primary" onclick="openModal('modal-turno')">+ Nuevo Turno</button>
+        </div>
+      </div>
+
+      <!-- Panel recordatorios WhatsApp (oculto por defecto) -->
+      <div id="panel-recordatorios" style="display:none;margin-bottom:20px">
+        <div class="card" style="padding:0;overflow:hidden;border:1.5px solid #25D36633">
+          <div style="padding:14px 20px;background:linear-gradient(135deg,#25D36615,#128C7E10);border-bottom:1px solid #25D36633;display:flex;justify-content:space-between;align-items:center">
+            <div>
+              <div style="font-size:14px;font-weight:700;color:#128C7E">📲 Recordatorios WhatsApp — Mañana</div>
+              <div style="font-size:12px;color:var(--text-light);margin-top:2px" id="recordatorios-sub">Cargando turnos de mañana...</div>
+            </div>
+            <button class="btn btn-outline btn-sm" onclick="loadRecordatorios()">↻ Actualizar</button>
+          </div>
+          <div id="recordatorios-lista" style="padding:16px 20px">
+            <div style="text-align:center;padding:20px;color:var(--text-light)">Cargando...</div>
+          </div>
+        </div>
       </div>
 
       <!-- Layout: calendario izquierda, resumen + tabla derecha -->
@@ -2796,17 +2815,20 @@ function renderAgenda(){
     return;
   }
 
-  var estadoBadge = {
-    'confirmado': 'b-green', 'pendiente': 'b-gray',
-    'realizado': 'b-blue', 'en curso': 'b-amb'
-  };
+  var estadoBadge = { 'confirmado':'b-green','pendiente':'b-gray','realizado':'b-blue','en curso':'b-amb' };
   tb.innerHTML = lista.map(function(t){
     var badge = estadoBadge[t.estado] || 'b-gray';
-    var accion = t.estado === 'realizado'
-      ? '<button class="action-btn ab-blue" title="Ver">📋</button>'
-      : t.estado === 'confirmado'
-        ? '<button class="action-btn ab-blue" onclick="openModal(\'modal-cobro\')" title="Cobrar">💰</button>'
-        : '<button class="action-btn ab-green" onclick="confirmarTurno(\''+t.id+'\')" title="Confirmar">✓</button>';
+    var accion;
+    if(t.estado === 'realizado'){
+      accion = '<span style="font-size:11px;color:var(--green);font-weight:600">✅ Listo</span>';
+    } else if(t.estado === 'confirmado'){
+      accion = '<div style="display:flex;gap:4px">'+
+        '<button class="action-btn ab-blue" onclick="openModal(\'modal-cobro\')" title="Cobrar">💰</button>'+
+        '<button class="action-btn ab-green" onclick="confirmarTurno(\''+t.id+'\')" title="Marcar realizado">✓</button>'+
+      '</div>';
+    } else {
+      accion = '<button class="action-btn ab-green" onclick="confirmarTurno(\''+t.id+'\')" title="Confirmar">✓</button>';
+    }
     return '<tr>'+
       '<td class="fw7">'+(t.hora||'—')+'</td>'+
       '<td>'+(t.cliente_nombre||'—')+'</td>'+
@@ -2819,6 +2841,81 @@ function renderAgenda(){
   }).join('');
 }
 
+// ── RECORDATORIOS WHATSAPP ───────────────────────────────────
+var recordatoriosVisible = false;
+
+function toggleRecordatorios(btn){
+  recordatoriosVisible = !recordatoriosVisible;
+  var panel = document.getElementById('panel-recordatorios');
+  if(panel) panel.style.display = recordatoriosVisible ? 'block' : 'none';
+  btn.style.background = recordatoriosVisible ? '#25D36620' : '';
+  btn.style.borderColor = recordatoriosVisible ? '#25D366' : '';
+  btn.style.color = recordatoriosVisible ? '#128C7E' : '';
+  if(recordatoriosVisible) loadRecordatorios();
+}
+
+async function loadRecordatorios(){
+  var manana = new Date();
+  manana.setDate(manana.getDate() + 1);
+  var mananaStr = manana.toISOString().split('T')[0];
+  var partes = mananaStr.split('-');
+  var MESES_ES2 = ['enero','febrero','marzo','abril','mayo','junio','julio','agosto','septiembre','octubre','noviembre','diciembre'];
+  var mananaLabel = parseInt(partes[2])+' de '+MESES_ES2[parseInt(partes[1])-1];
+
+  var { data: turnos } = await supa.from('turnos')
+    .select('*')
+    .eq('fecha', mananaStr)
+    .neq('estado', 'realizado')
+    .order('hora');
+
+  var sub = document.getElementById('recordatorios-sub');
+  var lista = document.getElementById('recordatorios-lista');
+  if(!lista) return;
+
+  if(!turnos || turnos.length === 0){
+    if(sub) sub.textContent = 'Sin turnos para mañana ('+mananaLabel+')';
+    lista.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-light)">No hay turnos agendados para mañana</div>';
+    return;
+  }
+
+  if(sub) sub.textContent = turnos.length+' turno'+(turnos.length>1?'s':'')+' para mañana — '+mananaLabel;
+
+  lista.innerHTML = '<div style="display:flex;flex-direction:column;gap:10px">'+
+    turnos.map(function(t){
+      var tel = (t.cliente_tel||'').replace(/\D/g,'');
+      var nombre = t.cliente_nombre || 'Cliente';
+      var hora = t.hora || '';
+      var servicio = t.servicio || 'turno';
+      var empleado = t.empleado_nombre || '';
+      var msg = encodeURIComponent(
+        '¡Hola '+nombre+'! 👋\n\n'+
+        'Te recordamos que mañana tenés turno en *Salón MK* 💈\n\n'+
+        '🕐 Hora: *'+hora+'*\n'+
+        '✂️ Servicio: *'+servicio+'*\n'+
+        (empleado ? '👤 Con: *'+empleado+'*\n' : '')+
+        '\nAny consulta, escribinos. ¡Te esperamos!'
+      );
+      var waLink = 'https://wa.me/549'+tel+'?text='+msg;
+      var tieneTel = tel.length > 5;
+      return '<div style="display:flex;justify-content:space-between;align-items:center;padding:12px 14px;background:var(--bg);border-radius:12px;border:1px solid var(--border)">'+
+        '<div style="display:flex;gap:12px;align-items:center">'+
+          '<div style="width:36px;height:36px;border-radius:10px;background:#25D36620;display:flex;align-items:center;justify-content:center;font-size:16px">📱</div>'+
+          '<div>'+
+            '<div style="font-weight:700;font-size:13px">'+nombre+'</div>'+
+            '<div style="font-size:11px;color:var(--text-light)">'+hora+' · '+servicio+(empleado?' · '+empleado:'')+'</div>'+
+            (tieneTel?'':'<div style="font-size:11px;color:var(--red);margin-top:2px">⚠️ Sin teléfono registrado</div>')+
+          '</div>'+
+        '</div>'+
+        (tieneTel
+          ? '<a href="'+waLink+'" target="_blank" class="btn btn-sm" style="background:#25D366;color:#fff;border:none;gap:6px;text-decoration:none">'+
+              '<i class="fa-brands fa-whatsapp"></i> Enviar recordatorio</a>'
+          : '<button class="btn btn-sm btn-outline" disabled style="opacity:.4">Sin tel.</button>'
+        )+
+      '</div>';
+    }).join('')+
+  '</div>';
+}
+
 function filterAgenda(el, filtro){
   agendaFiltro = filtro;
   var pills = document.querySelectorAll('#page-agenda .tab-pill');
@@ -2828,9 +2925,37 @@ function filterAgenda(el, filtro){
 }
 
 async function confirmarTurno(id){
-  await supa.from('turnos').update({ estado: 'confirmado' }).eq('id', id);
-  await loadAgenda();
-  showToast('Turno confirmado ✓');
+  var turno = TURNOS_HOY.find(function(t){ return t.id===id; });
+  if(!turno) return;
+
+  // Ciclo de estados: pendiente → confirmado → realizado
+  var siguienteEstado = turno.estado === 'pendiente' ? 'confirmado' : 'realizado';
+  await supa.from('turnos').update({ estado: siguienteEstado }).eq('id', id);
+
+  // Si se marca como realizado, actualizar última visita y visitas del cliente
+  if(siguienteEstado === 'realizado' && turno.cliente_nombre){
+    var hoy = new Date().toISOString().split('T')[0];
+    // Buscar cliente por nombre
+    var { data: clientes } = await supa.from('clientes')
+      .select('id, visitas')
+      .ilike('nombre', turno.cliente_nombre);
+    if(clientes && clientes.length > 0){
+      var cl = clientes[0];
+      await supa.from('clientes').update({
+        ultima_visita: hoy,
+        visitas: (cl.visitas||0) + 1
+      }).eq('id', cl.id);
+      // Actualizar en memoria
+      var idx = CLIENTES.findIndex(function(c){ return c.id == cl.id; });
+      if(idx >= 0){
+        CLIENTES[idx].ultimaVisita = 'Hoy';
+        CLIENTES[idx].visitas = (cl.visitas||0) + 1;
+      }
+    }
+  }
+
+  await loadAgendaDia(calSelDate);
+  showToast(siguienteEstado === 'confirmado' ? 'Turno confirmado ✓' : '✅ Turno realizado — visita registrada');
 }
 function applyRole(){
   var isAdmin=currentRole==='admin';
@@ -3430,6 +3555,18 @@ async function loadAgendaDia(dateStr){
   agendaFiltro = 'todos';
   var pills = document.querySelectorAll('#page-agenda .tab-pill');
   pills.forEach(function(p,i){ p.classList.toggle('active', i===0); });
+
+  // Badge sidebar: pendientes de hoy
+  var hoyCheck = new Date().toISOString().split('T')[0];
+  var badge = document.getElementById('sidebar-agenda-badge');
+  if(badge){
+    if(dateStr === hoyCheck){
+      var pendientes = TURNOS_HOY.filter(function(t){ return t.estado==='pendiente'; }).length;
+      badge.textContent = pendientes;
+      badge.style.display = pendientes > 0 ? '' : 'none';
+    }
+  }
+
   renderAgenda();
 }
 
@@ -4340,7 +4477,7 @@ async function saveCliente(){
     categoria: cat.charAt(0).toUpperCase()+cat.slice(1).toLowerCase() || 'Nuevo',
     visitas:0, notas:notas||null
   }).select().single();
-  var newC = { id: data?data.id:Date.now(), nombre, tel:tel||'—', email, birthday, barbero, cat, visitas:0, ultimaVisita:'Hoy', notas };
+  var newC = { id: data?data.id:Date.now(), nombre, tel:tel||'—', email, birthday, barbero, cat, visitas:0, ultimaVisita:'—', notas };
   CLIENTES.push(newC);
   closeModal('modal-cliente');
   ['cl-nombre','cl-tel','cl-email','cl-birthday','cl-notas'].forEach(function(id){var e=document.getElementById(id);if(e)e.value='';});
