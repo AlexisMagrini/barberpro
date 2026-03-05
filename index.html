@@ -385,7 +385,10 @@ tr:hover td{background:var(--blue-faint);}
     <div class="login-hint">
       <div class="login-hint-title">Credenciales de prueba</div>
       <div class="login-hint-row"><span class="login-hint-label">👑 Administrador</span><span class="login-hint-val">admin / admin123</span></div>
-      <div class="login-hint-row"><span class="login-hint-label">✂️ Empleado</span><span class="login-hint-val">empleado / emp123</span></div>
+      <div class="login-hint-row"><span class="login-hint-label">✂️ Franco</span><span class="login-hint-val">franco / franco123</span></div>
+      <div class="login-hint-row"><span class="login-hint-label">💈 Simón</span><span class="login-hint-val">simon / simon123</span></div>
+      <div class="login-hint-row"><span class="login-hint-label">🪒 Tomás</span><span class="login-hint-val">tomas / tomas123</span></div>
+      <div class="login-hint-row"><span class="login-hint-label">💇 Marcos</span><span class="login-hint-val">marcos / marcos123</span></div>
     </div>
   </div>
 </div>
@@ -533,20 +536,12 @@ tr:hover td{background:var(--blue-faint);}
             <div class="table-title">Empleados Hoy</div>
           </div>
           <table>
-            <thead><tr><th>Empleado</th><th>Serv.</th><th>Total</th></tr></thead>
+            <thead><tr><th>Empleado</th><th>%</th><th>Serv.</th><th>Total</th></tr></thead>
             <tbody>
-              <tr>
-                <td><div class="emp-cell"><div class="emp-avatar-sm">💈</div><div class="emp-cell-name">Marcos R.</div></div></td>
-                <td>3</td><td class="fw7 v-blue">$18.000</td>
-              </tr>
-              <tr>
-                <td><div class="emp-cell"><div class="emp-avatar-sm">✂️</div><div class="emp-cell-name">Lucas P.</div></div></td>
-                <td>2</td><td class="fw7 v-blue">$14.500</td>
-              </tr>
-              <tr>
-                <td><div class="emp-cell"><div class="emp-avatar-sm">🪒</div><div class="emp-cell-name">Tomás G.</div></div></td>
-                <td>3</td><td class="fw7 v-blue">$16.000</td>
-              </tr>
+              <tr><td><div class="emp-cell"><div class="emp-avatar-sm">✂️</div><div class="emp-cell-name">Franco</div></div></td><td class="fw7" style="color:var(--text-light)">40%</td><td>0</td><td class="fw7 v-blue">$0</td></tr>
+              <tr><td><div class="emp-cell"><div class="emp-avatar-sm">💈</div><div class="emp-cell-name">Simón</div></div></td><td class="fw7" style="color:var(--text-light)">40%</td><td>0</td><td class="fw7 v-blue">$0</td></tr>
+              <tr><td><div class="emp-cell"><div class="emp-avatar-sm">🪒</div><div class="emp-cell-name">Tomás</div></div></td><td class="fw7" style="color:var(--text-light)">40%</td><td>0</td><td class="fw7 v-blue">$0</td></tr>
+              <tr><td><div class="emp-cell"><div class="emp-avatar-sm">💇</div><div class="emp-cell-name">Marcos</div></div></td><td class="fw7" style="color:var(--text-light)">50%</td><td>0</td><td class="fw7 v-blue">$0</td></tr>
             </tbody>
           </table>
         </div>
@@ -579,26 +574,26 @@ tr:hover td{background:var(--blue-faint);}
           </thead>
           <tbody id="bookings-tbody">
             <tr>
-              <td><div class="emp-cell"><div class="emp-avatar-sm">💈</div><div class="emp-cell-name">Marcos R.</div></div></td>
-              <td>Corte + Barba</td><td>10:00</td><td>10:45</td><td>Juan M.</td>
+              <td><div class="emp-cell"><div class="emp-avatar-sm">✂️</div><div class="emp-cell-name">Franco</div></div></td>
+              <td>Corte y barba</td><td>10:00</td><td>10:45</td><td>Juan M.</td>
               <td><span class="badge b-green"><span class="b-dot"></span>Confirmado</span></td>
               <td><button class="action-btn ab-blue" onclick="openModal('modal-cobro')">💰</button></td>
             </tr>
             <tr>
-              <td><div class="emp-cell"><div class="emp-avatar-sm">✂️</div><div class="emp-cell-name">Lucas P.</div></div></td>
-              <td>Corte Clásico</td><td>11:30</td><td>12:00</td><td>Pedro L.</td>
+              <td><div class="emp-cell"><div class="emp-avatar-sm">💈</div><div class="emp-cell-name">Simón</div></div></td>
+              <td>Corte + Perfilado</td><td>11:30</td><td>12:10</td><td>Pedro L.</td>
               <td><span class="badge b-amb"><span class="b-dot"></span>Pendiente</span></td>
               <td><button class="action-btn ab-green">✓</button></td>
             </tr>
             <tr>
-              <td><div class="emp-cell"><div class="emp-avatar-sm">🪒</div><div class="emp-cell-name">Tomás G.</div></div></td>
-              <td>Barba + Fade</td><td>13:00</td><td>14:00</td><td>Carlos V.</td>
+              <td><div class="emp-cell"><div class="emp-avatar-sm">🪒</div><div class="emp-cell-name">Tomás</div></div></td>
+              <td>Corte y barba VIP</td><td>13:00</td><td>14:00</td><td>Carlos V.</td>
               <td><span class="badge b-gray"><span class="b-dot"></span>Sin confirmar</span></td>
               <td><button class="action-btn ab-blue">👁</button></td>
             </tr>
             <tr>
-              <td><div class="emp-cell"><div class="emp-avatar-sm">💈</div><div class="emp-cell-name">Marcos R.</div></div></td>
-              <td>Corte Clásico</td><td>09:00</td><td>09:30</td><td>Ariel F.</td>
+              <td><div class="emp-cell"><div class="emp-avatar-sm">💇</div><div class="emp-cell-name">Marcos</div></div></td>
+              <td>Corte</td><td>09:00</td><td>09:30</td><td>Ariel F.</td>
               <td><span class="badge b-blue"><span class="b-dot"></span>Realizado</span></td>
               <td><button class="action-btn ab-blue">📋</button></td>
             </tr>
@@ -653,10 +648,10 @@ tr:hover td{background:var(--blue-faint);}
         <table>
           <thead><tr><th>Hora</th><th>Cliente</th><th>Tel.</th><th>Servicio</th><th>Empleado</th><th>Estado</th><th>Acción</th></tr></thead>
           <tbody>
-            <tr><td class="fw7">09:00</td><td>Ariel F.</td><td>11-5555-0001</td><td>Corte Clásico</td><td>Marcos R.</td><td><span class="badge b-blue"><span class="b-dot"></span>Realizado</span></td><td><button class="action-btn ab-blue">📋</button></td></tr>
-            <tr><td class="fw7">10:00</td><td>Juan M.</td><td>11-5555-0002</td><td>Corte + Barba</td><td>Marcos R.</td><td><span class="badge b-amb"><span class="b-dot"></span>En curso</span></td><td><button class="action-btn ab-blue" onclick="openModal('modal-cobro')">💰</button></td></tr>
-            <tr><td class="fw7">11:30</td><td>Pedro L.</td><td>11-5555-0003</td><td>Corte</td><td>Lucas P.</td><td><span class="badge b-gray"><span class="b-dot"></span>Pendiente</span></td><td><button class="action-btn ab-green">✓</button></td></tr>
-            <tr><td class="fw7">13:00</td><td>Carlos V.</td><td>11-5555-0004</td><td>Barba + Fade</td><td>Tomás G.</td><td><span class="badge b-gray"><span class="b-dot"></span>Pendiente</span></td><td><button class="action-btn ab-green">✓</button></td></tr>
+            <tr><td class="fw7">09:00</td><td>Ariel F.</td><td>11-5555-0001</td><td>Corte</td><td>Franco</td><td><span class="badge b-blue"><span class="b-dot"></span>Realizado</span></td><td><button class="action-btn ab-blue">📋</button></td></tr>
+            <tr><td class="fw7">10:00</td><td>Juan M.</td><td>11-5555-0002</td><td>Corte y barba</td><td>Franco</td><td><span class="badge b-amb"><span class="b-dot"></span>En curso</span></td><td><button class="action-btn ab-blue" onclick="openModal('modal-cobro')">💰</button></td></tr>
+            <tr><td class="fw7">11:30</td><td>Pedro L.</td><td>11-5555-0003</td><td>Corte + Perfilado</td><td>Simón</td><td><span class="badge b-gray"><span class="b-dot"></span>Pendiente</span></td><td><button class="action-btn ab-green">✓</button></td></tr>
+            <tr><td class="fw7">13:00</td><td>Carlos V.</td><td>11-5555-0004</td><td>Corte y barba VIP</td><td>Tomás</td><td><span class="badge b-gray"><span class="b-dot"></span>Pendiente</span></td><td><button class="action-btn ab-green">✓</button></td></tr>
           </tbody>
         </table>
       </div>
@@ -671,10 +666,11 @@ tr:hover td{background:var(--blue-faint);}
         </div>
         <button class="btn btn-primary" onclick="openModal('modal-cobro')">+ Registrar Cobro</button>
       </div>
-      <div class="stat-grid" style="grid-template-columns:repeat(3,1fr)">
-        <div class="stat-card featured"><div class="stat-label">Total Hoy</div><div class="stat-value">$48.500</div></div>
-        <div class="stat-card"><div class="stat-label">Efectivo</div><div class="stat-value">$22.000</div><div class="stat-sub">45% del total</div></div>
-        <div class="stat-card"><div class="stat-label">Digital</div><div class="stat-value">$26.500</div><div class="stat-sub">55% del total</div></div>
+      <div class="stat-grid" style="grid-template-columns:repeat(4,1fr)">
+        <div class="stat-card featured"><div class="stat-label">Total Hoy</div><div class="stat-value">$0</div></div>
+        <div class="stat-card"><div class="stat-label">Efectivo</div><div class="stat-value">$0</div></div>
+        <div class="stat-card"><div class="stat-label">Santander</div><div class="stat-value">$0</div></div>
+        <div class="stat-card"><div class="stat-label">Personal Pay</div><div class="stat-value">$0</div></div>
       </div>
       <div class="table-card">
         <div class="table-header"><div class="table-title">Cobros del Día</div>
@@ -685,13 +681,9 @@ tr:hover td{background:var(--blue-faint);}
           </div>
         </div>
         <table>
-          <thead><tr><th>Hora</th><th>Cliente</th><th>Servicio</th><th>Empleado</th><th>Monto</th><th>Método</th><th>Propina</th></tr></thead>
+          <thead><tr><th>Hora</th><th>Cliente</th><th>Servicio</th><th>Empleado</th><th>Monto</th><th>Método</th></tr></thead>
           <tbody>
-            <tr><td class="fw7">09:15</td><td>Ariel F.</td><td>Corte Clásico</td><td>Marcos R.</td><td class="fw7 v-blue">$7.500</td><td><span class="badge b-green">Efectivo</span></td><td class="fw7 v-blue">$500</td></tr>
-            <tr><td class="fw7">09:50</td><td>Mateo S.</td><td>Barba</td><td>Lucas P.</td><td class="fw7 v-blue">$5.000</td><td><span class="badge b-blue">Transfer.</span></td><td>—</td></tr>
-            <tr><td class="fw7">10:30</td><td>Rodrigo T.</td><td>Corte + Barba</td><td>Tomás G.</td><td class="fw7 v-blue">$12.000</td><td><span class="badge b-amb">Mixto</span></td><td class="fw7 v-blue">$1.000</td></tr>
-            <tr><td class="fw7">11:15</td><td>Pablo N.</td><td>Fade + Barba</td><td>Marcos R.</td><td class="fw7 v-blue">$14.000</td><td><span class="badge b-blue">Tarjeta</span></td><td>—</td></tr>
-            <tr><td class="fw7">12:00</td><td>Ignacio M.</td><td>Corte Clásico</td><td>Lucas P.</td><td class="fw7 v-blue">$10.000</td><td><span class="badge b-green">Efectivo</span></td><td class="fw7 v-blue">$500</td></tr>
+            <tr><td colspan="6" style="text-align:center;padding:28px;color:var(--text-light);font-size:13px">Sin cobros registrados hoy. Conectá la base de datos para ver datos reales.</td></tr>
           </tbody>
         </table>
       </div>
@@ -702,52 +694,59 @@ tr:hover td{background:var(--blue-faint);}
       <div id="emp-denied" style="display:none"><div class="access-denied"><div class="icon">🔒</div><h2>Acceso Restringido</h2><p>Solo el Administrador puede gestionar empleados.</p></div></div>
       <div id="emp-content">
         <div class="page-header">
-          <div class="page-header-left"><div class="page-title">Empleados</div><div class="page-sub">Equipo del salón</div></div>
+          <div class="page-header-left"><div class="page-title">Empleados</div><div class="page-sub">Equipo del Salón MK</div></div>
           <button class="btn btn-primary" onclick="openModal('modal-empleado')">+ Agregar Empleado</button>
         </div>
         <div class="stat-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:22px">
-          <div class="stat-card featured"><div class="stat-label">Total Empleados</div><div class="stat-value">3</div></div>
-          <div class="stat-card"><div class="stat-label">Activos Hoy</div><div class="stat-value">3</div></div>
-          <div class="stat-card"><div class="stat-label">Servicios Hoy</div><div class="stat-value">8</div></div>
-          <div class="stat-card"><div class="stat-label">Sueldos a Pagar</div><div class="stat-value" style="font-size:20px">$19.400</div></div>
+          <div class="stat-card featured"><div class="stat-label">Total Empleados</div><div class="stat-value">4</div></div>
+          <div class="stat-card"><div class="stat-label">Activos Hoy</div><div class="stat-value">4</div></div>
+          <div class="stat-card"><div class="stat-label">Servicios Hoy</div><div class="stat-value">0</div></div>
+          <div class="stat-card"><div class="stat-label">Sueldos a Pagar</div><div class="stat-value" style="font-size:20px">$0</div></div>
         </div>
         <div class="cards-grid">
           <div class="emp-card">
             <div class="emp-card-top">
-              <div class="emp-big-avatar">💈</div>
-              <div><div class="emp-card-name">Marcos Rodríguez</div><div class="emp-card-role">Barbero Senior</div></div>
+              <div class="emp-big-avatar">✂️</div>
+              <div><div class="emp-card-name">Franco</div><div class="emp-card-role">Barbero · 40%</div></div>
             </div>
-            <div class="emp-stat-row"><span class="emp-stat-key">Ingresos hoy</span><span class="emp-stat-val hi">$18.000</span></div>
-            <div class="emp-stat-row"><span class="emp-stat-key">Sueldo (40%)</span><span class="emp-stat-val hi">$7.200</span></div>
-            <div class="emp-stat-row"><span class="emp-stat-key">Propinas hoy</span><span class="emp-stat-val hi">$1.500</span></div>
-            <div class="emp-stat-row"><span class="emp-stat-key">Total mes</span><span class="emp-stat-val hi">$210.000</span></div>
-            <div style="margin-top:12px"><button class="btn btn-ghost btn-sm" style="width:100%;justify-content:center" onclick="goTo('reportes')">Ver reporte completo →</button></div>
+            <div class="emp-stat-row"><span class="emp-stat-key">Ingresos mes</span><span class="emp-stat-val hi">$0</span></div>
+            <div class="emp-stat-row"><span class="emp-stat-key">Sueldo (40%)</span><span class="emp-stat-val hi">$0</span></div>
+            <div class="emp-stat-row"><span class="emp-stat-key">Servicios mes</span><span class="emp-stat-val hi">0</span></div>
+            <div class="emp-stat-row"><span class="emp-stat-key">Días trabajados</span><span class="emp-stat-val hi">0</span></div>
+            <div style="margin-top:12px"><button class="btn btn-ghost btn-sm" style="width:100%;justify-content:center" onclick="setReportEmp('franco')">Ver reporte →</button></div>
           </div>
           <div class="emp-card">
             <div class="emp-card-top">
-              <div class="emp-big-avatar">✂️</div>
-              <div><div class="emp-card-name">Lucas Pereyra</div><div class="emp-card-role">Barbero</div></div>
+              <div class="emp-big-avatar">💈</div>
+              <div><div class="emp-card-name">Simón</div><div class="emp-card-role">Barbero · 40%</div></div>
             </div>
-            <div class="emp-stat-row"><span class="emp-stat-key">Ingresos hoy</span><span class="emp-stat-val hi">$14.500</span></div>
-            <div class="emp-stat-row"><span class="emp-stat-key">Sueldo (40%)</span><span class="emp-stat-val hi">$5.800</span></div>
-            <div class="emp-stat-row"><span class="emp-stat-key">Propinas hoy</span><span class="emp-stat-val hi">$500</span></div>
-            <div class="emp-stat-row"><span class="emp-stat-key">Total mes</span><span class="emp-stat-val hi">$168.000</span></div>
-            <div style="margin-top:12px"><button class="btn btn-ghost btn-sm" style="width:100%;justify-content:center" onclick="goTo('reportes')">Ver reporte completo →</button></div>
+            <div class="emp-stat-row"><span class="emp-stat-key">Ingresos mes</span><span class="emp-stat-val hi">$0</span></div>
+            <div class="emp-stat-row"><span class="emp-stat-key">Sueldo (40%)</span><span class="emp-stat-val hi">$0</span></div>
+            <div class="emp-stat-row"><span class="emp-stat-key">Servicios mes</span><span class="emp-stat-val hi">0</span></div>
+            <div class="emp-stat-row"><span class="emp-stat-key">Días trabajados</span><span class="emp-stat-val hi">0</span></div>
+            <div style="margin-top:12px"><button class="btn btn-ghost btn-sm" style="width:100%;justify-content:center" onclick="setReportEmp('simon')">Ver reporte →</button></div>
           </div>
           <div class="emp-card">
             <div class="emp-card-top">
               <div class="emp-big-avatar">🪒</div>
-              <div><div class="emp-card-name">Tomás García</div><div class="emp-card-role">Barbero</div></div>
+              <div><div class="emp-card-name">Tomás</div><div class="emp-card-role">Barbero · 40%</div></div>
             </div>
-            <div class="emp-stat-row"><span class="emp-stat-key">Ingresos hoy</span><span class="emp-stat-val hi">$16.000</span></div>
-            <div class="emp-stat-row"><span class="emp-stat-key">Sueldo (40%)</span><span class="emp-stat-val hi">$6.400</span></div>
-            <div class="emp-stat-row"><span class="emp-stat-key">Propinas hoy</span><span class="emp-stat-val hi">$1.000</span></div>
-            <div class="emp-stat-row"><span class="emp-stat-key">Total mes</span><span class="emp-stat-val hi">$185.000</span></div>
-            <div style="margin-top:12px"><button class="btn btn-ghost btn-sm" style="width:100%;justify-content:center" onclick="goTo('reportes')">Ver reporte completo →</button></div>
+            <div class="emp-stat-row"><span class="emp-stat-key">Ingresos mes</span><span class="emp-stat-val hi">$0</span></div>
+            <div class="emp-stat-row"><span class="emp-stat-key">Sueldo (40%)</span><span class="emp-stat-val hi">$0</span></div>
+            <div class="emp-stat-row"><span class="emp-stat-key">Servicios mes</span><span class="emp-stat-val hi">0</span></div>
+            <div class="emp-stat-row"><span class="emp-stat-key">Días trabajados</span><span class="emp-stat-val hi">0</span></div>
+            <div style="margin-top:12px"><button class="btn btn-ghost btn-sm" style="width:100%;justify-content:center" onclick="setReportEmp('tomas')">Ver reporte →</button></div>
           </div>
-          <div class="emp-card" style="border:2px dashed var(--border);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:200px;box-shadow:none;background:transparent" onclick="openModal('modal-empleado')">
-            <div style="font-size:28px;color:var(--border);margin-bottom:8px">+</div>
-            <div style="color:var(--text-light);font-size:13px;font-weight:600">Agregar Empleado</div>
+          <div class="emp-card">
+            <div class="emp-card-top">
+              <div class="emp-big-avatar">💇</div>
+              <div><div class="emp-card-name">Marcos</div><div class="emp-card-role">Barbero Senior · 50%</div></div>
+            </div>
+            <div class="emp-stat-row"><span class="emp-stat-key">Ingresos mes</span><span class="emp-stat-val hi">$0</span></div>
+            <div class="emp-stat-row"><span class="emp-stat-key">Sueldo (50%)</span><span class="emp-stat-val hi">$0</span></div>
+            <div class="emp-stat-row"><span class="emp-stat-key">Servicios mes</span><span class="emp-stat-val hi">0</span></div>
+            <div class="emp-stat-row"><span class="emp-stat-key">Días trabajados</span><span class="emp-stat-val hi">0</span></div>
+            <div style="margin-top:12px"><button class="btn btn-ghost btn-sm" style="width:100%;justify-content:center" onclick="setReportEmp('marcos')">Ver reporte →</button></div>
           </div>
         </div>
       </div>
@@ -756,21 +755,31 @@ tr:hover td{background:var(--blue-faint);}
     <!-- ══ SERVICIOS ══ -->
     <div class="page" id="page-servicios">
       <div class="page-header">
-        <div class="page-header-left"><div class="page-title">Servicios</div><div class="page-sub">Catálogo del salón</div></div>
+        <div class="page-header-left"><div class="page-title">Servicios</div><div class="page-sub">Catálogo del Salón MK — 13 servicios</div></div>
         <button class="btn btn-primary" onclick="openModal('modal-servicio')">+ Agregar Servicio</button>
       </div>
       <div class="table-card">
         <table>
-          <thead><tr><th>Servicio</th><th>Descripción</th><th>Precio</th><th>Duración</th><th>Estado</th><th></th></tr></thead>
+          <thead><tr><th>#</th><th>Servicio</th><th>Duración est.</th><th>Estado</th><th></th></tr></thead>
           <tbody>
-            <tr><td class="fw7">Corte Clásico</td><td>Corte con tijera y máquina</td><td class="fw7 v-blue">$7.500</td><td>30 min</td><td><span class="badge b-green"><span class="b-dot"></span>Activo</span></td><td><button class="btn btn-outline btn-sm">Editar</button></td></tr>
-            <tr><td class="fw7">Barba</td><td>Perfilado y afeitado</td><td class="fw7 v-blue">$5.000</td><td>20 min</td><td><span class="badge b-green"><span class="b-dot"></span>Activo</span></td><td><button class="btn btn-outline btn-sm">Editar</button></td></tr>
-            <tr><td class="fw7">Corte + Barba</td><td>Combo completo</td><td class="fw7 v-blue">$11.500</td><td>45 min</td><td><span class="badge b-green"><span class="b-dot"></span>Activo</span></td><td><button class="btn btn-outline btn-sm">Editar</button></td></tr>
-            <tr><td class="fw7">Fade + Barba</td><td>Degradado con barba</td><td class="fw7 v-blue">$14.000</td><td>60 min</td><td><span class="badge b-green"><span class="b-dot"></span>Activo</span></td><td><button class="btn btn-outline btn-sm">Editar</button></td></tr>
-            <tr><td class="fw7">Corte Niño</td><td>Hasta 12 años</td><td class="fw7 v-blue">$5.000</td><td>25 min</td><td><span class="badge b-green"><span class="b-dot"></span>Activo</span></td><td><button class="btn btn-outline btn-sm">Editar</button></td></tr>
-            <tr><td class="fw7">Tratamiento Capilar</td><td>Hidratación + peinado</td><td class="fw7 v-blue">$9.000</td><td>40 min</td><td><span class="badge b-gray"><span class="b-dot"></span>Inactivo</span></td><td><button class="btn btn-outline btn-sm">Editar</button></td></tr>
+            <tr><td class="fw7" style="color:var(--text-light)">01</td><td class="fw7">Corte</td><td>30 min</td><td><span class="badge b-green"><span class="b-dot"></span>Activo</span></td><td><button class="btn btn-outline btn-sm">Editar precio</button></td></tr>
+            <tr><td class="fw7" style="color:var(--text-light)">02</td><td class="fw7">Corte + Perfilado</td><td>40 min</td><td><span class="badge b-green"><span class="b-dot"></span>Activo</span></td><td><button class="btn btn-outline btn-sm">Editar precio</button></td></tr>
+            <tr><td class="fw7" style="color:var(--text-light)">03</td><td class="fw7">Corte y barba</td><td>45 min</td><td><span class="badge b-green"><span class="b-dot"></span>Activo</span></td><td><button class="btn btn-outline btn-sm">Editar precio</button></td></tr>
+            <tr><td class="fw7" style="color:var(--text-light)">04</td><td class="fw7">Corte y barba + perfilado</td><td>55 min</td><td><span class="badge b-green"><span class="b-dot"></span>Activo</span></td><td><button class="btn btn-outline btn-sm">Editar precio</button></td></tr>
+            <tr><td class="fw7" style="color:var(--text-light)">05</td><td class="fw7">Corte y barba VIP</td><td>60 min</td><td><span class="badge b-green"><span class="b-dot"></span>Activo</span></td><td><button class="btn btn-outline btn-sm">Editar precio</button></td></tr>
+            <tr><td class="fw7" style="color:var(--text-light)">06</td><td class="fw7">Corte y barba VIP + perfilado</td><td>70 min</td><td><span class="badge b-green"><span class="b-dot"></span>Activo</span></td><td><button class="btn btn-outline btn-sm">Editar precio</button></td></tr>
+            <tr><td class="fw7" style="color:var(--text-light)">07</td><td class="fw7">Perfilado</td><td>15 min</td><td><span class="badge b-green"><span class="b-dot"></span>Activo</span></td><td><button class="btn btn-outline btn-sm">Editar precio</button></td></tr>
+            <tr><td class="fw7" style="color:var(--text-light)">08</td><td class="fw7">Global</td><td>90 min</td><td><span class="badge b-green"><span class="b-dot"></span>Activo</span></td><td><button class="btn btn-outline btn-sm">Editar precio</button></td></tr>
+            <tr><td class="fw7" style="color:var(--text-light)">09</td><td class="fw7">Claritos</td><td>90 min</td><td><span class="badge b-green"><span class="b-dot"></span>Activo</span></td><td><button class="btn btn-outline btn-sm">Editar precio</button></td></tr>
+            <tr><td class="fw7" style="color:var(--text-light)">10</td><td class="fw7">Corte y barba VIP + perfilado + lavado</td><td>80 min</td><td><span class="badge b-green"><span class="b-dot"></span>Activo</span></td><td><button class="btn btn-outline btn-sm">Editar precio</button></td></tr>
+            <tr><td class="fw7" style="color:var(--text-light)">11</td><td class="fw7">Corte y barba + perfilado + lavado</td><td>65 min</td><td><span class="badge b-green"><span class="b-dot"></span>Activo</span></td><td><button class="btn btn-outline btn-sm">Editar precio</button></td></tr>
+            <tr><td class="fw7" style="color:var(--text-light)">12</td><td class="fw7">Corte + perfilado + lavado</td><td>50 min</td><td><span class="badge b-green"><span class="b-dot"></span>Activo</span></td><td><button class="btn btn-outline btn-sm">Editar precio</button></td></tr>
+            <tr><td class="fw7" style="color:var(--text-light)">13</td><td class="fw7">Barba</td><td>20 min</td><td><span class="badge b-green"><span class="b-dot"></span>Activo</span></td><td><button class="btn btn-outline btn-sm">Editar precio</button></td></tr>
           </tbody>
         </table>
+      </div>
+      <div style="background:var(--blue-faint);border:1px solid var(--border);border-radius:12px;padding:14px 18px;font-size:12px;color:var(--text-light)">
+        💡 Los precios se cargarán cuando conectemos la base de datos (Supabase). Por ahora podés agregar nuevos servicios al catálogo.
       </div>
     </div>
 
@@ -781,19 +790,25 @@ tr:hover td{background:var(--blue-faint);}
         <button class="btn btn-primary" onclick="openModal('modal-producto')">+ Agregar Producto</button>
       </div>
       <div class="stat-grid" style="grid-template-columns:repeat(3,1fr)">
-        <div class="stat-card"><div class="stat-label">Total Productos</div><div class="stat-value">12</div></div>
+        <div class="stat-card"><div class="stat-label">Total Productos</div><div class="stat-value">11</div></div>
         <div class="stat-card"><div class="stat-top"><div class="stat-icon-wrap red">⚠️</div></div><div class="stat-label">Stock Bajo</div><div class="stat-value v-red">2</div></div>
-        <div class="stat-card featured"><div class="stat-label">Valor Inventario</div><div class="stat-value">$84.500</div></div>
+        <div class="stat-card featured"><div class="stat-label">Valor Inventario</div><div class="stat-value">$0</div></div>
       </div>
       <div class="table-card">
         <table>
-          <thead><tr><th>Producto</th><th>Categoría</th><th>Stock</th><th>Mínimo</th><th>Precio</th><th>Estado</th></tr></thead>
+          <thead><tr><th>Producto (Insumo)</th><th>Categoría</th><th>Stock</th><th>Mínimo</th><th>Estado</th></tr></thead>
           <tbody>
-            <tr><td class="fw7">Pomada Fijadora Premium</td><td>Cera/Pomada</td><td><div>8 unid.<div class="stock-bar"><div class="stock-fill s-ok" style="width:80%"></div></div></div></td><td>3</td><td>$4.500</td><td><span class="badge b-green"><span class="b-dot"></span>OK</span></td></tr>
-            <tr><td class="fw7">Shampoo Anticaspa</td><td>Cabello</td><td><div>2 unid.<div class="stock-bar"><div class="stock-fill s-crit" style="width:20%"></div></div></div></td><td>3</td><td>$3.200</td><td><span class="badge b-red"><span class="b-dot"></span>Bajo</span></td></tr>
-            <tr><td class="fw7">Aceite de Barba</td><td>Barba</td><td><div>5 unid.<div class="stock-bar"><div class="stock-fill s-low" style="width:50%"></div></div></div></td><td>4</td><td>$5.800</td><td><span class="badge b-amb"><span class="b-dot"></span>Regular</span></td></tr>
-            <tr><td class="fw7">Cera Mate</td><td>Cera/Pomada</td><td><div>12 unid.<div class="stock-bar"><div class="stock-fill s-ok" style="width:100%"></div></div></div></td><td>3</td><td>$3.900</td><td><span class="badge b-green"><span class="b-dot"></span>OK</span></td></tr>
-            <tr><td class="fw7">Crema de Afeitar</td><td>Barba</td><td><div>1 unid.<div class="stock-bar"><div class="stock-fill s-crit" style="width:10%"></div></div></div></td><td>2</td><td>$2.800</td><td><span class="badge b-red"><span class="b-dot"></span>Bajo</span></td></tr>
+            <tr><td class="fw7">Cuellos</td><td>Insumos</td><td><div>— <div class="stock-bar"><div class="stock-fill s-ok" style="width:60%"></div></div></div></td><td>1 pack</td><td><span class="badge b-green"><span class="b-dot"></span>OK</span></td></tr>
+            <tr><td class="fw7">Coolcare</td><td>Insumos</td><td><div>— <div class="stock-bar"><div class="stock-fill s-low" style="width:35%"></div></div></div></td><td>1 unid.</td><td><span class="badge b-amb"><span class="b-dot"></span>Regular</span></td></tr>
+            <tr><td class="fw7">Filos navaja</td><td>Insumos</td><td><div>— <div class="stock-bar"><div class="stock-fill s-crit" style="width:15%"></div></div></div></td><td>5 unid.</td><td><span class="badge b-red"><span class="b-dot"></span>Bajo</span></td></tr>
+            <tr><td class="fw7">Gel shaving</td><td>Insumos</td><td><div>— <div class="stock-bar"><div class="stock-fill s-ok" style="width:70%"></div></div></div></td><td>1 unid.</td><td><span class="badge b-green"><span class="b-dot"></span>OK</span></td></tr>
+            <tr><td class="fw7">After shave</td><td>Insumos</td><td><div>— <div class="stock-bar"><div class="stock-fill s-ok" style="width:80%"></div></div></div></td><td>1 unid.</td><td><span class="badge b-green"><span class="b-dot"></span>OK</span></td></tr>
+            <tr><td class="fw7">Tonificador</td><td>Insumos</td><td><div>— <div class="stock-bar"><div class="stock-fill s-ok" style="width:55%"></div></div></div></td><td>1 unid.</td><td><span class="badge b-green"><span class="b-dot"></span>OK</span></td></tr>
+            <tr><td class="fw7">Crema</td><td>Insumos</td><td><div>— <div class="stock-bar"><div class="stock-fill s-low" style="width:30%"></div></div></div></td><td>1 unid.</td><td><span class="badge b-amb"><span class="b-dot"></span>Regular</span></td></tr>
+            <tr><td class="fw7">Algodón</td><td>Insumos</td><td><div>— <div class="stock-bar"><div class="stock-fill s-ok" style="width:90%"></div></div></div></td><td>1 roll</td><td><span class="badge b-green"><span class="b-dot"></span>OK</span></td></tr>
+            <tr><td class="fw7">Guantes</td><td>Insumos</td><td><div>— <div class="stock-bar"><div class="stock-fill s-crit" style="width:10%"></div></div></div></td><td>1 caja</td><td><span class="badge b-red"><span class="b-dot"></span>Bajo</span></td></tr>
+            <tr><td class="fw7">Sanitizante</td><td>Insumos</td><td><div>— <div class="stock-bar"><div class="stock-fill s-ok" style="width:65%"></div></div></div></td><td>1 unid.</td><td><span class="badge b-green"><span class="b-dot"></span>OK</span></td></tr>
+            <tr><td class="fw7">Productos limpieza</td><td>Limpieza</td><td><div>— <div class="stock-bar"><div class="stock-fill s-ok" style="width:75%"></div></div></div></td><td>1 set</td><td><span class="badge b-green"><span class="b-dot"></span>OK</span></td></tr>
           </tbody>
         </table>
       </div>
@@ -802,24 +817,82 @@ tr:hover td{background:var(--blue-faint);}
     <!-- ══ EGRESOS ══ -->
     <div class="page" id="page-egresos">
       <div class="page-header">
-        <div class="page-header-left"><div class="page-title">Egresos</div><div class="page-sub">Gastos del salón</div></div>
+        <div class="page-header-left"><div class="page-title">Egresos</div><div class="page-sub">Gastos del Salón MK</div></div>
         <button class="btn btn-primary" onclick="openModal('modal-egreso')">+ Registrar Egreso</button>
       </div>
-      <div class="stat-grid" style="grid-template-columns:repeat(auto-fit,minmax(150px,1fr))">
-        <div class="stat-card"><div class="stat-label">Egresos Hoy</div><div class="stat-value v-red">$8.200</div></div>
-        <div class="stat-card"><div class="stat-label">Egresos Mes</div><div class="stat-value v-red">$94.500</div></div>
-        <div class="stat-card"><div class="stat-label">Alquiler</div><div class="stat-value v-red" style="font-size:20px">$35.000</div></div>
-        <div class="stat-card"><div class="stat-label">Insumos</div><div class="stat-value v-red" style="font-size:20px">$18.500</div></div>
-        <div class="stat-card"><div class="stat-label">Servicios</div><div class="stat-value v-red" style="font-size:20px">$22.000</div></div>
-        <div class="stat-card"><div class="stat-label">Marketing</div><div class="stat-value v-red" style="font-size:20px">$12.000</div></div>
+
+      <!-- Resumen totales -->
+      <div class="stat-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:20px">
+        <div class="stat-card featured"><div class="stat-label">Total Egresos Mes</div><div class="stat-value">$0</div></div>
+        <div class="stat-card"><div class="stat-label">Egresos Fijos</div><div class="stat-value v-red">$0</div><div class="stat-sub">Alquiler, Servicios, etc.</div></div>
+        <div class="stat-card"><div class="stat-label">Egresos Variables</div><div class="stat-value v-red">$0</div><div class="stat-sub">Insumos, Publicidad, etc.</div></div>
+        <div class="stat-card"><div class="stat-label">Egreso Neto/día</div><div class="stat-value v-red">$0</div></div>
       </div>
+
+      <div class="two-col" style="margin-bottom:20px">
+        <!-- EGRESOS FIJOS -->
+        <div class="table-card" style="margin-bottom:0">
+          <div class="table-header">
+            <div><div class="table-title">Egresos Fijos</div><div style="font-size:11px;color:var(--text-light);margin-top:2px">Se repiten cada mes</div></div>
+            <span class="badge b-red" style="font-size:12px">Total: $0</span>
+          </div>
+          <table>
+            <thead><tr><th>Concepto</th><th>Monto</th><th></th></tr></thead>
+            <tbody>
+              <tr><td>Insumos</td><td class="fw7 v-red">$0</td><td><button class="action-btn ab-blue" onclick="openModal('modal-egreso')">+</button></td></tr>
+              <tr><td>Personal limpieza</td><td class="fw7 v-red">$0</td><td><button class="action-btn ab-blue" onclick="openModal('modal-egreso')">+</button></td></tr>
+              <tr><td>Personal administrativo</td><td class="fw7 v-red">$0</td><td><button class="action-btn ab-blue" onclick="openModal('modal-egreso')">+</button></td></tr>
+              <tr><td>Alquiler</td><td class="fw7 v-red">$0</td><td><button class="action-btn ab-blue" onclick="openModal('modal-egreso')">+</button></td></tr>
+              <tr><td>Municipal</td><td class="fw7 v-red">$0</td><td><button class="action-btn ab-blue" onclick="openModal('modal-egreso')">+</button></td></tr>
+              <tr><td>Edenor</td><td class="fw7 v-red">$0</td><td><button class="action-btn ab-blue" onclick="openModal('modal-egreso')">+</button></td></tr>
+              <tr><td>Monotributo</td><td class="fw7 v-red">$0</td><td><button class="action-btn ab-blue" onclick="openModal('modal-egreso')">+</button></td></tr>
+              <tr><td>Contador</td><td class="fw7 v-red">$0</td><td><button class="action-btn ab-blue" onclick="openModal('modal-egreso')">+</button></td></tr>
+              <tr><td>Claro</td><td class="fw7 v-red">$0</td><td><button class="action-btn ab-blue" onclick="openModal('modal-egreso')">+</button></td></tr>
+              <tr><td>Movistar</td><td class="fw7 v-red">$0</td><td><button class="action-btn ab-blue" onclick="openModal('modal-egreso')">+</button></td></tr>
+              <tr style="background:var(--blue-faint)"><td class="fw7">Espacio publicitario fijo</td><td class="fw7 v-red">$0</td><td><button class="action-btn ab-blue" onclick="openModal('modal-egreso')">+</button></td></tr>
+              <tr style="background:var(--blue-faint)"><td class="fw7">Agenda pro</td><td class="fw7 v-red">$0</td><td><button class="action-btn ab-blue" onclick="openModal('modal-egreso')">+</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- EGRESOS VARIABLES -->
+        <div class="table-card" style="margin-bottom:0">
+          <div class="table-header">
+            <div><div class="table-title">Egresos Variables</div><div style="font-size:11px;color:var(--text-light);margin-top:2px">Insumos + Publicidad + Otros</div></div>
+            <span class="badge b-amb" style="font-size:12px">Total: $0</span>
+          </div>
+          <table>
+            <thead><tr><th>Concepto</th><th>Monto</th><th></th></tr></thead>
+            <tbody>
+              <tr><td style="font-size:10px;font-weight:700;color:var(--text-light);text-transform:uppercase;letter-spacing:1px;padding-top:10px" colspan="3">INSUMOS VARIABLES</td></tr>
+              <tr><td>Cuellos</td><td class="fw7 v-red">$0</td><td><button class="action-btn ab-blue" onclick="openModal('modal-egreso')">+</button></td></tr>
+              <tr><td>Coolcare</td><td class="fw7 v-red">$0</td><td><button class="action-btn ab-blue" onclick="openModal('modal-egreso')">+</button></td></tr>
+              <tr><td>Filos navaja</td><td class="fw7 v-red">$0</td><td><button class="action-btn ab-blue" onclick="openModal('modal-egreso')">+</button></td></tr>
+              <tr><td>Gel shaving</td><td class="fw7 v-red">$0</td><td><button class="action-btn ab-blue" onclick="openModal('modal-egreso')">+</button></td></tr>
+              <tr><td>After shave</td><td class="fw7 v-red">$0</td><td><button class="action-btn ab-blue" onclick="openModal('modal-egreso')">+</button></td></tr>
+              <tr><td>Crema / Algodón / Guantes</td><td class="fw7 v-red">$0</td><td><button class="action-btn ab-blue" onclick="openModal('modal-egreso')">+</button></td></tr>
+              <tr><td style="font-size:10px;font-weight:700;color:var(--text-light);text-transform:uppercase;letter-spacing:1px;padding-top:10px" colspan="3">PUBLICIDAD VARIABLE</td></tr>
+              <tr><td>Publicidad Oviedo</td><td class="fw7 v-red">$0</td><td><button class="action-btn ab-blue" onclick="openModal('modal-egreso')">+</button></td></tr>
+              <tr><td>Tarjetas / Folletos / Digital</td><td class="fw7 v-red">$0</td><td><button class="action-btn ab-blue" onclick="openModal('modal-egreso')">+</button></td></tr>
+              <tr><td>Merchandising</td><td class="fw7 v-red">$0</td><td><button class="action-btn ab-blue" onclick="openModal('modal-egreso')">+</button></td></tr>
+              <tr><td style="font-size:10px;font-weight:700;color:var(--text-light);text-transform:uppercase;letter-spacing:1px;padding-top:10px" colspan="3">OTROS VARIABLES</td></tr>
+              <tr><td>Agua / Yerba / Sahumerio</td><td class="fw7 v-red">$0</td><td><button class="action-btn ab-blue" onclick="openModal('modal-egreso')">+</button></td></tr>
+              <tr><td>Alacena / Bebidas / Productos</td><td class="fw7 v-red">$0</td><td><button class="action-btn ab-blue" onclick="openModal('modal-egreso')">+</button></td></tr>
+              <tr><td>Inversión salón / herramientas</td><td class="fw7 v-red">$0</td><td><button class="action-btn ab-blue" onclick="openModal('modal-egreso')">+</button></td></tr>
+              <tr><td>Educación / Reuniones</td><td class="fw7 v-red">$0</td><td><button class="action-btn ab-blue" onclick="openModal('modal-egreso')">+</button></td></tr>
+              <tr><td>Gastos X</td><td class="fw7 v-red">$0</td><td><button class="action-btn ab-blue" onclick="openModal('modal-egreso')">+</button></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Historial del mes -->
       <div class="table-card">
-        <div class="table-header"><div class="table-title">Egresos del Día</div></div>
+        <div class="table-header"><div class="table-title">Historial de Egresos</div></div>
         <table>
-          <thead><tr><th>Hora</th><th>Categoría</th><th>Descripción</th><th>Monto</th><th>Método</th></tr></thead>
+          <thead><tr><th>Fecha</th><th>Tipo</th><th>Concepto</th><th>Monto</th><th>Método</th></tr></thead>
           <tbody>
-            <tr><td class="fw7">09:30</td><td><span class="badge b-blue">Insumos</span></td><td>Compra hojas de afeitar x50</td><td class="fw7 v-red">-$3.200</td><td>Efectivo</td></tr>
-            <tr><td class="fw7">11:00</td><td><span class="badge b-amb">Servicios</span></td><td>Limpieza del local</td><td class="fw7 v-red">-$5.000</td><td>Transferencia</td></tr>
+            <tr><td colspan="5" style="text-align:center;padding:24px;color:var(--text-light);font-size:13px">Sin egresos registrados. Usá el botón "+ Registrar Egreso".</td></tr>
           </tbody>
         </table>
       </div>
@@ -830,10 +903,10 @@ tr:hover td{background:var(--blue-faint);}
       <div id="reportes-denied" style="display:none"><div class="access-denied"><div class="icon">🔒</div><h2>Acceso Restringido</h2><p>Los reportes son exclusivos del Administrador.</p></div></div>
       <div id="reportes-content">
         <div class="page-header">
-          <div class="page-header-left"><div class="page-title">Reportes</div><div class="page-sub">Análisis del negocio</div></div>
+          <div class="page-header-left"><div class="page-title">Reportes</div><div class="page-sub">Análisis del Salón MK</div></div>
           <button class="btn btn-primary" onclick="generatePDF()">📥 Generar PDF</button>
         </div>
-        <!-- Period + View Filters -->
+        <!-- Filters -->
         <div class="chart-card" style="padding:16px 20px;margin-bottom:20px">
           <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
             <div class="tabs-pill" id="rp-tabs">
@@ -847,10 +920,11 @@ tr:hover td{background:var(--blue-faint);}
             <div style="width:1px;height:24px;background:var(--border)"></div>
             <span style="font-size:12px;color:var(--text-light);font-weight:600">Vista:</span>
             <div style="display:flex;gap:6px;flex-wrap:wrap" id="view-tabs">
-              <button class="btn btn-primary btn-sm" onclick="setReportView('local',this)">🏪 Local</button>
-              <button class="btn btn-outline btn-sm" onclick="setReportView('marcos',this)">Marcos R.</button>
-              <button class="btn btn-outline btn-sm" onclick="setReportView('lucas',this)">Lucas P.</button>
-              <button class="btn btn-outline btn-sm" onclick="setReportView('tomas',this)">Tomás G.</button>
+              <button class="btn btn-primary btn-sm" onclick="setReportView('local',this)">🏪 Salón MK</button>
+              <button class="btn btn-outline btn-sm" onclick="setReportView('franco',this)">Franco</button>
+              <button class="btn btn-outline btn-sm" onclick="setReportView('simon',this)">Simón</button>
+              <button class="btn btn-outline btn-sm" onclick="setReportView('tomas',this)">Tomás</button>
+              <button class="btn btn-outline btn-sm" onclick="setReportView('marcos',this)">Marcos</button>
             </div>
           </div>
         </div>
@@ -859,92 +933,139 @@ tr:hover td{background:var(--blue-faint);}
         <div id="report-local">
           <div id="rep-dia-local">
             <div class="stat-grid">
-              <div class="stat-card featured"><div class="stat-top"><div class="stat-icon-wrap">💰</div><div class="stat-trend up">↑ 12%</div></div><div class="stat-label">Ingresos</div><div class="stat-value">$48.500</div></div>
-              <div class="stat-card"><div class="stat-label">Egresos</div><div class="stat-value v-red">$8.200</div></div>
-              <div class="stat-card"><div class="stat-top"><div class="stat-icon-wrap green">📈</div></div><div class="stat-label">Ganancia Neta</div><div class="stat-value v-green">$40.300</div></div>
-              <div class="stat-card"><div class="stat-label">Servicios</div><div class="stat-value">8</div></div>
+              <div class="stat-card featured"><div class="stat-top"><div class="stat-icon-wrap">💰</div></div><div class="stat-label">Ingresos</div><div class="stat-value">$0</div></div>
+              <div class="stat-card"><div class="stat-label">Egresos</div><div class="stat-value v-red">$0</div></div>
+              <div class="stat-card"><div class="stat-top"><div class="stat-icon-wrap green">📈</div></div><div class="stat-label">Resto</div><div class="stat-value v-green">$0</div></div>
+              <div class="stat-card"><div class="stat-label">Total Servicios</div><div class="stat-value">0</div></div>
             </div>
-            <div class="two-col">
-              <div class="chart-card">
-                <div class="chart-title" style="margin-bottom:16px">Ingresos por Método</div>
+
+            <!-- Métodos de pago -->
+            <div class="two-col" style="margin-bottom:20px">
+              <div class="chart-card" style="margin-bottom:0">
+                <div class="chart-title" style="margin-bottom:16px">Ingresos por Método de Pago</div>
                 <div style="display:flex;flex-direction:column;gap:12px">
-                  <div><div style="display:flex;justify-content:space-between;font-size:12px;font-weight:600;margin-bottom:6px"><span>Efectivo</span><span class="v-blue">$22.000</span></div><div class="stock-bar" style="height:7px"><div class="stock-fill s-ok" style="width:45%"></div></div></div>
-                  <div><div style="display:flex;justify-content:space-between;font-size:12px;font-weight:600;margin-bottom:6px"><span>Tarjeta</span><span class="v-blue">$17.000</span></div><div class="stock-bar" style="height:7px"><div class="stock-fill s-low" style="width:35%"></div></div></div>
-                  <div><div style="display:flex;justify-content:space-between;font-size:12px;font-weight:600;margin-bottom:6px"><span>Transferencia</span><span class="v-blue">$9.500</span></div><div class="stock-bar" style="height:7px"><div class="stock-fill" style="width:20%;background:var(--blue)"></div></div></div>
+                  <div><div style="display:flex;justify-content:space-between;font-size:12px;font-weight:600;margin-bottom:6px"><span>💵 Efectivo</span><span class="v-blue">$0</span></div><div class="stock-bar" style="height:7px"><div class="stock-fill s-ok" style="width:0%"></div></div></div>
+                  <div><div style="display:flex;justify-content:space-between;font-size:12px;font-weight:600;margin-bottom:6px"><span>🏦 Santander</span><span class="v-blue">$0</span></div><div class="stock-bar" style="height:7px"><div class="stock-fill s-low" style="width:0%"></div></div></div>
+                  <div><div style="display:flex;justify-content:space-between;font-size:12px;font-weight:600;margin-bottom:6px"><span>📱 Personal Pay</span><span class="v-blue">$0</span></div><div class="stock-bar" style="height:7px"><div class="stock-fill" style="width:0%;background:var(--blue)"></div></div></div>
                 </div>
               </div>
               <div class="sum-box" style="align-self:start">
-                <div class="sum-row"><span class="sum-lbl">Total Ingresos</span><span class="sum-val">$48.500</span></div>
-                <div class="sum-row"><span class="sum-lbl">Total Egresos</span><span class="sum-val v-red">-$8.200</span></div>
-                <div class="sum-row"><span class="sum-lbl">Sueldos (40%)</span><span class="sum-val">-$19.400</span></div>
-                <div class="sum-row"><span class="sum-lbl">Propinas</span><span class="sum-val">-$3.000</span></div>
-                <div class="sum-row"><span>Ganancia del Salón</span><span class="v-green">$17.900</span></div>
+                <div class="sum-row"><span class="sum-lbl">Total Ingresos</span><span class="sum-val">$0</span></div>
+                <div class="sum-row"><span class="sum-lbl">Egresos Fijos</span><span class="sum-val v-red">$0</span></div>
+                <div class="sum-row"><span class="sum-lbl">Egresos Variables</span><span class="sum-val v-red">$0</span></div>
+                <div class="sum-row"><span class="sum-lbl">Total Egresos</span><span class="sum-val v-red">$0</span></div>
+                <div class="sum-row"><span class="sum-lbl">Resto Fijo</span><span class="sum-val">$0</span></div>
+                <div class="sum-row"><span class="sum-lbl">Resto Variable</span><span class="sum-val">$0</span></div>
+                <div class="sum-row"><span class="sum-lbl">Ganancia MK</span><span class="sum-val v-green">$0</span></div>
+                <div class="sum-row"><span class="sum-lbl">× Día</span><span class="sum-val">$0</span></div>
+                <div class="sum-row"><span>× Semana</span><span class="v-green fw7">$0</span></div>
               </div>
             </div>
+
+            <!-- Detalle empleados -->
             <div class="table-card">
               <div class="table-header"><div class="table-title">Detalle por Empleado</div></div>
               <table>
-                <thead><tr><th>Empleado</th><th>Servicios</th><th>Ingresos</th><th>Propinas</th><th>Sueldo 40%</th><th>Total a Cobrar</th></tr></thead>
+                <thead><tr><th>Empleado</th><th>%</th><th>Total</th><th>Su parte</th><th>60%/50% Salón</th></tr></thead>
                 <tbody>
-                  <tr><td><div class="emp-cell"><div class="emp-avatar-sm">💈</div><div class="emp-cell-name">Marcos Rodríguez</div></div></td><td>3</td><td>$18.000</td><td class="fw7 v-blue">$1.500</td><td class="fw7 v-blue">$7.200</td><td class="fw7 v-blue">$8.700</td></tr>
-                  <tr><td><div class="emp-cell"><div class="emp-avatar-sm">✂️</div><div class="emp-cell-name">Lucas Pereyra</div></div></td><td>2</td><td>$14.500</td><td class="fw7 v-blue">$500</td><td class="fw7 v-blue">$5.800</td><td class="fw7 v-blue">$6.300</td></tr>
-                  <tr><td><div class="emp-cell"><div class="emp-avatar-sm">🪒</div><div class="emp-cell-name">Tomás García</div></div></td><td>3</td><td>$16.000</td><td class="fw7 v-blue">$1.000</td><td class="fw7 v-blue">$6.400</td><td class="fw7 v-blue">$7.400</td></tr>
+                  <tr><td><div class="emp-cell"><div class="emp-avatar-sm">✂️</div><div class="emp-cell-name">Franco</div></div></td><td>40%</td><td>$0</td><td class="fw7 v-blue">$0</td><td class="fw7 v-green">$0</td></tr>
+                  <tr><td><div class="emp-cell"><div class="emp-avatar-sm">💈</div><div class="emp-cell-name">Simón</div></div></td><td>40%</td><td>$0</td><td class="fw7 v-blue">$0</td><td class="fw7 v-green">$0</td></tr>
+                  <tr><td><div class="emp-cell"><div class="emp-avatar-sm">🪒</div><div class="emp-cell-name">Tomás</div></div></td><td>40%</td><td>$0</td><td class="fw7 v-blue">$0</td><td class="fw7 v-green">$0</td></tr>
+                  <tr><td><div class="emp-cell"><div class="emp-avatar-sm">💇</div><div class="emp-cell-name">Marcos</div></div></td><td>50%</td><td>$0</td><td class="fw7 v-blue">$0</td><td class="fw7 v-green">$0</td></tr>
                 </tbody>
               </table>
+            </div>
+
+            <!-- Productos y Bebidas -->
+            <div class="two-col">
+              <div class="table-card" style="margin-bottom:0">
+                <div class="table-header"><div class="table-title">Productos vendidos</div></div>
+                <div class="sum-box" style="margin-bottom:0">
+                  <div class="sum-row"><span class="sum-lbl">Productos</span><span class="sum-val">$0</span></div>
+                  <div class="sum-row"><span class="sum-lbl">Bebidas</span><span class="sum-val">$0</span></div>
+                  <div class="sum-row"><span>Subtotal</span><span class="fw7">$0</span></div>
+                </div>
+              </div>
+              <div class="table-card" style="margin-bottom:0">
+                <div class="table-header"><div class="table-title">Ganancia Marcos (dueño)</div></div>
+                <div class="sum-box" style="margin-bottom:0">
+                  <div class="sum-row"><span class="sum-lbl">Ganancia MK</span><span class="sum-val v-green">$0</span></div>
+                  <div class="sum-row"><span class="sum-lbl">Ganancia Marcos (barbero)</span><span class="sum-val v-green">$0</span></div>
+                  <div class="sum-row"><span>Total Marcos</span><span class="fw7 v-green">$0</span></div>
+                </div>
+              </div>
             </div>
           </div>
           <div id="rep-mes-local" style="display:none">
             <div class="stat-grid">
-              <div class="stat-card featured"><div class="stat-label">Ingresos Mes</div><div class="stat-value">$1.245.000</div></div>
-              <div class="stat-card"><div class="stat-label">Egresos Mes</div><div class="stat-value v-red">$94.500</div></div>
-              <div class="stat-card"><div class="stat-label">Ganancia Neta</div><div class="stat-value v-green">$1.150.500</div></div>
-              <div class="stat-card"><div class="stat-label">Servicios</div><div class="stat-value">186</div><div class="stat-sub v-green">↑ +17.7% vs feb</div></div>
+              <div class="stat-card featured"><div class="stat-label">Ingresos Mes</div><div class="stat-value">$0</div></div>
+              <div class="stat-card"><div class="stat-label">Egresos Mes</div><div class="stat-value v-red">$0</div></div>
+              <div class="stat-card"><div class="stat-label">Resto Mes</div><div class="stat-value v-green">$0</div></div>
+              <div class="stat-card"><div class="stat-label">Total Servicios</div><div class="stat-value">0</div><div class="stat-sub">Días trabajados: 0</div></div>
             </div>
             <div class="table-card">
-              <div class="table-header"><div class="table-title">Resumen por Empleado</div></div>
+              <div class="table-header"><div class="table-title">Servicios por Empleado (mes)</div></div>
               <table>
-                <thead><tr><th>Empleado</th><th>Servicios</th><th>Ingresos</th><th>Propinas</th><th>Sueldo</th><th>Promedio/día</th></tr></thead>
+                <thead><tr><th>Empleado</th><th>Servicios</th><th>Total</th><th>Su 40%/50%</th><th>Días</th><th>Prom/día</th></tr></thead>
                 <tbody>
-                  <tr><td><div class="emp-cell"><div class="emp-avatar-sm">💈</div><div class="emp-cell-name">Marcos Rodríguez</div></div></td><td>68</td><td>$480.000</td><td class="fw7 v-blue">$28.000</td><td class="fw7 v-blue">$220.000</td><td>$15.500</td></tr>
-                  <tr><td><div class="emp-cell"><div class="emp-avatar-sm">✂️</div><div class="emp-cell-name">Lucas Pereyra</div></div></td><td>55</td><td>$390.000</td><td class="fw7 v-blue">$18.000</td><td class="fw7 v-blue">$174.000</td><td>$12.600</td></tr>
-                  <tr><td><div class="emp-cell"><div class="emp-avatar-sm">🪒</div><div class="emp-cell-name">Tomás García</div></div></td><td>63</td><td>$375.000</td><td class="fw7 v-blue">$22.000</td><td class="fw7 v-blue">$172.000</td><td>$12.100</td></tr>
+                  <tr><td><div class="emp-cell"><div class="emp-avatar-sm">✂️</div><div class="emp-cell-name">Franco</div></div></td><td>0</td><td>$0</td><td class="fw7 v-blue">$0</td><td>0</td><td>$0</td></tr>
+                  <tr><td><div class="emp-cell"><div class="emp-avatar-sm">💈</div><div class="emp-cell-name">Simón</div></div></td><td>0</td><td>$0</td><td class="fw7 v-blue">$0</td><td>0</td><td>$0</td></tr>
+                  <tr><td><div class="emp-cell"><div class="emp-avatar-sm">🪒</div><div class="emp-cell-name">Tomás</div></div></td><td>0</td><td>$0</td><td class="fw7 v-blue">$0</td><td>0</td><td>$0</td></tr>
+                  <tr><td><div class="emp-cell"><div class="emp-avatar-sm">💇</div><div class="emp-cell-name">Marcos</div></div></td><td>0</td><td>$0</td><td class="fw7 v-blue">$0</td><td>0</td><td>$0</td></tr>
                 </tbody>
               </table>
             </div>
           </div>
           <div id="rep-anio-local" style="display:none">
             <div class="stat-grid">
-              <div class="stat-card featured"><div class="stat-label">Ingresos Año</div><div class="stat-value">$3.810.000</div></div>
-              <div class="stat-card"><div class="stat-label">Egresos Año</div><div class="stat-value v-red">$285.000</div></div>
-              <div class="stat-card"><div class="stat-label">Ganancia Neta</div><div class="stat-value v-green">$3.525.000</div></div>
-              <div class="stat-card"><div class="stat-label">Proyección 2026</div><div class="stat-value v-blue" style="font-size:18px">$15.2M</div><div class="stat-sub v-green">↑ +35%</div></div>
+              <div class="stat-card featured"><div class="stat-label">Ingresos Año</div><div class="stat-value">$0</div></div>
+              <div class="stat-card"><div class="stat-label">Egresos Año</div><div class="stat-value v-red">$0</div></div>
+              <div class="stat-card"><div class="stat-label">Ganancia Neta</div><div class="stat-value v-green">$0</div></div>
+              <div class="stat-card"><div class="stat-label">Total Servicios</div><div class="stat-value">0</div></div>
             </div>
           </div>
         </div>
 
         <!-- EMPLOYEE VIEW -->
         <div id="report-empleado" style="display:none">
-          <div class="stat-grid">
-            <div class="stat-card featured"><div class="stat-label">Ingresos <span id="emp-period-label">Hoy</span></div><div class="stat-value" id="emp-stat-ing">$18.000</div></div>
-            <div class="stat-card"><div class="stat-label">Servicios</div><div class="stat-value" id="emp-stat-serv">3</div></div>
-            <div class="stat-card"><div class="stat-label">Sueldo 40%</div><div class="stat-value v-green" id="emp-stat-sueldo">$7.200</div></div>
-            <div class="stat-card"><div class="stat-label">Propinas</div><div class="stat-value v-blue" id="emp-stat-prop">$1.500</div></div>
+          <!-- Reporte mensual empleado — estructura del PDF original -->
+          <div class="stat-grid" style="grid-template-columns:repeat(4,1fr)">
+            <div class="stat-card featured"><div class="stat-label">Ingresos <span id="emp-period-label">Hoy</span></div><div class="stat-value" id="emp-stat-ing">$0</div></div>
+            <div class="stat-card"><div class="stat-label">Total Servicios</div><div class="stat-value" id="emp-stat-serv">0</div></div>
+            <div class="stat-card"><div class="stat-label">Días trabajados</div><div class="stat-value" id="emp-stat-dias">0</div></div>
+            <div class="stat-card"><div class="stat-label">Prom. servicios/día</div><div class="stat-value" id="emp-stat-prom">0</div></div>
           </div>
+          <div class="stat-card" style="background:var(--green);margin-bottom:20px">
+            <div class="stat-label" style="color:rgba(255,255,255,.7)">Sueldo (<span id="emp-comision-label">40</span>%)</div>
+            <div class="stat-value" style="color:#fff;font-size:32px" id="emp-stat-sueldo">$0</div>
+          </div>
+
+          <!-- Desglose por servicio -->
           <div class="table-card">
-            <div class="table-header"><div class="table-title">Historial de Cobros</div></div>
+            <div class="table-header"><div class="table-title">Desglose por Servicio</div></div>
             <table>
-              <thead><tr><th>Hora</th><th>Cliente</th><th>Servicio</th><th>Monto</th><th>Propina</th><th>Método</th></tr></thead>
-              <tbody>
-                <tr><td class="fw7">09:00</td><td>Ariel F.</td><td>Corte Clásico</td><td>$7.500</td><td class="fw7 v-blue">$500</td><td><span class="badge b-green">Efectivo</span></td></tr>
-                <tr><td class="fw7">11:00</td><td>Pablo N.</td><td>Fade + Barba</td><td>$14.000</td><td>—</td><td><span class="badge b-blue">Tarjeta</span></td></tr>
-                <tr><td class="fw7">13:30</td><td>Ramiro S.</td><td>Corte + Barba</td><td>$11.500</td><td class="fw7 v-blue">$1.000</td><td><span class="badge b-amb">Mixto</span></td></tr>
+              <thead><tr><th>Servicio</th><th>Cantidad</th><th>% del total</th></tr></thead>
+              <tbody id="emp-servicios-tbody">
+                <tr><td>Corte</td><td>0</td><td><div class="stock-bar" style="height:5px"><div class="stock-fill" style="width:0%;background:var(--blue)"></div></div></td></tr>
+                <tr><td>Corte + Perfilado</td><td>0</td><td><div class="stock-bar" style="height:5px"><div class="stock-fill" style="width:0%;background:var(--blue)"></div></div></td></tr>
+                <tr><td>Corte y barba</td><td>0</td><td><div class="stock-bar" style="height:5px"><div class="stock-fill" style="width:0%;background:var(--blue)"></div></div></td></tr>
+                <tr><td>Corte y barba + perfilado</td><td>0</td><td><div class="stock-bar" style="height:5px"><div class="stock-fill" style="width:0%;background:var(--blue)"></div></div></td></tr>
+                <tr><td>Corte y barba VIP</td><td>0</td><td><div class="stock-bar" style="height:5px"><div class="stock-fill" style="width:0%;background:var(--blue)"></div></div></td></tr>
+                <tr><td>Corte y barba VIP + perfilado</td><td>0</td><td><div class="stock-bar" style="height:5px"><div class="stock-fill" style="width:0%;background:var(--blue)"></div></div></td></tr>
+                <tr><td>Perfilado</td><td>0</td><td><div class="stock-bar" style="height:5px"><div class="stock-fill" style="width:0%;background:var(--blue)"></div></div></td></tr>
+                <tr><td>Global</td><td>0</td><td><div class="stock-bar" style="height:5px"><div class="stock-fill" style="width:0%;background:var(--blue)"></div></div></td></tr>
+                <tr><td>Claritos</td><td>0</td><td><div class="stock-bar" style="height:5px"><div class="stock-fill" style="width:0%;background:var(--blue)"></div></div></td></tr>
+                <tr><td>Corte y barba VIP + perfilado + lavado</td><td>0</td><td><div class="stock-bar" style="height:5px"><div class="stock-fill" style="width:0%;background:var(--blue)"></div></div></td></tr>
+                <tr><td>Corte y barba + perfilado + lavado</td><td>0</td><td><div class="stock-bar" style="height:5px"><div class="stock-fill" style="width:0%;background:var(--blue)"></div></div></td></tr>
+                <tr><td>Corte + perfilado + lavado</td><td>0</td><td><div class="stock-bar" style="height:5px"><div class="stock-fill" style="width:0%;background:var(--blue)"></div></div></td></tr>
+                <tr><td>Barba</td><td>0</td><td><div class="stock-bar" style="height:5px"><div class="stock-fill" style="width:0%;background:var(--blue)"></div></div></td></tr>
               </tbody>
             </table>
           </div>
           <div class="sum-box">
-            <div class="sum-row"><span class="sum-lbl">Total facturado</span><span class="sum-val" id="emp-sum-ing">$18.000</span></div>
-            <div class="sum-row"><span class="sum-lbl">Propinas recibidas</span><span class="sum-val" id="emp-sum-prop">$1.500</span></div>
-            <div class="sum-row"><span>Total a cobrar</span><span class="v-green" id="emp-sum-total">$8.700</span></div>
+            <div class="sum-row"><span class="sum-lbl">Total Servicios</span><span class="sum-val" id="emp-sum-serv">0</span></div>
+            <div class="sum-row"><span class="sum-lbl">Ingresos</span><span class="sum-val" id="emp-sum-ing">$0</span></div>
+            <div class="sum-row"><span>Sueldo a cobrar</span><span class="v-green fw7" id="emp-sum-total">$0</span></div>
           </div>
         </div>
       </div>
@@ -1340,29 +1461,49 @@ tr:hover td{background:var(--blue-faint);}
     <div class="modal-title">💰 Registrar Cobro</div>
     <div class="form-grid">
       <div class="fg"><label>Cliente</label><input type="text" placeholder="Nombre del cliente"></div>
-      <div class="fg"><label>Empleado</label><select><option>Marcos Rodríguez</option><option>Lucas Pereyra</option><option>Tomás García</option></select></div>
+      <div class="fg"><label>Empleado</label>
+        <select>
+          <option>Franco</option>
+          <option>Simón</option>
+          <option>Tomás</option>
+          <option>Marcos</option>
+        </select>
+      </div>
     </div>
-    <div class="form-grid">
-      <div class="fg"><label>Servicio</label><select><option>Corte Clásico — $7.500</option><option>Barba — $5.000</option><option>Corte + Barba — $11.500</option><option>Fade + Barba — $14.000</option></select></div>
-      <div class="fg"><label>Monto Total</label><input type="number" value="7500"></div>
+    <div class="fg" style="margin-bottom:12px"><label>Servicio</label>
+      <select>
+        <option>Corte</option>
+        <option>Corte + Perfilado</option>
+        <option>Corte y barba</option>
+        <option>Corte y barba + perfilado</option>
+        <option>Corte y barba VIP</option>
+        <option>Corte y barba VIP + perfilado</option>
+        <option>Perfilado</option>
+        <option>Global</option>
+        <option>Claritos</option>
+        <option>Corte y barba VIP + perfilado + lavado</option>
+        <option>Corte y barba + perfilado + lavado</option>
+        <option>Corte + perfilado + lavado</option>
+        <option>Barba</option>
+      </select>
     </div>
-    <div class="fg" style="margin-bottom:12px"><label>Propina</label><input type="number" placeholder="0"></div>
+    <div class="fg" style="margin-bottom:12px"><label>Monto ($)</label><input type="number" placeholder="0" id="cobro-monto"></div>
     <div class="fg" style="margin-bottom:12px">
       <label>Método de Pago</label>
       <div class="pay-split">
         <div class="pay-m selected" onclick="selectPay(this)">💵 Efectivo</div>
-        <div class="pay-m" onclick="selectPay(this)">💳 Tarjeta</div>
-        <div class="pay-m" onclick="selectPay(this)">📱 Transfer.</div>
+        <div class="pay-m" onclick="selectPay(this)">🏦 Santander</div>
+        <div class="pay-m" onclick="selectPay(this)">📱 Personal Pay</div>
         <div class="pay-m" onclick="selectPay(this)">🔀 Mixto</div>
       </div>
     </div>
     <div id="pago-mixto" style="display:none;margin-bottom:12px">
       <div class="form-grid">
-        <div class="fg"><label>Efectivo</label><input type="number" placeholder="0"></div>
-        <div class="fg"><label>Tarjeta / Transfer.</label><input type="number" placeholder="0"></div>
+        <div class="fg"><label>Efectivo $</label><input type="number" placeholder="0"></div>
+        <div class="fg"><label>Santander / Personal Pay $</label><input type="number" placeholder="0"></div>
       </div>
     </div>
-    <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="closeModal('modal-cobro')">✓ Registrar Cobro</button>
+    <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="closeModal('modal-cobro');showToast('Cobro registrado ✓')">✓ Registrar Cobro</button>
   </div>
 </div>
 
@@ -1379,11 +1520,34 @@ tr:hover td{background:var(--blue-faint);}
       <div class="fg"><label>Hora</label><input type="time"></div>
     </div>
     <div class="form-grid">
-      <div class="fg"><label>Servicio</label><select><option>Corte Clásico</option><option>Barba</option><option>Corte + Barba</option><option>Fade + Barba</option></select></div>
-      <div class="fg"><label>Empleado</label><select><option>Marcos Rodríguez</option><option>Lucas Pereyra</option><option>Tomás García</option></select></div>
+      <div class="fg"><label>Servicio</label>
+        <select>
+          <option>Corte</option>
+          <option>Corte + Perfilado</option>
+          <option>Corte y barba</option>
+          <option>Corte y barba + perfilado</option>
+          <option>Corte y barba VIP</option>
+          <option>Corte y barba VIP + perfilado</option>
+          <option>Perfilado</option>
+          <option>Global</option>
+          <option>Claritos</option>
+          <option>Corte y barba VIP + perfilado + lavado</option>
+          <option>Corte y barba + perfilado + lavado</option>
+          <option>Corte + perfilado + lavado</option>
+          <option>Barba</option>
+        </select>
+      </div>
+      <div class="fg"><label>Empleado</label>
+        <select>
+          <option>Franco</option>
+          <option>Simón</option>
+          <option>Tomás</option>
+          <option>Marcos</option>
+        </select>
+      </div>
     </div>
     <div class="fg" style="margin-bottom:14px"><label>Notas</label><textarea rows="2" placeholder="Observaciones..."></textarea></div>
-    <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="closeModal('modal-turno')">✓ Guardar Turno</button>
+    <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="closeModal('modal-turno');showToast('Turno guardado ✓')">✓ Guardar Turno</button>
   </div>
 </div>
 
@@ -1391,13 +1555,30 @@ tr:hover td{background:var(--blue-faint);}
   <div class="modal">
     <button class="modal-close" onclick="closeModal('modal-egreso')">✕</button>
     <div class="modal-title">📤 Registrar Egreso</div>
-    <div class="fg" style="margin-bottom:12px"><label>Categoría</label><select><option>Alquiler</option><option>Insumos</option><option>Servicios</option><option>Marketing</option><option>Sueldos</option><option>Otros</option></select></div>
-    <div class="fg" style="margin-bottom:12px"><label>Descripción</label><input type="text" placeholder="Ej: Compra de insumos"></div>
     <div class="form-grid">
-      <div class="fg"><label>Monto</label><input type="number" placeholder="0"></div>
-      <div class="fg"><label>Método</label><select><option>Efectivo</option><option>Tarjeta</option><option>Transferencia</option></select></div>
+      <div class="fg"><label>Tipo</label>
+        <select id="eg-tipo" onchange="updateEgresoConcepto()">
+          <option value="fijo">Fijo</option>
+          <option value="variable-insumo">Variable — Insumo</option>
+          <option value="variable-pub">Variable — Publicidad</option>
+          <option value="variable-otro">Variable — Otro</option>
+        </select>
+      </div>
+      <div class="fg"><label>Concepto</label>
+        <select id="eg-concepto">
+          <option>Insumos</option><option>Personal limpieza</option><option>Personal administrativo</option>
+          <option>Alquiler</option><option>Municipal</option><option>Edenor</option>
+          <option>Monotributo</option><option>Contador</option><option>Claro</option><option>Movistar</option>
+          <option>Espacio publicitario fijo</option><option>Agenda pro</option>
+        </select>
+      </div>
     </div>
-    <button class="btn btn-primary" style="width:100%;margin-top:6px;justify-content:center" onclick="closeModal('modal-egreso')">✓ Registrar Egreso</button>
+    <div class="form-grid">
+      <div class="fg"><label>Monto ($)</label><input type="number" placeholder="0"></div>
+      <div class="fg"><label>Fecha</label><input type="date" id="eg-fecha"></div>
+    </div>
+    <div class="fg" style="margin-bottom:14px"><label>Observaciones (opcional)</label><input type="text" placeholder="Ej: mes de enero"></div>
+    <button class="btn btn-primary" style="width:100%;margin-top:2px;justify-content:center" onclick="closeModal('modal-egreso');showToast('Egreso registrado ✓')">✓ Registrar Egreso</button>
   </div>
 </div>
 
@@ -1451,19 +1632,54 @@ tr:hover td{background:var(--blue-faint);}
 
 <script>
 var USERS = {
-  'admin':    {pass:'admin123', role:'admin',    name:'Administrador', avatar:'👑'},
-  'empleado': {pass:'emp123',   role:'empleado', name:'Empleado',      avatar:'✂️'},
-  'marcos':   {pass:'marcos123',role:'empleado', name:'Marcos R.',     avatar:'💈'},
-  'lucas':    {pass:'lucas123', role:'empleado', name:'Lucas P.',      avatar:'✂️'},
-  'tomas':    {pass:'tomas123', role:'empleado', name:'Tomás G.',      avatar:'🪒'}
+  'admin':   {pass:'admin123',  role:'admin',    name:'Administrador', avatar:'👑'},
+  'franco':  {pass:'franco123', role:'empleado', name:'Franco',        avatar:'✂️'},
+  'simon':   {pass:'simon123',  role:'empleado', name:'Simón',         avatar:'💈'},
+  'tomas':   {pass:'tomas123',  role:'empleado', name:'Tomás',         avatar:'🪒'},
+  'marcos':  {pass:'marcos123', role:'empleado', name:'Marcos',        avatar:'💇'}
 };
 
-var currentRole='admin', currentUser=null, currentPeriod='dia', currentView='local', currentEmp='marcos';
+// Servicios reales del salón
+var SERVICIOS = [
+  {nombre:'Corte',                                    duracion:'30 min'},
+  {nombre:'Corte + Perfilado',                        duracion:'40 min'},
+  {nombre:'Corte y barba',                            duracion:'45 min'},
+  {nombre:'Corte y barba + perfilado',                duracion:'55 min'},
+  {nombre:'Corte y barba VIP',                        duracion:'60 min'},
+  {nombre:'Corte y barba VIP + perfilado',            duracion:'70 min'},
+  {nombre:'Perfilado',                                duracion:'15 min'},
+  {nombre:'Global',                                   duracion:'90 min'},
+  {nombre:'Claritos',                                 duracion:'90 min'},
+  {nombre:'Corte y barba VIP + perfilado + lavado',   duracion:'80 min'},
+  {nombre:'Corte y barba + perfilado + lavado',       duracion:'65 min'},
+  {nombre:'Corte + perfilado + lavado',               duracion:'50 min'},
+  {nombre:'Barba',                                    duracion:'20 min'},
+];
+
+// Egresos reales del salón
+var EGRESOS_FIJOS = [
+  'Insumos','Personal limpieza','Personal administrativo','Alquiler',
+  'Municipal','Edenor','Monotributo','Contador','Claro','Movistar'
+];
+var EGRESOS_VARIABLES_INSUMOS = [
+  'Cuellos','Coolcare','Filos navaja','Gel shaving','After shave',
+  'Tonificador','Crema','Algodón','Guantes','Sanitizante','Productos limpieza'
+];
+var EGRESOS_PUBLICIDAD_FIJA = ['Espacio publicitario fijo','Agenda pro'];
+var EGRESOS_PUBLICIDAD_VAR  = ['Publicidad Oviedo','Tarjetas','Folletos','Digital','Merchandising'];
+var EGRESOS_VARIABLES_OTROS = [
+  'Agua','Yerba','Sahumerio','Alacena','Tarjeta','Bebidas','Productos',
+  'Gastos X','Inversión salón','Inversión herramientas','Educación',
+  'Reuniones','Espacio publicitario variable'
+];
+
+var currentRole='admin', currentUser=null, currentPeriod='dia', currentView='local', currentEmp='franco';
 
 var empData={
-  marcos:{name:'Marcos Rodríguez',dia:{ing:'$18.000',serv:'3',sueldo:'$7.200',prop:'$1.500',total:'$8.700'},mes:{ing:'$210.000',serv:'68',sueldo:'$84.000',prop:'$28.000',total:'$112.000'},anio:{ing:'$630.000',serv:'204',sueldo:'$252.000',prop:'$84.000',total:'$336.000'}},
-  lucas: {name:'Lucas Pereyra',   dia:{ing:'$14.500',serv:'2',sueldo:'$5.800',prop:'$500',total:'$6.300'},  mes:{ing:'$168.000',serv:'55',sueldo:'$67.200',prop:'$18.000',total:'$85.200'},  anio:{ing:'$504.000',serv:'165',sueldo:'$201.600',prop:'$54.000',total:'$255.600'}},
-  tomas: {name:'Tomás García',    dia:{ing:'$16.000',serv:'3',sueldo:'$6.400',prop:'$1.000',total:'$7.400'},mes:{ing:'$185.000',serv:'63',sueldo:'$74.000',prop:'$22.000',total:'$96.000'},  anio:{ing:'$555.000',serv:'189',sueldo:'$222.000',prop:'$66.000',total:'$288.000'}}
+  franco:{name:'Franco',  comision:40, dia:{ing:'$0',serv:'0',sueldo:'$0',dias:'0',prom:'0',total:'$0'},mes:{ing:'$0',serv:'0',sueldo:'$0',dias:'0',prom:'0',total:'$0'},anio:{ing:'$0',serv:'0',sueldo:'$0',dias:'0',prom:'0',total:'$0'}},
+  simon: {name:'Simón',   comision:40, dia:{ing:'$0',serv:'0',sueldo:'$0',dias:'0',prom:'0',total:'$0'},mes:{ing:'$0',serv:'0',sueldo:'$0',dias:'0',prom:'0',total:'$0'},anio:{ing:'$0',serv:'0',sueldo:'$0',dias:'0',prom:'0',total:'$0'}},
+  tomas: {name:'Tomás',   comision:40, dia:{ing:'$0',serv:'0',sueldo:'$0',dias:'0',prom:'0',total:'$0'},mes:{ing:'$0',serv:'0',sueldo:'$0',dias:'0',prom:'0',total:'$0'},anio:{ing:'$0',serv:'0',sueldo:'$0',dias:'0',prom:'0',total:'$0'}},
+  marcos:{name:'Marcos',  comision:50, dia:{ing:'$0',serv:'0',sueldo:'$0',dias:'0',prom:'0',total:'$0'},mes:{ing:'$0',serv:'0',sueldo:'$0',dias:'0',prom:'0',total:'$0'},anio:{ing:'$0',serv:'0',sueldo:'$0',dias:'0',prom:'0',total:'$0'}}
 };
 var periodLabel={dia:'Hoy',mes:'Este Mes',anio:'Este Año'};
 
@@ -1615,14 +1831,18 @@ function updateReportView(){
     document.getElementById('rep-mes-local').style.display=currentPeriod==='mes'?'block':'none';
     document.getElementById('rep-anio-local').style.display=currentPeriod==='anio'?'block':'none';
   } else {
-    var data=empData[currentEmp][currentPeriod];
+    var emp=empData[currentEmp];
+    var data=emp?emp[currentPeriod]:{ing:'$0',serv:'0',sueldo:'$0',dias:'0',prom:'0',total:'$0'};
+    var comision=emp?emp.comision:40;
     document.getElementById('emp-period-label').textContent=periodLabel[currentPeriod];
     document.getElementById('emp-stat-ing').textContent=data.ing;
     document.getElementById('emp-stat-serv').textContent=data.serv;
+    document.getElementById('emp-stat-dias').textContent=data.dias;
+    document.getElementById('emp-stat-prom').textContent=data.prom;
     document.getElementById('emp-stat-sueldo').textContent=data.sueldo;
-    document.getElementById('emp-stat-prop').textContent=data.prop;
+    document.getElementById('emp-comision-label').textContent=comision;
+    document.getElementById('emp-sum-serv').textContent=data.serv;
     document.getElementById('emp-sum-ing').textContent=data.ing;
-    document.getElementById('emp-sum-prop').textContent=data.prop;
     document.getElementById('emp-sum-total').textContent=data.total;
   }
 }
@@ -1861,8 +2081,39 @@ function saveIdentity() {
   showToast('Identidad guardada ✓');
 }
 
-// TOAST
-function showToast(msg) {
+// EGRESO CONCEPTO POR TIPO
+function updateEgresoConcepto() {
+  var tipo = document.getElementById('eg-tipo').value;
+  var sel  = document.getElementById('eg-concepto');
+  var opts = {
+    'fijo': ['Insumos','Personal limpieza','Personal administrativo','Alquiler','Municipal','Edenor','Monotributo','Contador','Claro','Movistar','Espacio publicitario fijo','Agenda pro'],
+    'variable-insumo': ['Cuellos','Coolcare','Filos navaja','Gel shaving','After shave','Tonificador','Crema','Algodón','Guantes','Sanitizante','Productos limpieza'],
+    'variable-pub': ['Publicidad Oviedo','Tarjetas','Folletos','Digital','Merchandising'],
+    'variable-otro': ['Agua','Yerba','Sahumerio','Alacena','Tarjeta','Bebidas','Productos','Gastos X','Inversión salón','Inversión herramientas','Educación','Reuniones','Espacio publicitario variable']
+  };
+  sel.innerHTML = '';
+  var list = opts[tipo] || [];
+  for (var i=0;i<list.length;i++) sel.innerHTML += '<option>'+list[i]+'</option>';
+}
+
+// Shortcut: ir a reporte de empleado desde card
+function setReportEmp(emp) {
+  goTo('reportes');
+  currentEmp = emp;
+  currentView = emp;
+  // update view-tabs buttons
+  var btns = document.querySelectorAll('#view-tabs button');
+  for (var i=0;i<btns.length;i++) btns[i].className='btn btn-outline btn-sm';
+  // find and highlight the correct button
+  var empNames = {franco:'Franco',simon:'Simón',tomas:'Tomás',marcos:'Marcos'};
+  for (var j=0;j<btns.length;j++) {
+    if (btns[j].textContent.trim() === empNames[emp]) btns[j].className='btn btn-primary btn-sm';
+  }
+  updateReportView();
+}
+
+// init egreso fecha
+var egF = document.getElementById('eg-fecha'); if(egF) egF.value = todayVal;
   var t = document.getElementById('toast');
   t.textContent = msg;
   t.style.opacity = '1';
