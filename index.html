@@ -455,6 +455,9 @@ tr:hover td{background:var(--blue-faint);}
     <div class="nav-group-label admin-only">Análisis</div>
     <div class="nav-item admin-only" onclick="goTo('reportes')"><span class="nav-ico">📋</span><span class="sb-item-label"> Reportes</span></div>
 
+    <div class="nav-group-label">Academia</div>
+    <div class="nav-item" onclick="goTo('academia')"><span class="nav-ico">🎓</span><span class="sb-item-label"> Academia MK</span></div>
+
     <div class="nav-group-label admin-only">Sistema</div>
     <div class="nav-item admin-only" onclick="goTo('configuracion')"><span class="nav-ico">⚙️</span><span class="sb-item-label"> Configuración</span></div>
   </div>
@@ -784,60 +787,82 @@ tr:hover td{background:var(--blue-faint);}
     <!-- ══ SERVICIOS ══ -->
     <div class="page" id="page-servicios">
       <div class="page-header">
-        <div class="page-header-left"><div class="page-title">Servicios</div><div class="page-sub">Catálogo del Salón MK — 13 servicios</div></div>
-        <button class="btn btn-primary" onclick="openModal('modal-servicio')">+ Agregar Servicio</button>
+        <div class="page-header-left"><div class="page-title">Servicios</div><div class="page-sub">Lista de precios — 2 tarifas: Efectivo / QR-Transfer</div></div>
       </div>
-      <div class="table-card">
+
+      <!-- Equipo MK -->
+      <div class="table-card" style="margin-bottom:18px">
+        <div class="table-header">
+          <div><div class="table-title">✂️ Equipo MK</div><div style="font-size:11px;color:var(--text-light);margin-top:2px">Franco · Simón · Tomás — comisión 40%</div></div>
+          <span class="badge b-blue">13 servicios</span>
+        </div>
         <table>
-          <thead><tr><th>#</th><th>Servicio</th><th>Duración est.</th><th>Estado</th><th></th></tr></thead>
-          <tbody>
-            <tr><td class="fw7" style="color:var(--text-light)">01</td><td class="fw7">Corte</td><td>30 min</td><td><span class="badge b-green"><span class="b-dot"></span>Activo</span></td><td><button class="btn btn-outline btn-sm">Editar precio</button></td></tr>
-            <tr><td class="fw7" style="color:var(--text-light)">02</td><td class="fw7">Corte + Perfilado</td><td>40 min</td><td><span class="badge b-green"><span class="b-dot"></span>Activo</span></td><td><button class="btn btn-outline btn-sm">Editar precio</button></td></tr>
-            <tr><td class="fw7" style="color:var(--text-light)">03</td><td class="fw7">Corte y barba</td><td>45 min</td><td><span class="badge b-green"><span class="b-dot"></span>Activo</span></td><td><button class="btn btn-outline btn-sm">Editar precio</button></td></tr>
-            <tr><td class="fw7" style="color:var(--text-light)">04</td><td class="fw7">Corte y barba + perfilado</td><td>55 min</td><td><span class="badge b-green"><span class="b-dot"></span>Activo</span></td><td><button class="btn btn-outline btn-sm">Editar precio</button></td></tr>
-            <tr><td class="fw7" style="color:var(--text-light)">05</td><td class="fw7">Corte y barba VIP</td><td>60 min</td><td><span class="badge b-green"><span class="b-dot"></span>Activo</span></td><td><button class="btn btn-outline btn-sm">Editar precio</button></td></tr>
-            <tr><td class="fw7" style="color:var(--text-light)">06</td><td class="fw7">Corte y barba VIP + perfilado</td><td>70 min</td><td><span class="badge b-green"><span class="b-dot"></span>Activo</span></td><td><button class="btn btn-outline btn-sm">Editar precio</button></td></tr>
-            <tr><td class="fw7" style="color:var(--text-light)">07</td><td class="fw7">Perfilado</td><td>15 min</td><td><span class="badge b-green"><span class="b-dot"></span>Activo</span></td><td><button class="btn btn-outline btn-sm">Editar precio</button></td></tr>
-            <tr><td class="fw7" style="color:var(--text-light)">08</td><td class="fw7">Global</td><td>90 min</td><td><span class="badge b-green"><span class="b-dot"></span>Activo</span></td><td><button class="btn btn-outline btn-sm">Editar precio</button></td></tr>
-            <tr><td class="fw7" style="color:var(--text-light)">09</td><td class="fw7">Claritos</td><td>90 min</td><td><span class="badge b-green"><span class="b-dot"></span>Activo</span></td><td><button class="btn btn-outline btn-sm">Editar precio</button></td></tr>
-            <tr><td class="fw7" style="color:var(--text-light)">10</td><td class="fw7">Corte y barba VIP + perfilado + lavado</td><td>80 min</td><td><span class="badge b-green"><span class="b-dot"></span>Activo</span></td><td><button class="btn btn-outline btn-sm">Editar precio</button></td></tr>
-            <tr><td class="fw7" style="color:var(--text-light)">11</td><td class="fw7">Corte y barba + perfilado + lavado</td><td>65 min</td><td><span class="badge b-green"><span class="b-dot"></span>Activo</span></td><td><button class="btn btn-outline btn-sm">Editar precio</button></td></tr>
-            <tr><td class="fw7" style="color:var(--text-light)">12</td><td class="fw7">Corte + perfilado + lavado</td><td>50 min</td><td><span class="badge b-green"><span class="b-dot"></span>Activo</span></td><td><button class="btn btn-outline btn-sm">Editar precio</button></td></tr>
-            <tr><td class="fw7" style="color:var(--text-light)">13</td><td class="fw7">Barba</td><td>20 min</td><td><span class="badge b-green"><span class="b-dot"></span>Activo</span></td><td><button class="btn btn-outline btn-sm">Editar precio</button></td></tr>
-          </tbody>
+          <thead><tr><th>#</th><th>Servicio</th><th>Duración</th><th>💵 Efectivo</th><th>📱 QR / Transfer</th></tr></thead>
+          <tbody id="tbody-servicios-equipo"></tbody>
         </table>
       </div>
-      <div style="background:var(--blue-faint);border:1px solid var(--border);border-radius:12px;padding:14px 18px;font-size:12px;color:var(--text-light)">
-        💡 Los precios se cargarán cuando conectemos la base de datos (Supabase). Por ahora podés agregar nuevos servicios al catálogo.
+
+      <!-- Marcos -->
+      <div class="table-card">
+        <div class="table-header">
+          <div><div class="table-title">💇 Marcos</div><div style="font-size:11px;color:var(--text-light);margin-top:2px">Precios propios — comisión 50%</div></div>
+          <span class="badge b-amb">13 + cursos Academia</span>
+        </div>
+        <table>
+          <thead><tr><th>#</th><th>Servicio</th><th>Duración</th><th>💵 Efectivo</th><th>📱 QR / Transfer</th></tr></thead>
+          <tbody id="tbody-servicios-marcos"></tbody>
+        </table>
       </div>
     </div>
 
     <!-- ══ STOCK ══ -->
     <div class="page" id="page-stock">
       <div class="page-header">
-        <div class="page-header-left"><div class="page-title">Stock</div><div class="page-sub">Control de inventario</div></div>
-        <button class="btn btn-primary" onclick="openModal('modal-producto')">+ Agregar Producto</button>
+        <div class="page-header-left"><div class="page-title">Stock</div><div class="page-sub">Productos y bebidas del Salón MK</div></div>
+        <button class="btn btn-primary" onclick="openModal('modal-producto')">+ Restock semanal</button>
       </div>
-      <div class="stat-grid" style="grid-template-columns:repeat(3,1fr)">
-        <div class="stat-card"><div class="stat-label">Total Productos</div><div class="stat-value">11</div></div>
-        <div class="stat-card"><div class="stat-top"><div class="stat-icon-wrap red">⚠️</div></div><div class="stat-label">Stock Bajo</div><div class="stat-value v-red">2</div></div>
-        <div class="stat-card featured"><div class="stat-label">Valor Inventario</div><div class="stat-value">$0</div></div>
+      <div class="stat-grid" style="grid-template-columns:repeat(4,1fr)">
+        <div class="stat-card featured"><div class="stat-label">Total ítems</div><div class="stat-value" id="stock-total-items">0</div></div>
+        <div class="stat-card"><div class="stat-label">Bebidas</div><div class="stat-value" id="stock-total-beb">0</div><div class="stat-sub">unidades</div></div>
+        <div class="stat-card"><div class="stat-label">Productos</div><div class="stat-value" id="stock-total-prod">0</div><div class="stat-sub">unidades</div></div>
+        <div class="stat-card"><div class="stat-top"><div class="stat-icon-wrap red">⚠️</div></div><div class="stat-label">Stock bajo</div><div class="stat-value v-red" id="stock-bajo">0</div></div>
       </div>
+
+      <div class="two-col">
+        <!-- BEBIDAS -->
+        <div class="table-card" style="margin-bottom:0">
+          <div class="table-header"><div class="table-title">🍺 Bebidas</div><div class="tabs-pill"><div class="tab-pill active" onclick="stockFilter(this,'beb')">Ver todo</div></div></div>
+          <table>
+            <thead><tr><th>Producto</th><th>Precio</th><th>Stock</th><th>Acc.</th></tr></thead>
+            <tbody id="tbody-bebidas"></tbody>
+          </table>
+        </div>
+        <!-- PRODUCTOS -->
+        <div class="table-card" style="margin-bottom:0">
+          <div class="table-header"><div class="table-title">🧴 Productos</div></div>
+          <table>
+            <thead><tr><th>Producto</th><th>Precio</th><th>Stock</th><th>Acc.</th></tr></thead>
+            <tbody id="tbody-productos"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Insumos de trabajo (no venta) -->
       <div class="table-card">
+        <div class="table-header"><div class="table-title">🔧 Insumos de trabajo</div><div style="font-size:11px;color:var(--text-light)">No se venden — uso interno</div></div>
         <table>
-          <thead><tr><th>Producto (Insumo)</th><th>Categoría</th><th>Stock</th><th>Mínimo</th><th>Estado</th></tr></thead>
+          <thead><tr><th>Insumo</th><th>Estado</th><th>Último restock</th></tr></thead>
           <tbody>
-            <tr><td class="fw7">Cuellos</td><td>Insumos</td><td><div>— <div class="stock-bar"><div class="stock-fill s-ok" style="width:60%"></div></div></div></td><td>1 pack</td><td><span class="badge b-green"><span class="b-dot"></span>OK</span></td></tr>
-            <tr><td class="fw7">Coolcare</td><td>Insumos</td><td><div>— <div class="stock-bar"><div class="stock-fill s-low" style="width:35%"></div></div></div></td><td>1 unid.</td><td><span class="badge b-amb"><span class="b-dot"></span>Regular</span></td></tr>
-            <tr><td class="fw7">Filos navaja</td><td>Insumos</td><td><div>— <div class="stock-bar"><div class="stock-fill s-crit" style="width:15%"></div></div></div></td><td>5 unid.</td><td><span class="badge b-red"><span class="b-dot"></span>Bajo</span></td></tr>
-            <tr><td class="fw7">Gel shaving</td><td>Insumos</td><td><div>— <div class="stock-bar"><div class="stock-fill s-ok" style="width:70%"></div></div></div></td><td>1 unid.</td><td><span class="badge b-green"><span class="b-dot"></span>OK</span></td></tr>
-            <tr><td class="fw7">After shave</td><td>Insumos</td><td><div>— <div class="stock-bar"><div class="stock-fill s-ok" style="width:80%"></div></div></div></td><td>1 unid.</td><td><span class="badge b-green"><span class="b-dot"></span>OK</span></td></tr>
-            <tr><td class="fw7">Tonificador</td><td>Insumos</td><td><div>— <div class="stock-bar"><div class="stock-fill s-ok" style="width:55%"></div></div></div></td><td>1 unid.</td><td><span class="badge b-green"><span class="b-dot"></span>OK</span></td></tr>
-            <tr><td class="fw7">Crema</td><td>Insumos</td><td><div>— <div class="stock-bar"><div class="stock-fill s-low" style="width:30%"></div></div></div></td><td>1 unid.</td><td><span class="badge b-amb"><span class="b-dot"></span>Regular</span></td></tr>
-            <tr><td class="fw7">Algodón</td><td>Insumos</td><td><div>— <div class="stock-bar"><div class="stock-fill s-ok" style="width:90%"></div></div></div></td><td>1 roll</td><td><span class="badge b-green"><span class="b-dot"></span>OK</span></td></tr>
-            <tr><td class="fw7">Guantes</td><td>Insumos</td><td><div>— <div class="stock-bar"><div class="stock-fill s-crit" style="width:10%"></div></div></div></td><td>1 caja</td><td><span class="badge b-red"><span class="b-dot"></span>Bajo</span></td></tr>
-            <tr><td class="fw7">Sanitizante</td><td>Insumos</td><td><div>— <div class="stock-bar"><div class="stock-fill s-ok" style="width:65%"></div></div></div></td><td>1 unid.</td><td><span class="badge b-green"><span class="b-dot"></span>OK</span></td></tr>
-            <tr><td class="fw7">Productos limpieza</td><td>Limpieza</td><td><div>— <div class="stock-bar"><div class="stock-fill s-ok" style="width:75%"></div></div></div></td><td>1 set</td><td><span class="badge b-green"><span class="b-dot"></span>OK</span></td></tr>
+            <tr><td class="fw7">Cuellos</td><td><span class="badge b-green"><span class="b-dot"></span>OK</span></td><td style="color:var(--text-light);font-size:12px">—</td></tr>
+            <tr><td class="fw7">Coolcare</td><td><span class="badge b-green"><span class="b-dot"></span>OK</span></td><td style="color:var(--text-light);font-size:12px">—</td></tr>
+            <tr><td class="fw7">Filos navaja</td><td><span class="badge b-amb"><span class="b-dot"></span>Regular</span></td><td style="color:var(--text-light);font-size:12px">—</td></tr>
+            <tr><td class="fw7">Gel shaving</td><td><span class="badge b-green"><span class="b-dot"></span>OK</span></td><td style="color:var(--text-light);font-size:12px">—</td></tr>
+            <tr><td class="fw7">After shave</td><td><span class="badge b-green"><span class="b-dot"></span>OK</span></td><td style="color:var(--text-light);font-size:12px">—</td></tr>
+            <tr><td class="fw7">Crema / Tonificador</td><td><span class="badge b-green"><span class="b-dot"></span>OK</span></td><td style="color:var(--text-light);font-size:12px">—</td></tr>
+            <tr><td class="fw7">Algodón</td><td><span class="badge b-green"><span class="b-dot"></span>OK</span></td><td style="color:var(--text-light);font-size:12px">—</td></tr>
+            <tr><td class="fw7">Guantes</td><td><span class="badge b-red"><span class="b-dot"></span>Bajo</span></td><td style="color:var(--text-light);font-size:12px">—</td></tr>
+            <tr><td class="fw7">Sanitizante</td><td><span class="badge b-green"><span class="b-dot"></span>OK</span></td><td style="color:var(--text-light);font-size:12px">—</td></tr>
+            <tr><td class="fw7">Productos limpieza</td><td><span class="badge b-green"><span class="b-dot"></span>OK</span></td><td style="color:var(--text-light);font-size:12px">—</td></tr>
           </tbody>
         </table>
       </div>
@@ -1095,6 +1120,52 @@ tr:hover td{background:var(--blue-faint);}
             <div class="sum-row"><span class="sum-lbl">Total Servicios</span><span class="sum-val" id="emp-sum-serv">0</span></div>
             <div class="sum-row"><span class="sum-lbl">Ingresos</span><span class="sum-val" id="emp-sum-ing">$0</span></div>
             <div class="sum-row"><span>Sueldo a cobrar</span><span class="v-green fw7" id="emp-sum-total">$0</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ══ ACADEMIA MK ══ -->
+    <div class="page" id="page-academia">
+      <div class="page-header">
+        <div class="page-header-left">
+          <div class="page-title">🎓 Academia MK</div>
+          <div class="page-sub">Cursos de barbería con Marcos</div>
+        </div>
+        <button class="btn btn-primary" onclick="openModal('modal-cobro')">+ Registrar inscripción</button>
+      </div>
+
+      <!-- Stats -->
+      <div class="stat-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:20px">
+        <div class="stat-card featured"><div class="stat-label">Inscriptos este mes</div><div class="stat-value">0</div></div>
+        <div class="stat-card"><div class="stat-label">Cursos activos</div><div class="stat-value">4</div></div>
+        <div class="stat-card"><div class="stat-label">Ingresos Academia</div><div class="stat-value">$0</div></div>
+        <div class="stat-card"><div class="stat-label">Próximo curso</div><div class="stat-value" style="font-size:14px;font-weight:700">A confirmar</div></div>
+      </div>
+
+      <!-- Cursos disponibles -->
+      <div class="table-card" style="margin-bottom:20px">
+        <div class="table-header"><div class="table-title">Cursos disponibles</div><div style="font-size:11px;color:var(--text-light)">Dictados por Marcos</div></div>
+        <table>
+          <thead><tr><th>Curso</th><th>💵 Efectivo</th><th>📱 QR / Transfer</th><th></th></tr></thead>
+          <tbody id="tbody-cursos"></tbody>
+        </table>
+      </div>
+
+      <!-- Info cards -->
+      <div class="two-col">
+        <div class="chart-card" style="margin-bottom:0">
+          <div class="chart-title" style="margin-bottom:14px">📋 ¿Cómo funciona?</div>
+          <div style="display:flex;flex-direction:column;gap:10px;font-size:13px;color:var(--text-mid)">
+            <div style="display:flex;gap:10px;align-items:flex-start"><span style="font-size:18px">✂️</span><div><strong>Corte inicial / intensivo</strong><br>Fundamentos del corte masculino profesional. 1 o 2 personas.</div></div>
+            <div style="display:flex;gap:10px;align-items:flex-start"><span style="font-size:18px">⭐</span><div><strong>Perfeccionamiento</strong><br>Técnicas avanzadas para barberos con experiencia previa.</div></div>
+            <div style="display:flex;gap:10px;align-items:flex-start"><span style="font-size:18px">🪒</span><div><strong>Curso de barba</strong><br>Perfilado, afeitado y cuidado de barba. 1 o 2 personas.</div></div>
+          </div>
+        </div>
+        <div class="sum-box" style="align-self:start;margin-bottom:0">
+          <div style="font-size:12px;font-weight:700;color:var(--text-light);text-transform:uppercase;letter-spacing:.5px;margin-bottom:12px">Inscriptos recientes</div>
+          <div style="text-align:center;padding:20px;color:var(--text-light);font-size:13px">
+            Sin inscriptos registrados.<br>Los datos se cargarán con Supabase.
           </div>
         </div>
       </div>
@@ -1485,54 +1556,95 @@ tr:hover td{background:var(--blue-faint);}
 
 <!-- ══ MODALS ══ -->
 <div class="modal-overlay" id="modal-cobro">
-  <div class="modal">
+  <div class="modal" style="max-width:520px">
     <button class="modal-close" onclick="closeModal('modal-cobro')">✕</button>
     <div class="modal-title">💰 Registrar Cobro</div>
-    <div class="form-grid">
-      <div class="fg"><label>Cliente</label><input type="text" placeholder="Nombre del cliente"></div>
+
+    <!-- Empleado + Hora -->
+    <div class="form-grid" style="margin-bottom:12px">
       <div class="fg"><label>Empleado</label>
-        <select>
-          <option>Franco</option>
-          <option>Simón</option>
-          <option>Tomás</option>
-          <option>Marcos</option>
+        <select id="cobro-emp" onchange="cobroUpdatePrices()">
+          <option value="equipo">Franco</option>
+          <option value="equipo">Simón</option>
+          <option value="equipo">Tomás</option>
+          <option value="marcos">Marcos</option>
+        </select>
+      </div>
+      <div class="fg"><label>Hora del turno</label>
+        <select id="cobro-hora">
+          <option>10:00</option><option>10:30</option><option>11:00</option><option>11:30</option>
+          <option>12:00</option><option>12:30</option><option>14:00</option><option>14:30</option>
+          <option>15:00</option><option>15:30</option><option>16:00</option><option>16:30</option>
+          <option>17:00</option><option>17:30</option><option>18:00</option><option>18:30</option>
+          <option>19:00</option><option>19:30</option>
         </select>
       </div>
     </div>
-    <div class="fg" style="margin-bottom:12px"><label>Servicio</label>
-      <select>
-        <option>Corte</option>
-        <option>Corte + Perfilado</option>
-        <option>Corte y barba</option>
-        <option>Corte y barba + perfilado</option>
-        <option>Corte y barba VIP</option>
-        <option>Corte y barba VIP + perfilado</option>
-        <option>Perfilado</option>
-        <option>Global</option>
-        <option>Claritos</option>
-        <option>Corte y barba VIP + perfilado + lavado</option>
-        <option>Corte y barba + perfilado + lavado</option>
-        <option>Corte + perfilado + lavado</option>
-        <option>Barba</option>
+
+    <!-- Método de pago (arriba para auto-actualizar precio) -->
+    <div class="fg" style="margin-bottom:14px">
+      <label>Método de pago</label>
+      <div class="pay-split">
+        <div class="pay-m selected" onclick="selectPayCobro(this,'ef')">💵 Efectivo</div>
+        <div class="pay-m" onclick="selectPayCobro(this,'qr')">🏦 Santander</div>
+        <div class="pay-m" onclick="selectPayCobro(this,'qr')">📱 Personal Pay</div>
+        <div class="pay-m" onclick="selectPayCobro(this,'mix')">🔀 Mixto</div>
+      </div>
+    </div>
+    <div id="cobro-mixto-wrap" style="display:none;margin-bottom:12px">
+      <div class="form-grid">
+        <div class="fg"><label>Efectivo $</label><input type="number" id="cobro-mix-ef" placeholder="0" oninput="cobroRecalc()"></div>
+        <div class="fg"><label>Digital $</label><input type="number" id="cobro-mix-qr" placeholder="0" oninput="cobroRecalc()"></div>
+      </div>
+    </div>
+
+    <!-- Servicio principal -->
+    <div class="fg" style="margin-bottom:8px">
+      <label>Servicio</label>
+      <select id="cobro-servicio" onchange="cobroUpdatePrices()">
+        <option value="">— Seleccionar servicio —</option>
       </select>
     </div>
-    <div class="fg" style="margin-bottom:12px"><label>Monto ($)</label><input type="number" placeholder="0" id="cobro-monto"></div>
-    <div class="fg" style="margin-bottom:12px">
-      <label>Método de Pago</label>
-      <div class="pay-split">
-        <div class="pay-m selected" onclick="selectPay(this)">💵 Efectivo</div>
-        <div class="pay-m" onclick="selectPay(this)">🏦 Santander</div>
-        <div class="pay-m" onclick="selectPay(this)">📱 Personal Pay</div>
-        <div class="pay-m" onclick="selectPay(this)">🔀 Mixto</div>
+
+    <!-- Extras: bebida -->
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px">
+      <div class="fg" style="flex:1;margin:0"><label>+ Bebida (opcional)</label>
+        <select id="cobro-bebida" onchange="cobroRecalc()">
+          <option value="0">Sin bebida</option>
+        </select>
+      </div>
+      <div class="fg" style="width:80px;margin:0;padding-top:20px"><label style="font-size:10px">Cant.</label>
+        <input type="number" id="cobro-beb-qty" value="1" min="1" max="10" style="text-align:center" oninput="cobroRecalc()">
       </div>
     </div>
-    <div id="pago-mixto" style="display:none;margin-bottom:12px">
-      <div class="form-grid">
-        <div class="fg"><label>Efectivo $</label><input type="number" placeholder="0"></div>
-        <div class="fg"><label>Santander / Personal Pay $</label><input type="number" placeholder="0"></div>
+
+    <!-- Extras: producto -->
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+      <div class="fg" style="flex:1;margin:0"><label>+ Producto (opcional)</label>
+        <select id="cobro-producto" onchange="cobroRecalc()">
+          <option value="0">Sin producto</option>
+        </select>
+      </div>
+      <div class="fg" style="width:80px;margin:0;padding-top:20px"><label style="font-size:10px">Cant.</label>
+        <input type="number" id="cobro-prod-qty" value="1" min="1" max="10" style="text-align:center" oninput="cobroRecalc()">
       </div>
     </div>
-    <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="closeModal('modal-cobro');showToast('Cobro registrado ✓')">✓ Registrar Cobro</button>
+
+    <!-- Propina -->
+    <div class="fg" style="margin-bottom:14px">
+      <label>Propina ($)</label>
+      <input type="number" id="cobro-propina" placeholder="0" oninput="cobroRecalc()">
+    </div>
+
+    <!-- Resumen automático -->
+    <div style="background:var(--blue-faint);border-radius:12px;padding:14px 16px;margin-bottom:14px">
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-light);margin-bottom:6px"><span>Servicio</span><span id="cobro-r-servicio" class="fw7">$0</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-light);margin-bottom:6px"><span>Extras</span><span id="cobro-r-extras" class="fw7">$0</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:12px;color:var(--text-light);margin-bottom:6px"><span>Propina</span><span id="cobro-r-propina" class="fw7">$0</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:14px;font-weight:700;color:var(--blue);border-top:1px solid var(--border);padding-top:8px;margin-top:6px"><span>TOTAL</span><span id="cobro-r-total">$0</span></div>
+    </div>
+
+    <button class="btn btn-primary" style="width:100%;justify-content:center;padding:13px" onclick="registrarCobro()">✓ Registrar Cobro</button>
   </div>
 </div>
 
@@ -1666,21 +1778,70 @@ var USERS = {
 };
 
 // Servicios reales del salón
+// ══ DATA MAESTRO ══
+// Precios reales — dos tarifas: efectivo vs QR/transfer
+// Equipo MK = Franco, Simón, Tomás (40%)  |  Marcos = precio propio (50%)
 var SERVICIOS = [
-  {nombre:'Corte',                                    duracion:'30 min'},
-  {nombre:'Corte + Perfilado',                        duracion:'40 min'},
-  {nombre:'Corte y barba',                            duracion:'45 min'},
-  {nombre:'Corte y barba + perfilado',                duracion:'55 min'},
-  {nombre:'Corte y barba VIP',                        duracion:'60 min'},
-  {nombre:'Corte y barba VIP + perfilado',            duracion:'70 min'},
-  {nombre:'Perfilado',                                duracion:'15 min'},
-  {nombre:'Global',                                   duracion:'90 min'},
-  {nombre:'Claritos',                                 duracion:'90 min'},
-  {nombre:'Corte y barba VIP + perfilado + lavado',   duracion:'80 min'},
-  {nombre:'Corte y barba + perfilado + lavado',       duracion:'65 min'},
-  {nombre:'Corte + perfilado + lavado',               duracion:'50 min'},
-  {nombre:'Barba',                                    duracion:'20 min'},
+  {id:'corte',                nombre:'Corte',                                   dur:'30 min', ef:12000, qr:12200, ef_m:15500, qr_m:15700},
+  {id:'corte-perfilado',      nombre:'Corte + Perfilado',                       dur:'40 min', ef:14500, qr:14700, ef_m:18000, qr_m:18200},
+  {id:'corte-barba',          nombre:'Corte y barba',                           dur:'45 min', ef:18200, qr:18400, ef_m:20000, qr_m:20300},
+  {id:'corte-barba-perf',     nombre:'Corte y barba + perfilado',               dur:'55 min', ef:20700, qr:20900, ef_m:22500, qr_m:22800},
+  {id:'corte-barba-vip',      nombre:'Corte y barba VIP',                       dur:'60 min', ef:22200, qr:22400, ef_m:25000, qr_m:25300},
+  {id:'corte-barba-vip-perf', nombre:'Corte y barba VIP + perfilado',           dur:'70 min', ef:24700, qr:24900, ef_m:27500, qr_m:27800},
+  {id:'perfilado',            nombre:'Perfilado',                               dur:'15 min', ef:2500,  qr:2500,  ef_m:2500,  qr_m:2500},
+  {id:'global',               nombre:'Global',                                  dur:'90 min', ef:60000, qr:62000, ef_m:86000, qr_m:88000},
+  {id:'claritos',             nombre:'Claritos',                                dur:'90 min', ef:45000, qr:47000, ef_m:62000, qr_m:64000},
+  {id:'vip-perf-lavado',      nombre:'Corte y barba VIP + perfilado + lavado',  dur:'80 min', ef:10000, qr:12000, ef_m:10000, qr_m:12000},
+  {id:'barba-perf-lavado',    nombre:'Corte y barba + perfilado + lavado',      dur:'65 min', ef:10000, qr:12000, ef_m:10000, qr_m:12000},
+  {id:'corte-perf-lavado',    nombre:'Corte + perfilado + lavado',              dur:'50 min', ef:10000, qr:12000, ef_m:10000, qr_m:12000},
+  {id:'barba',                nombre:'Barba',                                   dur:'20 min', ef:10000, qr:12000, ef_m:10000, qr_m:12000},
 ];
+
+var CURSOS = [
+  {nombre:'Curso inicial extendido (1 persona)',  ef:55000, qr:57000},
+  {nombre:'Curso inicial extendido (2 personas)', ef:90000, qr:92000},
+  {nombre:'Curso inicial intensivo (1 persona)',  ef:55000, qr:57000},
+  {nombre:'Curso inicial intensivo (2 personas)', ef:90000, qr:92000},
+  {nombre:'Curso perfeccionamiento (1 persona)',  ef:55000, qr:57000},
+  {nombre:'Curso perfeccionamiento (2 personas)', ef:90000, qr:92000},
+  {nombre:'Curso barba (1 persona)',              ef:55000, qr:57000},
+  {nombre:'Curso barba (2 personas)',             ef:90000, qr:92000},
+];
+
+var BEBIDAS = [
+  {nombre:'Pepsi',            precio:1500,  stock:10},
+  {nombre:'Coca Cola',        precio:1500,  stock:10},
+  {nombre:'Corona',           precio:3500,  stock:6},
+  {nombre:'Miller',           precio:2500,  stock:6},
+  {nombre:'Quilmes',          precio:2000,  stock:8},
+  {nombre:'Andes',            precio:2500,  stock:6},
+  {nombre:'Budweiser',        precio:3000,  stock:4},
+  {nombre:'Heineken',         precio:3500,  stock:4},
+  {nombre:'Stella Artois',    precio:3000,  stock:4},
+  {nombre:'Monster',          precio:3000,  stock:6},
+  {nombre:'Monster Rosa',     precio:3000,  stock:6},
+  {nombre:'Baggio Multifruta',precio:1000,  stock:8},
+  {nombre:'Baggio Naranja',   precio:1000,  stock:8},
+];
+
+var PRODUCTOS_VENTA = [
+  {nombre:'Aceite barba sandía',             precio:6000,  stock:3},
+  {nombre:'Jabón exfoliante coco',           precio:5000,  stock:2},
+  {nombre:'Crema peinado rulos',             precio:6000,  stock:2},
+  {nombre:'Cera fijación Easy Fold',         precio:6000,  stock:3},
+  {nombre:'Bálsamo barbas Hawaiian coconut', precio:8000,  stock:2},
+  {nombre:'Gel',                             precio:5000,  stock:4},
+  {nombre:'After Shave',                     precio:8000,  stock:2},
+  {nombre:'Aceite barba menta',              precio:6000,  stock:3},
+  {nombre:'Aceite barba coco y vainilla',    precio:6000,  stock:2},
+  {nombre:'Aceite barba café',               precio:6000,  stock:2},
+  {nombre:'Cera nutritiva',                  precio:10000, stock:2},
+];
+
+// Horarios del flujo diario (sin 13:00-13:30 — almuerzo)
+var HORARIOS = ['10:00','10:30','11:00','11:30','12:00','12:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30'];
+var BARBEROS  = ['Franco','Simón','Tomás','Marcos'];
+var BARBEROS_KEYS = ['franco','simon','tomas','marcos'];
 
 // Egresos reales del salón
 var EGRESOS_FIJOS = [
@@ -2150,6 +2311,168 @@ function setReportEmp(emp) {
 
 // init egreso fecha
 var egF = document.getElementById('eg-fecha'); if(egF) egF.value = todayVal;
+
+// ══ COBRO LOGIC ══
+var cobroPayMode = 'ef'; // 'ef' | 'qr' | 'mix'
+
+function selectPayCobro(el, mode) {
+  cobroPayMode = mode;
+  var ms = el.closest('.pay-split').querySelectorAll('.pay-m');
+  for (var i=0;i<ms.length;i++) ms[i].classList.remove('selected');
+  el.classList.add('selected');
+  document.getElementById('cobro-mixto-wrap').style.display = mode==='mix'?'block':'none';
+  cobroUpdatePrices();
+}
+
+function cobroIsMarcos() {
+  var emp = document.getElementById('cobro-emp');
+  return emp && emp.value === 'marcos';
+}
+
+function cobroUpdatePrices() {
+  // Repopulate servicio select with correct prices
+  var sel = document.getElementById('cobro-servicio');
+  if (!sel) return;
+  var isMarcos = cobroIsMarcos();
+  var isQR = cobroPayMode === 'qr';
+  sel.innerHTML = '<option value="">— Seleccionar servicio —</option>';
+  for (var i=0;i<SERVICIOS.length;i++) {
+    var s = SERVICIOS[i];
+    var price = isMarcos ? (isQR ? s.qr_m : s.ef_m) : (isQR ? s.qr : s.ef);
+    sel.innerHTML += '<option value="'+price+'">'+s.nombre+' — $'+fmtN(price)+'</option>';
+  }
+  // If marcos, add cursos
+  if (isMarcos) {
+    sel.innerHTML += '<optgroup label="── Academia MK ──"></optgroup>';
+    for (var j=0;j<CURSOS.length;j++) {
+      var c = CURSOS[j];
+      var cp = isQR ? c.qr : c.ef;
+      sel.innerHTML += '<option value="'+cp+'">'+c.nombre+' — $'+fmtN(cp)+'</option>';
+    }
+  }
+  cobroRecalc();
+}
+
+function cobroRecalc() {
+  var servVal = parseFloat((document.getElementById('cobro-servicio')||{}).value) || 0;
+  var bebSel  = document.getElementById('cobro-bebida');
+  var prodSel = document.getElementById('cobro-producto');
+  var bebPrice  = bebSel  ? (parseFloat(bebSel.value)||0)  : 0;
+  var prodPrice = prodSel ? (parseFloat(prodSel.value)||0) : 0;
+  var bebQty    = parseInt((document.getElementById('cobro-beb-qty')||{}).value)||1;
+  var prodQty   = parseInt((document.getElementById('cobro-prod-qty')||{}).value)||1;
+  var propina   = parseFloat((document.getElementById('cobro-propina')||{}).value)||0;
+  var extras    = (bebPrice * bebQty) + (prodPrice * prodQty);
+  var total     = servVal + extras + propina;
+  set('cobro-r-servicio', '$'+fmtN(servVal));
+  set('cobro-r-extras',   '$'+fmtN(extras));
+  set('cobro-r-propina',  '$'+fmtN(propina));
+  set('cobro-r-total',    '$'+fmtN(total));
+}
+
+function registrarCobro() {
+  closeModal('modal-cobro');
+  showToast('Cobro registrado ✓');
+}
+
+function set(id, val) { var el=document.getElementById(id); if(el) el.textContent=val; }
+function fmtN(n) { return Number(n).toLocaleString('es-AR'); }
+
+// ══ RENDER SERVICIOS PAGE ══
+function renderServiciosPage() {
+  var tEq = document.getElementById('tbody-servicios-equipo');
+  var tMk = document.getElementById('tbody-servicios-marcos');
+  if (!tEq || !tMk) return;
+  tEq.innerHTML = ''; tMk.innerHTML = '';
+  for (var i=0;i<SERVICIOS.length;i++) {
+    var s = SERVICIOS[i];
+    var n = i+1;
+    var numStr = n < 10 ? '0'+n : ''+n;
+    tEq.innerHTML += '<tr><td class="fw7" style="color:var(--text-light)">'+numStr+'</td><td class="fw7">'+s.nombre+'</td><td>'+s.dur+'</td><td class="fw7 v-blue">$'+fmtN(s.ef)+'</td><td class="fw7" style="color:var(--text-mid)">$'+fmtN(s.qr)+'</td></tr>';
+    tMk.innerHTML += '<tr><td class="fw7" style="color:var(--text-light)">'+numStr+'</td><td class="fw7">'+s.nombre+'</td><td>'+s.dur+'</td><td class="fw7 v-blue">$'+fmtN(s.ef_m)+'</td><td class="fw7" style="color:var(--text-mid)">$'+fmtN(s.qr_m)+'</td></tr>';
+  }
+  // Cursos en Marcos
+  var tCurs = document.getElementById('tbody-cursos');
+  if (tCurs) {
+    tCurs.innerHTML = '';
+    for (var j=0;j<CURSOS.length;j++) {
+      var c = CURSOS[j];
+      tCurs.innerHTML += '<tr><td class="fw7">'+c.nombre+'</td><td class="fw7 v-blue">$'+fmtN(c.ef)+'</td><td class="fw7" style="color:var(--text-mid)">$'+fmtN(c.qr)+'</td><td><button class="btn btn-outline btn-sm" onclick="openModal(\'modal-cobro\')">Inscribir</button></td></tr>';
+    }
+  }
+  for (var k=0;k<CURSOS.length;k++) {
+    var ck = CURSOS[k];
+    tMk.innerHTML += '<tr style="background:rgba(251,191,36,.06)"><td class="fw7" style="color:var(--text-light)">🎓</td><td class="fw7" style="color:var(--amber)">'+ck.nombre+'</td><td>—</td><td class="fw7 v-blue">$'+fmtN(ck.ef)+'</td><td class="fw7" style="color:var(--text-mid)">$'+fmtN(ck.qr)+'</td></tr>';
+  }
+}
+
+// ══ RENDER STOCK PAGE ══
+function renderStock() {
+  var tBeb  = document.getElementById('tbody-bebidas');
+  var tProd = document.getElementById('tbody-productos');
+  if (!tBeb || !tProd) return;
+  var totalBeb=0, totalProd=0, bajo=0;
+  tBeb.innerHTML = '';
+  for (var i=0;i<BEBIDAS.length;i++) {
+    var b = BEBIDAS[i];
+    totalBeb += b.stock;
+    var pct = Math.min(b.stock*10, 100);
+    var cls = b.stock <= 2 ? 's-crit' : (b.stock <= 4 ? 's-low' : 's-ok');
+    if (b.stock <= 2) bajo++;
+    tBeb.innerHTML += '<tr><td class="fw7">'+b.nombre+'</td><td class="fw7 v-blue">$'+fmtN(b.precio)+'</td>'
+      +'<td><div style="font-size:12px;font-weight:600">'+b.stock+' unid.<div class="stock-bar"><div class="stock-fill '+cls+'" style="width:'+pct+'%"></div></div></div></td>'
+      +'<td><button class="action-btn ab-blue" title="Restock" onclick="stockAjuste(\'beb\','+i+',1)">+</button></td></tr>';
+  }
+  tProd.innerHTML = '';
+  for (var j=0;j<PRODUCTOS_VENTA.length;j++) {
+    var p = PRODUCTOS_VENTA[j];
+    totalProd += p.stock;
+    var ppct = Math.min(p.stock*15, 100);
+    var pcls = p.stock <= 1 ? 's-crit' : (p.stock <= 2 ? 's-low' : 's-ok');
+    if (p.stock <= 1) bajo++;
+    tProd.innerHTML += '<tr><td class="fw7">'+p.nombre+'</td><td class="fw7 v-blue">$'+fmtN(p.precio)+'</td>'
+      +'<td><div style="font-size:12px;font-weight:600">'+p.stock+' unid.<div class="stock-bar"><div class="stock-fill '+pcls+'" style="width:'+ppct+'%"></div></div></div></td>'
+      +'<td><button class="action-btn ab-blue" title="Restock" onclick="stockAjuste(\'prod\','+j+',1)">+</button></td></tr>';
+  }
+  set('stock-total-items', totalBeb + totalProd);
+  set('stock-total-beb', totalBeb);
+  set('stock-total-prod', totalProd);
+  set('stock-bajo', bajo);
+}
+
+function stockAjuste(tipo, idx, delta) {
+  if (tipo==='beb') {
+    BEBIDAS[idx].stock = Math.max(0, BEBIDAS[idx].stock + delta);
+  } else {
+    PRODUCTOS_VENTA[idx].stock = Math.max(0, PRODUCTOS_VENTA[idx].stock + delta);
+  }
+  renderStock();
+  showToast('Stock actualizado ✓');
+}
+
+function stockFilter(el, tipo) { /* futuro */ }
+
+// ══ INIT COBRO MODAL ══
+function initCobroModal() {
+  // Populate bebida select
+  var bSel = document.getElementById('cobro-bebida');
+  if (bSel) {
+    bSel.innerHTML = '<option value="0">Sin bebida</option>';
+    for (var i=0;i<BEBIDAS.length;i++) bSel.innerHTML += '<option value="'+BEBIDAS[i].precio+'">'+BEBIDAS[i].nombre+' $'+fmtN(BEBIDAS[i].precio)+'</option>';
+  }
+  // Populate producto select
+  var pSel = document.getElementById('cobro-producto');
+  if (pSel) {
+    pSel.innerHTML = '<option value="0">Sin producto</option>';
+    for (var j=0;j<PRODUCTOS_VENTA.length;j++) pSel.innerHTML += '<option value="'+PRODUCTOS_VENTA[j].precio+'">'+PRODUCTOS_VENTA[j].nombre+' $'+fmtN(PRODUCTOS_VENTA[j].precio)+'</option>';
+  }
+  cobroUpdatePrices();
+}
+
+// Run on load
+renderServiciosPage();
+renderStock();
+initCobroModal();
 
 // TOAST
 function showToast(msg) {
