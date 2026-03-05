@@ -234,6 +234,24 @@ tr:hover td{background:var(--blue-faint);}
 .emp-big-avatar{width:48px;height:48px;border-radius:14px;background:var(--blue-pale);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
 .emp-card-name{font-size:14px;font-weight:700;color:var(--text);letter-spacing:-.2px;}
 .emp-card-role{font-size:11px;color:var(--text-light);font-weight:500;}
+.emp-card-actions{display:flex;gap:8px;margin-top:12px;}
+.emp-card-actions .btn{flex:1;justify-content:center;}
+/* ── CLIENTES ── */
+.cliente-card{background:var(--white);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);border:1px solid var(--border);transition:all .22s;position:relative;}
+.cliente-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md);}
+.cliente-card-top{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
+.cliente-avatar{width:44px;height:44px;border-radius:12px;background:var(--blue);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:#fff;flex-shrink:0;letter-spacing:-.5px;}
+.cliente-name{font-size:14px;font-weight:700;color:var(--text);letter-spacing:-.2px;}
+.cliente-phone{font-size:12px;color:var(--text-light);margin-top:1px;}
+.cliente-stat{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border);font-size:12px;}
+.cliente-stat:last-of-type{border:none;}
+.cliente-stat-key{color:var(--text-light);font-weight:500;}
+.cliente-stat-val{font-weight:700;color:var(--text);}
+.cliente-tag{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:20px;font-size:10px;font-weight:700;letter-spacing:.3px;}
+.tag-vip{background:rgba(251,191,36,.15);color:var(--amber);}
+.tag-regular{background:var(--blue-pale);color:var(--blue);}
+.tag-nuevo{background:var(--green-bg);color:var(--green);}
+.cliente-card-menu{position:absolute;top:12px;right:12px;}
 .emp-stat-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border);}
 .emp-stat-row:last-of-type{border-bottom:none;}
 .emp-stat-key{font-size:12px;color:var(--text-light);font-weight:500;}
@@ -454,6 +472,7 @@ tr:hover td{background:var(--blue-faint);}
 
     <div class="nav-group-label">Gestión</div>
     <div class="nav-item admin-only" onclick="goTo('empleados')"><i class="fa-solid fa-users"></i><span class="sb-item-label">Empleados</span></div>
+    <div class="nav-item" onclick="goTo('clientes')"><i class="fa-solid fa-address-book"></i><span class="sb-item-label">Clientes</span></div>
     <div class="nav-item" onclick="goTo('servicios')"><i class="fa-solid fa-scissors"></i><span class="sb-item-label">Servicios</span></div>
     <div class="nav-item" onclick="goTo('stock')"><i class="fa-solid fa-boxes-stacked"></i><span class="sb-item-label">Stock</span></div>
     <div class="nav-item" onclick="goTo('egresos')"><i class="fa-solid fa-arrow-trend-down"></i><span class="sb-item-label">Egresos</span></div>
@@ -755,7 +774,10 @@ tr:hover td{background:var(--blue-faint);}
             <div class="emp-stat-row"><span class="emp-stat-key">Sueldo (40%)</span><span class="emp-stat-val hi">$0</span></div>
             <div class="emp-stat-row"><span class="emp-stat-key">Servicios mes</span><span class="emp-stat-val hi">0</span></div>
             <div class="emp-stat-row"><span class="emp-stat-key">Días trabajados</span><span class="emp-stat-val hi">0</span></div>
-            <div style="margin-top:12px"><button class="btn btn-ghost btn-sm" style="width:100%;justify-content:center" onclick="setReportEmp('franco')">Ver reporte →</button></div>
+            <div class="emp-card-actions">
+              <button class="btn btn-outline btn-sm" onclick="openEditEmp('franco')"><i class="fa-solid fa-pen"></i> Editar</button>
+              <button class="btn btn-ghost btn-sm" onclick="setReportEmp('franco')">Ver reporte →</button>
+            </div>
           </div>
           <div class="emp-card">
             <div class="emp-card-top">
@@ -766,7 +788,10 @@ tr:hover td{background:var(--blue-faint);}
             <div class="emp-stat-row"><span class="emp-stat-key">Sueldo (40%)</span><span class="emp-stat-val hi">$0</span></div>
             <div class="emp-stat-row"><span class="emp-stat-key">Servicios mes</span><span class="emp-stat-val hi">0</span></div>
             <div class="emp-stat-row"><span class="emp-stat-key">Días trabajados</span><span class="emp-stat-val hi">0</span></div>
-            <div style="margin-top:12px"><button class="btn btn-ghost btn-sm" style="width:100%;justify-content:center" onclick="setReportEmp('simon')">Ver reporte →</button></div>
+            <div class="emp-card-actions">
+              <button class="btn btn-outline btn-sm" onclick="openEditEmp('simon')"><i class="fa-solid fa-pen"></i> Editar</button>
+              <button class="btn btn-ghost btn-sm" onclick="setReportEmp('simon')">Ver reporte →</button>
+            </div>
           </div>
           <div class="emp-card">
             <div class="emp-card-top">
@@ -777,7 +802,10 @@ tr:hover td{background:var(--blue-faint);}
             <div class="emp-stat-row"><span class="emp-stat-key">Sueldo (40%)</span><span class="emp-stat-val hi">$0</span></div>
             <div class="emp-stat-row"><span class="emp-stat-key">Servicios mes</span><span class="emp-stat-val hi">0</span></div>
             <div class="emp-stat-row"><span class="emp-stat-key">Días trabajados</span><span class="emp-stat-val hi">0</span></div>
-            <div style="margin-top:12px"><button class="btn btn-ghost btn-sm" style="width:100%;justify-content:center" onclick="setReportEmp('tomas')">Ver reporte →</button></div>
+            <div class="emp-card-actions">
+              <button class="btn btn-outline btn-sm" onclick="openEditEmp('tomas')"><i class="fa-solid fa-pen"></i> Editar</button>
+              <button class="btn btn-ghost btn-sm" onclick="setReportEmp('tomas')">Ver reporte →</button>
+            </div>
           </div>
           <div class="emp-card">
             <div class="emp-card-top">
@@ -788,7 +816,10 @@ tr:hover td{background:var(--blue-faint);}
             <div class="emp-stat-row"><span class="emp-stat-key">Sueldo (50%)</span><span class="emp-stat-val hi">$0</span></div>
             <div class="emp-stat-row"><span class="emp-stat-key">Servicios mes</span><span class="emp-stat-val hi">0</span></div>
             <div class="emp-stat-row"><span class="emp-stat-key">Días trabajados</span><span class="emp-stat-val hi">0</span></div>
-            <div style="margin-top:12px"><button class="btn btn-ghost btn-sm" style="width:100%;justify-content:center" onclick="setReportEmp('marcos')">Ver reporte →</button></div>
+            <div class="emp-card-actions">
+              <button class="btn btn-outline btn-sm" onclick="openEditEmp('marcos')"><i class="fa-solid fa-pen"></i> Editar</button>
+              <button class="btn btn-ghost btn-sm" onclick="setReportEmp('marcos')">Ver reporte →</button>
+            </div>
           </div>
         </div>
       </div>
@@ -1540,6 +1571,39 @@ tr:hover td{background:var(--blue-faint);}
       </div>
     </div>
 
+    <!-- ══ CLIENTES ══ -->
+    <div class="page" id="page-clientes">
+      <div class="page-header">
+        <div class="page-header-left">
+          <div class="page-title">Clientes</div>
+          <div class="page-sub">Base de clientes del Salón MK</div>
+        </div>
+        <div class="page-header-right">
+          <div class="search-sm" style="width:220px"><span class="si"><i class="fa-solid fa-magnifying-glass"></i></span><input type="text" placeholder="Buscar cliente..." id="cl-search" oninput="filterClientes()"></div>
+          <button class="btn btn-primary" onclick="openModal('modal-cliente')"><i class="fa-solid fa-user-plus"></i> Nuevo Cliente</button>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="stat-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:22px">
+        <div class="stat-card featured"><div class="stat-label">Total Clientes</div><div class="stat-value" id="cl-stat-total">6</div></div>
+        <div class="stat-card"><div class="stat-label">VIP</div><div class="stat-value" id="cl-stat-vip">2</div></div>
+        <div class="stat-card"><div class="stat-label">Regulares</div><div class="stat-value" id="cl-stat-reg">3</div></div>
+        <div class="stat-card"><div class="stat-label">Nuevos (30d)</div><div class="stat-value" id="cl-stat-new">1</div></div>
+      </div>
+
+      <!-- Filtros -->
+      <div style="display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap">
+        <button class="tab-pill active" onclick="setClienteFilter('todos',this)">Todos</button>
+        <button class="tab-pill" onclick="setClienteFilter('vip',this)">⭐ VIP</button>
+        <button class="tab-pill" onclick="setClienteFilter('regular',this)">Regular</button>
+        <button class="tab-pill" onclick="setClienteFilter('nuevo',this)">Nuevo</button>
+      </div>
+
+      <!-- Cards grid -->
+      <div class="cards-grid" id="clientes-grid"></div>
+    </div>
+
   </div>
 </div>
 
@@ -1566,7 +1630,7 @@ tr:hover td{background:var(--blue-faint);}
 
 <!-- ══ MODALS ══ -->
 <div class="modal-overlay" id="modal-cobro">
-  <div class="modal" style="max-width:700px;padding:0;display:flex;flex-direction:column;max-height:96vh;width:100%">
+  <div class="modal" style="max-width:760px;padding:0;display:flex;flex-direction:column;max-height:96vh;width:100%">
 
     <!-- Header fijo -->
     <div style="padding:22px 24px 16px;border-bottom:1px solid var(--border);flex-shrink:0;">
@@ -1764,6 +1828,85 @@ tr:hover td{background:var(--blue-faint);}
     </div>
     <div class="fg" style="margin-bottom:14px"><label>Contraseña inicial</label><input type="password" placeholder="••••••••"></div>
     <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="closeModal('modal-empleado')">✓ Guardar</button>
+  </div>
+</div>
+
+<!-- Modal Editar Empleado -->
+<div class="modal-overlay" id="modal-edit-emp">
+  <div class="modal" style="max-width:480px">
+    <button class="modal-close" onclick="closeModal('modal-edit-emp')"><i class="fa-solid fa-xmark"></i></button>
+    <div class="modal-title"><i class="fa-solid fa-pen" style="color:var(--blue);margin-right:8px"></i>Editar Empleado</div>
+
+    <!-- Avatar preview + selector emoji -->
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;padding:14px;background:var(--blue-faint);border-radius:12px;border:1px solid var(--border)">
+      <div id="edit-emp-avatar-preview" style="width:52px;height:52px;border-radius:14px;background:var(--blue-pale);display:flex;align-items:center;justify-content:center;font-size:26px;border:2px solid var(--border);flex-shrink:0">✂️</div>
+      <div style="flex:1">
+        <div style="font-size:11px;color:var(--text-light);font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px">Foto / Avatar</div>
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <span onclick="setEmpAvatar('✂️')" style="cursor:pointer;font-size:20px;padding:4px;border-radius:8px;transition:background .15s" onmouseover="this.style.background='var(--blue-pale)'" onmouseout="this.style.background='transparent'">✂️</span>
+          <span onclick="setEmpAvatar('💈')" style="cursor:pointer;font-size:20px;padding:4px;border-radius:8px;transition:background .15s" onmouseover="this.style.background='var(--blue-pale)'" onmouseout="this.style.background='transparent'">💈</span>
+          <span onclick="setEmpAvatar('🪒')" style="cursor:pointer;font-size:20px;padding:4px;border-radius:8px;transition:background .15s" onmouseover="this.style.background='var(--blue-pale)'" onmouseout="this.style.background='transparent'">🪒</span>
+          <span onclick="setEmpAvatar('💇')" style="cursor:pointer;font-size:20px;padding:4px;border-radius:8px;transition:background .15s" onmouseover="this.style.background='var(--blue-pale)'" onmouseout="this.style.background='transparent'">💇</span>
+          <span onclick="setEmpAvatar('👨')" style="cursor:pointer;font-size:20px;padding:4px;border-radius:8px;transition:background .15s" onmouseover="this.style.background='var(--blue-pale)'" onmouseout="this.style.background='transparent'">👨</span>
+          <span onclick="setEmpAvatar('🧔')" style="cursor:pointer;font-size:20px;padding:4px;border-radius:8px;transition:background .15s" onmouseover="this.style.background='var(--blue-pale)'" onmouseout="this.style.background='transparent'">🧔</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-grid" style="margin-bottom:12px">
+      <div class="fg"><label>Nombre</label><input type="text" id="edit-emp-nombre" placeholder="Nombre completo"></div>
+      <div class="fg"><label>Tipo</label>
+        <select id="edit-emp-tipo">
+          <option value="Barbero">Barbero</option>
+          <option value="Barbero Senior">Barbero Senior</option>
+          <option value="Encargado">Encargado</option>
+        </select>
+      </div>
+    </div>
+    <div class="fg" style="margin-bottom:16px">
+      <label>% Comisión</label>
+      <div style="display:flex;align-items:center;gap:12px">
+        <input type="range" id="edit-emp-comision-range" min="20" max="70" step="5" value="40" oninput="document.getElementById('edit-emp-comision-val').textContent=this.value+'%';document.getElementById('edit-emp-comision').value=this.value" style="flex:1;accent-color:var(--blue)">
+        <span id="edit-emp-comision-val" style="font-size:16px;font-weight:800;color:var(--blue);min-width:40px;text-align:right">40%</span>
+        <input type="hidden" id="edit-emp-comision" value="40">
+      </div>
+    </div>
+    <div style="display:flex;gap:10px">
+      <button class="btn btn-outline" style="flex:1;justify-content:center" onclick="closeModal('modal-edit-emp')">Cancelar</button>
+      <button class="btn btn-primary" style="flex:1;justify-content:center" onclick="saveEditEmp()"><i class="fa-solid fa-check"></i> Guardar cambios</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Nuevo/Editar Cliente -->
+<div class="modal-overlay" id="modal-cliente">
+  <div class="modal" style="max-width:480px">
+    <button class="modal-close" onclick="closeModal('modal-cliente')"><i class="fa-solid fa-xmark"></i></button>
+    <div class="modal-title"><i class="fa-solid fa-user-plus" style="color:var(--blue);margin-right:8px"></i>Nuevo Cliente</div>
+    <div class="form-grid" style="margin-bottom:12px">
+      <div class="fg"><label>Nombre</label><input type="text" id="cl-nombre" placeholder="Nombre completo"></div>
+      <div class="fg"><label>Teléfono</label><input type="text" id="cl-tel" placeholder="11-XXXX-XXXX"></div>
+    </div>
+    <div class="form-grid" style="margin-bottom:12px">
+      <div class="fg"><label>Barbero preferido</label>
+        <select id="cl-barbero">
+          <option value="">Sin preferencia</option>
+          <option>Franco</option><option>Simón</option><option>Tomás</option><option>Marcos</option>
+        </select>
+      </div>
+      <div class="fg"><label>Categoría</label>
+        <select id="cl-cat">
+          <option value="nuevo">Nuevo</option>
+          <option value="regular">Regular</option>
+          <option value="vip">VIP</option>
+        </select>
+      </div>
+    </div>
+    <div class="fg" style="margin-bottom:16px"><label>Notas internas</label><textarea id="cl-notas" placeholder="Preferencias, alergias, observaciones..." style="height:72px;resize:none"></textarea></div>
+    <div style="display:flex;gap:10px">
+      <button class="btn btn-outline" style="flex:1;justify-content:center" onclick="closeModal('modal-cliente')">Cancelar</button>
+      <button class="btn btn-primary" style="flex:1;justify-content:center" onclick="saveCliente()"><i class="fa-solid fa-check"></i> Guardar</button>
+    </div>
   </div>
 </div>
 
@@ -2518,10 +2661,141 @@ function initCobroModal() {
   cobroUpdatePrices(); // populate services with efectivo prices
 }
 
+// ══ CLIENTES ══
+var CLIENTES = [
+  {id:1, nombre:'Juan Martínez',    tel:'11-4532-7891', barbero:'Franco',  cat:'vip',     visitas:18, ultimaVisita:'hace 5 días',    notas:'Prefiere corte clásico, sin máquina en la nuca.'},
+  {id:2, nombre:'Pedro López',      tel:'11-6721-3344', barbero:'Simón',   cat:'regular', visitas:7,  ultimaVisita:'hace 2 semanas', notas:''},
+  {id:3, nombre:'Carlos Vega',      tel:'11-2210-5509', barbero:'Marcos',  cat:'vip',     visitas:24, ultimaVisita:'hace 1 semana',  notas:'VIP — viene siempre los sábados a las 10.'},
+  {id:4, nombre:'Ariel Fernández',  tel:'11-8843-1102', barbero:'Tomás',   cat:'regular', visitas:4,  ultimaVisita:'hace 3 semanas', notas:''},
+  {id:5, nombre:'Martín Sánchez',   tel:'11-5567-9980', barbero:'',        cat:'regular', visitas:3,  ultimaVisita:'hace 1 mes',     notas:'Vino referido por Carlos.'},
+  {id:6, nombre:'Diego Romero',     tel:'11-3390-2244', barbero:'Franco',  cat:'nuevo',   visitas:1,  ultimaVisita:'hace 3 días',    notas:'Primera visita — le gustó el ambiente.'},
+];
+var clienteFilter = 'todos';
+var currentEditEmpKey = null;
+var empAvatarMap = {franco:'✂️', simon:'💈', tomas:'🪒', marcos:'💇'};
+var empDataMap = {
+  franco:{nombre:'Franco', tipo:'Barbero',        comision:40},
+  simon: {nombre:'Simón',  tipo:'Barbero',        comision:40},
+  tomas: {nombre:'Tomás',  tipo:'Barbero',        comision:40},
+  marcos:{nombre:'Marcos', tipo:'Barbero Senior', comision:50}
+};
+
+function getInitials(n){return n.split(' ').map(function(w){return w[0];}).join('').substring(0,2).toUpperCase();}
+
+function renderClientes() {
+  var grid = document.getElementById('clientes-grid');
+  if (!grid) return;
+  var q = ((document.getElementById('cl-search')||{}).value||'').toLowerCase();
+  var list = CLIENTES.filter(function(c){
+    return (clienteFilter==='todos'||c.cat===clienteFilter) && (!q||c.nombre.toLowerCase().indexOf(q)!==-1||c.tel.indexOf(q)!==-1);
+  });
+  if (!list.length) { grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-light)"><i class="fa-solid fa-users-slash" style="font-size:32px;margin-bottom:12px;display:block;opacity:.3"></i>Sin resultados</div>'; return; }
+  var tagMap={vip:'tag-vip',regular:'tag-regular',nuevo:'tag-nuevo'};
+  var tagLabel={vip:'⭐ VIP',regular:'Regular',nuevo:'Nuevo'};
+  var palette=['#1B3A6B','#2A4F8F','#1E8C5A','#6B3A8F','#8F5B1B'];
+  grid.innerHTML='';
+  list.forEach(function(c){
+    var col=palette[c.id%palette.length];
+    grid.innerHTML+='<div class="cliente-card">'+
+      '<div class="cliente-card-menu"><span class="cliente-tag '+tagMap[c.cat]+'">'+tagLabel[c.cat]+'</span></div>'+
+      '<div class="cliente-card-top">'+
+        '<div class="cliente-avatar" style="background:'+col+'">'+getInitials(c.nombre)+'</div>'+
+        '<div><div class="cliente-name">'+c.nombre+'</div><div class="cliente-phone"><i class="fa-solid fa-phone" style="font-size:10px;margin-right:4px"></i>'+c.tel+'</div></div>'+
+      '</div>'+
+      '<div class="cliente-stat"><span class="cliente-stat-key">Visitas</span><span class="cliente-stat-val v-blue">'+c.visitas+'</span></div>'+
+      '<div class="cliente-stat"><span class="cliente-stat-key">Última visita</span><span class="cliente-stat-val">'+c.ultimaVisita+'</span></div>'+
+      '<div class="cliente-stat"><span class="cliente-stat-key">Barbero preferido</span><span class="cliente-stat-val">'+(c.barbero||'—')+'</span></div>'+
+      (c.notas?'<div style="margin-top:9px;font-size:11px;color:var(--text-light);background:var(--bg);border-radius:8px;padding:7px 10px;line-height:1.5"><i class="fa-solid fa-note-sticky" style="margin-right:4px;color:var(--amber)"></i>'+c.notas+'</div>':'')+
+      '<div style="display:flex;gap:7px;margin-top:12px">'+
+        '<button class="btn btn-ghost btn-sm" style="flex:1;justify-content:center" onclick="openModal(\'modal-cobro\')"><i class="fa-solid fa-calendar-plus"></i> Turno</button>'+
+        '<button class="btn btn-outline btn-sm" style="width:36px;justify-content:center;padding:0" title="Editar"><i class="fa-solid fa-pen"></i></button>'+
+        '<a href="https://wa.me/549'+c.tel.replace(/\D/g,'')+'" target="_blank" class="btn btn-outline btn-sm" style="width:36px;justify-content:center;padding:0;color:#25D366;text-decoration:none" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>'+
+      '</div>'+
+    '</div>';
+  });
+}
+
+function filterClientes(){renderClientes();}
+
+function setClienteFilter(f,el){
+  clienteFilter=f;
+  var pills=document.querySelectorAll('#page-clientes .tab-pill');
+  for(var i=0;i<pills.length;i++) pills[i].classList.remove('active');
+  if(el) el.classList.add('active');
+  renderClientes();
+}
+
+function saveCliente(){
+  var nombre=((document.getElementById('cl-nombre')||{}).value||'').trim();
+  if(!nombre){showToast('Ingresá el nombre');return;}
+  var tel=((document.getElementById('cl-tel')||{}).value||'').trim();
+  var barbero=((document.getElementById('cl-barbero')||{}).value||'');
+  var cat=((document.getElementById('cl-cat')||{}).value||'nuevo');
+  var notas=((document.getElementById('cl-notas')||{}).value||'').trim();
+  CLIENTES.push({id:Date.now(),nombre:nombre,tel:tel||'—',barbero:barbero,cat:cat,visitas:0,ultimaVisita:'Hoy',notas:notas});
+  closeModal('modal-cliente');
+  ['cl-nombre','cl-tel','cl-notas'].forEach(function(id){var e=document.getElementById(id);if(e)e.value='';});
+  renderClientes();
+  updateClienteStats();
+  showToast('"'+nombre+'" agregado ✓');
+}
+
+function updateClienteStats(){
+  var f=function(cat){return CLIENTES.filter(function(c){return c.cat===cat;}).length;};
+  var t=document.getElementById('cl-stat-total');if(t)t.textContent=CLIENTES.length;
+  var v=document.getElementById('cl-stat-vip');  if(v)v.textContent=f('vip');
+  var r=document.getElementById('cl-stat-reg');  if(r)r.textContent=f('regular');
+  var n=document.getElementById('cl-stat-new');  if(n)n.textContent=f('nuevo');
+}
+
+function openEditEmp(key){
+  currentEditEmpKey=key;
+  var d=empDataMap[key];if(!d)return;
+  var av=empAvatarMap[key]||'✂️';
+  var p=document.getElementById('edit-emp-avatar-preview');if(p)p.textContent=av;
+  var nm=document.getElementById('edit-emp-nombre');if(nm)nm.value=d.nombre;
+  var tp=document.getElementById('edit-emp-tipo');if(tp)tp.value=d.tipo;
+  var rng=document.getElementById('edit-emp-comision-range');if(rng)rng.value=d.comision;
+  var vl=document.getElementById('edit-emp-comision-val');if(vl)vl.textContent=d.comision+'%';
+  var hd=document.getElementById('edit-emp-comision');if(hd)hd.value=d.comision;
+  openModal('modal-edit-emp');
+}
+
+function setEmpAvatar(emoji){
+  var p=document.getElementById('edit-emp-avatar-preview');if(p)p.textContent=emoji;
+  if(currentEditEmpKey) empAvatarMap[currentEditEmpKey]=emoji;
+}
+
+function saveEditEmp(){
+  if(!currentEditEmpKey)return;
+  var nombre=((document.getElementById('edit-emp-nombre')||{}).value||'').trim();
+  var tipo=((document.getElementById('edit-emp-tipo')||{}).value||'Barbero');
+  var comision=parseInt(((document.getElementById('edit-emp-comision')||{}).value)||40);
+  if(!nombre){showToast('Ingresá el nombre');return;}
+  empDataMap[currentEditEmpKey]={nombre:nombre,tipo:tipo,comision:comision};
+  empAvatarMap[currentEditEmpKey]=document.getElementById('edit-emp-avatar-preview').textContent;
+  // Update card visually
+  var cards=document.querySelectorAll('.emp-card');
+  cards.forEach(function(card){
+    var editBtn=card.querySelector('button[onclick*="\''+currentEditEmpKey+'\'"]');
+    if(editBtn){
+      var nm=card.querySelector('.emp-card-name');if(nm)nm.textContent=nombre;
+      var rl=card.querySelector('.emp-card-role');if(rl)rl.textContent=tipo+' · '+comision+'%';
+      var av=card.querySelector('.emp-big-avatar');if(av)av.textContent=empAvatarMap[currentEditEmpKey];
+      var sks=card.querySelectorAll('.emp-stat-key');
+      sks.forEach(function(sk){if(sk.textContent.indexOf('Sueldo')!==-1)sk.textContent='Sueldo ('+comision+'%)';});
+    }
+  });
+  closeModal('modal-edit-emp');
+  showToast(nombre+' actualizado ✓');
+}
+
 // Run on load
 renderServiciosPage();
 renderStock();
 initCobroModal();
+renderClientes();
+updateClienteStats();
 
 // TOAST
 function showToast(msg) {
