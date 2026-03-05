@@ -665,50 +665,77 @@ td { vertical-align:middle; }
       <div class="page-header">
         <div class="page-header-left">
           <div class="page-title">Agenda de Turnos</div>
-          <div class="page-sub">Gestión completa de citas</div>
+          <div class="page-sub" id="agenda-fecha-sel">Cargando...</div>
         </div>
         <button class="btn btn-primary" onclick="openModal('modal-turno')">+ Nuevo Turno</button>
       </div>
-      <div class="two-col" style="margin-bottom:22px">
-        <div class="chart-card" style="margin-bottom:0">
-          <div class="chart-header">
-            <div class="chart-title">Marzo 2026</div>
-            <div style="display:flex;gap:8px">
-              <button class="btn btn-outline btn-sm">◀</button>
-              <button class="btn btn-outline btn-sm">▶</button>
+
+      <!-- Layout: calendario izquierda, resumen + tabla derecha -->
+      <div style="display:grid;grid-template-columns:320px 1fr;gap:20px;align-items:start">
+
+        <!-- Calendario -->
+        <div class="card" style="padding:20px">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+            <div id="cal-mes-label" style="font-size:15px;font-weight:800;color:var(--text)">Marzo 2026</div>
+            <div style="display:flex;gap:6px">
+              <button class="action-btn ab-blue" onclick="calNavMes(-1)" title="Mes anterior">◀</button>
+              <button class="action-btn ab-blue" onclick="calNavMes(1)"  title="Mes siguiente">▶</button>
             </div>
           </div>
-          <div class="cal-grid" style="margin-bottom:6px">
-            <div class="cal-head">DOM</div><div class="cal-head">LUN</div><div class="cal-head">MAR</div>
-            <div class="cal-head">MIÉ</div><div class="cal-head">JUE</div><div class="cal-head">VIE</div><div class="cal-head">SÁB</div>
+          <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px;margin-bottom:6px">
+            <div style="text-align:center;font-size:9px;font-weight:700;color:var(--text-light);padding:4px">DOM</div>
+            <div style="text-align:center;font-size:9px;font-weight:700;color:var(--text-light);padding:4px">LUN</div>
+            <div style="text-align:center;font-size:9px;font-weight:700;color:var(--text-light);padding:4px">MAR</div>
+            <div style="text-align:center;font-size:9px;font-weight:700;color:var(--text-light);padding:4px">MIÉ</div>
+            <div style="text-align:center;font-size:9px;font-weight:700;color:var(--text-light);padding:4px">JUE</div>
+            <div style="text-align:center;font-size:9px;font-weight:700;color:var(--text-light);padding:4px">VIE</div>
+            <div style="text-align:center;font-size:9px;font-weight:700;color:var(--text-light);padding:4px">SÁB</div>
           </div>
-          <div class="cal-grid" id="cal-days"></div>
-        </div>
-        <div class="table-card" style="margin-bottom:0">
-          <div class="table-header"><div class="table-title">Resumen del Día</div></div>
-          <div class="stat-grid" style="grid-template-columns:1fr 1fr;margin-bottom:0">
-            <div class="stat-card" style="padding:14px"><div class="stat-label">Turnos</div><div class="stat-value" style="font-size:22px" id="agenda-stat-total">0</div></div>
-            <div class="stat-card" style="padding:14px"><div class="stat-label">Confirmados</div><div class="stat-value" style="font-size:22px;color:var(--green)" id="agenda-stat-conf">0</div></div>
-            <div class="stat-card" style="padding:14px"><div class="stat-label">Pendientes</div><div class="stat-value" style="font-size:22px;color:var(--amber)" id="agenda-stat-pend">0</div></div>
-            <div class="stat-card" style="padding:14px"><div class="stat-label">Realizados</div><div class="stat-value" style="font-size:22px;color:var(--blue)" id="agenda-stat-real">0</div></div>
+          <div style="display:grid;grid-template-columns:repeat(7,1fr);gap:2px" id="cal-days"></div>
+
+          <!-- Leyenda -->
+          <div style="display:flex;gap:12px;margin-top:14px;padding-top:12px;border-top:1px solid var(--border)">
+            <div style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text-light)">
+              <div style="width:8px;height:8px;border-radius:50%;background:var(--blue)"></div>Hoy
+            </div>
+            <div style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text-light)">
+              <div style="width:8px;height:8px;border-radius:50%;background:var(--amber)"></div>Con turnos
+            </div>
+            <div style="display:flex;align-items:center;gap:5px;font-size:10px;color:var(--text-light)">
+              <div style="width:8px;height:8px;border-radius:50%;background:var(--blue-pale);border:1.5px solid var(--blue)"></div>Seleccionado
+            </div>
           </div>
         </div>
-      </div>
-      <div class="table-card">
-        <div class="table-header">
-          <div class="table-title">Turnos de Hoy</div>
-          <div class="tabs-pill">
-            <div class="tab-pill active" onclick="filterAgenda(this,'todos')">Todos</div>
-            <div class="tab-pill" onclick="filterAgenda(this,'pendiente')">Pendientes</div>
-            <div class="tab-pill" onclick="filterAgenda(this,'realizado')">Realizados</div>
+
+        <!-- Panel derecho -->
+        <div style="display:flex;flex-direction:column;gap:16px">
+          <!-- Stats del día seleccionado -->
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px">
+            <div class="stat-card"><div class="stat-label">Total turnos</div><div class="stat-value" id="agenda-stat-total">0</div></div>
+            <div class="stat-card"><div class="stat-label">Confirmados</div><div class="stat-value" style="color:var(--green)" id="agenda-stat-conf">0</div></div>
+            <div class="stat-card"><div class="stat-label">Pendientes</div><div class="stat-value" style="color:var(--amber)" id="agenda-stat-pend">0</div></div>
+            <div class="stat-card"><div class="stat-label">Realizados</div><div class="stat-value" style="color:var(--blue)" id="agenda-stat-real">0</div></div>
+          </div>
+
+          <!-- Tabla turnos -->
+          <div class="card" style="overflow:hidden">
+            <div style="padding:14px 20px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center">
+              <div style="font-size:14px;font-weight:700" id="agenda-tabla-titulo">Turnos de hoy</div>
+              <div class="tabs-pill">
+                <div class="tab-pill active" onclick="filterAgenda(this,'todos')">Todos</div>
+                <div class="tab-pill" onclick="filterAgenda(this,'pendiente')">Pendientes</div>
+                <div class="tab-pill" onclick="filterAgenda(this,'confirmado')">Confirmados</div>
+                <div class="tab-pill" onclick="filterAgenda(this,'realizado')">Realizados</div>
+              </div>
+            </div>
+            <table>
+              <thead><tr><th>Hora</th><th>Cliente</th><th>Tel.</th><th>Servicio</th><th>Empleado</th><th>Estado</th><th>Acción</th></tr></thead>
+              <tbody id="agenda-tbody">
+                <tr><td colspan="7" style="text-align:center;padding:32px;color:var(--text-light)">Sin turnos este día</td></tr>
+              </tbody>
+            </table>
           </div>
         </div>
-        <table>
-          <thead><tr><th>Hora</th><th>Cliente</th><th>Tel.</th><th>Servicio</th><th>Empleado</th><th>Estado</th><th>Acción</th></tr></thead>
-          <tbody id="agenda-tbody">
-            <tr><td colspan="7" style="text-align:center;padding:28px;color:var(--text-light)">Sin turnos registrados hoy</td></tr>
-          </tbody>
-        </table>
       </div>
     </div>
 
@@ -2196,6 +2223,42 @@ td { vertical-align:middle; }
   </div>
 </div>
 
+<!-- Modal editar cliente -->
+<div class="modal-overlay" id="modal-edit-cliente">
+  <div class="modal" style="max-width:480px">
+    <button class="modal-close" onclick="closeModal('modal-edit-cliente')"><i class="fa-solid fa-xmark"></i></button>
+    <div class="modal-title"><i class="fa-solid fa-pen" style="color:var(--blue);margin-right:8px"></i>Editar Cliente — <span id="edit-cl-titulo"></span></div>
+    <div class="form-grid" style="margin-bottom:12px">
+      <div class="fg"><label>Nombre</label><input type="text" id="edit-cl-nombre" placeholder="Nombre completo"></div>
+      <div class="fg"><label>Teléfono</label><input type="text" id="edit-cl-tel" placeholder="11-XXXX-XXXX"></div>
+    </div>
+    <div class="form-grid" style="margin-bottom:12px">
+      <div class="fg"><label>Email</label><input type="email" id="edit-cl-email" placeholder="correo@email.com"></div>
+      <div class="fg"><label>Cumpleaños</label><input type="date" id="edit-cl-birthday"></div>
+    </div>
+    <div class="form-grid" style="margin-bottom:12px">
+      <div class="fg"><label>Barbero preferido</label>
+        <select id="edit-cl-barbero">
+          <option value="">Sin preferencia</option>
+          <option>Franco</option><option>Simón</option><option>Tomás</option><option>Marcos</option>
+        </select>
+      </div>
+      <div class="fg"><label>Categoría</label>
+        <select id="edit-cl-cat">
+          <option value="nuevo">Nuevo</option>
+          <option value="regular">Regular</option>
+          <option value="vip">VIP</option>
+        </select>
+      </div>
+    </div>
+    <div class="fg" style="margin-bottom:16px"><label>Notas internas</label><textarea id="edit-cl-notas" style="height:68px;resize:none"></textarea></div>
+    <div style="display:flex;gap:10px">
+      <button class="btn btn-outline" style="flex:1;justify-content:center" onclick="closeModal('modal-edit-cliente')">Cancelar</button>
+      <button class="btn btn-primary" style="flex:1;justify-content:center" onclick="saveEditCliente()"><i class="fa-solid fa-check"></i> Guardar cambios</button>
+    </div>
+  </div>
+</div>
+
 <div class="modal-overlay" id="modal-servicio">
   <div class="modal">
     <button class="modal-close" onclick="closeModal('modal-servicio')">✕</button>
@@ -3258,17 +3321,116 @@ function generatePDF(){
   }catch(e){alert('Error al generar PDF: '+e.message);console.error(e);}
 }
 
-// CALENDARIO
-var cd=document.getElementById('cal-days');
-if(cd){
-  var yr=d.getFullYear(),mo=d.getMonth();
-  var fd=new Date(yr,mo,1).getDay(),dim=new Date(yr,mo+1,0).getDate();
-  var tDays=[3,5,7,10,12,15,17,20,22,25,d.getDate()];
-  for(var fi=0;fi<fd;fi++) cd.innerHTML+='<div></div>';
-  for(var di=1;di<=dim;di++){
-    var isT=di===d.getDate(),hasT=tDays.indexOf(di)!==-1;
-    cd.innerHTML+='<div class="cal-day'+(isT?' today':'')+(hasT?' has-t':'')+'" onclick="goTo(\'agenda\')"><div class="cal-day-num">'+di+'</div></div>';
+// ── CALENDARIO DINÁMICO ───────────────────────────────────────
+var calYear  = new Date().getFullYear();
+var calMonth = new Date().getMonth();
+var calSelDate = new Date().toISOString().split('T')[0]; // fecha seleccionada
+var calTurnosDates = {}; // { 'YYYY-MM-DD': count } para mostrar puntos
+
+var MESES_ES = ['Enero','Febrero','Marzo','Abril','Mayo','Junio',
+                'Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+
+function renderCalendario(){
+  var cd = document.getElementById('cal-days');
+  if(!cd) return;
+  var lbl = document.getElementById('cal-mes-label');
+  if(lbl) lbl.textContent = MESES_ES[calMonth] + ' ' + calYear;
+
+  var firstDay = new Date(calYear, calMonth, 1).getDay();
+  var daysInMonth = new Date(calYear, calMonth+1, 0).getDate();
+  var today = new Date().toISOString().split('T')[0];
+
+  cd.innerHTML = '';
+  // Espacios vacíos
+  for(var fi=0; fi<firstDay; fi++){
+    cd.innerHTML += '<div></div>';
   }
+  // Días
+  for(var di=1; di<=daysInMonth; di++){
+    var mm = String(calMonth+1).padStart(2,'0');
+    var dd = String(di).padStart(2,'0');
+    var dateStr = calYear+'-'+mm+'-'+dd;
+    var isToday = dateStr === today;
+    var isSel   = dateStr === calSelDate;
+    var hasTurn = calTurnosDates[dateStr] > 0;
+
+    var bg = isSel ? 'var(--blue)' : isToday ? 'var(--blue-pale)' : 'transparent';
+    var color = isSel ? '#fff' : isToday ? 'var(--blue)' : 'var(--text)';
+    var border = isToday && !isSel ? '1.5px solid var(--blue)' : '1.5px solid transparent';
+
+    cd.innerHTML += '<div onclick="calSelectDay(\''+dateStr+'\')" style="'+
+      'text-align:center;padding:6px 2px;border-radius:9px;cursor:pointer;'+
+      'background:'+bg+';color:'+color+';border:'+border+';'+
+      'font-size:12px;font-weight:'+(isToday||isSel?'700':'500')+';'+
+      'transition:all .15s;position:relative"'+
+      ' onmouseover="if(this.style.background===\'transparent\')this.style.background=\'var(--blue-faint)\'"'+
+      ' onmouseout="if(this.style.background===\'var(--blue-faint)\')this.style.background=\'transparent\'"'+
+    '>'+di+
+      (hasTurn ? '<div style="width:5px;height:5px;border-radius:50%;background:'+(isSel?'#fff':'var(--amber)')+
+        ';margin:2px auto 0"></div>' : '<div style="height:7px"></div>')+
+    '</div>';
+  }
+}
+
+async function calNavMes(delta){
+  calMonth += delta;
+  if(calMonth > 11){ calMonth=0; calYear++; }
+  if(calMonth < 0) { calMonth=11; calYear--; }
+  await calCargarMes();
+  renderCalendario();
+}
+
+async function calCargarMes(){
+  // Traer todos los turnos del mes para mostrar puntos
+  var mm = String(calMonth+1).padStart(2,'0');
+  var desde = calYear+'-'+mm+'-01';
+  var hasta = new Date(calYear, calMonth+1, 0);
+  var hastaStr = calYear+'-'+mm+'-'+String(hasta.getDate()).padStart(2,'0');
+
+  var { data } = await supa.from('turnos')
+    .select('fecha')
+    .gte('fecha', desde)
+    .lte('fecha', hastaStr);
+
+  calTurnosDates = {};
+  (data||[]).forEach(function(t){
+    calTurnosDates[t.fecha] = (calTurnosDates[t.fecha]||0)+1;
+  });
+}
+
+async function calSelectDay(dateStr){
+  calSelDate = dateStr;
+  renderCalendario();
+  await loadAgendaDia(dateStr);
+}
+
+async function loadAgenda(){
+  var today = new Date().toISOString().split('T')[0];
+  await calCargarMes();
+  renderCalendario();
+  await loadAgendaDia(today);
+}
+
+async function loadAgendaDia(dateStr){
+  var { data } = await supa.from('turnos')
+    .select('*')
+    .eq('fecha', dateStr)
+    .order('hora');
+  TURNOS_HOY = data || [];
+
+  // Actualizar subtítulo
+  var partes = dateStr.split('-');
+  var fechaLabel = parseInt(partes[2])+' de '+MESES_ES[parseInt(partes[1])-1]+' '+partes[0];
+  var hoy = new Date().toISOString().split('T')[0];
+  var s2 = document.getElementById('agenda-fecha-sel');
+  if(s2) s2.textContent = dateStr===hoy ? 'Hoy — '+fechaLabel : fechaLabel;
+  var tt = document.getElementById('agenda-tabla-titulo');
+  if(tt) tt.textContent = dateStr===hoy ? 'Turnos de hoy' : 'Turnos del '+fechaLabel;
+
+  agendaFiltro = 'todos';
+  var pills = document.querySelectorAll('#page-agenda .tab-pill');
+  pills.forEach(function(p,i){ p.classList.toggle('active', i===0); });
+  renderAgenda();
 }
 
 // ── CONFIGURACIÓN ──
@@ -4103,7 +4265,7 @@ function renderClientes() {
         (c.notas?'<div style="margin-top:9px;font-size:11px;color:var(--text-light);background:var(--bg);border-radius:8px;padding:7px 10px;line-height:1.5"><i class="fa-solid fa-note-sticky" style="margin-right:4px;color:var(--amber)"></i>'+c.notas+'</div>':'')+
         '<div style="display:flex;gap:7px;margin-top:12px">'+
           '<button class="btn btn-ghost btn-sm" style="flex:1;justify-content:center" onclick="openModal(\'modal-cobro\')"><i class="fa-solid fa-calendar-plus"></i> Turno</button>'+
-          '<button class="btn btn-outline btn-sm" style="width:36px;justify-content:center;padding:0" title="Editar"><i class="fa-solid fa-pen"></i></button>'+
+          '<button class="btn btn-outline btn-sm" style="width:36px;justify-content:center;padding:0" title="Editar" onclick="openEditCliente(\''+c.id+'\')"><i class="fa-solid fa-pen"></i></button>'+
           '<a href="https://wa.me/549'+c.tel.replace(/\D/g,'')+'" target="_blank" class="btn btn-outline btn-sm" style="width:36px;justify-content:center;padding:0;color:#25D366;text-decoration:none" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>'+
         '</div>'+
       '</div>';
@@ -4127,7 +4289,7 @@ function renderClientes() {
         '<td>'+c.ultimaVisita+'</td>'+
         '<td><div style="display:flex;align-items:center;gap:5px">'+
           '<button class="action-btn ab-blue" onclick="openModal(\'modal-cobro\')" title="Agendar turno"><i class="fa-solid fa-calendar-plus"></i></button>'+
-          '<button class="action-btn ab-blue" title="Editar"><i class="fa-solid fa-pen"></i></button>'+
+          '<button class="action-btn ab-blue" title="Editar" onclick="openEditCliente(\''+c.id+'\')"><i class="fa-solid fa-pen"></i></button>'+
           '<a href="https://wa.me/549'+c.tel.replace(/\D/g,'')+'" target="_blank" class="action-btn" style="background:none;border:1px solid #25D36633;color:#25D366;display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;text-decoration:none" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>'+
         '</div></td>'+
       '</tr>';
@@ -4193,6 +4355,61 @@ function updateClienteStats(){
   var v=document.getElementById('cl-stat-vip');  if(v)v.textContent=f('vip');
   var r=document.getElementById('cl-stat-reg');  if(r)r.textContent=f('regular');
   var n=document.getElementById('cl-stat-new');  if(n)n.textContent=f('nuevo');
+}
+
+var editClienteId = null;
+
+function openEditCliente(id){
+  var c = CLIENTES.find(function(x){ return x.id == id; });
+  if(!c){ showToast('Cliente no encontrado'); return; }
+  editClienteId = id;
+  var g = function(el, val){ var e=document.getElementById(el); if(e) e.value=val||''; };
+  g('edit-cl-nombre',  c.nombre);
+  g('edit-cl-tel',     c.tel==='—'?'':c.tel);
+  g('edit-cl-email',   c.email);
+  g('edit-cl-birthday',c.birthday);
+  g('edit-cl-barbero', c.barbero);
+  g('edit-cl-cat',     c.cat);
+  g('edit-cl-notas',   c.notas);
+  var titulo = document.getElementById('edit-cl-titulo');
+  if(titulo) titulo.textContent = c.nombre;
+  openModal('modal-edit-cliente');
+}
+
+async function saveEditCliente(){
+  if(!editClienteId) return;
+  var g = function(id){ var e=document.getElementById(id); return e?e.value.trim():''; };
+  var nombre  = g('edit-cl-nombre');
+  if(!nombre){ showToast('Ingresá el nombre'); return; }
+  var payload = {
+    nombre,
+    telefono:          g('edit-cl-tel') || '—',
+    email:             g('edit-cl-email') || null,
+    cumpleanos:        g('edit-cl-birthday') || null,
+    barbero_preferido: g('edit-cl-barbero') || null,
+    categoria:         (['vip','regular','nuevo'].indexOf(g('edit-cl-cat'))>=0
+                         ? g('edit-cl-cat').charAt(0).toUpperCase()+g('edit-cl-cat').slice(1)
+                         : 'Nuevo'),
+    notas:             g('edit-cl-notas') || null,
+  };
+  await supa.from('clientes').update(payload).eq('id', editClienteId);
+  // Actualizar en memoria
+  var idx = CLIENTES.findIndex(function(x){ return x.id == editClienteId; });
+  if(idx >= 0){
+    CLIENTES[idx] = Object.assign(CLIENTES[idx], {
+      nombre:      payload.nombre,
+      tel:         payload.telefono,
+      email:       payload.email||'',
+      birthday:    payload.cumpleanos||'',
+      barbero:     payload.barbero_preferido||'',
+      cat:         g('edit-cl-cat'),
+      notas:       payload.notas||''
+    });
+  }
+  closeModal('modal-edit-cliente');
+  renderClientes();
+  updateClienteStats();
+  showToast('"'+nombre+'" actualizado ✓');
 }
 
 // ══ EDIT EMPLEADO ══
