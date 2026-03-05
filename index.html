@@ -1074,8 +1074,7 @@ tr:hover td{background:var(--blue-faint);}
                 <div class="sum-row" style="border-bottom:2px solid var(--border);padding-bottom:8px;margin-bottom:4px"><span class="sum-lbl">Total Egresos</span><span class="sum-val v-red">$0</span></div>
                 <div class="sum-row"><span class="sum-lbl">Sueldos del día</span><span class="sum-val v-red">$0</span></div>
                 <div class="sum-row"><span class="sum-lbl">Propinas del día</span><span class="sum-val">$0</span></div>
-                <div class="sum-row"><span class="sum-lbl">Ganancia MK hoy</span><span class="sum-val v-green">$0</span></div>
-                <div class="sum-row"><span style="font-weight:800">Ganancia Marcos hoy</span><span class="v-green fw7">$0</span></div>
+                <div class="sum-row"><span style="font-weight:800">Ganancia MK hoy</span><span class="sum-val v-green fw7">$0</span></div>
               </div>
             </div>
 
@@ -1115,22 +1114,68 @@ tr:hover td{background:var(--blue-faint);}
           </div>
           <div id="rep-mes-local" style="display:none">
             <div class="stat-grid">
-              <div class="stat-card featured"><div class="stat-label">Ingresos Mes</div><div class="stat-value">$0</div></div>
+              <div class="stat-card featured"><div class="stat-top"><div class="stat-icon-wrap">💰</div></div><div class="stat-label">Ingresos Mes</div><div class="stat-value">$0</div></div>
               <div class="stat-card"><div class="stat-label">Egresos Mes</div><div class="stat-value v-red">$0</div></div>
-              <div class="stat-card"><div class="stat-label">Resto Mes</div><div class="stat-value v-green">$0</div></div>
+              <div class="stat-card"><div class="stat-top"><div class="stat-icon-wrap green">📈</div></div><div class="stat-label">Ganancia Neta</div><div class="stat-value v-green">$0</div></div>
               <div class="stat-card"><div class="stat-label">Total Servicios</div><div class="stat-value">0</div><div class="stat-sub">Días trabajados: 0</div></div>
             </div>
+
+            <!-- Métodos de pago del mes -->
+            <div class="two-col" style="margin-bottom:20px">
+              <div class="chart-card" style="margin-bottom:0">
+                <div class="chart-title" style="margin-bottom:16px">Ingresos por Método de Pago — Mes</div>
+                <div style="display:flex;flex-direction:column;gap:12px">
+                  <div><div style="display:flex;justify-content:space-between;font-size:12px;font-weight:600;margin-bottom:6px"><span>💵 Efectivo</span><span class="v-blue">$0</span></div><div class="stock-bar" style="height:7px"><div class="stock-fill s-ok" style="width:0%"></div></div></div>
+                  <div><div style="display:flex;justify-content:space-between;font-size:12px;font-weight:600;margin-bottom:6px"><span>🏦 Santander</span><span class="v-blue">$0</span></div><div class="stock-bar" style="height:7px"><div class="stock-fill s-low" style="width:0%"></div></div></div>
+                  <div><div style="display:flex;justify-content:space-between;font-size:12px;font-weight:600;margin-bottom:6px"><span>📱 Personal Pay</span><span class="v-blue">$0</span></div><div class="stock-bar" style="height:7px"><div class="stock-fill" style="width:0%;background:var(--blue)"></div></div></div>
+                </div>
+              </div>
+              <div class="sum-box" style="align-self:start">
+                <div class="sum-row"><span class="sum-lbl">Total Ingresos</span><span class="sum-val">$0</span></div>
+                <div class="sum-row"><span class="sum-lbl">Egresos Fijos</span><span class="sum-val v-red">$0</span></div>
+                <div class="sum-row"><span class="sum-lbl">Egresos Variables</span><span class="sum-val v-red">$0</span></div>
+                <div class="sum-row" style="border-bottom:2px solid var(--border);padding-bottom:8px;margin-bottom:4px"><span class="sum-lbl">Total Egresos</span><span class="sum-val v-red">$0</span></div>
+                <div class="sum-row"><span class="sum-lbl">Sueldos del mes</span><span class="sum-val v-red">$0</span></div>
+                <div class="sum-row"><span class="sum-lbl">Propinas del mes</span><span class="sum-val">$0</span></div>
+                <div class="sum-row"><span class="sum-lbl">Ganancia MK</span><span class="sum-val v-green">$0</span></div>
+                <div class="sum-row"><span class="sum-lbl">Promedio por día</span><span class="sum-val">$0</span></div>
+                <div class="sum-row"><span class="sum-lbl">Promedio por semana</span><span class="sum-val">$0</span></div>
+              </div>
+            </div>
+
+            <!-- Servicios por empleado -->
             <div class="table-card">
-              <div class="table-header"><div class="table-title">Servicios por Empleado (mes)</div></div>
+              <div class="table-header"><div class="table-title">Servicios por Empleado — Mes</div></div>
               <table>
-                <thead><tr><th>Empleado</th><th>Servicios</th><th>Total</th><th>Su 40%/50%</th><th>Días</th><th>Prom/día</th></tr></thead>
+                <thead><tr><th>Empleado</th><th>%</th><th>Servicios</th><th>Total</th><th>Su parte</th><th>60%/50% Salón</th><th>Días</th><th>Prom/día</th></tr></thead>
                 <tbody>
-                  <tr><td><div class="emp-cell"><div class="emp-avatar-sm">✂️</div><div class="emp-cell-name">Franco</div></div></td><td>0</td><td>$0</td><td class="fw7 v-blue">$0</td><td>0</td><td>$0</td></tr>
-                  <tr><td><div class="emp-cell"><div class="emp-avatar-sm">💈</div><div class="emp-cell-name">Simón</div></div></td><td>0</td><td>$0</td><td class="fw7 v-blue">$0</td><td>0</td><td>$0</td></tr>
-                  <tr><td><div class="emp-cell"><div class="emp-avatar-sm">🪒</div><div class="emp-cell-name">Tomás</div></div></td><td>0</td><td>$0</td><td class="fw7 v-blue">$0</td><td>0</td><td>$0</td></tr>
-                  <tr><td><div class="emp-cell"><div class="emp-avatar-sm">💇</div><div class="emp-cell-name">Marcos</div></div></td><td>0</td><td>$0</td><td class="fw7 v-blue">$0</td><td>0</td><td>$0</td></tr>
+                  <tr><td><div class="emp-cell"><div class="emp-avatar-sm">✂️</div><div class="emp-cell-name">Franco</div></div></td><td>40%</td><td>0</td><td>$0</td><td class="fw7 v-blue">$0</td><td class="fw7 v-green">$0</td><td>0</td><td>$0</td></tr>
+                  <tr><td><div class="emp-cell"><div class="emp-avatar-sm">💈</div><div class="emp-cell-name">Simón</div></div></td><td>40%</td><td>0</td><td>$0</td><td class="fw7 v-blue">$0</td><td class="fw7 v-green">$0</td><td>0</td><td>$0</td></tr>
+                  <tr><td><div class="emp-cell"><div class="emp-avatar-sm">🪒</div><div class="emp-cell-name">Tomás</div></div></td><td>40%</td><td>0</td><td>$0</td><td class="fw7 v-blue">$0</td><td class="fw7 v-green">$0</td><td>0</td><td>$0</td></tr>
+                  <tr><td><div class="emp-cell"><div class="emp-avatar-sm">💇</div><div class="emp-cell-name">Marcos</div></div></td><td>50%</td><td>0</td><td>$0</td><td class="fw7 v-blue">$0</td><td class="fw7 v-green">$0</td><td>0</td><td>$0</td></tr>
                 </tbody>
               </table>
+            </div>
+
+            <!-- Productos y Ganancia Marcos -->
+            <div class="two-col">
+              <div class="table-card" style="margin-bottom:0">
+                <div class="table-header"><div class="table-title">Productos y Bebidas vendidos</div></div>
+                <div class="sum-box" style="margin-bottom:0">
+                  <div class="sum-row"><span class="sum-lbl">Productos</span><span class="sum-val">$0</span></div>
+                  <div class="sum-row"><span class="sum-lbl">Bebidas</span><span class="sum-val">$0</span></div>
+                  <div class="sum-row"><span class="sum-lbl">Ingresos Academia</span><span class="sum-val">$0</span></div>
+                  <div class="sum-row"><span>Subtotal extra</span><span class="fw7">$0</span></div>
+                </div>
+              </div>
+              <div class="table-card" style="margin-bottom:0">
+                <div class="table-header"><div class="table-title">Ganancia Marcos (dueño) — Mes</div></div>
+                <div class="sum-box" style="margin-bottom:0">
+                  <div class="sum-row"><span class="sum-lbl">Ganancia MK</span><span class="sum-val v-green">$0</span></div>
+                  <div class="sum-row"><span class="sum-lbl">Ganancia Marcos (barbero)</span><span class="sum-val v-green">$0</span></div>
+                  <div class="sum-row"><span>Total Marcos — Mes</span><span class="fw7 v-green">$0</span></div>
+                </div>
+              </div>
             </div>
           </div>
           <div id="rep-anio-local" style="display:none">
