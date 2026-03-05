@@ -109,6 +109,9 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);min
 .topbar-search input:focus{border-color:var(--accent);background:#fff;box-shadow:0 0 0 4px rgba(76,126,240,.08);}
 .topbar-search input::placeholder{color:var(--text-light);}
 .search-ico{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:var(--text-light);pointer-events:none;font-size:13px;}
+.topbar-icon-btn{background:none;border:1px solid var(--border);border-radius:9px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--text-mid);font-size:15px;transition:all .18s;flex-shrink:0;}
+.topbar-icon-btn:hover{background:var(--blue-faint);border-color:var(--blue-pale);color:var(--blue);}
+.topbar-icon-btn:last-child:hover{background:#fff0f0;border-color:#fca5a5;color:var(--red);}
 .topbar-right{margin-left:auto;display:flex;align-items:center;gap:8px;}
 /* Bell */
 .topbar-notif{width:36px;height:36px;background:var(--bg);border-radius:10px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;position:relative;border:1px solid var(--border);transition:all .2s;color:var(--text-mid);}
@@ -241,7 +244,7 @@ tr:hover td{background:var(--blue-faint);}
 .cliente-card:hover{transform:translateY(-2px);box-shadow:var(--shadow-md);}
 .cliente-card-top{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
 .cliente-avatar{width:44px;height:44px;border-radius:12px;background:var(--blue);display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:800;color:#fff;flex-shrink:0;letter-spacing:-.5px;}
-.cliente-name{font-size:14px;font-weight:700;color:var(--text);letter-spacing:-.2px;}
+.cliente-name{font-size:14px;font-weight:700;color:var(--text);letter-spacing:-.2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:120px;}
 .cliente-phone{font-size:12px;color:var(--text-light);margin-top:1px;}
 .cliente-stat{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-bottom:1px solid var(--border);font-size:12px;}
 .cliente-stat:last-of-type{border:none;}
@@ -252,6 +255,17 @@ tr:hover td{background:var(--blue-faint);}
 .tag-regular{background:var(--blue-pale);color:var(--blue);}
 .tag-nuevo{background:var(--green-bg);color:var(--green);}
 .cliente-card-menu{position:absolute;top:12px;right:12px;}
+/* View toggle */
+.view-toggle{display:flex;gap:4px;background:var(--bg);border:1px solid var(--border);border-radius:9px;padding:3px;}
+.view-toggle-btn{background:none;border:none;cursor:pointer;width:30px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;color:var(--text-light);font-size:13px;transition:all .15s;}
+.view-toggle-btn.active{background:var(--white);color:var(--blue);box-shadow:0 1px 4px rgba(0,0,0,.08);}
+/* List view */
+.list-view-table{width:100%;border-collapse:collapse;}
+.list-view-table th{font-size:10px;font-weight:700;color:var(--text-light);text-transform:uppercase;letter-spacing:1.2px;padding:8px 12px;border-bottom:1px solid var(--border);text-align:left;white-space:nowrap;}
+.list-view-table td{padding:10px 12px;border-bottom:1px solid var(--border);font-size:13px;color:var(--text);vertical-align:middle;}
+.list-view-table tr:last-child td{border-bottom:none;}
+.list-view-table tr:hover td{background:var(--blue-faint);}
+.list-avatar-sm{width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:800;color:#fff;flex-shrink:0;}
 .emp-stat-row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid var(--border);}
 .emp-stat-row:last-of-type{border-bottom:none;}
 .emp-stat-key{font-size:12px;color:var(--text-light);font-weight:500;}
@@ -486,11 +500,6 @@ tr:hover td{background:var(--blue-faint);}
     <div class="nav-group-label admin-only">Sistema</div>
     <div class="nav-item admin-only" onclick="goTo('configuracion')"><i class="fa-solid fa-gear"></i><span class="sb-item-label">Configuración</span></div>
   </div>
-
-  <div class="sb-logout" onclick="doLogout()">
-    <i class="fa-solid fa-right-from-bracket"></i>
-    <span class="sb-logout-label">Cerrar sesión</span>
-  </div>
 </nav>
 
 <div id="overlay" onclick="closeSidebar()"></div>
@@ -508,13 +517,15 @@ tr:hover td{background:var(--blue-faint);}
         <i class="fa-solid fa-bell"></i>
         <div class="notif-dot"></div>
       </div>
-      <div class="topbar-user-chip" onclick="doLogout()">
+      <div class="topbar-user-chip">
         <div class="user-chip-avatar" id="tb-avatar">A</div>
         <div class="user-chip-info">
           <span class="user-chip-name" id="tb-name">Admin</span>
           <span class="user-chip-role" id="tb-role-pill">Administrador</span>
         </div>
       </div>
+      <button class="topbar-icon-btn admin-only" onclick="goTo('configuracion')" title="Configuración"><i class="fa-solid fa-gear"></i></button>
+      <button class="topbar-icon-btn" onclick="doLogout()" title="Cerrar sesión"><i class="fa-solid fa-right-from-bracket"></i></button>
     </div>
   </div>
 
@@ -756,7 +767,13 @@ tr:hover td{background:var(--blue-faint);}
       <div id="emp-content">
         <div class="page-header">
           <div class="page-header-left"><div class="page-title">Empleados</div><div class="page-sub">Equipo del Salón MK</div></div>
-          <button class="btn btn-primary" onclick="openModal('modal-empleado')">+ Agregar Empleado</button>
+          <div style="display:flex;gap:10px;align-items:center">
+            <div class="view-toggle" id="emp-view-toggle">
+              <button class="view-toggle-btn active" onclick="setEmpView('cards',this)" title="Tarjetas"><i class="fa-solid fa-table-cells-large"></i></button>
+              <button class="view-toggle-btn" onclick="setEmpView('list',this)" title="Lista"><i class="fa-solid fa-list"></i></button>
+            </div>
+            <button class="btn btn-primary" onclick="openModal('modal-empleado')">+ Agregar Empleado</button>
+          </div>
         </div>
         <div class="stat-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:22px">
           <div class="stat-card featured"><div class="stat-label">Total Empleados</div><div class="stat-value">4</div></div>
@@ -764,10 +781,10 @@ tr:hover td{background:var(--blue-faint);}
           <div class="stat-card"><div class="stat-label">Servicios Hoy</div><div class="stat-value">0</div></div>
           <div class="stat-card"><div class="stat-label">Sueldos a Pagar</div><div class="stat-value" style="font-size:20px">$0</div></div>
         </div>
-        <div class="cards-grid">
+        <div class="cards-grid" id="emp-cards-grid">
           <div class="emp-card">
             <div class="emp-card-top">
-              <div class="emp-big-avatar">✂️</div>
+              <div class="emp-big-avatar" id="emp-av-franco">✂️</div>
               <div><div class="emp-card-name">Franco</div><div class="emp-card-role">Barbero · 40%</div></div>
             </div>
             <div class="emp-stat-row"><span class="emp-stat-key">Ingresos mes</span><span class="emp-stat-val hi">$0</span></div>
@@ -781,7 +798,7 @@ tr:hover td{background:var(--blue-faint);}
           </div>
           <div class="emp-card">
             <div class="emp-card-top">
-              <div class="emp-big-avatar">💈</div>
+              <div class="emp-big-avatar" id="emp-av-simon">💈</div>
               <div><div class="emp-card-name">Simón</div><div class="emp-card-role">Barbero · 40%</div></div>
             </div>
             <div class="emp-stat-row"><span class="emp-stat-key">Ingresos mes</span><span class="emp-stat-val hi">$0</span></div>
@@ -795,7 +812,7 @@ tr:hover td{background:var(--blue-faint);}
           </div>
           <div class="emp-card">
             <div class="emp-card-top">
-              <div class="emp-big-avatar">🪒</div>
+              <div class="emp-big-avatar" id="emp-av-tomas">🪒</div>
               <div><div class="emp-card-name">Tomás</div><div class="emp-card-role">Barbero · 40%</div></div>
             </div>
             <div class="emp-stat-row"><span class="emp-stat-key">Ingresos mes</span><span class="emp-stat-val hi">$0</span></div>
@@ -809,7 +826,7 @@ tr:hover td{background:var(--blue-faint);}
           </div>
           <div class="emp-card">
             <div class="emp-card-top">
-              <div class="emp-big-avatar">💇</div>
+              <div class="emp-big-avatar" id="emp-av-marcos">💇</div>
               <div><div class="emp-card-name">Marcos</div><div class="emp-card-role">Barbero Senior · 50%</div></div>
             </div>
             <div class="emp-stat-row"><span class="emp-stat-key">Ingresos mes</span><span class="emp-stat-val hi">$0</span></div>
@@ -820,6 +837,15 @@ tr:hover td{background:var(--blue-faint);}
               <button class="btn btn-outline btn-sm" onclick="openEditEmp('marcos')"><i class="fa-solid fa-pen"></i> Editar</button>
               <button class="btn btn-ghost btn-sm" onclick="setReportEmp('marcos')">Ver reporte →</button>
             </div>
+          </div>
+        </div>
+        <!-- Lista empleados (oculta por defecto) -->
+        <div id="emp-list-view" style="display:none">
+          <div class="table-card" style="margin-bottom:0">
+            <table class="list-view-table">
+              <thead><tr><th>Empleado</th><th>Tipo</th><th>Comisión</th><th>Servicios</th><th>Ingresos mes</th><th>Sueldo</th><th>Acciones</th></tr></thead>
+              <tbody id="emp-list-tbody"></tbody>
+            </table>
           </div>
         </div>
       </div>
@@ -1592,16 +1618,22 @@ tr:hover td{background:var(--blue-faint);}
         <div class="stat-card"><div class="stat-label">Nuevos (30d)</div><div class="stat-value" id="cl-stat-new">1</div></div>
       </div>
 
-      <!-- Filtros -->
-      <div style="display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap">
-        <button class="tab-pill active" onclick="setClienteFilter('todos',this)">Todos</button>
-        <button class="tab-pill" onclick="setClienteFilter('vip',this)">⭐ VIP</button>
-        <button class="tab-pill" onclick="setClienteFilter('regular',this)">Regular</button>
-        <button class="tab-pill" onclick="setClienteFilter('nuevo',this)">Nuevo</button>
+      <!-- Filtros + toggle -->
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:18px;flex-wrap:wrap">
+        <div style="display:flex;gap:8px;flex:1;flex-wrap:wrap">
+          <button class="tab-pill active" onclick="setClienteFilter('todos',this)">Todos</button>
+          <button class="tab-pill" onclick="setClienteFilter('vip',this)">⭐ VIP</button>
+          <button class="tab-pill" onclick="setClienteFilter('regular',this)">Regular</button>
+          <button class="tab-pill" onclick="setClienteFilter('nuevo',this)">Nuevo</button>
+        </div>
+        <div class="view-toggle" id="cl-view-toggle">
+          <button class="view-toggle-btn active" onclick="setClienteView('cards',this)" title="Tarjetas"><i class="fa-solid fa-table-cells-large"></i></button>
+          <button class="view-toggle-btn" onclick="setClienteView('list',this)" title="Lista"><i class="fa-solid fa-list"></i></button>
+        </div>
       </div>
 
       <!-- Cards grid -->
-      <div class="cards-grid" id="clientes-grid"></div>
+      <div id="clientes-grid"></div>
     </div>
 
   </div>
@@ -1837,18 +1869,16 @@ tr:hover td{background:var(--blue-faint);}
     <button class="modal-close" onclick="closeModal('modal-edit-emp')"><i class="fa-solid fa-xmark"></i></button>
     <div class="modal-title"><i class="fa-solid fa-pen" style="color:var(--blue);margin-right:8px"></i>Editar Empleado</div>
 
-    <!-- Avatar preview + selector emoji -->
+    <!-- Avatar upload -->
     <div style="display:flex;align-items:center;gap:14px;margin-bottom:16px;padding:14px;background:var(--blue-faint);border-radius:12px;border:1px solid var(--border)">
-      <div id="edit-emp-avatar-preview" style="width:52px;height:52px;border-radius:14px;background:var(--blue-pale);display:flex;align-items:center;justify-content:center;font-size:26px;border:2px solid var(--border);flex-shrink:0">✂️</div>
+      <div id="edit-emp-avatar-preview" style="width:60px;height:60px;border-radius:14px;background:var(--blue-pale);border:2px solid var(--border);flex-shrink:0;overflow:hidden;display:flex;align-items:center;justify-content:center;font-size:26px">✂️</div>
       <div style="flex:1">
-        <div style="font-size:11px;color:var(--text-light);font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-bottom:6px">Foto / Avatar</div>
-        <div style="display:flex;gap:6px;flex-wrap:wrap">
-          <span onclick="setEmpAvatar('✂️')" style="cursor:pointer;font-size:20px;padding:4px;border-radius:8px;transition:background .15s" onmouseover="this.style.background='var(--blue-pale)'" onmouseout="this.style.background='transparent'">✂️</span>
-          <span onclick="setEmpAvatar('💈')" style="cursor:pointer;font-size:20px;padding:4px;border-radius:8px;transition:background .15s" onmouseover="this.style.background='var(--blue-pale)'" onmouseout="this.style.background='transparent'">💈</span>
-          <span onclick="setEmpAvatar('🪒')" style="cursor:pointer;font-size:20px;padding:4px;border-radius:8px;transition:background .15s" onmouseover="this.style.background='var(--blue-pale)'" onmouseout="this.style.background='transparent'">🪒</span>
-          <span onclick="setEmpAvatar('💇')" style="cursor:pointer;font-size:20px;padding:4px;border-radius:8px;transition:background .15s" onmouseover="this.style.background='var(--blue-pale)'" onmouseout="this.style.background='transparent'">💇</span>
-          <span onclick="setEmpAvatar('👨')" style="cursor:pointer;font-size:20px;padding:4px;border-radius:8px;transition:background .15s" onmouseover="this.style.background='var(--blue-pale)'" onmouseout="this.style.background='transparent'">👨</span>
-          <span onclick="setEmpAvatar('🧔')" style="cursor:pointer;font-size:20px;padding:4px;border-radius:8px;transition:background .15s" onmouseover="this.style.background='var(--blue-pale)'" onmouseout="this.style.background='transparent'">🧔</span>
+        <div style="font-size:12px;font-weight:700;color:var(--text);margin-bottom:4px">Foto del barbero</div>
+        <div style="font-size:11px;color:var(--text-light);margin-bottom:10px">JPG o PNG · se muestra en la card</div>
+        <input type="file" id="edit-emp-file" accept="image/*" style="display:none" onchange="previewEmpPhoto(this)">
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-outline btn-sm" onclick="document.getElementById('edit-emp-file').click()"><i class="fa-solid fa-upload"></i> Subir foto</button>
+          <button class="btn btn-ghost btn-sm" onclick="clearEmpPhoto()"><i class="fa-solid fa-xmark"></i> Quitar</button>
         </div>
       </div>
     </div>
@@ -1888,6 +1918,10 @@ tr:hover td{background:var(--blue-faint);}
       <div class="fg"><label>Teléfono</label><input type="text" id="cl-tel" placeholder="11-XXXX-XXXX"></div>
     </div>
     <div class="form-grid" style="margin-bottom:12px">
+      <div class="fg"><label>Email</label><input type="email" id="cl-email" placeholder="correo@email.com"></div>
+      <div class="fg"><label>Cumpleaños</label><input type="date" id="cl-birthday"></div>
+    </div>
+    <div class="form-grid" style="margin-bottom:12px">
       <div class="fg"><label>Barbero preferido</label>
         <select id="cl-barbero">
           <option value="">Sin preferencia</option>
@@ -1902,7 +1936,7 @@ tr:hover td{background:var(--blue-faint);}
         </select>
       </div>
     </div>
-    <div class="fg" style="margin-bottom:16px"><label>Notas internas</label><textarea id="cl-notas" placeholder="Preferencias, alergias, observaciones..." style="height:72px;resize:none"></textarea></div>
+    <div class="fg" style="margin-bottom:16px"><label>Notas internas</label><textarea id="cl-notas" placeholder="Preferencias, alergias, observaciones..." style="height:68px;resize:none"></textarea></div>
     <div style="display:flex;gap:10px">
       <button class="btn btn-outline" style="flex:1;justify-content:center" onclick="closeModal('modal-cliente')">Cancelar</button>
       <button class="btn btn-primary" style="flex:1;justify-content:center" onclick="saveCliente()"><i class="fa-solid fa-check"></i> Guardar</button>
@@ -2663,15 +2697,17 @@ function initCobroModal() {
 
 // ══ CLIENTES ══
 var CLIENTES = [
-  {id:1, nombre:'Juan Martínez',    tel:'11-4532-7891', barbero:'Franco',  cat:'vip',     visitas:18, ultimaVisita:'hace 5 días',    notas:'Prefiere corte clásico, sin máquina en la nuca.'},
-  {id:2, nombre:'Pedro López',      tel:'11-6721-3344', barbero:'Simón',   cat:'regular', visitas:7,  ultimaVisita:'hace 2 semanas', notas:''},
-  {id:3, nombre:'Carlos Vega',      tel:'11-2210-5509', barbero:'Marcos',  cat:'vip',     visitas:24, ultimaVisita:'hace 1 semana',  notas:'VIP — viene siempre los sábados a las 10.'},
-  {id:4, nombre:'Ariel Fernández',  tel:'11-8843-1102', barbero:'Tomás',   cat:'regular', visitas:4,  ultimaVisita:'hace 3 semanas', notas:''},
-  {id:5, nombre:'Martín Sánchez',   tel:'11-5567-9980', barbero:'',        cat:'regular', visitas:3,  ultimaVisita:'hace 1 mes',     notas:'Vino referido por Carlos.'},
-  {id:6, nombre:'Diego Romero',     tel:'11-3390-2244', barbero:'Franco',  cat:'nuevo',   visitas:1,  ultimaVisita:'hace 3 días',    notas:'Primera visita — le gustó el ambiente.'},
+  {id:1, nombre:'Juan Martínez',    tel:'11-4532-7891', email:'juan.m@gmail.com',   birthday:'1990-03-15', barbero:'Franco',  cat:'vip',     visitas:18, ultimaVisita:'hace 5 días',    notas:'Prefiere corte clásico, sin máquina en la nuca.'},
+  {id:2, nombre:'Pedro López',      tel:'11-6721-3344', email:'',                   birthday:'',           barbero:'Simón',   cat:'regular', visitas:7,  ultimaVisita:'hace 2 semanas', notas:''},
+  {id:3, nombre:'Carlos Vega',      tel:'11-2210-5509', email:'cvega@gmail.com',    birthday:'1985-11-22', barbero:'Marcos',  cat:'vip',     visitas:24, ultimaVisita:'hace 1 semana',  notas:'VIP — viene siempre los sábados a las 10.'},
+  {id:4, nombre:'Ariel Fernández',  tel:'11-8843-1102', email:'',                   birthday:'1995-07-04', barbero:'Tomás',   cat:'regular', visitas:4,  ultimaVisita:'hace 3 semanas', notas:''},
+  {id:5, nombre:'Martín Sánchez',   tel:'11-5567-9980', email:'martin.s@yahoo.com', birthday:'',           barbero:'',        cat:'regular', visitas:3,  ultimaVisita:'hace 1 mes',     notas:'Vino referido por Carlos.'},
+  {id:6, nombre:'Diego Romero',     tel:'11-3390-2244', email:'',                   birthday:'2000-05-30', barbero:'Franco',  cat:'nuevo',   visitas:1,  ultimaVisita:'hace 3 días',    notas:'Primera visita — le gustó el ambiente.'},
 ];
 var clienteFilter = 'todos';
+var clienteView = 'cards';
 var currentEditEmpKey = null;
+var empPhotoMap = {};
 var empAvatarMap = {franco:'✂️', simon:'💈', tomas:'🪒', marcos:'💇'};
 var empDataMap = {
   franco:{nombre:'Franco', tipo:'Barbero',        comision:40},
@@ -2682,6 +2718,10 @@ var empDataMap = {
 
 function getInitials(n){return n.split(' ').map(function(w){return w[0];}).join('').substring(0,2).toUpperCase();}
 
+var clPalette=['#1B3A6B','#2A4F8F','#1E8C5A','#6B3A8F','#8F5B1B'];
+var tagMap={vip:'tag-vip',regular:'tag-regular',nuevo:'tag-nuevo'};
+var tagLabel={vip:'⭐ VIP',regular:'Regular',nuevo:'Nuevo'};
+
 function renderClientes() {
   var grid = document.getElementById('clientes-grid');
   if (!grid) return;
@@ -2689,30 +2729,72 @@ function renderClientes() {
   var list = CLIENTES.filter(function(c){
     return (clienteFilter==='todos'||c.cat===clienteFilter) && (!q||c.nombre.toLowerCase().indexOf(q)!==-1||c.tel.indexOf(q)!==-1);
   });
-  if (!list.length) { grid.innerHTML='<div style="grid-column:1/-1;text-align:center;padding:40px;color:var(--text-light)"><i class="fa-solid fa-users-slash" style="font-size:32px;margin-bottom:12px;display:block;opacity:.3"></i>Sin resultados</div>'; return; }
-  var tagMap={vip:'tag-vip',regular:'tag-regular',nuevo:'tag-nuevo'};
-  var tagLabel={vip:'⭐ VIP',regular:'Regular',nuevo:'Nuevo'};
-  var palette=['#1B3A6B','#2A4F8F','#1E8C5A','#6B3A8F','#8F5B1B'];
-  grid.innerHTML='';
-  list.forEach(function(c){
-    var col=palette[c.id%palette.length];
-    grid.innerHTML+='<div class="cliente-card">'+
-      '<div class="cliente-card-menu"><span class="cliente-tag '+tagMap[c.cat]+'">'+tagLabel[c.cat]+'</span></div>'+
-      '<div class="cliente-card-top">'+
-        '<div class="cliente-avatar" style="background:'+col+'">'+getInitials(c.nombre)+'</div>'+
-        '<div><div class="cliente-name">'+c.nombre+'</div><div class="cliente-phone"><i class="fa-solid fa-phone" style="font-size:10px;margin-right:4px"></i>'+c.tel+'</div></div>'+
-      '</div>'+
-      '<div class="cliente-stat"><span class="cliente-stat-key">Visitas</span><span class="cliente-stat-val v-blue">'+c.visitas+'</span></div>'+
-      '<div class="cliente-stat"><span class="cliente-stat-key">Última visita</span><span class="cliente-stat-val">'+c.ultimaVisita+'</span></div>'+
-      '<div class="cliente-stat"><span class="cliente-stat-key">Barbero preferido</span><span class="cliente-stat-val">'+(c.barbero||'—')+'</span></div>'+
-      (c.notas?'<div style="margin-top:9px;font-size:11px;color:var(--text-light);background:var(--bg);border-radius:8px;padding:7px 10px;line-height:1.5"><i class="fa-solid fa-note-sticky" style="margin-right:4px;color:var(--amber)"></i>'+c.notas+'</div>':'')+
-      '<div style="display:flex;gap:7px;margin-top:12px">'+
-        '<button class="btn btn-ghost btn-sm" style="flex:1;justify-content:center" onclick="openModal(\'modal-cobro\')"><i class="fa-solid fa-calendar-plus"></i> Turno</button>'+
-        '<button class="btn btn-outline btn-sm" style="width:36px;justify-content:center;padding:0" title="Editar"><i class="fa-solid fa-pen"></i></button>'+
-        '<a href="https://wa.me/549'+c.tel.replace(/\D/g,'')+'" target="_blank" class="btn btn-outline btn-sm" style="width:36px;justify-content:center;padding:0;color:#25D366;text-decoration:none" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>'+
-      '</div>'+
-    '</div>';
-  });
+  if (!list.length) {
+    grid.className = '';
+    grid.innerHTML='<div style="text-align:center;padding:40px;color:var(--text-light)"><i class="fa-solid fa-users-slash" style="font-size:32px;margin-bottom:12px;display:block;opacity:.3"></i>Sin resultados</div>';
+    return;
+  }
+  if (clienteView === 'cards') {
+    grid.className = 'cards-grid';
+    grid.innerHTML='';
+    list.forEach(function(c){
+      var col=clPalette[c.id%clPalette.length];
+      grid.innerHTML+='<div class="cliente-card">'+
+        '<div class="cliente-card-menu"><span class="cliente-tag '+tagMap[c.cat]+'">'+tagLabel[c.cat]+'</span></div>'+
+        '<div class="cliente-card-top">'+
+          '<div class="cliente-avatar" style="background:'+col+'">'+getInitials(c.nombre)+'</div>'+
+          '<div style="min-width:0;flex:1">'+
+            '<div class="cliente-name" title="'+c.nombre+'">'+c.nombre+'</div>'+
+            '<div class="cliente-phone"><i class="fa-solid fa-phone" style="font-size:10px;margin-right:4px"></i>'+c.tel+'</div>'+
+          '</div>'+
+        '</div>'+
+        '<div class="cliente-stat"><span class="cliente-stat-key">Visitas</span><span class="cliente-stat-val v-blue">'+c.visitas+'</span></div>'+
+        '<div class="cliente-stat"><span class="cliente-stat-key">Última visita</span><span class="cliente-stat-val">'+c.ultimaVisita+'</span></div>'+
+        '<div class="cliente-stat"><span class="cliente-stat-key">Barbero preferido</span><span class="cliente-stat-val">'+(c.barbero||'—')+'</span></div>'+
+        (c.birthday?'<div class="cliente-stat"><span class="cliente-stat-key">Cumpleaños</span><span class="cliente-stat-val">'+formatBirthday(c.birthday)+'</span></div>':'')+
+        (c.notas?'<div style="margin-top:9px;font-size:11px;color:var(--text-light);background:var(--bg);border-radius:8px;padding:7px 10px;line-height:1.5"><i class="fa-solid fa-note-sticky" style="margin-right:4px;color:var(--amber)"></i>'+c.notas+'</div>':'')+
+        '<div style="display:flex;gap:7px;margin-top:12px">'+
+          '<button class="btn btn-ghost btn-sm" style="flex:1;justify-content:center" onclick="openModal(\'modal-cobro\')"><i class="fa-solid fa-calendar-plus"></i> Turno</button>'+
+          '<button class="btn btn-outline btn-sm" style="width:36px;justify-content:center;padding:0" title="Editar"><i class="fa-solid fa-pen"></i></button>'+
+          '<a href="https://wa.me/549'+c.tel.replace(/\D/g,'')+'" target="_blank" class="btn btn-outline btn-sm" style="width:36px;justify-content:center;padding:0;color:#25D366;text-decoration:none" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>'+
+        '</div>'+
+      '</div>';
+    });
+  } else {
+    // List view
+    grid.className = 'table-card';
+    var rows = list.map(function(c){
+      var col=clPalette[c.id%clPalette.length];
+      return '<tr>'+
+        '<td><div style="display:flex;align-items:center;gap:10px">'+
+          '<div class="list-avatar-sm" style="background:'+col+'">'+getInitials(c.nombre)+'</div>'+
+          '<div><div style="font-weight:700;font-size:13px">'+c.nombre+'</div>'+
+          (c.email?'<div style="font-size:11px;color:var(--text-light)">'+c.email+'</div>':'')+
+          '</div></div></td>'+
+        '<td>'+c.tel+'</td>'+
+        '<td>'+(c.barbero||'—')+'</td>'+
+        '<td><span class="cliente-tag '+tagMap[c.cat]+'">'+tagLabel[c.cat]+'</span></td>'+
+        '<td class="fw7 v-blue">'+c.visitas+'</td>'+
+        '<td>'+(c.birthday?formatBirthday(c.birthday):'—')+'</td>'+
+        '<td>'+c.ultimaVisita+'</td>'+
+        '<td style="white-space:nowrap">'+
+          '<button class="action-btn ab-blue" onclick="openModal(\'modal-cobro\')" title="Agendar turno"><i class="fa-solid fa-calendar-plus"></i></button>'+
+          '<button class="action-btn ab-blue" style="margin-left:4px" title="Editar"><i class="fa-solid fa-pen"></i></button>'+
+          '<a href="https://wa.me/549'+c.tel.replace(/\D/g,'')+'" target="_blank" class="action-btn" style="background:none;border:1px solid #25D36633;color:#25D366;margin-left:4px;display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;text-decoration:none" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>'+
+        '</td>'+
+      '</tr>';
+    }).join('');
+    grid.innerHTML='<table class="list-view-table">'+
+      '<thead><tr><th>Cliente</th><th>Teléfono</th><th>Barbero</th><th>Categoría</th><th>Visitas</th><th>Cumpleaños</th><th>Última visita</th><th>Acciones</th></tr></thead>'+
+      '<tbody>'+rows+'</tbody></table>';
+  }
+}
+
+function formatBirthday(d) {
+  if (!d) return '—';
+  var p=d.split('-'); if(p.length<3) return d;
+  var months=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+  return parseInt(p[2])+' '+months[parseInt(p[1])-1];
 }
 
 function filterClientes(){renderClientes();}
@@ -2725,16 +2807,26 @@ function setClienteFilter(f,el){
   renderClientes();
 }
 
+function setClienteView(v,el){
+  clienteView=v;
+  var btns=document.querySelectorAll('#cl-view-toggle .view-toggle-btn');
+  for(var i=0;i<btns.length;i++) btns[i].classList.remove('active');
+  if(el) el.classList.add('active');
+  renderClientes();
+}
+
 function saveCliente(){
   var nombre=((document.getElementById('cl-nombre')||{}).value||'').trim();
   if(!nombre){showToast('Ingresá el nombre');return;}
   var tel=((document.getElementById('cl-tel')||{}).value||'').trim();
+  var email=((document.getElementById('cl-email')||{}).value||'').trim();
+  var birthday=((document.getElementById('cl-birthday')||{}).value||'');
   var barbero=((document.getElementById('cl-barbero')||{}).value||'');
   var cat=((document.getElementById('cl-cat')||{}).value||'nuevo');
   var notas=((document.getElementById('cl-notas')||{}).value||'').trim();
-  CLIENTES.push({id:Date.now(),nombre:nombre,tel:tel||'—',barbero:barbero,cat:cat,visitas:0,ultimaVisita:'Hoy',notas:notas});
+  CLIENTES.push({id:Date.now(),nombre:nombre,tel:tel||'—',email:email,birthday:birthday,barbero:barbero,cat:cat,visitas:0,ultimaVisita:'Hoy',notas:notas});
   closeModal('modal-cliente');
-  ['cl-nombre','cl-tel','cl-notas'].forEach(function(id){var e=document.getElementById(id);if(e)e.value='';});
+  ['cl-nombre','cl-tel','cl-email','cl-birthday','cl-notas'].forEach(function(id){var e=document.getElementById(id);if(e)e.value='';});
   renderClientes();
   updateClienteStats();
   showToast('"'+nombre+'" agregado ✓');
@@ -2748,11 +2840,38 @@ function updateClienteStats(){
   var n=document.getElementById('cl-stat-new');  if(n)n.textContent=f('nuevo');
 }
 
+// ══ EDIT EMPLEADO ══
+function previewEmpPhoto(input){
+  if(!input.files||!input.files[0]) return;
+  var reader=new FileReader();
+  reader.onload=function(e){
+    var prev=document.getElementById('edit-emp-avatar-preview');
+    if(prev){
+      prev.innerHTML='<img src="'+e.target.result+'" style="width:100%;height:100%;object-fit:cover;border-radius:12px">';
+      if(currentEditEmpKey) empPhotoMap[currentEditEmpKey]=e.target.result;
+    }
+  };
+  reader.readAsDataURL(input.files[0]);
+}
+
+function clearEmpPhoto(){
+  var prev=document.getElementById('edit-emp-avatar-preview');
+  if(prev){prev.innerHTML=empAvatarMap[currentEditEmpKey]||'✂️';}
+  if(currentEditEmpKey) delete empPhotoMap[currentEditEmpKey];
+  var fi=document.getElementById('edit-emp-file');if(fi)fi.value='';
+}
+
 function openEditEmp(key){
   currentEditEmpKey=key;
   var d=empDataMap[key];if(!d)return;
-  var av=empAvatarMap[key]||'✂️';
-  var p=document.getElementById('edit-emp-avatar-preview');if(p)p.textContent=av;
+  var prev=document.getElementById('edit-emp-avatar-preview');
+  if(prev){
+    if(empPhotoMap[key]){
+      prev.innerHTML='<img src="'+empPhotoMap[key]+'" style="width:100%;height:100%;object-fit:cover;border-radius:12px">';
+    } else {
+      prev.innerHTML=empAvatarMap[key]||'✂️';
+    }
+  }
   var nm=document.getElementById('edit-emp-nombre');if(nm)nm.value=d.nombre;
   var tp=document.getElementById('edit-emp-tipo');if(tp)tp.value=d.tipo;
   var rng=document.getElementById('edit-emp-comision-range');if(rng)rng.value=d.comision;
@@ -2773,21 +2892,72 @@ function saveEditEmp(){
   var comision=parseInt(((document.getElementById('edit-emp-comision')||{}).value)||40);
   if(!nombre){showToast('Ingresá el nombre');return;}
   empDataMap[currentEditEmpKey]={nombre:nombre,tipo:tipo,comision:comision};
-  empAvatarMap[currentEditEmpKey]=document.getElementById('edit-emp-avatar-preview').textContent;
-  // Update card visually
+  // Update avatar in card
+  var avEl=document.getElementById('emp-av-'+currentEditEmpKey);
+  if(avEl){
+    if(empPhotoMap[currentEditEmpKey]){
+      avEl.innerHTML='<img src="'+empPhotoMap[currentEditEmpKey]+'" style="width:100%;height:100%;object-fit:cover;border-radius:12px">';
+      avEl.style.fontSize='0';
+    } else {
+      avEl.innerHTML=empAvatarMap[currentEditEmpKey]||'✂️';
+      avEl.style.fontSize='';
+    }
+  }
+  // Update name/role in card
   var cards=document.querySelectorAll('.emp-card');
   cards.forEach(function(card){
     var editBtn=card.querySelector('button[onclick*="\''+currentEditEmpKey+'\'"]');
     if(editBtn){
       var nm=card.querySelector('.emp-card-name');if(nm)nm.textContent=nombre;
       var rl=card.querySelector('.emp-card-role');if(rl)rl.textContent=tipo+' · '+comision+'%';
-      var av=card.querySelector('.emp-big-avatar');if(av)av.textContent=empAvatarMap[currentEditEmpKey];
       var sks=card.querySelectorAll('.emp-stat-key');
       sks.forEach(function(sk){if(sk.textContent.indexOf('Sueldo')!==-1)sk.textContent='Sueldo ('+comision+'%)';});
     }
   });
+  renderEmpList();
   closeModal('modal-edit-emp');
   showToast(nombre+' actualizado ✓');
+}
+
+// ══ EMPLEADOS VIEW TOGGLE ══
+function setEmpView(v,el){
+  var cards=document.getElementById('emp-cards-grid');
+  var list=document.getElementById('emp-list-view');
+  var btns=document.querySelectorAll('#emp-view-toggle .view-toggle-btn');
+  for(var i=0;i<btns.length;i++) btns[i].classList.remove('active');
+  if(el) el.classList.add('active');
+  if(v==='cards'){
+    if(cards)cards.style.display='';
+    if(list)list.style.display='none';
+  } else {
+    if(cards)cards.style.display='none';
+    if(list)list.style.display='';
+    renderEmpList();
+  }
+}
+
+function renderEmpList(){
+  var tbody=document.getElementById('emp-list-tbody');
+  if(!tbody) return;
+  var keys=['franco','simon','tomas','marcos'];
+  tbody.innerHTML='';
+  keys.forEach(function(key){
+    var d=empDataMap[key];
+    var avatarHtml = empPhotoMap[key]
+      ? '<img src="'+empPhotoMap[key]+'" style="width:36px;height:36px;border-radius:10px;object-fit:cover;flex-shrink:0">'
+      : '<div class="emp-big-avatar" style="width:36px;height:36px;font-size:18px">'+empAvatarMap[key]+'</div>';
+    tbody.innerHTML+='<tr>'+
+      '<td><div style="display:flex;align-items:center;gap:10px">'+avatarHtml+
+        '<div><div style="font-weight:700">'+d.nombre+'</div></div></div></td>'+
+      '<td>'+d.tipo+'</td>'+
+      '<td class="fw7 v-blue">'+d.comision+'%</td>'+
+      '<td>0</td><td class="fw7 v-blue">$0</td><td class="fw7">$0</td>'+
+      '<td style="white-space:nowrap">'+
+        '<button class="action-btn ab-blue" onclick="openEditEmp(\''+key+'\')" title="Editar"><i class="fa-solid fa-pen"></i></button>'+
+        '<button class="action-btn ab-blue" style="margin-left:4px" onclick="setReportEmp(\''+key+'\')" title="Reporte"><i class="fa-solid fa-chart-bar"></i></button>'+
+      '</td>'+
+    '</tr>';
+  });
 }
 
 // Run on load
