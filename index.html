@@ -4474,7 +4474,7 @@ async function saveCliente(){
   var { data, error } = await supa.from('clientes').insert({
     nombre, telefono:tel, email:email||null,
     cumpleanos:birthday||null, barbero_preferido:barbero||null,
-    categoria: cat.charAt(0).toUpperCase()+cat.slice(1).toLowerCase() || 'Nuevo',
+    categoria: cat==='vip' ? 'VIP' : cat==='regular' ? 'Regular' : 'Nuevo',
     visitas:0, notas:notas||null
   }).select().single();
   if(error){
@@ -4529,9 +4529,7 @@ async function saveEditCliente(){
     email:             g('edit-cl-email') || null,
     cumpleanos:        g('edit-cl-birthday') || null,
     barbero_preferido: g('edit-cl-barbero') || null,
-    categoria:         (['vip','regular','nuevo'].indexOf(g('edit-cl-cat'))>=0
-                         ? g('edit-cl-cat').charAt(0).toUpperCase()+g('edit-cl-cat').slice(1)
-                         : 'Nuevo'),
+    categoria: g('edit-cl-cat')==='vip' ? 'VIP' : g('edit-cl-cat')==='regular' ? 'Regular' : 'Nuevo',
     notas:             g('edit-cl-notas') || null,
   };
   await supa.from('clientes').update(payload).eq('id', editClienteId);
