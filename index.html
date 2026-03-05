@@ -248,8 +248,8 @@ tr:hover td{background:var(--blue-faint);}
 .s-crit{background:var(--red);}
 
 /* ── PAY METHODS ── */
-.pay-split{display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;}
-.pay-m{flex:1;min-width:78px;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:9px;text-align:center;cursor:pointer;transition:all .18s;font-size:12px;color:var(--text-light);font-weight:600;}
+.pay-split{display:flex;gap:8px;margin-top:8px;}
+.pay-m{flex:1;min-width:0;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:9px 6px;text-align:center;cursor:pointer;transition:all .18s;font-size:12px;color:var(--text-light);font-weight:600;}
 .pay-m:hover{border-color:var(--accent);color:var(--blue);}
 .pay-m.selected{border-color:var(--blue);color:var(--blue);background:var(--blue-faint);font-weight:700;}
 
@@ -265,7 +265,7 @@ tr:hover td{background:var(--blue-faint);}
 .cal-day-num{font-size:12px;color:var(--text-mid);font-weight:500;}
 
 /* ── MODAL ── */
-.modal-overlay{display:none;position:fixed;inset:0;background:rgba(10,20,45,.5);backdrop-filter:blur(4px);z-index:200;align-items:center;justify-content:center;padding:20px;overflow:hidden;}
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(10,20,45,.5);backdrop-filter:blur(4px);z-index:200;align-items:center;justify-content:center;padding:16px;overflow:hidden;}
 .modal-overlay.open{display:flex;}
 .modal{background:var(--white);border-radius:20px;width:100%;max-width:500px;padding:28px;position:relative;box-shadow:0 30px 80px rgba(27,58,107,.2);animation:fadeUp .25s ease;border:1px solid var(--border);box-sizing:border-box;}
 .modal-title{font-size:17px;font-weight:700;color:var(--text);margin-bottom:20px;padding-right:30px;letter-spacing:-.3px;}
@@ -1566,7 +1566,7 @@ tr:hover td{background:var(--blue-faint);}
 
 <!-- ══ MODALS ══ -->
 <div class="modal-overlay" id="modal-cobro">
-  <div class="modal" style="max-width:640px;padding:0;display:flex;flex-direction:column;max-height:96vh;width:100%">
+  <div class="modal" style="max-width:700px;padding:0;display:flex;flex-direction:column;max-height:96vh;width:100%">
 
     <!-- Header fijo -->
     <div style="padding:22px 24px 16px;border-bottom:1px solid var(--border);flex-shrink:0;">
@@ -2374,13 +2374,13 @@ function cobroUpdatePrices() {
   for (var i=0;i<SERVICIOS.length;i++) {
     var s = SERVICIOS[i];
     var price = isMarcos ? s.ef_m : s.ef;  // Always efectivo base price
-    sel.innerHTML += '<option value="'+price+'">'+s.nombre+' — $'+fmtN(price)+'</option>';
+    sel.innerHTML += '<option value="'+price+'">'+s.nombre+'</option>';
   }
   if (isMarcos) {
     sel.innerHTML += '<optgroup label="── Academia MK ──"></optgroup>';
     for (var j=0;j<CURSOS.length;j++) {
       var c = CURSOS[j];
-      sel.innerHTML += '<option value="'+c.ef+'">'+c.nombre+' — $'+fmtN(c.ef)+'</option>';
+      sel.innerHTML += '<option value="'+c.ef+'">'+c.nombre+'</option>';
     }
   }
   cobroRecalc();
@@ -2508,12 +2508,12 @@ function initCobroModal() {
   var bSel = document.getElementById('cobro-bebida');
   if (bSel) {
     bSel.innerHTML = '<option value="0">Sin bebida</option>';
-    for (var i=0;i<BEBIDAS.length;i++) bSel.innerHTML += '<option value="'+BEBIDAS[i].precio+'">'+BEBIDAS[i].nombre+' — $'+fmtN(BEBIDAS[i].precio)+'</option>';
+    for (var i=0;i<BEBIDAS.length;i++) bSel.innerHTML += '<option value="'+BEBIDAS[i].precio+'">'+BEBIDAS[i].nombre+'</option>';
   }
   var pSel = document.getElementById('cobro-producto');
   if (pSel) {
     pSel.innerHTML = '<option value="0">Sin producto</option>';
-    for (var j=0;j<PRODUCTOS_VENTA.length;j++) pSel.innerHTML += '<option value="'+PRODUCTOS_VENTA[j].precio+'">'+PRODUCTOS_VENTA[j].nombre+' — $'+fmtN(PRODUCTOS_VENTA[j].precio)+'</option>';
+    for (var j=0;j<PRODUCTOS_VENTA.length;j++) pSel.innerHTML += '<option value="'+PRODUCTOS_VENTA[j].precio+'">'+PRODUCTOS_VENTA[j].nombre+'</option>';
   }
   cobroUpdatePrices(); // populate services with efectivo prices
 }
