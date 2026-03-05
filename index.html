@@ -433,6 +433,85 @@ tr:hover td{background:var(--blue-faint);}
   .page-header-left .page-title{font-size:16px;}
   .btn.btn-primary.btn-sm{padding:7px 12px;font-size:12px;}
 }
+
+/* ══ DARK MODE ══ */
+[data-theme="dark"] {
+  --white:      #1E2535;
+  --bg:         #141926;
+  --text:       #E2E8F4;
+  --text-mid:   #94A3B8;
+  --text-light: #64748B;
+  --border:     #2A3450;
+  --blue-pale:  #1C2D4E;
+  --blue-faint: #162038;
+  --shadow:     0 4px 24px rgba(0,0,0,.35);
+  --shadow-md:  0 8px 32px rgba(0,0,0,.45);
+  --green-bg:   #0C2318;
+  --red-bg:     #2A1010;
+  --amber-bg:   #251C09;
+}
+[data-theme="dark"] body{background:var(--bg);}
+[data-theme="dark"] #login-screen{background:#0F1520;}
+[data-theme="dark"] .login-box{background:#1E2535;box-shadow:0 40px 100px rgba(0,0,0,.6);}
+[data-theme="dark"] .login-input{background:#141926;color:var(--text);}
+[data-theme="dark"] .login-input:focus{background:#1a2235;}
+[data-theme="dark"] #sidebar{background:#181F30;border-right:1px solid var(--border);}
+[data-theme="dark"] .sb-logo-area{border-bottom-color:var(--border);}
+[data-theme="dark"] .nav-item:hover{background:#232d44;}
+[data-theme="dark"] .nav-item.active{background:var(--blue);color:#fff;}
+[data-theme="dark"] .nav-item.active i{color:#fff;}
+[data-theme="dark"] #topbar{background:#181F30;border-bottom:1px solid var(--border);}
+[data-theme="dark"] .topbar-search{background:#141926;border-color:var(--border);}
+[data-theme="dark"] .topbar-search input{background:transparent;color:var(--text);}
+[data-theme="dark"] .topbar-notif{background:#232d44;border-color:var(--border);}
+[data-theme="dark"] .topbar-user-chip{background:#232d44;border-color:var(--border);}
+[data-theme="dark"] .topbar-icon-btn{background:#232d44;border-color:var(--border);}
+[data-theme="dark"] .topbar-icon-btn:hover{background:#2a3550;border-color:var(--blue-pale);}
+[data-theme="dark"] .topbar-icon-btn:last-child:hover{background:#2a1818;border-color:#7f2020;color:var(--red);}
+[data-theme="dark"] .stat-card{background:#1E2535;}
+[data-theme="dark"] .stat-card.featured{background:var(--blue);}
+[data-theme="dark"] .chart-card,.table-card,.sum-box,.cfg-section{background:#1E2535 !important;}
+[data-theme="dark"] .emp-card,.cliente-card{background:#1E2535;}
+[data-theme="dark"] .modal{background:#1E2535;}
+[data-theme="dark"] .modal-overlay{background:rgba(0,0,0,.65);}
+[data-theme="dark"] input,[data-theme="dark"] select,[data-theme="dark"] textarea{background:#141926 !important;border-color:var(--border) !important;color:var(--text) !important;}
+[data-theme="dark"] input:focus,[data-theme="dark"] select:focus,[data-theme="dark"] textarea:focus{border-color:var(--accent) !important;background:#1a2235 !important;}
+[data-theme="dark"] .pay-m{background:#141926;border-color:var(--border);color:var(--text-light);}
+[data-theme="dark"] .pay-m.selected{background:var(--blue-faint);border-color:var(--accent);color:var(--accent);}
+[data-theme="dark"] .pay-m:hover{border-color:var(--accent);}
+[data-theme="dark"] .btn-ghost{background:transparent;border-color:var(--border);color:var(--text-mid);}
+[data-theme="dark"] .btn-ghost:hover{background:#232d44;}
+[data-theme="dark"] .btn-outline{background:transparent;border-color:var(--border);color:var(--text);}
+[data-theme="dark"] .btn-outline:hover{background:#232d44;}
+[data-theme="dark"] .view-toggle{background:#141926;border-color:var(--border);}
+[data-theme="dark"] .view-toggle-btn.active{background:#232d44;}
+[data-theme="dark"] .tab-pill{background:transparent;border-color:var(--border);color:var(--text-light);}
+[data-theme="dark"] .tab-pill.active{background:var(--blue);border-color:var(--blue);color:#fff;}
+[data-theme="dark"] .tabs-pill{background:#141926;border-color:var(--border);}
+[data-theme="dark"] .cfg-row{border-bottom-color:var(--border);}
+[data-theme="dark"] .cfg-input{background:#141926;border-color:var(--border);color:var(--text);}
+[data-theme="dark"] .cfg-tabs{background:#141926;border-color:var(--border);}
+[data-theme="dark"] .cfg-tab.active{background:#1E2535;color:var(--text);}
+[data-theme="dark"] .cobro-sum{background:#141926;border-color:var(--border);}
+[data-theme="dark"] .bar-chart .bar-item .bar-fill{opacity:.85;}
+[data-theme="dark"] .stock-bar{background:#2A3450;}
+[data-theme="dark"] .b-green{background:#0C2318;color:#34d399;}
+[data-theme="dark"] .b-blue{background:#162038;color:#60a5fa;}
+[data-theme="dark"] .b-amb{background:#251C09;color:#fbbf24;}
+[data-theme="dark"] .b-red{background:#2A1010;color:#f87171;}
+[data-theme="dark"] .b-gray{background:#232d44;color:var(--text-light);}
+[data-theme="dark"] .tag-vip{background:rgba(251,191,36,.12);color:#fbbf24;}
+[data-theme="dark"] .tag-regular{background:#162038;color:#60a5fa;}
+[data-theme="dark"] .tag-nuevo{background:#0C2318;color:#34d399;}
+[data-theme="dark"] .list-view-table tr:hover td{background:#232d44;}
+[data-theme="dark"] table thead th{background:#141926 !important;}
+[data-theme="dark"] .access-denied{background:#1E2535;}
+[data-theme="dark"] .notif-dot{background:#f87171;}
+[data-theme="dark"] ::-webkit-scrollbar-track{background:#141926;}
+[data-theme="dark"] ::-webkit-scrollbar-thumb{background:#2A3450;border-color:#141926;}
+[data-theme="dark"] ::-webkit-scrollbar-thumb:hover{background:#3A4560;}
+/* smooth theme transition */
+body,#sidebar,#topbar,.stat-card,.chart-card,.table-card,.modal,.emp-card,.cliente-card,input,select,textarea,.pay-m,.btn{transition:background .2s,border-color .2s,color .15s;}
 </style>
 </head>
 <body>
@@ -514,6 +593,7 @@ tr:hover td{background:var(--blue-faint);}
         <i class="fa-solid fa-bell"></i>
         <div class="notif-dot"></div>
       </div>
+      <button class="topbar-icon-btn" id="theme-toggle" onclick="toggleTheme()" title="Modo noche"><i class="fa-solid fa-moon" id="theme-icon"></i></button>
       <div class="topbar-user-chip">
         <div class="user-chip-avatar" id="tb-avatar">A</div>
         <div class="user-chip-info">
@@ -1800,15 +1880,16 @@ tr:hover td{background:var(--blue-faint);}
         </select>
       </div>
     </div>
-    <div class="form-grid" style="margin-bottom:14px">
-      <div class="fg"><label>Método de pago</label>
-        <select id="ins-pago">
-          <option value="ef">Efectivo</option>
-          <option value="qr">QR / Transfer</option>
-        </select>
+    <div style="margin-bottom:14px">
+      <label style="font-size:11px;font-weight:700;color:var(--text-light);text-transform:uppercase;letter-spacing:.8px;display:block;margin-bottom:8px">Método de pago</label>
+      <div class="pay-split" style="gap:6px;flex-wrap:nowrap">
+        <div class="pay-m selected" id="ins-pay-ef" onclick="selectPayIns(this,'ef')" style="flex:1;min-width:0;padding:10px 6px"><i class="fa-solid fa-money-bills"></i><div style="font-size:11px;margin-top:3px;white-space:nowrap">Efectivo</div></div>
+        <div class="pay-m" id="ins-pay-san" onclick="selectPayIns(this,'san')" style="flex:1;min-width:0;padding:10px 6px"><i class="fa-solid fa-building-columns"></i><div style="font-size:11px;margin-top:3px;white-space:nowrap">Santander</div></div>
+        <div class="pay-m" id="ins-pay-pp" onclick="selectPayIns(this,'pp')" style="flex:1;min-width:0;padding:10px 6px"><i class="fa-solid fa-mobile-screen"></i><div style="font-size:11px;margin-top:3px;white-space:nowrap">Personal Pay</div></div>
+        <div class="pay-m" id="ins-pay-mix" onclick="selectPayIns(this,'mix')" style="flex:1;min-width:0;padding:10px 6px"><i class="fa-solid fa-shuffle"></i><div style="font-size:11px;margin-top:3px;white-space:nowrap">Mixto</div></div>
       </div>
-      <div class="fg"><label>Fecha de inicio</label><input type="date" id="ins-fecha"></div>
     </div>
+    <div class="fg" style="margin-bottom:14px"><label>Fecha de inicio</label><input type="date" id="ins-fecha"></div>
     <div style="background:var(--blue-faint);border-radius:12px;padding:12px 15px;margin-bottom:16px;border:1px solid var(--border)">
       <div style="display:flex;justify-content:space-between;font-size:13px;font-weight:800;color:var(--blue)"><span>Total</span><span id="ins-total">$55.000</span></div>
     </div>
@@ -3013,16 +3094,28 @@ function renderEmpList(){
 }
 
 var INSCRIPCIONES = [];
+var insPayMethod = 'ef'; // ef | san | pp | mix
+var INS_PAY_LABELS = {ef:'Efectivo', san:'Santander', pp:'Personal Pay', mix:'Mixto'};
+// ef/mix → precio efectivo; san/pp → precio QR
+function insIsQR(){ return insPayMethod==='san'||insPayMethod==='pp'; }
+
+function selectPayIns(el, method){
+  insPayMethod = method;
+  var btns = document.querySelectorAll('#modal-inscripcion .pay-m');
+  for(var i=0;i<btns.length;i++) btns[i].classList.remove('selected');
+  el.classList.add('selected');
+  inscripcionRecalc();
+}
 
 function inscripcionRecalc(){
   var personas=parseInt((document.getElementById('ins-personas')||{value:'1'}).value)||1;
-  var pago=((document.getElementById('ins-pago')||{}).value)||'ef';
-  var precio=personas===2?(pago==='qr'?92000:90000):(pago==='qr'?57000:55000);
+  var qr = insIsQR();
+  var precio=personas===2?(qr?92000:90000):(qr?57000:55000);
   var el=document.getElementById('ins-total');if(el)el.textContent='$'+fmtN(precio);
   var sel=document.getElementById('ins-personas');
   if(sel){
-    sel.options[0].text='1 persona — $'+(pago==='qr'?'57.000':'55.000');
-    sel.options[1].text='2 personas — $'+(pago==='qr'?'92.000':'90.000');
+    sel.options[0].text='1 persona — $'+(qr?'57.000':'55.000');
+    sel.options[1].text='2 personas — $'+(qr?'92.000':'90.000');
   }
 }
 
@@ -3032,13 +3125,18 @@ function saveInscripcion(){
   if(!nombre||!curso){showToast('Completá nombre y curso');return;}
   var tel=((document.getElementById('ins-tel')||{}).value||'').trim();
   var personas=parseInt(((document.getElementById('ins-personas')||{}).value)||1);
-  var pago=((document.getElementById('ins-pago')||{}).value||'ef');
   var fecha=((document.getElementById('ins-fecha')||{}).value||'');
-  var precio=personas===2?(pago==='qr'?92000:90000):(pago==='qr'?57000:55000);
-  INSCRIPCIONES.push({nombre:nombre,tel:tel,curso:curso,personas:personas,pago:pago==='qr'?'QR':'Efectivo',fecha:fecha||'—',total:precio});
+  var qr=insIsQR();
+  var precio=personas===2?(qr?92000:90000):(qr?57000:55000);
+  INSCRIPCIONES.push({nombre:nombre,tel:tel,curso:curso,personas:personas,pago:INS_PAY_LABELS[insPayMethod],fecha:fecha||'—',total:precio});
   renderInscriptos();
   closeModal('modal-inscripcion');
   ['ins-nombre','ins-tel','ins-fecha'].forEach(function(id){var e=document.getElementById(id);if(e)e.value='';});
+  // Reset payment to Efectivo
+  insPayMethod='ef';
+  var btns=document.querySelectorAll('#modal-inscripcion .pay-m');
+  for(var i=0;i<btns.length;i++) btns[i].classList.remove('selected');
+  var ef=document.getElementById('ins-pay-ef');if(ef)ef.classList.add('selected');
   showToast('Inscripción de "'+nombre+'" registrada ✓');
 }
 
@@ -3071,6 +3169,25 @@ function renderInscriptos(){
   var sm=document.getElementById('acad-stat-mes');if(sm)sm.textContent=INSCRIPCIONES.length;
   var si=document.getElementById('acad-stat-ingresos');if(si)si.textContent='$'+fmtN(totalIngresos);
 }
+
+// ══ DARK MODE ══
+function toggleTheme(){
+  var isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  setTheme(!isDark);
+}
+function setTheme(dark){
+  document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
+  var icon = document.getElementById('theme-icon');
+  var btn  = document.getElementById('theme-toggle');
+  if(icon){ icon.className = dark ? 'fa-solid fa-sun' : 'fa-solid fa-moon'; }
+  if(btn) { btn.title = dark ? 'Modo claro' : 'Modo noche'; }
+  try{ localStorage.setItem('bp-theme', dark ? 'dark' : 'light'); } catch(e){}
+}
+(function initTheme(){
+  var saved = 'light';
+  try{ saved = localStorage.getItem('bp-theme') || 'light'; } catch(e){}
+  if(saved === 'dark') setTheme(true);
+})();
 
 // Run on load
 renderServiciosPage();
