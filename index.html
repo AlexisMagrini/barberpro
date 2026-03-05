@@ -4471,12 +4471,17 @@ async function saveCliente(){
   var barbero=((document.getElementById('cl-barbero')||{}).value||'');
   var cat=((document.getElementById('cl-cat')||{}).value||'Nuevo');
   var notas=((document.getElementById('cl-notas')||{}).value||'').trim();
-  var { data } = await supa.from('clientes').insert({
+  var { data, error } = await supa.from('clientes').insert({
     nombre, telefono:tel, email:email||null,
     cumpleanos:birthday||null, barbero_preferido:barbero||null,
     categoria: cat.charAt(0).toUpperCase()+cat.slice(1).toLowerCase() || 'Nuevo',
     visitas:0, notas:notas||null
   }).select().single();
+  if(error){
+    console.error('Error guardando cliente:', error);
+    showToast('Error al guardar: '+error.message);
+    return;
+  }
   var newC = { id: data?data.id:Date.now(), nombre, tel:tel||'—', email, birthday, barbero, cat, visitas:0, ultimaVisita:'—', notas };
   CLIENTES.push(newC);
   closeModal('modal-cliente');
