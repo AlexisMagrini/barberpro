@@ -7,6 +7,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+  // ── Supabase init ──────────────────────────────────────────
+  const SUPA_URL  = 'https://vaggbldepydlbhpmhsnv.supabase.co';
+  const SUPA_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZhZ2dibGRlcHlkbGJocG1oc252Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI3NDUxNjcsImV4cCI6MjA4ODMyMTE2N30.9IS6Q_YAolHrFYycYuq4CQS2jj81AsanZmo-16oiqI4';
+  const supa = supabase.createClient(SUPA_URL, SUPA_ANON);
+</script>
 <style>
 :root {
   --blue:       #1B3A6B;
@@ -451,20 +458,16 @@ td { vertical-align:middle; }
         <div class="sub">Sistema de Gestión</div>
       </div>
     </div>
-    <div class="login-error" id="login-error">Usuario o contraseña incorrectos.</div>
-    <label class="login-label">Usuario</label>
-    <input type="text" class="login-input" id="login-user" placeholder="Ingresá tu usuario" autocomplete="username">
+    <div class="login-error" id="login-error">Email o contraseña incorrectos.</div>
+    <label class="login-label">Email</label>
+    <input type="email" class="login-input" id="login-user" placeholder="tu@email.com" autocomplete="username">
     <label class="login-label">Contraseña</label>
     <div class="pw-wrap">
       <input type="password" class="login-input" id="login-pass" placeholder="••••••••" autocomplete="current-password" onkeydown="if(event.key==='Enter')doLogin()">
       <button class="pw-eye" onclick="togglePw()">👁</button>
     </div>
     <button class="login-btn" onclick="doLogin()">Ingresar al sistema →</button>
-    <div class="login-hint">
-      <div class="login-hint-title">Credenciales de prueba</div>
-      <div class="login-hint-row"><span class="login-hint-label">👑 Administrador</span><span class="login-hint-val">admin / admin123</span></div>
-      <div class="login-hint-row"><span class="login-hint-label">📋 Administrativo</span><span class="login-hint-val">empleado / emp123</span></div>
-    </div>
+
   </div>
 </div>
 
@@ -2073,28 +2076,46 @@ td { vertical-align:middle; }
     <div class="modal-title">📤 Registrar Egreso</div>
     <div class="form-grid">
       <div class="fg"><label>Tipo</label>
-        <select id="eg-tipo" onchange="updateEgresoConcepto()">
+        <select id="egr-tipo">
           <option value="fijo">Fijo</option>
-          <option value="variable-insumo">Variable — Insumo</option>
-          <option value="variable-pub">Variable — Publicidad</option>
-          <option value="variable-otro">Variable — Otro</option>
+          <option value="variable">Variable</option>
         </select>
       </div>
-      <div class="fg"><label>Concepto</label>
-        <select id="eg-concepto">
-          <option>Insumos</option><option>Personal limpieza</option><option>Personal administrativo</option>
+      <div class="fg"><label>Fecha</label>
+        <input type="date" id="egr-fecha">
+      </div>
+    </div>
+    <div class="form-grid">
+      <div class="fg" style="grid-column:1/-1"><label>Concepto</label>
+        <select id="egr-concepto">
+          <option value="">Seleccionar...</option>
           <option>Alquiler</option><option>Municipal</option><option>Edenor</option>
-          <option>Monotributo</option><option>Contador</option><option>Claro</option><option>Movistar</option>
-          <option>Espacio publicitario fijo</option><option>Agenda pro</option>
+          <option>Monotributo</option><option>Contador</option><option>Claro</option>
+          <option>Movistar</option><option>Espacio publicitario fijo</option><option>Agenda pro</option>
+          <option>Insumos</option><option>Personal limpieza</option><option>Personal administrativo</option>
+          <option>Cuellos</option><option>Coolcare</option><option>Filos navaja</option>
+          <option>Gel shaving</option><option>After shave</option><option>Crema / Algodón / Guantes</option>
+          <option>Publicidad Oviedo</option><option>Tarjetas / Folletos / Digital</option>
+          <option>Merchandising</option><option>Agua / Yerba / Sahumerio</option>
+          <option>Alacena / Bebidas / Productos</option><option>Inversión salón / herramientas</option>
+          <option>Educación / Reuniones</option><option>Gastos X</option>
         </select>
       </div>
     </div>
     <div class="form-grid">
-      <div class="fg"><label>Monto ($)</label><input type="number" placeholder="0"></div>
-      <div class="fg"><label>Fecha</label><input type="date" id="eg-fecha"></div>
+      <div class="fg"><label>Monto ($)</label><input type="number" id="egr-monto" placeholder="0"></div>
+      <div class="fg"><label>Método</label>
+        <select id="egr-metodo">
+          <option value="ef">Efectivo</option>
+          <option value="san">Santander</option>
+          <option value="pp">Personal Pay</option>
+        </select>
+      </div>
     </div>
-    <div class="fg" style="margin-bottom:14px"><label>Observaciones (opcional)</label><input type="text" placeholder="Ej: mes de enero"></div>
-    <button class="btn btn-primary" style="width:100%;margin-top:2px;justify-content:center" onclick="closeModal('modal-egreso');showToast('Egreso registrado ✓')">✓ Registrar Egreso</button>
+    <div class="fg" style="margin-bottom:14px"><label>Observaciones (opcional)</label>
+      <input type="text" id="egr-notas" placeholder="Ej: mes de enero">
+    </div>
+    <button class="btn btn-primary" style="width:100%;margin-top:2px;justify-content:center" onclick="saveEgreso()">✓ Registrar Egreso</button>
   </div>
 </div>
 
@@ -2377,7 +2398,26 @@ var EGRESOS_VARIABLES_OTROS = [
   'Reuniones','Espacio publicitario variable'
 ];
 
-var currentRole='admin', currentUser=null, currentPeriod='dia', currentView='local', currentEmp='franco';
+var currentRole='empleado', currentUser=null, currentPeriod='dia', currentView='local', currentEmp='franco';
+
+// ── Verificar sesión al cargar ─────────────────────────────
+(async function checkSession(){
+  var { data: { session } } = await supa.auth.getSession();
+  if(session){
+    var { data: emp } = await supa.from('empleados').select('*').eq('user_id', session.user.id).single();
+    currentRole = emp ? emp.rol : 'empleado';
+    currentUser = emp
+      ? { name: emp.nombre, role: emp.rol, avatar: emp.avatar_emoji }
+      : { name: session.user.email, role: 'empleado', avatar: '👤' };
+    document.getElementById('login-screen').style.display='none';
+    applyRole();
+    goTo('dashboard');
+    await loadAllData();
+  }
+  // Setear fecha de hoy en egr-fecha
+  var ef = document.getElementById('egr-fecha');
+  if(ef) ef.value = new Date().toISOString().split('T')[0];
+})();
 
 var empData={
   franco:{name:'Franco',  comision:40, dia:{ing:'$0',serv:'0',sueldo:'$0',dias:'0',prom:'0',total:'$0'},mes:{ing:'$0',serv:'0',sueldo:'$0',dias:'0',prom:'0',total:'$0'},anio:{ing:'$0',serv:'0',sueldo:'$0',dias:'0',prom:'0',total:'$0'}},
@@ -2418,21 +2458,190 @@ if(bc){
 // PW TOGGLE
 function togglePw(){var i=document.getElementById('login-pass');i.type=i.type==='password'?'text':'password';}
 
-// LOGIN
-function doLogin(){
-  var user=document.getElementById('login-user').value.trim().toLowerCase();
-  var pass=document.getElementById('login-pass').value;
-  var err=document.getElementById('login-error');
-  if(!USERS[user]||USERS[user].pass!==pass){err.style.display='block';document.getElementById('login-pass').value='';return;}
+// LOGIN — Supabase Auth
+async function doLogin(){
+  var email = document.getElementById('login-user').value.trim();
+  var pass  = document.getElementById('login-pass').value;
+  var err   = document.getElementById('login-error');
+  var btn   = document.querySelector('#login-screen .btn-primary');
+  if(btn){ btn.textContent='Ingresando...'; btn.disabled=true; }
+
+  var { data, error } = await supa.auth.signInWithPassword({ email, password: pass });
+
+  if(error){
+    err.style.display='block';
+    err.textContent='Email o contraseña incorrectos';
+    document.getElementById('login-pass').value='';
+    if(btn){ btn.textContent='Ingresar →'; btn.disabled=false; }
+    return;
+  }
+
+  // Fetch empleado profile
+  var { data: emp } = await supa.from('empleados').select('*').eq('user_id', data.user.id).single();
+  currentRole = emp ? emp.rol : 'empleado';
+  currentUser = emp ? { name: emp.nombre, role: emp.rol, avatar: emp.avatar_emoji } : { name: data.user.email, role: 'empleado', avatar: '👤' };
+
   err.style.display='none';
-  currentUser=USERS[user];currentRole=currentUser.role;
   document.getElementById('login-screen').style.display='none';
-  applyRole(); goTo('dashboard');
+  applyRole();
+  goTo('dashboard');
+
+  // Load all data from Supabase
+  await loadAllData();
 }
-function doLogout(){
+
+async function doLogout(){
+  await supa.auth.signOut();
   document.getElementById('login-screen').style.display='flex';
-  document.getElementById('login-user').value='';document.getElementById('login-pass').value='';
+  document.getElementById('login-user').value='';
+  document.getElementById('login-pass').value='';
   document.getElementById('login-error').style.display='none';
+  currentUser=null; currentRole='empleado';
+}
+
+// LOAD ALL DATA FROM SUPABASE
+async function loadAllData(){
+  await Promise.all([
+    loadClientes(),
+    loadEmpleados(),
+    loadStock(),
+    loadServicios(),
+    loadCobros(),
+    loadEgresos(),
+    loadCursos(),
+  ]);
+}
+
+async function loadClientes(){
+  var { data } = await supa.from('clientes').select('*').order('nombre');
+  if(data) CLIENTES = data.map(function(c){ return {
+    id: c.id, nombre: c.nombre, tel: c.telefono || '', email: c.email || '',
+    barbero: c.barbero_preferido || '', cat: c.categoria || 'Nuevo',
+    visitas: c.visitas || 0, ultimaVisita: c.ultima_visita || '—',
+    birthday: c.cumpleanos || '', notas: c.notas || ''
+  };});
+  renderClientes();
+}
+
+async function loadEmpleados(){
+  var { data } = await supa.from('empleados').select('*').eq('activo', true).order('nombre');
+  if(data){
+    empData = {};
+    data.forEach(function(e){
+      var key = e.nombre.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,'');
+      empData[key] = { name: e.nombre, comision: e.comision,
+        dia:{ing:'$0',serv:'0',sueldo:'$0',dias:'0',prom:'0',total:'$0'},
+        mes:{ing:'$0',serv:'0',sueldo:'$0',dias:'0',prom:'0',total:'$0'},
+        anio:{ing:'$0',serv:'0',sueldo:'$0',dias:'0',prom:'0',total:'$0'}
+      };
+    });
+    // Re-render report employee tabs
+    var vt = document.getElementById('view-tabs');
+    if(vt){
+      var btns = '<button class="btn btn-primary btn-sm" onclick="setReportView(\'local\',this)">🏪 Salón MK</button>';
+      data.forEach(function(e){
+        var key = e.nombre.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\s+/g,'');
+        btns += '<button class="btn btn-outline btn-sm" onclick="setReportView(\''+key+'\',this)">'+e.nombre+'</button>';
+      });
+      vt.innerHTML = btns;
+    }
+  }
+}
+
+async function loadStock(){
+  var { data } = await supa.from('stock_items').select('*').order('nombre');
+  if(data){
+    BEBIDAS = data.filter(function(i){ return i.categoria==='beb'; }).map(function(i){ return {id:i.id, nombre:i.nombre, precio:i.precio, stock:i.stock}; });
+    PRODUCTOS_VENTA = data.filter(function(i){ return i.categoria==='prod'; }).map(function(i){ return {id:i.id, nombre:i.nombre, precio:i.precio, stock:i.stock}; });
+    renderStock();
+    renderCobroProductos();
+  }
+}
+
+async function loadServicios(){
+  var { data } = await supa.from('servicios').select('*').eq('activo', true);
+  if(data){
+    SERVICIOS = data.map(function(s){ return {
+      id:s.id, nombre:s.nombre, dur:s.duracion,
+      ef:s.ef, qr:s.qr, ef_m:s.ef_m, qr_m:s.qr_m,
+      historial: s.historial || []
+    };});
+    renderServiciosPage();
+    initCobroModal();
+  }
+}
+
+async function loadCobros(){
+  var today = new Date().toISOString().split('T')[0];
+  var { data } = await supa.from('cobros').select('*, cobro_items(*)').gte('fecha', today).order('created_at', {ascending:false});
+  if(data){
+    var totalIng=0, totalServ=0, ef=0, san=0, pp=0, propinas=0;
+    data.forEach(function(c){
+      totalIng += c.total || 0;
+      totalServ++;
+      propinas += c.propina || 0;
+      if(c.metodo_pago==='ef')  ef  += c.total;
+      if(c.metodo_pago==='san') san += c.total;
+      if(c.metodo_pago==='pp')  pp  += c.total;
+    });
+    var s=function(id,v){var e=document.getElementById(id);if(e)e.textContent=v;};
+    s('stat-ingresos','$'+fmtN(totalIng));
+    s('stat-servicios',totalServ+'');
+    s('stat-ef','$'+fmtN(ef));
+    s('stat-san','$'+fmtN(san));
+    s('stat-pp','$'+fmtN(pp));
+    s('stat-propinas','$'+fmtN(propinas));
+    // Render historial
+    renderHistorialCobros(data);
+  }
+}
+
+function renderHistorialCobros(cobros){
+  var tb = document.getElementById('historial-tbody');
+  if(!tb) return;
+  if(!cobros || cobros.length===0){
+    tb.innerHTML='<tr><td colspan="7" style="text-align:center;padding:24px;color:var(--text-light)">Sin cobros hoy</td></tr>';
+    return;
+  }
+  tb.innerHTML = cobros.map(function(c){
+    var metLabel={'ef':'Efectivo','san':'Santander','pp':'Personal Pay','mix':'Mixto'};
+    var hora = c.fecha ? new Date(c.fecha).toLocaleTimeString('es-AR',{hour:'2-digit',minute:'2-digit'}) : '—';
+    return '<tr>'+
+      '<td class="fw7">'+hora+'</td>'+
+      '<td>'+(c.cliente_nombre||'—')+'</td>'+
+      '<td>'+(c.empleado_id||'—')+'</td>'+
+      '<td>'+((c.cobro_items||[]).map(function(i){return i.nombre;}).join(', ')||'—')+'</td>'+
+      '<td><span class="badge b-blue">'+( metLabel[c.metodo_pago]||c.metodo_pago)+'</span></td>'+
+      '<td class="fw7 v-green">$'+fmtN(c.total)+'</td>'+
+      '<td></td>'+
+    '</tr>';
+  }).join('');
+}
+
+async function loadEgresos(){
+  var mes = new Date().toISOString().slice(0,7);
+  var { data } = await supa.from('egresos').select('*').gte('fecha', mes+'-01').order('fecha',{ascending:false});
+  if(data){
+    // Update egr comparativa data for current month
+    var mesKey = ['ene','feb','mar','abr','may','jun','jul','ago','sep','oct','nov','dic'][new Date().getMonth()];
+    var fijos={}, vars={};
+    data.forEach(function(e){
+      if(e.tipo==='fijo') fijos[e.concepto]=(fijos[e.concepto]||0)+e.monto;
+      else vars[e.concepto]=(vars[e.concepto]||0)+e.monto;
+    });
+    EGR_DATA[mesKey] = { label: EGR_DATA[mesKey]?EGR_DATA[mesKey].label:(mesKey+' 2026'), short: mesKey.charAt(0).toUpperCase()+mesKey.slice(1), fijos:fijos, vars:vars };
+    EGR_ACT = mesKey;
+    renderEgrComp();
+  }
+}
+
+async function loadCursos(){
+  var { data } = await supa.from('cursos').select('*').eq('activo',true);
+  if(data){
+    // Update ACADEMIA data if needed
+    // For now just render if function exists
+    if(typeof renderAcademia === 'function') renderAcademia();
+  }
 }
 function applyRole(){
   var isAdmin=currentRole==='admin';
@@ -3229,9 +3438,86 @@ function cobroRecalc() {
   }
 }
 
-function registrarCobro() {
+async function registrarCobro() {
+  // Recopilar datos del modal de cobro
+  var empleadoNombre = (document.getElementById('cobro-empleado')||{}).value || '';
+  var clienteNombre  = (document.getElementById('cobro-cliente')||{}).value  || '';
+  var metodoPago     = cobroPay || 'ef';
+  var propina        = parseInt((document.getElementById('cobro-propina')||{}).value)||0;
+
+  // Calcular items y total
+  var items = [];
+  var subtotal = 0;
+
+  // Servicios seleccionados
+  var serviciosSel = document.querySelectorAll('.cobro-serv-item.selected');
+  serviciosSel.forEach(function(el){
+    var idx  = parseInt(el.dataset.idx);
+    var tipo = el.dataset.tipo; // 'mk' o 'marcos'
+    var s    = SERVICIOS[idx];
+    if(!s) return;
+    var precio = (metodoPago==='ef') ? (tipo==='marcos'?s.ef_m:s.ef) : (tipo==='marcos'?s.qr_m:s.qr);
+    subtotal += precio;
+    items.push({ tipo:'servicio', item_id:s.id||null, nombre:s.nombre, precio, cantidad:1 });
+  });
+
+  // Bebidas seleccionadas
+  var bebsSel = document.querySelectorAll('.cobro-beb-item.selected');
+  bebsSel.forEach(function(el){
+    var idx = parseInt(el.dataset.idx);
+    var b = BEBIDAS[idx];
+    if(!b) return;
+    subtotal += b.precio;
+    items.push({ tipo:'bebida', item_id:b.id||null, nombre:b.nombre, precio:b.precio, cantidad:1 });
+  });
+
+  // Productos seleccionados
+  var prodsSel = document.querySelectorAll('.cobro-prod-item.selected');
+  prodsSel.forEach(function(el){
+    var idx = parseInt(el.dataset.idx);
+    var p = PRODUCTOS_VENTA[idx];
+    if(!p) return;
+    subtotal += p.precio;
+    items.push({ tipo:'producto', item_id:p.id||null, nombre:p.nombre, precio:p.precio, cantidad:1 });
+  });
+
+  var total = subtotal + propina;
+
+  // Guardar cobro en Supabase
+  var { data: cobro } = await supa.from('cobros').insert({
+    empleado_nombre: empleadoNombre,
+    cliente_nombre: clienteNombre || null,
+    metodo_pago: metodoPago,
+    subtotal, propina, total
+  }).select().single();
+
+  // Guardar items del cobro
+  if(cobro && items.length > 0){
+    await supa.from('cobro_items').insert(items.map(function(it){
+      return Object.assign({}, it, { cobro_id: cobro.id });
+    }));
+  }
+
   closeModal('modal-cobro');
-  showToast('Cobro registrado ✓');
+  showToast('Cobro de $'+fmtN(total)+' registrado ✓');
+
+  // Recargar estadísticas del día
+  await loadCobros();
+}
+
+// Guardar egreso desde modal
+async function saveEgreso(){
+  var tipo     = (document.getElementById('egr-tipo')||{}).value || 'fijo';
+  var concepto = (document.getElementById('egr-concepto')||{}).value || '';
+  var monto    = parseInt((document.getElementById('egr-monto')||{}).value)||0;
+  var metodo   = (document.getElementById('egr-metodo')||{}).value || 'ef';
+  var fecha    = (document.getElementById('egr-fecha')||{}).value || new Date().toISOString().split('T')[0];
+  var notas    = (document.getElementById('egr-notas')||{}).value || '';
+  if(!concepto || !monto){ showToast('Completá concepto y monto'); return; }
+  await supa.from('egresos').insert({ tipo, concepto, monto, metodo, fecha, notas:notas||null });
+  closeModal('modal-egreso');
+  showToast('Egreso registrado ✓');
+  await loadEgresos();
 }
 
 function set(id, val) { var el=document.getElementById(id); if(el) el.textContent=val; }
@@ -3334,12 +3620,14 @@ function renderStock() {
   set('stock-bajo', bajo);
 }
 
-function stockAjuste(tipo, idx, delta) {
-  if (tipo==='beb') {
-    BEBIDAS[idx].stock = Math.max(0, BEBIDAS[idx].stock + delta);
-  } else {
-    PRODUCTOS_VENTA[idx].stock = Math.max(0, PRODUCTOS_VENTA[idx].stock + delta);
+async function stockAjuste(tipo, idx, delta) {
+  var arr = tipo==='beb' ? BEBIDAS : PRODUCTOS_VENTA;
+  var item = arr[idx];
+  var newStock = Math.max(0, item.stock + delta);
+  if(item.id){
+    await supa.from('stock_items').update({ stock: newStock }).eq('id', item.id);
   }
+  arr[idx].stock = newStock;
   renderStock();
   showToast(delta > 0 ? 'Unidad agregada ✓' : 'Unidad quitada');
 }
@@ -3355,11 +3643,15 @@ function openEditStock(tipo, idx) {
   document.getElementById('edit-stock-precio').value  = item.precio;
   openModal('modal-edit-stock');
 }
-function saveEditStock() {
+async function saveEditStock() {
   var nombre = (document.getElementById('edit-stock-nombre').value||'').trim();
   var precio = parseInt(document.getElementById('edit-stock-precio').value)||0;
   if (!nombre) { showToast('Ingresá un nombre'); return; }
   var arr = editStockTipo==='beb' ? BEBIDAS : PRODUCTOS_VENTA;
+  var item = arr[editStockIdx];
+  if(item.id){
+    await supa.from('stock_items').update({ nombre, precio }).eq('id', item.id);
+  }
   arr[editStockIdx].nombre = nombre;
   arr[editStockIdx].precio = precio;
   closeModal('modal-edit-stock');
@@ -3369,13 +3661,15 @@ function saveEditStock() {
 }
 
 // ── NUEVO STOCK ──
-function saveNuevoStock() {
+async function saveNuevoStock() {
   var nombre = (document.getElementById('nuevo-stock-nombre').value||'').trim();
   var cat    = document.getElementById('nuevo-stock-cat').value;
   var precio = parseInt(document.getElementById('nuevo-stock-precio').value)||0;
   var qty    = parseInt(document.getElementById('nuevo-stock-qty').value)||1;
+  var min    = parseInt(document.getElementById('nuevo-stock-min').value)||2;
   if (!nombre) { showToast('Ingresá un nombre'); return; }
-  var item = {nombre:nombre, precio:precio, stock:qty};
+  var { data } = await supa.from('stock_items').insert({ nombre, categoria:cat, precio, stock:qty, stock_minimo:min }).select().single();
+  var item = data ? { id:data.id, nombre, precio, stock:qty } : { nombre, precio, stock:qty };
   if (cat==='beb') { BEBIDAS.push(item); } else { PRODUCTOS_VENTA.push(item); }
   closeModal('modal-producto');
   ['nuevo-stock-nombre','nuevo-stock-precio','nuevo-stock-qty','nuevo-stock-min'].forEach(function(id){
@@ -3415,21 +3709,19 @@ function openEditServicio(idx) {
   }
   openModal('modal-edit-servicio');
 }
-function saveEditServicio() {
+async function saveEditServicio() {
   if (editServicioIdx < 0) return;
   var s    = SERVICIOS[editServicioIdx];
   var nuEf  = parseInt(document.getElementById('edit-serv-ef').value)||0;
   var nuQr  = parseInt(document.getElementById('edit-serv-qr').value)||0;
   var nuEfM = parseInt(document.getElementById('edit-serv-ef-m').value)||0;
   var nuQrM = parseInt(document.getElementById('edit-serv-qr-m').value)||0;
-  // Guardar precio anterior en historial antes de pisar
   if (!s.historial) s.historial = [];
   s.historial.push({ef:s.ef, qr:s.qr, ef_m:s.ef_m, qr_m:s.qr_m, desde: new Date().toISOString()});
-  // Actualizar precio actual
-  s.ef   = nuEf;
-  s.qr   = nuQr;
-  s.ef_m = nuEfM;
-  s.qr_m = nuQrM;
+  s.ef=nuEf; s.qr=nuQr; s.ef_m=nuEfM; s.qr_m=nuQrM;
+  if(s.id){
+    await supa.from('servicios').update({ ef:nuEf, qr:nuQr, ef_m:nuEfM, qr_m:nuQrM, historial:s.historial }).eq('id', s.id);
+  }
   closeModal('modal-edit-servicio');
   renderServiciosPage();
   showToast('Precios de "'+s.nombre+'" actualizados ✓ (historial guardado)');
@@ -3752,16 +4044,23 @@ function setClienteView(v,el){
   renderClientes();
 }
 
-function saveCliente(){
+async function saveCliente(){
   var nombre=((document.getElementById('cl-nombre')||{}).value||'').trim();
   if(!nombre){showToast('Ingresá el nombre');return;}
   var tel=((document.getElementById('cl-tel')||{}).value||'').trim();
   var email=((document.getElementById('cl-email')||{}).value||'').trim();
   var birthday=((document.getElementById('cl-birthday')||{}).value||'');
   var barbero=((document.getElementById('cl-barbero')||{}).value||'');
-  var cat=((document.getElementById('cl-cat')||{}).value||'nuevo');
+  var cat=((document.getElementById('cl-cat')||{}).value||'Nuevo');
   var notas=((document.getElementById('cl-notas')||{}).value||'').trim();
-  CLIENTES.push({id:Date.now(),nombre:nombre,tel:tel||'—',email:email,birthday:birthday,barbero:barbero,cat:cat,visitas:0,ultimaVisita:'Hoy',notas:notas});
+  var { data } = await supa.from('clientes').insert({
+    nombre, telefono:tel, email:email||null,
+    cumpleanos:birthday||null, barbero_preferido:barbero||null,
+    categoria: cat.charAt(0).toUpperCase()+cat.slice(1).toLowerCase() || 'Nuevo',
+    visitas:0, notas:notas||null
+  }).select().single();
+  var newC = { id: data?data.id:Date.now(), nombre, tel:tel||'—', email, birthday, barbero, cat, visitas:0, ultimaVisita:'Hoy', notas };
+  CLIENTES.push(newC);
   closeModal('modal-cliente');
   ['cl-nombre','cl-tel','cl-email','cl-birthday','cl-notas'].forEach(function(id){var e=document.getElementById(id);if(e)e.value='';});
   renderClientes();
