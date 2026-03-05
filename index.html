@@ -470,8 +470,12 @@ tr:hover td{background:var(--blue-faint);}
 [data-theme="dark"] .topbar-icon-btn:last-child:hover{background:#2a1818;border-color:#7f2020;color:var(--red);}
 [data-theme="dark"] .stat-card{background:#1E2535;}
 [data-theme="dark"] .stat-card.featured{background:var(--blue);}
-[data-theme="dark"] .chart-card,.table-card,.sum-box,.cfg-section{background:#1E2535 !important;}
-[data-theme="dark"] .emp-card,.cliente-card{background:#1E2535;}
+[data-theme="dark"] .chart-card{background:#1E2535 !important;}
+[data-theme="dark"] .table-card{background:#1E2535 !important;}
+[data-theme="dark"] .sum-box{background:#1E2535 !important;}
+[data-theme="dark"] .cfg-section{background:#1E2535 !important;}
+[data-theme="dark"] .emp-card{background:#1E2535;}
+[data-theme="dark"] .cliente-card{background:#1E2535;}
 [data-theme="dark"] .modal{background:#1E2535;}
 [data-theme="dark"] .modal-overlay{background:rgba(0,0,0,.65);}
 [data-theme="dark"] input,[data-theme="dark"] select,[data-theme="dark"] textarea{background:#141926 !important;border-color:var(--border) !important;color:var(--text) !important;}
@@ -484,13 +488,15 @@ tr:hover td{background:var(--blue-faint);}
 [data-theme="dark"] .btn-outline{background:transparent;border-color:var(--border);color:var(--text);}
 [data-theme="dark"] .btn-outline:hover{background:#232d44;}
 [data-theme="dark"] .view-toggle{background:#141926;border-color:var(--border);}
-[data-theme="dark"] .view-toggle-btn.active{background:#232d44;}
+[data-theme="dark"] .view-toggle-btn{color:var(--text-light);}
+[data-theme="dark"] .view-toggle-btn.active{background:#232d44;color:var(--text);}
 [data-theme="dark"] .tab-pill{background:transparent;border-color:var(--border);color:var(--text-light);}
 [data-theme="dark"] .tab-pill.active{background:var(--blue);border-color:var(--blue);color:#fff;}
 [data-theme="dark"] .tabs-pill{background:#141926;border-color:var(--border);}
 [data-theme="dark"] .cfg-row{border-bottom-color:var(--border);}
 [data-theme="dark"] .cfg-input{background:#141926;border-color:var(--border);color:var(--text);}
 [data-theme="dark"] .cfg-tabs{background:#141926;border-color:var(--border);}
+[data-theme="dark"] .cfg-tab{color:var(--text-light);}
 [data-theme="dark"] .cfg-tab.active{background:#1E2535;color:var(--text);}
 [data-theme="dark"] .cobro-sum{background:#141926;border-color:var(--border);}
 [data-theme="dark"] .bar-chart .bar-item .bar-fill{opacity:.85;}
@@ -503,8 +509,48 @@ tr:hover td{background:var(--blue-faint);}
 [data-theme="dark"] .tag-vip{background:rgba(251,191,36,.12);color:#fbbf24;}
 [data-theme="dark"] .tag-regular{background:#162038;color:#60a5fa;}
 [data-theme="dark"] .tag-nuevo{background:#0C2318;color:#34d399;}
+/* List table - full contrast fix */
+[data-theme="dark"] .list-view-table th{color:var(--text-light);}
+[data-theme="dark"] .list-view-table td{color:var(--text);border-bottom-color:var(--border);}
+[data-theme="dark"] .list-view-table tr:last-child td{border-bottom:none;}
 [data-theme="dark"] .list-view-table tr:hover td{background:#232d44;}
-[data-theme="dark"] table thead th{background:#141926 !important;}
+/* General table */
+[data-theme="dark"] table thead th{background:#141926 !important;color:var(--text-light) !important;}
+[data-theme="dark"] table tbody td{color:var(--text);}
+[data-theme="dark"] table tbody tr:hover td{background:#232d44;}
+/* Emp card */
+[data-theme="dark"] .emp-card-name{color:var(--text);}
+[data-theme="dark"] .emp-card-role{color:var(--text-light);}
+[data-theme="dark"] .emp-big-avatar{background:var(--blue-pale);}
+[data-theme="dark"] .emp-stat-row{border-bottom-color:var(--border);}
+[data-theme="dark"] .emp-stat-key{color:var(--text-light);}
+[data-theme="dark"] .emp-stat-val{color:var(--text);}
+/* Cliente card */
+[data-theme="dark"] .cliente-name{color:var(--text);}
+[data-theme="dark"] .cliente-phone{color:var(--text-light);}
+[data-theme="dark"] .cliente-stat{border-bottom-color:var(--border);}
+[data-theme="dark"] .cliente-stat-key{color:var(--text-light);}
+[data-theme="dark"] .cliente-stat-val{color:var(--text);}
+/* Page headers */
+[data-theme="dark"] .page-title{color:var(--text);}
+[data-theme="dark"] .page-sub{color:var(--text-light);}
+[data-theme="dark"] .table-title{color:var(--text);}
+[data-theme="dark"] .nav-group-label{color:var(--text-light);}
+/* Chart */
+[data-theme="dark"] .chart-title{color:var(--text);}
+[data-theme="dark"] .chart-meta{color:var(--text-light);}
+[data-theme="dark"] .chart-select{background:#141926;border-color:var(--border);color:var(--text);}
+/* Sum box */
+[data-theme="dark"] .sum-row{border-bottom-color:var(--border);}
+/* Search */
+[data-theme="dark"] .search-sm{background:#141926;border-color:var(--border);}
+[data-theme="dark"] .search-sm input{background:transparent !important;color:var(--text) !important;border:none !important;}
+[data-theme="dark"] .search-sm input::placeholder{color:var(--text-light);}
+/* Action buttons */
+[data-theme="dark"] .action-btn{background:var(--blue-pale);border-color:var(--border);}
+[data-theme="dark"] .action-btn.ab-blue{background:var(--blue-pale);color:#60a5fa;}
+[data-theme="dark"] .action-btn.ab-green{background:#0C2318;color:#34d399;}
+/* Misc */
 [data-theme="dark"] .access-denied{background:#1E2535;}
 [data-theme="dark"] .notif-dot{background:#f87171;}
 [data-theme="dark"] ::-webkit-scrollbar-track{background:#141926;}
