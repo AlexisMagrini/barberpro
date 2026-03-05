@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BarberPro — Sistema de Gestión</title>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<style>
+  :root {
+    --blue:#1B3A6B;--blue-mid:#2A4F8F;--blue-light:#3A6CC8;
+    --blue-pale:#E8EEF8;--blue-faint:#F2F5FC;--accent:#4C7EF0;--accent2:#2D5DC8;
+    --white:#FFFFFF;--off-white:#F7F9FF;--text:#1A2540;--text-mid:#3D4F6E;--text-light:#7A8BAA;
+    --border:#D6DFF0;--border-mid:#C0CEEA;--green:#1E8C5A;--green-bg:#E6F4EE;
+    --red:#C0392B;--red-bg:#FDECEA;--amber:#B8860B;--amber-bg:#FEF7E0;
+    --radius:12px;--sidebar-w:240px;
+    --shadow:0 4px 24px rgba(27,58,107,.10);--shadow-sm:0 2px 8px rgba(27,58,107,.08);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Outfit',sans-serif;background:var(--off-white);color:var(--text);min-height:100vh;display:flex;}
+
+  /* LOGIN */
+  #login-screen{position:fixed;inset:0;z-index:999;background:var(--blue);display:flex;align-items:center;justify-content:center;}
+  .login-box{background:var(--white);border-radius:20px;padding:38px 34px;width:100%;max-width:400px;box-shadow:0 30px 80px rgba(0,0,0,.3);animation:slideUp .3s ease;}
+  .login-logo{display:flex;align-items:center;gap:12px;margin-bottom:28px;}
+  .login-logo-icon{width:44px;height:44px;background:var(--blue);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:21px;color:white;}
+  .login-logo .brand{font-family:'Libre Baskerville',serif;font-size:21px;color:var(--blue);font-weight:700;}
+  .login-logo .sub{font-size:11px;color:var(--text-light);text-transform:uppercase;letter-spacing:2px;}
+  .login-title{font-family:'Libre Baskerville',serif;font-size:15px;color:var(--text);margin-bottom:5px;}
+  .login-sub{font-size:13px;color:var(--text-light);margin-bottom:22px;}
+  .role-selector{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px;}
+  .role-card{border:2px solid var(--border);border-radius:10px;padding:13px 10px;text-align:center;cursor:pointer;transition:all .2s;}
+  .role-card:hover{border-color:var(--blue-light);}
+  .role-card.selected{border-color:var(--blue);background:var(--blue-faint);}
+  .role-card .role-icon{font-size:22px;margin-bottom:5px;}
+  .role-card .role-name{font-size:13px;font-weight:700;color:var(--text);margin-bottom:2px;}
+  .role-card.selected .role-name{color:var(--blue);}
+  .role-card .role-desc{font-size:11px;color:var(--text-light);}
+
+  /* SIDEBAR */
+  #sidebar{width:var(--sidebar-w);background:var(--blue);display:flex;flex-direction:column;position:fixed;top:0;left:0;height:100vh;z-index:100;transition:transform .3s cubic-bezier(.4,0,.2,1);overflow-y:auto;}
+  .sidebar-logo{padding:20px 20px 16px;border-bottom:1px solid rgba(255,255,255,.1);}
+  .logo-mark{display:flex;align-items:center;gap:10px;}
+  .logo-icon{width:33px;height:33px;background:rgba(255,255,255,.15);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:16px;}
+  .logo-text .brand{font-family:'Libre Baskerville',serif;font-size:16px;color:#fff;letter-spacing:.5px;}
+  .logo-text .sub{font-size:10px;color:rgba(255,255,255,.4);letter-spacing:2px;text-transform:uppercase;margin-top:1px;}
+  .sidebar-role{margin:10px 14px 0;background:rgba(255,255,255,.1);border-radius:8px;padding:8px 11px;display:flex;align-items:center;gap:8px;}
+  .sidebar-role .r-icon{font-size:15px;}
+  .sidebar-role .r-name{font-size:12px;color:#fff;font-weight:600;}
+  .sidebar-role .r-tag{font-size:10px;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:1px;}
+  .nav-section{padding:15px 0 5px 20px;font-size:9px;letter-spacing:2.5px;color:rgba(255,255,255,.3);text-transform:uppercase;}
+  .nav-item{display:flex;align-items:center;gap:11px;padding:10px 20px;cursor:pointer;font-size:13px;color:rgba(255,255,255,.65);transition:all .2s;position:relative;margin:1px 0;}
+  .nav-item:hover{color:#fff;background:rgba(255,255,255,.08);}
+  .nav-item.active{color:#fff;background:rgba(255,255,255,.14);font-weight:600;}
+  .nav-item.active::before{content:'';position:absolute;left:0;top:50%;transform:translateY(-50%);height:60%;width:3px;background:rgba(255,255,255,.8);border-radius:0 3px 3px 0;}
+  .nav-icon{font-size:14px;width:20px;text-align:center;opacity:.85;}
+  .nav-badge{margin-left:auto;background:rgba(255,255,255,.2);color:#fff;font-size:10px;font-weight:600;padding:2px 7px;border-radius:20px;}
+  .sidebar-bottom{margin-top:auto;padding:13px 18px;border-top:1px solid rgba(255,255,255,.1);font-size:11px;color:rgba(255,255,255,.3);display:flex;align-items:center;justify-content:space-between;}
+  .logout-btn{background:rgba(255,255,255,.1);border:none;color:rgba(255,255,255,.6);padding:4px 10px;border-radius:6px;font-size:11px;cursor:pointer;font-family:'Outfit',sans-serif;transition:all .2s;}
+  .logout-btn:hover{background:rgba(255,255,255,.2);color:#fff;}
+
+  /* MAIN */
+  #main{margin-left:var(--sidebar-w);flex:1;min-height:100vh;background:var(--off-white);}
+  .topbar{height:58px;background:var(--white);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 24px;gap:11px;position:sticky;top:0;z-index:50;box-shadow:var(--shadow-sm);}
+  .topbar h1{font-family:'Libre Baskerville',serif;font-size:15px;color:var(--blue);flex:1;font-weight:700;}
+  .topbar-date{font-size:12px;color:var(--text-light);}
+  .topbar-role-badge{padding:4px 11px;border-radius:20px;font-size:11px;font-weight:700;background:var(--blue-pale);color:var(--blue);}
+  .topbar-role-badge.emp{background:var(--green-bg);color:var(--green);}
+  .btn-menu{display:none;background:none;border:none;color:var(--blue);font-size:22px;cursor:pointer;}
+  .content{padding:22px 24px;}
+
+  /* STAT CARDS */
+  .stat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:12px;margin-bottom:22px;}
+  .stat-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:17px;box-shadow:var(--shadow-sm);position:relative;overflow:hidden;transition:box-shadow .2s;}
+  .stat-card:hover{box-shadow:var(--shadow);}
+  .stat-card::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--accent);}
+  .stat-card.card-green::after{background:var(--green);}
+  .stat-card.card-red::after{background:var(--red);}
+  .stat-card.card-blue::after{background:var(--blue-light);}
+  .stat-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;margin-bottom:10px;}
+  .stat-icon.blue-i{background:var(--blue-pale);}
+  .stat-icon.green-i{background:var(--green-bg);}
+  .stat-icon.red-i{background:var(--red-bg);}
+  .stat-label{font-size:10px;color:var(--text-light);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;}
+  .stat-value{font-family:'Libre Baskerville',serif;font-size:22px;color:var(--text);line-height:1;}
+  .stat-value.v-blue{color:var(--blue);}
+  .stat-value.v-green{color:var(--green);}
+  .stat-value.v-red{color:var(--red);}
+  .stat-sub{font-size:11px;color:var(--text-light);margin-top:3px;}
+  .stat-sub.up{color:var(--green);}
+
+  /* SECTION TITLE */
+  .section-title{font-family:'Libre Baskerville',serif;font-size:14px;color:var(--blue);margin-bottom:12px;display:flex;align-items:center;gap:10px;}
+  .section-title::after{content:'';flex:1;height:1px;background:var(--border);}
+
+  /* TABLE */
+  .table-wrap{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:18px;box-shadow:var(--shadow-sm);}
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  th{background:var(--blue-faint);color:var(--text-mid);font-weight:600;text-align:left;padding:10px 14px;font-size:11px;letter-spacing:.7px;text-transform:uppercase;border-bottom:1px solid var(--border);}
+  td{padding:10px 14px;border-top:1px solid var(--border);color:var(--text-mid);font-size:13px;}
+  tr:hover td{background:var(--blue-faint);}
+
+  /* BADGES */
+  .badge{display:inline-block;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:600;}
+  .b-green{background:var(--green-bg);color:var(--green);}
+  .b-blue{background:var(--blue-pale);color:var(--blue-mid);}
+  .b-red{background:var(--red-bg);color:var(--red);}
+  .b-amb{background:var(--amber-bg);color:var(--amber);}
+  .b-gray{background:#F0F2F5;color:#7A8BAA;}
+
+  /* BUTTONS */
+  .btn{padding:8px 16px;border-radius:8px;border:none;cursor:pointer;font-family:'Outfit',sans-serif;font-size:13px;font-weight:600;transition:all .2s;display:inline-flex;align-items:center;gap:6px;}
+  .btn-primary{background:var(--blue);color:#fff;}
+  .btn-primary:hover{background:var(--blue-mid);}
+  .btn-outline{background:transparent;border:1.5px solid var(--border-mid);color:var(--text-mid);}
+  .btn-outline:hover{border-color:var(--blue);color:var(--blue);}
+  .btn-ghost{background:var(--blue-faint);color:var(--blue);}
+  .btn-ghost:hover{background:var(--blue-pale);}
+  .btn-sm{padding:6px 12px;font-size:12px;}
+
+  /* FORMS */
+  .form-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(185px,1fr));gap:11px;margin-bottom:11px;}
+  .form-group{display:flex;flex-direction:column;gap:5px;}
+  .form-group label{font-size:11px;color:var(--text-light);text-transform:uppercase;letter-spacing:.8px;font-weight:600;}
+  .form-group input,.form-group select,.form-group textarea{background:var(--off-white);border:1.5px solid var(--border);border-radius:8px;color:var(--text);padding:9px 11px;font-size:13px;font-family:'Outfit',sans-serif;outline:none;transition:border-color .2s;}
+  .form-group input:focus,.form-group select:focus{border-color:var(--accent);background:#fff;}
+
+  /* MODAL */
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(10,20,45,.45);backdrop-filter:blur(3px);z-index:200;align-items:center;justify-content:center;padding:20px;}
+  .modal-overlay.open{display:flex;}
+  .modal{background:var(--white);border:1px solid var(--border);border-radius:16px;width:100%;max-width:500px;padding:24px;position:relative;box-shadow:0 20px 60px rgba(27,58,107,.2);animation:slideUp .25s ease;}
+  @keyframes slideUp{from{transform:translateY(16px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+  .modal-title{font-family:'Libre Baskerville',serif;font-size:16px;color:var(--blue);margin-bottom:17px;padding-right:28px;}
+  .modal-close{position:absolute;top:14px;right:14px;background:var(--blue-faint);border:none;color:var(--text-mid);cursor:pointer;font-size:13px;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;}
+  .modal-close:hover{background:var(--blue-pale);}
+
+  /* CALENDAR */
+  .calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
+  .cal-header{text-align:center;font-size:10px;color:var(--text-light);padding:5px 0;font-weight:600;letter-spacing:1px;}
+  .cal-day{background:var(--off-white);border:1px solid var(--border);border-radius:7px;padding:6px 4px;text-align:center;cursor:pointer;min-height:50px;transition:all .18s;position:relative;}
+  .cal-day:hover{border-color:var(--accent);background:var(--blue-faint);}
+  .cal-day.today{background:var(--blue);border-color:var(--blue);}
+  .cal-day.today .cal-day-num{color:#fff;font-weight:700;}
+  .cal-day.has-turns::after{content:'';position:absolute;bottom:4px;left:50%;transform:translateX(-50%);width:5px;height:5px;background:var(--accent);border-radius:50%;}
+  .cal-day.today.has-turns::after{background:rgba(255,255,255,.7);}
+  .cal-day-num{font-size:12px;color:var(--text-mid);}
+
+  /* TABS */
+  .tabs{display:flex;gap:3px;background:var(--blue-faint);padding:4px;border-radius:10px;border:1px solid var(--border);width:fit-content;}
+  .tab{padding:7px 15px;border-radius:7px;cursor:pointer;font-size:13px;color:var(--text-light);font-weight:500;transition:all .18s;}
+  .tab.active{background:var(--blue);color:#fff;font-weight:600;box-shadow:0 2px 8px rgba(27,58,107,.2);}
+
+  /* EMP CARDS */
+  .emp-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin-bottom:18px;}
+  .emp-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:17px;transition:all .2s;box-shadow:var(--shadow-sm);}
+  .emp-card:hover{box-shadow:var(--shadow);border-color:var(--border-mid);}
+  .emp-avatar{width:44px;height:44px;border-radius:50%;background:var(--blue-pale);border:2px solid var(--border-mid);display:flex;align-items:center;justify-content:center;font-size:18px;margin-bottom:10px;}
+  .emp-name{font-family:'Libre Baskerville',serif;font-size:14px;color:var(--blue);margin-bottom:2px;}
+  .emp-role{font-size:11px;color:var(--text-light);text-transform:uppercase;letter-spacing:1px;margin-bottom:11px;}
+  .emp-stat-row{display:flex;justify-content:space-between;margin-bottom:6px;}
+  .emp-stat-label{font-size:12px;color:var(--text-light);}
+  .emp-stat-val{font-size:13px;color:var(--text-mid);font-weight:600;}
+  .emp-stat-val.hi{color:var(--blue);}
+
+  /* COMPARE */
+  .compare-bar{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+  .compare-label{font-size:12px;color:var(--text-light);width:100px;}
+  .compare-track{flex:1;height:6px;background:var(--blue-faint);border-radius:3px;overflow:hidden;border:1px solid var(--border);}
+  .compare-fill{height:100%;border-radius:3px;background:var(--blue);}
+  .compare-fill.prev{background:var(--border-mid);}
+  .compare-val{font-size:12px;color:var(--text-mid);width:72px;text-align:right;font-weight:600;}
+
+  /* REPORT CARD */
+  .report-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:17px;margin-bottom:13px;box-shadow:var(--shadow-sm);}
+  .divider{height:1px;background:var(--border);margin:11px 0;}
+  .two-col{display:grid;grid-template-columns:1fr 1fr;gap:15px;}
+
+  /* FILTER BAR */
+  .filter-bar{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:13px 16px;display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:18px;box-shadow:var(--shadow-sm);}
+  .filter-input{background:var(--off-white);border:1.5px solid var(--border);border-radius:8px;color:var(--text);padding:7px 11px;font-size:13px;font-family:'Outfit',sans-serif;outline:none;transition:border-color .2s;}
+  .filter-input:focus{border-color:var(--accent);background:#fff;}
+  .emp-tab{padding:5px 12px;border-radius:20px;border:1.5px solid var(--border);background:transparent;font-family:'Outfit',sans-serif;font-size:12px;font-weight:600;color:var(--text-light);cursor:pointer;transition:all .18s;}
+  .emp-tab:hover{border-color:var(--blue);color:var(--blue);}
+  .emp-tab.active{background:var(--blue);color:#fff;border-color:var(--blue);}
+
+  /* STOCK */
+  .stock-bar{height:5px;background:var(--blue-faint);border-radius:3px;margin-top:5px;overflow:hidden;}
+  .stock-fill{height:100%;border-radius:3px;}
+  .stock-ok{background:var(--green);}
+  .stock-low{background:var(--amber);}
+  .stock-crit{background:var(--red);}
+
+  /* PAY SPLIT */
+  .pay-split{display:flex;gap:7px;margin-top:7px;flex-wrap:wrap;}
+  .pay-method{flex:1;min-width:80px;background:var(--off-white);border:1.5px solid var(--border);border-radius:8px;padding:8px;text-align:center;cursor:pointer;transition:all .18s;font-size:12px;color:var(--text-light);font-weight:500;}
+  .pay-method:hover{border-color:var(--accent);color:var(--blue);}
+  .pay-method.selected{border-color:var(--blue);color:var(--blue);background:var(--blue-pale);font-weight:600;}
+
+  /* SUM ROW */
+  .pdf-section{background:var(--blue-faint);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:14px;}
+  .sum-row{display:flex;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);font-size:13px;}
+  .sum-row:last-child{border:none;font-weight:700;color:var(--blue);font-size:14px;}
+  .sum-label{color:var(--text-mid);}
+  .sum-val{font-weight:600;}
+
+  /* ACCESS DENIED */
+  .access-denied{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:55vh;text-align:center;}
+  .access-denied .icon{font-size:46px;margin-bottom:14px;}
+  .access-denied h2{font-family:'Libre Baskerville',serif;color:var(--blue);margin-bottom:7px;}
+  .access-denied p{color:var(--text-light);font-size:14px;}
+
+  /* HELPERS */
+  .flex-row{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
+  .ml-auto{margin-left:auto;}
+  .page{display:none;}
+  .page.active{display:block;}
+  .v-blue{color:var(--blue);}
+  .v-green{color:var(--green);}
+  .v-red{color:var(--red);}
+  .fw6{font-weight:600;}
+
+  #overlay{display:none;position:fixed;inset:0;background:rgba(10,20,45,.4);z-index:90;backdrop-filter:blur(2px);}
+  #overlay.open{display:block;}
+
+  @media(max-width:768px){
+    #sidebar{transform:translateX(-100%);}
+    #sidebar.open{transform:translateX(0);}
+    #main{margin-left:0;}
+    .btn-menu{display:block;}
+    .two-col{grid-template-columns:1fr;}
+    .stat-grid{grid-template-columns:1fr 1fr;}
+    .content{padding:14px;}
+    .topbar{padding:0 13px;}
+    .topbar-date{display:none;}
+  }
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">
+      <div class="login-logo-icon">✂</div>
+      <div>
+        <div class="brand">BarberPro</div>
+        <div class="sub">Sistema de Gestión</div>
+      </div>
+    </div>
+    <div class="login-title">Bienvenido</div>
+    <div class="login-sub">Seleccioná tu rol para continuar</div>
+    <div class="role-selector">
+      <div class="role-card selected" id="role-admin" onclick="selectRole('admin')">
+        <div class="role-icon">👑</div>
+        <div class="role-name">Administrador</div>
+        <div class="role-desc">Acceso completo</div>
+      </div>
+      <div class="role-card" id="role-empleado" onclick="selectRole('empleado')">
+        <div class="role-icon">✂️</div>
+        <div class="role-name">Empleado</div>
+        <div class="role-desc">Sin reportes</div>
+      </div>
+    </div>
+    <div class="form-group" style="margin-bottom:11px">
+      <label>Usuario</label>
+      <input type="text" id="login-user" placeholder="Tu nombre de usuario" value="admin">
+    </div>
+    <div class="form-group" style="margin-bottom:18px">
+      <label>Contraseña</label>
+      <input type="password" id="login-pass" placeholder="••••••••" value="1234">
+    </div>
+    <button class="btn btn-primary" style="width:100%;padding:12px;justify-content:center" onclick="doLogin()">Ingresar al sistema →</button>
+    <div style="margin-top:12px;font-size:11px;color:var(--text-light);text-align:center">Demo: cualquier usuario y contraseña funciona</div>
+  </div>
+</div>
+
+<!-- SIDEBAR -->
+<nav id="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-mark">
+      <div class="logo-icon">✂</div>
+      <div class="logo-text">
+        <div class="brand">BarberPro</div>
+        <div class="sub">Gestión</div>
+      </div>
+    </div>
+  </div>
+  <div class="sidebar-role">
+    <div class="r-icon" id="sb-role-icon">👑</div>
+    <div>
+      <div class="r-name" id="sb-role-name">Administrador</div>
+      <div class="r-tag" id="sb-role-tag">Acceso completo</div>
+    </div>
+  </div>
+  <div class="nav-section">Principal</div>
+  <div class="nav-item active" onclick="goTo('dashboard')"><span class="nav-icon">📊</span> Dashboard</div>
+  <div class="nav-item" onclick="goTo('agenda')"><span class="nav-icon">📅</span> Agenda <span class="nav-badge">3</span></div>
+  <div class="nav-item" onclick="goTo('cobros')"><span class="nav-icon">💰</span> Cobros</div>
+  <div class="nav-section">Gestión</div>
+  <div class="nav-item" onclick="goTo('empleados')"><span class="nav-icon">👤</span> Empleados</div>
+  <div class="nav-item" onclick="goTo('servicios')"><span class="nav-icon">✂️</span> Servicios</div>
+  <div class="nav-item" onclick="goTo('stock')"><span class="nav-icon">📦</span> Stock</div>
+  <div class="nav-item" onclick="goTo('egresos')"><span class="nav-icon">📤</span> Egresos</div>
+  <div class="nav-section admin-only">Reportes</div>
+  <div class="nav-item admin-only" onclick="goTo('reportes')"><span class="nav-icon">📋</span> Reportes</div>
+  <div class="sidebar-bottom">
+    <span>v1.0</span>
+    <button class="logout-btn" onclick="doLogout()">Cerrar sesión</button>
+  </div>
+</nav>
+
+<div id="overlay" onclick="closeSidebar()"></div>
+
+<!-- MAIN -->
+<div id="main">
+  <div class="topbar">
+    <button class="btn-menu" onclick="toggleSidebar()">☰</button>
+    <h1 id="page-title">Dashboard</h1>
+    <span class="topbar-date" id="today-date"></span>
+    <span class="topbar-role-badge" id="topbar-role">👑 Admin</span>
+    <button class="btn btn-primary btn-sm" onclick="openModal('modal-cobro')">+ Cobro</button>
+  </div>
+  <div class="content">
+
+    <!-- DASHBOARD -->
+    <div class="page active" id="page-dashboard">
+      <div class="stat-grid">
+        <div class="stat-card"><div class="stat-icon blue-i">💰</div><div class="stat-label">Ingresos Hoy</div><div class="stat-value v-blue">$48.500</div><div class="stat-sub up">↑ 12% vs ayer</div></div>
+        <div class="stat-card card-red"><div class="stat-icon red-i">📤</div><div class="stat-label">Egresos Hoy</div><div class="stat-value v-red">$8.200</div><div class="stat-sub">2 gastos</div></div>
+        <div class="stat-card card-green"><div class="stat-icon green-i">📈</div><div class="stat-label">Ganancia Neta</div><div class="stat-value v-green">$40.300</div><div class="stat-sub up">↑ 18% vs ayer</div></div>
+        <div class="stat-card card-blue"><div class="stat-icon blue-i">📅</div><div class="stat-label">Turnos Hoy</div><div class="stat-value v-blue">8</div><div class="stat-sub">3 pendientes</div></div>
+      </div>
+      <div class="section-title">Empleados — Resumen de Hoy</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Empleado</th><th>Rol</th><th>Servicios</th><th>Total Facturado</th><th>Propinas</th><th>Sueldo (40%)</th></tr></thead>
+          <tbody>
+            <tr><td class="fw6">Marcos Rodríguez</td><td><span class="badge b-blue">Senior</span></td><td>3</td><td>$18.000</td><td class="v-blue fw6">$1.500</td><td class="v-blue fw6">$7.200</td></tr>
+            <tr><td class="fw6">Lucas Pereyra</td><td><span class="badge b-gray">Barbero</span></td><td>2</td><td>$14.500</td><td class="v-blue fw6">$500</td><td class="v-blue fw6">$5.800</td></tr>
+            <tr><td class="fw6">Tomás García</td><td><span class="badge b-gray">Barbero</span></td><td>3</td><td>$16.000</td><td class="v-blue fw6">$1.000</td><td class="v-blue fw6">$6.400</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="section-title">Próximos Turnos</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Hora</th><th>Cliente</th><th>Servicio</th><th>Empleado</th><th>Estado</th><th></th></tr></thead>
+          <tbody>
+            <tr><td>10:00</td><td>Juan M.</td><td>Corte + Barba</td><td>Marcos R.</td><td><span class="badge b-green">Confirmado</span></td><td><button class="btn btn-primary btn-sm" onclick="openModal('modal-cobro')">Cobrar</button></td></tr>
+            <tr><td>11:30</td><td>Pedro L.</td><td>Corte</td><td>Lucas P.</td><td><span class="badge b-amb">Pendiente</span></td><td><button class="btn btn-primary btn-sm" onclick="openModal('modal-cobro')">Cobrar</button></td></tr>
+            <tr><td>13:00</td><td>Carlos V.</td><td>Barba + Fade</td><td>Tomás G.</td><td><span class="badge b-gray">Sin confirmar</span></td><td><button class="btn btn-outline btn-sm">Ver</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- AGENDA -->
+    <div class="page" id="page-agenda">
+      <div class="flex-row" style="margin-bottom:15px">
+        <div class="tabs"><div class="tab active">Mes</div><div class="tab">Semana</div><div class="tab">Día</div></div>
+        <button class="btn btn-primary ml-auto" onclick="openModal('modal-turno')">+ Nuevo Turno</button>
+      </div>
+      <div class="report-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:13px">
+          <button class="btn btn-outline btn-sm">◀</button>
+          <span style="font-family:'Libre Baskerville',serif;font-size:14px;color:var(--blue)">Marzo 2026</span>
+          <button class="btn btn-outline btn-sm">▶</button>
+        </div>
+        <div class="calendar-grid" style="margin-bottom:5px">
+          <div class="cal-header">DOM</div><div class="cal-header">LUN</div><div class="cal-header">MAR</div>
+          <div class="cal-header">MIÉ</div><div class="cal-header">JUE</div><div class="cal-header">VIE</div><div class="cal-header">SÁB</div>
+        </div>
+        <div class="calendar-grid" id="cal-days"></div>
+      </div>
+      <div class="section-title">Turnos de Hoy</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Hora</th><th>Cliente</th><th>Tel.</th><th>Servicio</th><th>Empleado</th><th>Estado</th><th>Acción</th></tr></thead>
+          <tbody>
+            <tr><td>09:00</td><td>Ariel F.</td><td>11-5555-0001</td><td>Corte Clásico</td><td>Marcos R.</td><td><span class="badge b-green">Realizado</span></td><td><button class="btn btn-outline btn-sm">Ver</button></td></tr>
+            <tr><td>10:00</td><td>Juan M.</td><td>11-5555-0002</td><td>Corte + Barba</td><td>Marcos R.</td><td><span class="badge b-amb">En curso</span></td><td><button class="btn btn-primary btn-sm" onclick="openModal('modal-cobro')">Cobrar</button></td></tr>
+            <tr><td>11:30</td><td>Pedro L.</td><td>11-5555-0003</td><td>Corte</td><td>Lucas P.</td><td><span class="badge b-gray">Pendiente</span></td><td><button class="btn btn-outline btn-sm">Confirmar</button></td></tr>
+            <tr><td>13:00</td><td>Carlos V.</td><td>11-5555-0004</td><td>Barba + Fade</td><td>Tomás G.</td><td><span class="badge b-gray">Pendiente</span></td><td><button class="btn btn-outline btn-sm">Confirmar</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- COBROS -->
+    <div class="page" id="page-cobros">
+      <div class="flex-row" style="margin-bottom:15px">
+        <div class="stat-card" style="flex:1;min-width:130px"><div class="stat-label">Total Hoy</div><div class="stat-value v-blue" style="font-size:19px">$48.500</div></div>
+        <div class="stat-card" style="flex:1;min-width:130px"><div class="stat-label">Efectivo</div><div class="stat-value" style="font-size:17px">$22.000</div></div>
+        <div class="stat-card" style="flex:1;min-width:130px"><div class="stat-label">Digital</div><div class="stat-value" style="font-size:17px">$26.500</div></div>
+        <button class="btn btn-primary ml-auto" onclick="openModal('modal-cobro')">+ Registrar Cobro</button>
+      </div>
+      <div class="section-title">Cobros del Día</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Hora</th><th>Cliente</th><th>Servicio</th><th>Empleado</th><th>Monto</th><th>Método</th><th>Propina</th></tr></thead>
+          <tbody>
+            <tr><td>09:15</td><td>Ariel F.</td><td>Corte Clásico</td><td>Marcos R.</td><td class="fw6">$7.500</td><td><span class="badge b-green">Efectivo</span></td><td class="v-blue fw6">$500</td></tr>
+            <tr><td>09:50</td><td>Mateo S.</td><td>Barba</td><td>Lucas P.</td><td class="fw6">$5.000</td><td><span class="badge b-blue">Transfer.</span></td><td>—</td></tr>
+            <tr><td>10:30</td><td>Rodrigo T.</td><td>Corte + Barba</td><td>Tomás G.</td><td class="fw6">$12.000</td><td><span class="badge b-amb">Mixto</span></td><td class="v-blue fw6">$1.000</td></tr>
+            <tr><td>11:15</td><td>Pablo N.</td><td>Fade + Barba</td><td>Marcos R.</td><td class="fw6">$14.000</td><td><span class="badge b-blue">Tarjeta</span></td><td>—</td></tr>
+            <tr><td>12:00</td><td>Ignacio M.</td><td>Corte Clásico</td><td>Lucas P.</td><td class="fw6">$10.000</td><td><span class="badge b-green">Efectivo</span></td><td class="v-blue fw6">$500</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- EMPLEADOS -->
+    <div class="page" id="page-empleados">
+      <div class="flex-row" style="margin-bottom:15px">
+        <button class="btn btn-primary ml-auto" onclick="openModal('modal-empleado')">+ Agregar Empleado</button>
+      </div>
+      <div class="emp-grid">
+        <div class="emp-card">
+          <div class="emp-avatar">💈</div><div class="emp-name">Marcos Rodríguez</div><div class="emp-role">Barbero Senior</div>
+          <div class="emp-stat-row"><span class="emp-stat-label">Ingresos hoy</span><span class="emp-stat-val">$18.000</span></div>
+          <div class="emp-stat-row"><span class="emp-stat-label">Sueldo (40%)</span><span class="emp-stat-val hi">$7.200</span></div>
+          <div class="emp-stat-row"><span class="emp-stat-label">Propinas hoy</span><span class="emp-stat-val hi">$1.500</span></div>
+          <div class="emp-stat-row"><span class="emp-stat-label">Servicios</span><span class="emp-stat-val">3</span></div>
+          <div class="divider"></div>
+          <div class="emp-stat-row"><span class="emp-stat-label">Total mes</span><span class="emp-stat-val hi">$210.000</span></div>
+          <button class="btn btn-ghost btn-sm" style="width:100%;margin-top:9px;justify-content:center" onclick="goTo('reportes')">Ver reporte</button>
+        </div>
+        <div class="emp-card">
+          <div class="emp-avatar">✂️</div><div class="emp-name">Lucas Pereyra</div><div class="emp-role">Barbero</div>
+          <div class="emp-stat-row"><span class="emp-stat-label">Ingresos hoy</span><span class="emp-stat-val">$14.500</span></div>
+          <div class="emp-stat-row"><span class="emp-stat-label">Sueldo (40%)</span><span class="emp-stat-val hi">$5.800</span></div>
+          <div class="emp-stat-row"><span class="emp-stat-label">Propinas hoy</span><span class="emp-stat-val hi">$500</span></div>
+          <div class="emp-stat-row"><span class="emp-stat-label">Servicios</span><span class="emp-stat-val">2</span></div>
+          <div class="divider"></div>
+          <div class="emp-stat-row"><span class="emp-stat-label">Total mes</span><span class="emp-stat-val hi">$168.000</span></div>
+          <button class="btn btn-ghost btn-sm" style="width:100%;margin-top:9px;justify-content:center" onclick="goTo('reportes')">Ver reporte</button>
+        </div>
+        <div class="emp-card">
+          <div class="emp-avatar">🪒</div><div class="emp-name">Tomás García</div><div class="emp-role">Barbero</div>
+          <div class="emp-stat-row"><span class="emp-stat-label">Ingresos hoy</span><span class="emp-stat-val">$16.000</span></div>
+          <div class="emp-stat-row"><span class="emp-stat-label">Sueldo (40%)</span><span class="emp-stat-val hi">$6.400</span></div>
+          <div class="emp-stat-row"><span class="emp-stat-label">Propinas hoy</span><span class="emp-stat-val hi">$1.000</span></div>
+          <div class="emp-stat-row"><span class="emp-stat-label">Servicios</span><span class="emp-stat-val">3</span></div>
+          <div class="divider"></div>
+          <div class="emp-stat-row"><span class="emp-stat-label">Total mes</span><span class="emp-stat-val hi">$185.000</span></div>
+          <button class="btn btn-ghost btn-sm" style="width:100%;margin-top:9px;justify-content:center" onclick="goTo('reportes')">Ver reporte</button>
+        </div>
+        <div class="emp-card" style="border-style:dashed;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:170px;box-shadow:none" onclick="openModal('modal-empleado')">
+          <div style="font-size:26px;color:var(--border-mid);margin-bottom:7px">+</div>
+          <div style="color:var(--text-light);font-size:13px">Agregar Empleado</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SERVICIOS -->
+    <div class="page" id="page-servicios">
+      <div class="flex-row" style="margin-bottom:15px">
+        <button class="btn btn-primary ml-auto" onclick="openModal('modal-servicio')">+ Agregar Servicio</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Servicio</th><th>Descripción</th><th>Precio</th><th>Duración</th><th>Estado</th><th></th></tr></thead>
+          <tbody>
+            <tr><td class="fw6">Corte Clásico</td><td>Corte con tijera y máquina</td><td class="v-blue fw6">$7.500</td><td>30 min</td><td><span class="badge b-green">Activo</span></td><td><button class="btn btn-outline btn-sm">Editar</button></td></tr>
+            <tr><td class="fw6">Barba</td><td>Perfilado y afeitado</td><td class="v-blue fw6">$5.000</td><td>20 min</td><td><span class="badge b-green">Activo</span></td><td><button class="btn btn-outline btn-sm">Editar</button></td></tr>
+            <tr><td class="fw6">Corte + Barba</td><td>Combo completo</td><td class="v-blue fw6">$11.500</td><td>45 min</td><td><span class="badge b-green">Activo</span></td><td><button class="btn btn-outline btn-sm">Editar</button></td></tr>
+            <tr><td class="fw6">Fade + Barba</td><td>Degradado con barba</td><td class="v-blue fw6">$14.000</td><td>60 min</td><td><span class="badge b-green">Activo</span></td><td><button class="btn btn-outline btn-sm">Editar</button></td></tr>
+            <tr><td class="fw6">Corte Niño</td><td>Hasta 12 años</td><td class="v-blue fw6">$5.000</td><td>25 min</td><td><span class="badge b-green">Activo</span></td><td><button class="btn btn-outline btn-sm">Editar</button></td></tr>
+            <tr><td class="fw6">Tratamiento Capilar</td><td>Hidratación + peinado</td><td class="v-blue fw6">$9.000</td><td>40 min</td><td><span class="badge b-gray">Inactivo</span></td><td><button class="btn btn-outline btn-sm">Editar</button></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- STOCK -->
+    <div class="page" id="page-stock">
+      <div class="flex-row" style="margin-bottom:15px">
+        <div class="stat-card" style="flex:1"><div class="stat-label">Productos</div><div class="stat-value v-blue" style="font-size:19px">12</div></div>
+        <div class="stat-card card-red" style="flex:1"><div class="stat-label">Stock Bajo</div><div class="stat-value v-red" style="font-size:19px">2</div></div>
+        <div class="stat-card" style="flex:1"><div class="stat-label">Val. Inventario</div><div class="stat-value v-blue" style="font-size:19px">$84.500</div></div>
+        <button class="btn btn-primary ml-auto" onclick="openModal('modal-producto')">+ Agregar</button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Producto</th><th>Categoría</th><th>Stock</th><th>Mínimo</th><th>Precio</th><th>Estado</th></tr></thead>
+          <tbody>
+            <tr><td class="fw6">Pomada Fijadora Premium</td><td>Cera/Pomada</td><td><div>8 unid.<div class="stock-bar"><div class="stock-fill stock-ok" style="width:80%"></div></div></div></td><td>3</td><td>$4.500</td><td><span class="badge b-green">OK</span></td></tr>
+            <tr><td class="fw6">Shampoo Anticaspa</td><td>Cabello</td><td><div>2 unid.<div class="stock-bar"><div class="stock-fill stock-crit" style="width:20%"></div></div></div></td><td>3</td><td>$3.200</td><td><span class="badge b-red">⚠ Bajo</span></td></tr>
+            <tr><td class="fw6">Aceite de Barba</td><td>Barba</td><td><div>5 unid.<div class="stock-bar"><div class="stock-fill stock-low" style="width:50%"></div></div></div></td><td>4</td><td>$5.800</td><td><span class="badge b-amb">Regular</span></td></tr>
+            <tr><td class="fw6">Cera Mate</td><td>Cera/Pomada</td><td><div>12 unid.<div class="stock-bar"><div class="stock-fill stock-ok" style="width:100%"></div></div></div></td><td>3</td><td>$3.900</td><td><span class="badge b-green">OK</span></td></tr>
+            <tr><td class="fw6">Crema de Afeitar</td><td>Barba</td><td><div>1 unid.<div class="stock-bar"><div class="stock-fill stock-crit" style="width:10%"></div></div></div></td><td>2</td><td>$2.800</td><td><span class="badge b-red">⚠ Bajo</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- EGRESOS -->
+    <div class="page" id="page-egresos">
+      <div class="flex-row" style="margin-bottom:15px">
+        <div class="stat-card card-red" style="flex:1"><div class="stat-label">Egresos Hoy</div><div class="stat-value v-red" style="font-size:19px">$8.200</div></div>
+        <div class="stat-card card-red" style="flex:1"><div class="stat-label">Egresos Mes</div><div class="stat-value v-red" style="font-size:19px">$94.500</div></div>
+        <button class="btn btn-primary ml-auto" onclick="openModal('modal-egreso')">+ Registrar Egreso</button>
+      </div>
+      <div class="section-title">Egresos del Día</div>
+      <div class="table-wrap">
+        <table>
+          <thead><tr><th>Hora</th><th>Categoría</th><th>Descripción</th><th>Monto</th><th>Método</th></tr></thead>
+          <tbody>
+            <tr><td>09:30</td><td><span class="badge b-blue">Insumos</span></td><td>Compra hojas de afeitar x50</td><td class="v-red fw6">-$3.200</td><td>Efectivo</td></tr>
+            <tr><td>11:00</td><td><span class="badge b-amb">Servicios</span></td><td>Limpieza del local</td><td class="v-red fw6">-$5.000</td><td>Transferencia</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="section-title">Por Categoría — Mes</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(135px,1fr));gap:10px">
+        <div class="stat-card card-red"><div class="stat-label">Alquiler</div><div class="stat-value v-red" style="font-size:17px">$35.000</div></div>
+        <div class="stat-card card-red"><div class="stat-label">Insumos</div><div class="stat-value v-red" style="font-size:17px">$18.500</div></div>
+        <div class="stat-card card-red"><div class="stat-label">Servicios</div><div class="stat-value v-red" style="font-size:17px">$22.000</div></div>
+        <div class="stat-card card-red"><div class="stat-label">Marketing</div><div class="stat-value v-red" style="font-size:17px">$12.000</div></div>
+        <div class="stat-card card-red"><div class="stat-label">Otros</div><div class="stat-value v-red" style="font-size:17px">$7.000</div></div>
+      </div>
+    </div>
+
+    <!-- REPORTES -->
+    <div class="page" id="page-reportes">
+      <div id="reportes-denied" style="display:none">
+        <div class="access-denied">
+          <div class="icon">🔒</div>
+          <h2>Acceso Restringido</h2>
+          <p>Los reportes son exclusivos del Administrador.<br>Contactá al encargado del local.</p>
+        </div>
+      </div>
+      <div id="reportes-content">
+        <div class="filter-bar">
+          <div class="tabs" id="rp-tabs">
+            <div class="tab active" onclick="setReportPeriod('dia',this)">Día</div>
+            <div class="tab" onclick="setReportPeriod('mes',this)">Mes</div>
+            <div class="tab" onclick="setReportPeriod('anio',this)">Año</div>
+          </div>
+          <input type="date" id="filter-dia" class="filter-input">
+          <select id="filter-mes" class="filter-input" style="display:none">
+            <option>Marzo 2026</option><option>Febrero 2026</option><option>Enero 2026</option>
+          </select>
+          <select id="filter-anio" class="filter-input" style="display:none">
+            <option>2026</option><option>2025</option>
+          </select>
+          <div style="height:24px;width:1px;background:var(--border)"></div>
+          <span style="font-size:12px;color:var(--text-light);font-weight:600">Vista:</span>
+          <div style="display:flex;gap:5px;flex-wrap:wrap">
+            <button class="emp-tab active" onclick="setReportView('local',this)">🏪 Local</button>
+            <button class="emp-tab" onclick="setReportView('marcos',this)">Marcos R.</button>
+            <button class="emp-tab" onclick="setReportView('lucas',this)">Lucas P.</button>
+            <button class="emp-tab" onclick="setReportView('tomas',this)">Tomás G.</button>
+          </div>
+          <button class="btn btn-primary btn-sm ml-auto" onclick="generatePDF()">📥 Generar PDF</button>
+        </div>
+
+        <div id="report-local">
+          <div id="rep-dia-local">
+            <div class="stat-grid">
+              <div class="stat-card"><div class="stat-label">Ingresos</div><div class="stat-value v-blue">$48.500</div><div class="stat-sub up">↑ 12% vs ayer</div></div>
+              <div class="stat-card card-red"><div class="stat-label">Egresos</div><div class="stat-value v-red">$8.200</div></div>
+              <div class="stat-card card-green"><div class="stat-label">Ganancia Neta</div><div class="stat-value v-green">$40.300</div></div>
+              <div class="stat-card card-blue"><div class="stat-label">Servicios</div><div class="stat-value v-blue">8</div></div>
+            </div>
+            <div class="two-col">
+              <div>
+                <div class="section-title">Ingresos por Método</div>
+                <div class="report-card">
+                  <div class="compare-bar"><span class="compare-label">Efectivo</span><div class="compare-track"><div class="compare-fill" style="width:45%"></div></div><span class="compare-val">$22.000</span></div>
+                  <div class="compare-bar"><span class="compare-label">Tarjeta</span><div class="compare-track"><div class="compare-fill" style="width:35%"></div></div><span class="compare-val">$17.000</span></div>
+                  <div class="compare-bar"><span class="compare-label">Transferencia</span><div class="compare-track"><div class="compare-fill" style="width:20%"></div></div><span class="compare-val">$9.500</span></div>
+                </div>
+              </div>
+              <div>
+                <div class="section-title">Propinas del Día</div>
+                <div class="report-card">
+                  <div class="compare-bar"><span class="compare-label">Marcos R.</span><div class="compare-track"><div class="compare-fill" style="width:60%"></div></div><span class="compare-val">$1.500</span></div>
+                  <div class="compare-bar"><span class="compare-label">Tomás G.</span><div class="compare-track"><div class="compare-fill" style="width:40%"></div></div><span class="compare-val">$1.000</span></div>
+                  <div class="compare-bar"><span class="compare-label">Lucas P.</span><div class="compare-track"><div class="compare-fill" style="width:20%"></div></div><span class="compare-val">$500</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="section-title">Detalle por Empleado</div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Empleado</th><th>Servicios</th><th>Ingresos</th><th>Propinas</th><th>Sueldo 40%</th><th>Total a Cobrar</th></tr></thead>
+                <tbody>
+                  <tr><td>Marcos Rodríguez</td><td>3</td><td>$18.000</td><td class="v-blue fw6">$1.500</td><td class="v-blue fw6">$7.200</td><td class="v-blue fw6">$8.700</td></tr>
+                  <tr><td>Lucas Pereyra</td><td>2</td><td>$14.500</td><td class="v-blue fw6">$500</td><td class="v-blue fw6">$5.800</td><td class="v-blue fw6">$6.300</td></tr>
+                  <tr><td>Tomás García</td><td>3</td><td>$16.000</td><td class="v-blue fw6">$1.000</td><td class="v-blue fw6">$6.400</td><td class="v-blue fw6">$7.400</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="pdf-section">
+              <div class="sum-row"><span class="sum-label">Total Ingresos</span><span class="sum-val">$48.500</span></div>
+              <div class="sum-row"><span class="sum-label">Total Egresos</span><span class="sum-val v-red">-$8.200</span></div>
+              <div class="sum-row"><span class="sum-label">Sueldos a pagar (40%)</span><span class="sum-val">-$19.400</span></div>
+              <div class="sum-row"><span class="sum-label">Propinas distribuidas</span><span class="sum-val">-$3.000</span></div>
+              <div class="sum-row"><span>Ganancia del Salón</span><span class="v-green fw6">$17.900</span></div>
+            </div>
+          </div>
+          <div id="rep-mes-local" style="display:none">
+            <div class="stat-grid">
+              <div class="stat-card"><div class="stat-label">Ingresos Mes</div><div class="stat-value v-blue">$1.245.000</div></div>
+              <div class="stat-card card-red"><div class="stat-label">Egresos Mes</div><div class="stat-value v-red">$94.500</div></div>
+              <div class="stat-card card-green"><div class="stat-label">Ganancia Neta</div><div class="stat-value v-green">$1.150.500</div></div>
+              <div class="stat-card card-blue"><div class="stat-label">Servicios</div><div class="stat-value v-blue">186</div></div>
+            </div>
+            <div class="section-title">Comparativa vs Mes Anterior</div>
+            <div class="report-card">
+              <div style="display:flex;gap:14px;margin-bottom:12px;font-size:12px">
+                <span style="display:flex;align-items:center;gap:5px"><span style="width:12px;height:4px;background:var(--blue);display:inline-block;border-radius:2px"></span>Marzo 2026</span>
+                <span style="display:flex;align-items:center;gap:5px"><span style="width:12px;height:4px;background:var(--border-mid);display:inline-block;border-radius:2px"></span>Febrero 2026</span>
+              </div>
+              <div class="compare-bar"><span class="compare-label">Ingresos</span><div class="compare-track"><div class="compare-fill" style="width:85%"></div></div><span class="compare-val">$1.245k</span></div>
+              <div class="compare-bar"><span class="compare-label" style="opacity:.6">Febrero</span><div class="compare-track"><div class="compare-fill prev" style="width:72%"></div></div><span class="compare-val" style="color:var(--text-light)">$1.050k</span></div>
+              <div class="compare-bar"><span class="compare-label">Servicios</span><div class="compare-track"><div class="compare-fill" style="width:80%"></div></div><span class="compare-val">186</span></div>
+              <div class="compare-bar"><span class="compare-label" style="opacity:.6">Febrero</span><div class="compare-track"><div class="compare-fill prev" style="width:65%"></div></div><span class="compare-val" style="color:var(--text-light)">158</span></div>
+              <div style="margin-top:8px;font-size:12px;color:var(--green);font-weight:600">↑ +18.6% ingresos · +17.7% servicios vs mes anterior</div>
+            </div>
+            <div class="section-title">Resumen por Empleado</div>
+            <div class="table-wrap">
+              <table>
+                <thead><tr><th>Empleado</th><th>Servicios</th><th>Ingresos</th><th>Propinas</th><th>Sueldo</th><th>Promedio/día</th></tr></thead>
+                <tbody>
+                  <tr><td>Marcos Rodríguez</td><td>68</td><td>$480.000</td><td class="v-blue fw6">$28.000</td><td class="v-blue fw6">$220.000</td><td>$15.500</td></tr>
+                  <tr><td>Lucas Pereyra</td><td>55</td><td>$390.000</td><td class="v-blue fw6">$18.000</td><td class="v-blue fw6">$174.000</td><td>$12.600</td></tr>
+                  <tr><td>Tomás García</td><td>63</td><td>$375.000</td><td class="v-blue fw6">$22.000</td><td class="v-blue fw6">$172.000</td><td>$12.100</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div id="rep-anio-local" style="display:none">
+            <div class="stat-grid">
+              <div class="stat-card"><div class="stat-label">Ingresos Año</div><div class="stat-value v-blue" style="font-size:19px">$3.810.000</div></div>
+              <div class="stat-card card-red"><div class="stat-label">Egresos Año</div><div class="stat-value v-red" style="font-size:19px">$285.000</div></div>
+              <div class="stat-card card-green"><div class="stat-label">Ganancia Neta</div><div class="stat-value v-green" style="font-size:19px">$3.525.000</div></div>
+              <div class="stat-card card-blue"><div class="stat-label">Mejor Mes</div><div class="stat-value v-blue" style="font-size:16px">Marzo</div></div>
+            </div>
+            <div class="section-title">Comparativa Anual</div>
+            <div class="report-card">
+              <div class="compare-bar"><span class="compare-label">2026 (Ene-Mar)</span><div class="compare-track"><div class="compare-fill" style="width:30%"></div></div><span class="compare-val">$3.810k</span></div>
+              <div class="compare-bar"><span class="compare-label" style="opacity:.6">2025 completo</span><div class="compare-track"><div class="compare-fill prev" style="width:80%"></div></div><span class="compare-val" style="color:var(--text-light)">$11.2M</span></div>
+              <div style="margin-top:8px;font-size:12px;color:var(--blue);font-weight:600">Proyección 2026: $15.2M ↑ +35% vs 2025</div>
+            </div>
+          </div>
+        </div>
+
+        <div id="report-empleado" style="display:none">
+          <div class="stat-grid">
+            <div class="stat-card"><div class="stat-label">Ingresos <span id="emp-period-label">Hoy</span></div><div class="stat-value v-blue" id="emp-stat-ing">$18.000</div></div>
+            <div class="stat-card card-blue"><div class="stat-label">Servicios</div><div class="stat-value v-blue" id="emp-stat-serv">3</div></div>
+            <div class="stat-card card-green"><div class="stat-label">Sueldo 40%</div><div class="stat-value v-green" id="emp-stat-sueldo">$7.200</div></div>
+            <div class="stat-card"><div class="stat-label">Propinas</div><div class="stat-value v-blue" id="emp-stat-prop">$1.500</div></div>
+          </div>
+          <div class="two-col">
+            <div>
+              <div class="section-title">Servicios realizados</div>
+              <div class="report-card">
+                <div class="compare-bar"><span class="compare-label">Corte Clásico</span><div class="compare-track"><div class="compare-fill" style="width:40%"></div></div><span class="compare-val">2 veces</span></div>
+                <div class="compare-bar"><span class="compare-label">Corte + Barba</span><div class="compare-track"><div class="compare-fill" style="width:60%"></div></div><span class="compare-val">3 veces</span></div>
+                <div class="compare-bar"><span class="compare-label">Fade + Barba</span><div class="compare-track"><div class="compare-fill" style="width:30%"></div></div><span class="compare-val">1 vez</span></div>
+              </div>
+            </div>
+            <div>
+              <div class="section-title">Comparativa vs período anterior</div>
+              <div class="report-card">
+                <div class="compare-bar"><span class="compare-label">Ingresos</span><div class="compare-track"><div class="compare-fill" style="width:75%"></div></div><span class="compare-val" id="emp-cmp-ing">$18.000</span></div>
+                <div class="compare-bar"><span class="compare-label" style="opacity:.6">Anterior</span><div class="compare-track"><div class="compare-fill prev" style="width:60%"></div></div><span class="compare-val" style="color:var(--text-light)">$15.000</span></div>
+                <div style="margin-top:8px;font-size:12px;color:var(--green);font-weight:600">↑ +20% vs período anterior</div>
+              </div>
+            </div>
+          </div>
+          <div class="section-title">Historial de Cobros</div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Hora</th><th>Cliente</th><th>Servicio</th><th>Monto</th><th>Propina</th><th>Método</th></tr></thead>
+              <tbody>
+                <tr><td>09:00</td><td>Ariel F.</td><td>Corte Clásico</td><td>$7.500</td><td class="v-blue fw6">$500</td><td><span class="badge b-green">Efectivo</span></td></tr>
+                <tr><td>11:00</td><td>Pablo N.</td><td>Fade + Barba</td><td>$14.000</td><td>—</td><td><span class="badge b-blue">Tarjeta</span></td></tr>
+                <tr><td>13:30</td><td>Ramiro S.</td><td>Corte + Barba</td><td>$11.500</td><td class="v-blue fw6">$1.000</td><td><span class="badge b-amb">Mixto</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="pdf-section">
+            <div class="sum-row"><span class="sum-label">Total facturado</span><span class="sum-val" id="emp-sum-ing">$18.000</span></div>
+            <div class="sum-row"><span class="sum-label">Propinas recibidas</span><span class="sum-val" id="emp-sum-prop">$1.500</span></div>
+            <div class="sum-row"><span>Sueldo total a cobrar</span><span class="v-green fw6" id="emp-sum-total">$8.700</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- MODALS -->
+<div class="modal-overlay" id="modal-cobro">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('modal-cobro')">✕</button>
+    <div class="modal-title">💰 Registrar Cobro</div>
+    <div class="form-grid">
+      <div class="form-group"><label>Cliente</label><input type="text" placeholder="Nombre del cliente"></div>
+      <div class="form-group"><label>Empleado</label><select><option>Marcos Rodríguez</option><option>Lucas Pereyra</option><option>Tomás García</option></select></div>
+    </div>
+    <div class="form-grid">
+      <div class="form-group"><label>Servicio</label><select><option>Corte Clásico — $7.500</option><option>Barba — $5.000</option><option>Corte + Barba — $11.500</option><option>Fade + Barba — $14.000</option></select></div>
+      <div class="form-group"><label>Monto Total</label><input type="number" value="7500"></div>
+    </div>
+    <div class="form-group" style="margin-bottom:11px"><label>Propina</label><input type="number" placeholder="0"></div>
+    <div class="form-group" style="margin-bottom:11px">
+      <label>Método de Pago</label>
+      <div class="pay-split">
+        <div class="pay-method selected" onclick="selectPay(this)">💵 Efectivo</div>
+        <div class="pay-method" onclick="selectPay(this)">💳 Tarjeta</div>
+        <div class="pay-method" onclick="selectPay(this)">📱 Transfer.</div>
+        <div class="pay-method" onclick="selectPay(this)">🔀 Mixto</div>
+      </div>
+    </div>
+    <div id="pago-mixto" style="display:none;margin-bottom:11px">
+      <div class="form-grid">
+        <div class="form-group"><label>Efectivo</label><input type="number" placeholder="0"></div>
+        <div class="form-group"><label>Tarjeta / Transfer.</label><input type="number" placeholder="0"></div>
+      </div>
+    </div>
+    <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="closeModal('modal-cobro')">✓ Registrar Cobro</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-turno">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('modal-turno')">✕</button>
+    <div class="modal-title">📅 Nuevo Turno</div>
+    <div class="form-grid">
+      <div class="form-group"><label>Cliente</label><input type="text" placeholder="Nombre"></div>
+      <div class="form-group"><label>Teléfono</label><input type="text" placeholder="11-XXXX-XXXX"></div>
+    </div>
+    <div class="form-grid">
+      <div class="form-group"><label>Fecha</label><input type="date"></div>
+      <div class="form-group"><label>Hora</label><input type="time"></div>
+    </div>
+    <div class="form-grid">
+      <div class="form-group"><label>Servicio</label><select><option>Corte Clásico</option><option>Barba</option><option>Corte + Barba</option><option>Fade + Barba</option></select></div>
+      <div class="form-group"><label>Empleado</label><select><option>Marcos Rodríguez</option><option>Lucas Pereyra</option><option>Tomás García</option></select></div>
+    </div>
+    <div class="form-group" style="margin-bottom:13px"><label>Notas</label><textarea rows="2" placeholder="Observaciones..."></textarea></div>
+    <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="closeModal('modal-turno')">✓ Guardar Turno</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-egreso">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('modal-egreso')">✕</button>
+    <div class="modal-title">📤 Registrar Egreso</div>
+    <div class="form-group" style="margin-bottom:11px"><label>Categoría</label><select><option>Alquiler</option><option>Insumos</option><option>Servicios</option><option>Marketing</option><option>Sueldos</option><option>Otros</option></select></div>
+    <div class="form-group" style="margin-bottom:11px"><label>Descripción</label><input type="text" placeholder="Ej: Compra de insumos"></div>
+    <div class="form-grid">
+      <div class="form-group"><label>Monto</label><input type="number" placeholder="0"></div>
+      <div class="form-group"><label>Método</label><select><option>Efectivo</option><option>Tarjeta</option><option>Transferencia</option></select></div>
+    </div>
+    <button class="btn btn-primary" style="width:100%;margin-top:6px;justify-content:center" onclick="closeModal('modal-egreso')">✓ Registrar Egreso</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-empleado">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('modal-empleado')">✕</button>
+    <div class="modal-title">👤 Agregar Empleado</div>
+    <div class="form-grid">
+      <div class="form-group"><label>Nombre</label><input type="text" placeholder="Nombre completo"></div>
+      <div class="form-group"><label>Rol</label><select><option>Barbero</option><option>Barbero Senior</option><option>Encargado</option></select></div>
+    </div>
+    <div class="form-grid">
+      <div class="form-group"><label>Teléfono</label><input type="text" placeholder="11-XXXX-XXXX"></div>
+      <div class="form-group"><label>% Comisión</label><input type="number" value="40"></div>
+    </div>
+    <button class="btn btn-primary" style="width:100%;margin-top:6px;justify-content:center" onclick="closeModal('modal-empleado')">✓ Guardar</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-servicio">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('modal-servicio')">✕</button>
+    <div class="modal-title">✂️ Agregar Servicio</div>
+    <div class="form-group" style="margin-bottom:11px"><label>Nombre</label><input type="text" placeholder="Ej: Corte + Barba"></div>
+    <div class="form-grid">
+      <div class="form-group"><label>Precio</label><input type="number" placeholder="0"></div>
+      <div class="form-group"><label>Duración (min)</label><input type="number" placeholder="30"></div>
+    </div>
+    <div class="form-group" style="margin-bottom:13px"><label>Descripción</label><textarea rows="2" placeholder="Descripción..."></textarea></div>
+    <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="closeModal('modal-servicio')">✓ Guardar</button>
+  </div>
+</div>
+
+<div class="modal-overlay" id="modal-producto">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('modal-producto')">✕</button>
+    <div class="modal-title">📦 Agregar Producto</div>
+    <div class="form-group" style="margin-bottom:11px"><label>Nombre</label><input type="text" placeholder="Nombre del producto"></div>
+    <div class="form-grid">
+      <div class="form-group"><label>Categoría</label><select><option>Cera/Pomada</option><option>Cabello</option><option>Barba</option><option>Herramientas</option></select></div>
+      <div class="form-group"><label>Precio de Venta</label><input type="number" placeholder="0"></div>
+    </div>
+    <div class="form-grid">
+      <div class="form-group"><label>Stock Inicial</label><input type="number" placeholder="0"></div>
+      <div class="form-group"><label>Stock Mínimo</label><input type="number" placeholder="2"></div>
+    </div>
+    <button class="btn btn-primary" style="width:100%;margin-top:6px;justify-content:center" onclick="closeModal('modal-producto')">✓ Guardar</button>
+  </div>
+</div>
+
+<script>
+var currentRole   = 'admin';
+var currentPeriod = 'dia';
+var currentView   = 'local';
+var currentEmp    = 'marcos';
+var selectedRole  = 'admin';
+
+var empData = {
+  marcos:{ name:'Marcos Rodríguez', dia:{ing:'$18.000',serv:'3',sueldo:'$7.200',prop:'$1.500',total:'$8.700'}, mes:{ing:'$210.000',serv:'68',sueldo:'$84.000',prop:'$28.000',total:'$112.000'}, anio:{ing:'$630.000',serv:'204',sueldo:'$252.000',prop:'$84.000',total:'$336.000'} },
+  lucas:{ name:'Lucas Pereyra',     dia:{ing:'$14.500',serv:'2',sueldo:'$5.800',prop:'$500',total:'$6.300'},   mes:{ing:'$168.000',serv:'55',sueldo:'$67.200',prop:'$18.000',total:'$85.200'},   anio:{ing:'$504.000',serv:'165',sueldo:'$201.600',prop:'$54.000',total:'$255.600'} },
+  tomas:{ name:'Tomás García',      dia:{ing:'$16.000',serv:'3',sueldo:'$6.400',prop:'$1.000',total:'$7.400'}, mes:{ing:'$185.000',serv:'63',sueldo:'$74.000',prop:'$22.000',total:'$96.000'},   anio:{ing:'$555.000',serv:'189',sueldo:'$222.000',prop:'$66.000',total:'$288.000'} }
+};
+var periodLabel = {dia:'Hoy',mes:'Este Mes',anio:'Este Año'};
+
+// FECHA
+var d = new Date();
+document.getElementById('today-date').textContent = d.toLocaleDateString('es-AR',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+var todayVal = d.toISOString().split('T')[0];
+document.getElementById('filter-dia').value = todayVal;
+
+// LOGIN
+function selectRole(role) {
+  selectedRole = role;
+  document.getElementById('role-admin').classList.toggle('selected', role === 'admin');
+  document.getElementById('role-empleado').classList.toggle('selected', role === 'empleado');
+}
+function doLogin() {
+  currentRole = selectedRole;
+  document.getElementById('login-screen').style.display = 'none';
+  applyRole();
+}
+function doLogout() {
+  document.getElementById('login-screen').style.display = 'flex';
+  selectedRole = 'admin';
+  document.getElementById('role-admin').classList.add('selected');
+  document.getElementById('role-empleado').classList.remove('selected');
+}
+function applyRole() {
+  var isAdmin = currentRole === 'admin';
+  var adminEls = document.querySelectorAll('.admin-only');
+  for (var i = 0; i < adminEls.length; i++) adminEls[i].style.display = isAdmin ? '' : 'none';
+  var badge = document.getElementById('topbar-role');
+  if (isAdmin) {
+    badge.textContent = '👑 Admin'; badge.className = 'topbar-role-badge';
+    document.getElementById('sb-role-icon').textContent = '👑';
+    document.getElementById('sb-role-name').textContent = 'Administrador';
+    document.getElementById('sb-role-tag').textContent  = 'Acceso completo';
+  } else {
+    badge.textContent = '✂️ Empleado'; badge.className = 'topbar-role-badge emp';
+    document.getElementById('sb-role-icon').textContent = '✂️';
+    document.getElementById('sb-role-name').textContent = 'Empleado';
+    document.getElementById('sb-role-tag').textContent  = 'Acceso limitado';
+  }
+}
+
+// NAVEGACIÓN
+var pageTitles = {dashboard:'Dashboard',agenda:'Agenda de Turnos',cobros:'Registro de Cobros',empleados:'Empleados',servicios:'Servicios',stock:'Stock',egresos:'Egresos',reportes:'Reportes'};
+function goTo(id) {
+  var pages = document.querySelectorAll('.page');
+  for (var i = 0; i < pages.length; i++) pages[i].classList.remove('active');
+  var pg = document.getElementById('page-' + id);
+  if (pg) pg.classList.add('active');
+  document.getElementById('page-title').textContent = pageTitles[id] || id;
+  if (id === 'reportes') {
+    var denied  = document.getElementById('reportes-denied');
+    var content = document.getElementById('reportes-content');
+    if (currentRole !== 'admin') { denied.style.display = 'flex'; content.style.display = 'none'; }
+    else                         { denied.style.display = 'none'; content.style.display = 'block'; }
+  }
+  var items = document.querySelectorAll('.nav-item');
+  for (var j = 0; j < items.length; j++) {
+    var oc = items[j].getAttribute('onclick') || '';
+    if (oc.indexOf("'" + id + "'") !== -1) items[j].classList.add('active');
+    else items[j].classList.remove('active');
+  }
+  closeSidebar();
+}
+
+// MODALS
+function openModal(id)  { document.getElementById(id).classList.add('open'); }
+function closeModal(id) { document.getElementById(id).classList.remove('open'); }
+var overlays = document.querySelectorAll('.modal-overlay');
+for (var oi = 0; oi < overlays.length; oi++) {
+  overlays[oi].addEventListener('click', function(e){ if(e.target===this) this.classList.remove('open'); });
+}
+
+// SIDEBAR
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('open');
+}
+function closeSidebar() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+}
+
+// PAY METHOD
+function selectPay(el) {
+  var ms = el.closest('.pay-split').querySelectorAll('.pay-method');
+  for (var i = 0; i < ms.length; i++) ms[i].classList.remove('selected');
+  el.classList.add('selected');
+  document.getElementById('pago-mixto').style.display = el.textContent.indexOf('Mixto') !== -1 ? 'block' : 'none';
+}
+
+// TABS
+var tabGroups = document.querySelectorAll('.tabs');
+for (var tg = 0; tg < tabGroups.length; tg++) {
+  (function(group){
+    var tabs = group.querySelectorAll('.tab');
+    for (var ti = 0; ti < tabs.length; ti++) {
+      tabs[ti].addEventListener('click', function(){
+        var all = group.querySelectorAll('.tab');
+        for (var ai = 0; ai < all.length; ai++) all[ai].classList.remove('active');
+        this.classList.add('active');
+      });
+    }
+  })(tabGroups[tg]);
+}
+
+// REPORT
+function setReportPeriod(period, el) {
+  currentPeriod = period;
+  document.getElementById('filter-dia').style.display  = period==='dia'  ? 'block':'none';
+  document.getElementById('filter-mes').style.display  = period==='mes'  ? 'block':'none';
+  document.getElementById('filter-anio').style.display = period==='anio' ? 'block':'none';
+  var rpTabs = document.querySelectorAll('#rp-tabs .tab');
+  for (var i = 0; i < rpTabs.length; i++) rpTabs[i].classList.remove('active');
+  if (el) el.classList.add('active');
+  updateReportView();
+}
+function setReportView(view, el) {
+  currentView = view;
+  var empTabs = document.querySelectorAll('.emp-tab');
+  for (var i = 0; i < empTabs.length; i++) empTabs[i].classList.remove('active');
+  if (el) el.classList.add('active');
+  if (view !== 'local') currentEmp = view;
+  updateReportView();
+}
+function updateReportView() {
+  var isLocal = currentView === 'local';
+  document.getElementById('report-local').style.display    = isLocal ? 'block' : 'none';
+  document.getElementById('report-empleado').style.display = isLocal ? 'none'  : 'block';
+  if (isLocal) {
+    document.getElementById('rep-dia-local').style.display  = currentPeriod==='dia'  ? 'block':'none';
+    document.getElementById('rep-mes-local').style.display  = currentPeriod==='mes'  ? 'block':'none';
+    document.getElementById('rep-anio-local').style.display = currentPeriod==='anio' ? 'block':'none';
+  } else {
+    var data = empData[currentEmp][currentPeriod];
+    document.getElementById('emp-period-label').textContent = periodLabel[currentPeriod];
+    document.getElementById('emp-stat-ing').textContent     = data.ing;
+    document.getElementById('emp-stat-serv').textContent    = data.serv;
+    document.getElementById('emp-stat-sueldo').textContent  = data.sueldo;
+    document.getElementById('emp-stat-prop').textContent    = data.prop;
+    document.getElementById('emp-cmp-ing').textContent      = data.ing;
+    document.getElementById('emp-sum-ing').textContent      = data.ing;
+    document.getElementById('emp-sum-prop').textContent     = data.prop;
+    document.getElementById('emp-sum-total').textContent    = data.total;
+  }
+}
+
+// PDF
+function generatePDF() {
+  try {
+    var jsPDF = window.jspdf.jsPDF;
+    var doc = new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
+    var W=210, M=18, y=0;
+    doc.setFillColor(27,58,107); doc.rect(0,0,W,36,'F');
+    doc.setTextColor(255,255,255); doc.setFontSize(20); doc.setFont('helvetica','bold'); doc.text('BarberPro',M,15);
+    doc.setFontSize(9); doc.setFont('helvetica','normal'); doc.setTextColor(200,210,235); doc.text('SISTEMA DE GESTION',M,22);
+    var pLabel = currentView==='local' ? 'Reporte del Local — '+periodLabel[currentPeriod] : 'Reporte: '+(empData[currentEmp]?empData[currentEmp].name:'')+' — '+periodLabel[currentPeriod];
+    doc.setFontSize(11); doc.setFont('helvetica','bold'); doc.setTextColor(255,255,255); doc.text(pLabel,M,30);
+    doc.setFontSize(9); doc.setFont('helvetica','normal'); doc.setTextColor(200,210,235);
+    doc.text(d.toLocaleDateString('es-AR',{weekday:'long',year:'numeric',month:'long',day:'numeric'}),W-M,30,{align:'right'});
+    y=46;
+    function sec(title){ doc.setFillColor(242,245,252); doc.roundedRect(M,y,W-2*M,8,1,1,'F'); doc.setFontSize(9); doc.setFont('helvetica','bold'); doc.setTextColor(27,58,107); doc.text(title.toUpperCase(),M+4,y+5.5); y+=13; }
+    function box(label,value,r,g,b,x,bw){ doc.setFillColor(255,255,255); doc.setDrawColor(214,223,240); doc.roundedRect(x,y,bw,18,2,2,'FD'); doc.setFontSize(7); doc.setFont('helvetica','normal'); doc.setTextColor(120,135,160); doc.text(label.toUpperCase(),x+4,y+6); doc.setFontSize(12); doc.setFont('helvetica','bold'); doc.setTextColor(r,g,b); doc.text(value,x+4,y+14); }
+    function row(cols,ws,yy,isH){ if(isH){doc.setFillColor(242,245,252);doc.rect(M,yy-4,W-2*M,7,'F');} var x=M; for(var ci=0;ci<cols.length;ci++){doc.setFontSize(8);doc.setFont('helvetica',isH?'bold':'normal');if(isH){doc.setTextColor(27,58,107);}else{doc.setTextColor(120,135,160);}doc.text(String(cols[ci]),x+2,yy);x+=ws[ci];} }
+    function sum(label,value,isT,r,g,b){ doc.setDrawColor(214,223,240);doc.line(M,y,W-M,y);y+=6;doc.setFontSize(9);doc.setFont('helvetica',isT?'bold':'normal');if(isT){doc.setTextColor(27,58,107);}else{doc.setTextColor(120,135,160);}doc.text(label,M+3,y);doc.setFont('helvetica','bold');if(r!==undefined){doc.setTextColor(r,g,b);}else if(isT){doc.setTextColor(27,58,107);}else{doc.setTextColor(120,135,160);}doc.text(value,W-M-3,y,{align:'right'});y+=3; }
+    var bw=(W-2*M-6)/4;
+    if(currentView==='local'){
+      if(currentPeriod==='dia'){
+        box('Ingresos','$48.500',27,58,107,M,bw);box('Egresos','$8.200',192,57,43,M+bw+2,bw);box('Ganancia','$40.300',30,140,90,M+2*(bw+2),bw);box('Servicios','8',27,58,107,M+3*(bw+2),bw);y+=25;
+        sec('Ingresos por Metodo');
+        var r1=[['Metodo','Monto'],['Efectivo','$22.000'],['Tarjeta','$17.000'],['Transferencia','$9.500']];
+        for(var i=0;i<r1.length;i++){row(r1[i],[80,50],y+2,i===0);if(i>0){doc.setDrawColor(230,235,245);doc.line(M,y-2,W-M,y-2);}y+=7;}y+=4;
+        sec('Detalle por Empleado');
+        var ec=['Empleado','Serv.','Ingresos','Propinas','Sueldo 40%','Total'],ew=[45,15,28,22,28,22];
+        row(ec,ew,y+2,true);y+=10;
+        var er=[['Marcos Rodriguez','3','$18.000','$1.500','$7.200','$8.700'],['Lucas Pereyra','2','$14.500','$500','$5.800','$6.300'],['Tomas Garcia','3','$16.000','$1.000','$6.400','$7.400']];
+        for(var j=0;j<er.length;j++){doc.setDrawColor(230,235,245);doc.line(M,y-4,W-M,y-4);row(er[j],ew,y+2,false);y+=8;}y+=6;
+        sec('Resumen del Dia');
+        sum('Total Ingresos','$48.500',false);sum('Total Egresos','-$8.200',false,192,57,43);sum('Sueldos','-$19.400',false);sum('Propinas','-$3.000',false);sum('Ganancia del Salon','$17.900',true,30,140,90);
+      } else if(currentPeriod==='mes'){
+        box('Ingresos','$1.245.000',27,58,107,M,bw);box('Egresos','$94.500',192,57,43,M+bw+2,bw);box('Ganancia','$1.150.500',30,140,90,M+2*(bw+2),bw);box('Servicios','186',27,58,107,M+3*(bw+2),bw);y+=25;
+        sec('Resumen por Empleado - Mes');
+        var mc=['Empleado','Serv.','Ingresos','Propinas','Sueldo'],mw=[50,15,32,25,30];
+        row(mc,mw,y+2,true);y+=10;
+        var mr=[['Marcos Rodriguez','68','$480.000','$28.000','$220.000'],['Lucas Pereyra','55','$390.000','$18.000','$174.000'],['Tomas Garcia','63','$375.000','$22.000','$172.000']];
+        for(var k=0;k<mr.length;k++){doc.setDrawColor(230,235,245);doc.line(M,y-4,W-M,y-4);row(mr[k],mw,y+2,false);y+=8;}y+=6;
+        sec('Comparativa vs Febrero 2026');
+        sum('Ingresos Marzo 2026','$1.245.000',false);sum('Ingresos Febrero 2026','$1.050.000',false);sum('Variacion','+18.6%',true,30,140,90);
+      } else {
+        box('Ingresos','$3.810.000',27,58,107,M,bw);box('Egresos','$285.000',192,57,43,M+bw+2,bw);box('Ganancia','$3.525.000',30,140,90,M+2*(bw+2),bw);box('Mejor Mes','Marzo',27,58,107,M+3*(bw+2),bw);y+=25;
+        sec('Ingresos por Mes - 2026');
+        var ac=['Mes','Ingresos','Servicios'],aw=[60,60,40];
+        row(ac,aw,y+2,true);y+=10;
+        var ar=[['Enero','$980.000','142'],['Febrero','$1.050.000','158'],['Marzo','$1.245.000','186'],['Abr-Dic','Pendiente','—']];
+        for(var l=0;l<ar.length;l++){doc.setDrawColor(230,235,245);doc.line(M,y-4,W-M,y-4);row(ar[l],aw,y+2,false);y+=7;}y+=6;
+        sec('Proyeccion Anual');
+        sum('Acumulado Ene-Mar','$3.275.000',false);sum('Promedio mensual','$1.091.667',false);sum('Proyeccion 12 meses','$13.100.000',true,30,140,90);
+      }
+    } else {
+      var emp=empData[currentEmp],data=emp[currentPeriod];
+      box('Ingresos',data.ing,27,58,107,M,bw);box('Servicios',data.serv,27,58,107,M+bw+2,bw);box('Sueldo 40%',data.sueldo,30,140,90,M+2*(bw+2),bw);box('Propinas',data.prop,27,58,107,M+3*(bw+2),bw);y+=25;
+      sec('Historial — '+emp.name);
+      var hc=['Hora','Cliente','Servicio','Monto','Propina'],hw=[20,40,50,25,25];
+      row(hc,hw,y+2,true);y+=10;
+      var hr=[['09:00','Ariel F.','Corte Clasico','$7.500','$500'],['11:00','Pablo N.','Fade + Barba','$14.000','—'],['13:30','Ramiro S.','Corte + Barba','$11.500','$1.000']];
+      for(var m=0;m<hr.length;m++){doc.setDrawColor(230,235,245);doc.line(M,y-4,W-M,y-4);row(hr[m],hw,y+2,false);y+=8;}y+=6;
+      sec('Liquidacion');
+      sum('Total facturado',data.ing,false);sum('Propinas recibidas',data.prop,false);sum('Total a cobrar',data.total,true,30,140,90);
+    }
+    var pH=doc.internal.pageSize.getHeight();
+    doc.setFillColor(27,58,107);doc.rect(0,pH-13,W,13,'F');
+    doc.setFontSize(8);doc.setFont('helvetica','normal');doc.setTextColor(200,210,235);
+    doc.text('BarberPro — Sistema de Gestion Profesional',M,pH-4);
+    doc.text('Generado: '+new Date().toLocaleString('es-AR'),W-M,pH-4,{align:'right'});
+    var empN=empData[currentEmp]?empData[currentEmp].name.replace(/ /g,'_'):'emp';
+    doc.save('BarberPro_'+(currentView==='local'?'Local':empN)+'_'+currentPeriod+'_'+todayVal+'.pdf');
+  } catch(e){ alert('Error generando PDF. Verificá tu conexión a internet.'); console.error(e); }
+}
+
+// CALENDARIO
+var calDays=document.getElementById('cal-days');
+var yr=d.getFullYear(),mo=d.getMonth();
+var firstDay=new Date(yr,mo,1).getDay(),dim=new Date(yr,mo+1,0).getDate();
+var tDays=[3,5,7,10,12,15,17,20,22,25,d.getDate()];
+for(var fi=0;fi<firstDay;fi++) calDays.innerHTML+='<div></div>';
+for(var di=1;di<=dim;di++){
+  var isT=di===d.getDate(), hasT=tDays.indexOf(di)!==-1;
+  calDays.innerHTML+='<div class="cal-day'+(isT?' today':'')+(hasT?' has-turns':'')+'" onclick="goTo(\'agenda\')"><div class="cal-day-num">'+di+'</div></div>';
+}
+</script>
+</body>
+</html>
