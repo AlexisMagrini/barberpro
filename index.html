@@ -63,14 +63,20 @@ body{font-family:'Poppins',sans-serif;background:var(--bg);color:var(--text);min
 
 /* ── SIDEBAR ── */
 #sidebar{width:var(--sidebar-w);background:var(--white);display:flex;flex-direction:column;position:fixed;top:0;left:0;height:100vh;z-index:100;box-shadow:0 0 40px rgba(27,58,107,.06);transition:width .28s cubic-bezier(.4,0,.2,1),transform .28s cubic-bezier(.4,0,.2,1);overflow:hidden;border-right:1px solid var(--border);flex-shrink:0;}
-/* COLLAPSED — sólo muestra hamburguesa, sin nav ni logo */
-#sidebar.collapsed{width:60px;}
-#sidebar.collapsed .sb-logo-inner,
-#sidebar.collapsed .sb-nav,
-#sidebar.collapsed .sb-logout{display:none!important;}
-#sidebar.collapsed .sb-logo{justify-content:center;border-bottom-color:transparent;}
+/* COLLAPSED — solo iconos, oculta labels y texto */
+#sidebar.collapsed{width:62px;}
+#sidebar.collapsed .sb-logo-text,
+#sidebar.collapsed .sb-item-label,
+#sidebar.collapsed .nav-group-label,
+#sidebar.collapsed .nav-badge,
+#sidebar.collapsed .sb-logout-label{display:none!important;}
+#sidebar.collapsed .sb-logo-inner{justify-content:center;}
+#sidebar.collapsed .nav-item{justify-content:center;padding:11px 0;margin:1px 5px;}
+#sidebar.collapsed .nav-item i{width:auto;margin:0;font-size:16px;}
+#sidebar.collapsed .sb-logout{justify-content:center;padding:12px 0;}
+#sidebar.collapsed .sb-logout i{font-size:16px;}
 #main{margin-left:var(--sidebar-w);flex:1;min-height:100vh;background:var(--bg);transition:margin-left .28s cubic-bezier(.4,0,.2,1);}
-#main.sb-collapsed{margin-left:60px;}
+#main.sb-collapsed{margin-left:62px;}
 /* Toggle button */
 .sb-toggle-btn{background:none;border:none;cursor:pointer;color:var(--text-mid);font-size:17px;padding:6px;line-height:1;display:flex;align-items:center;justify-content:center;flex-shrink:0;border-radius:8px;transition:color .18s,background .18s;}
 .sb-toggle-btn:hover{color:var(--blue);background:var(--blue-faint);}
@@ -452,7 +458,7 @@ tr:hover td{background:var(--blue-faint);}
     <div class="nav-item" onclick="goTo('egresos')"><i class="fa-solid fa-arrow-trend-down"></i><span class="sb-item-label">Egresos</span></div>
 
     <div class="nav-group-label admin-only">Análisis</div>
-    <div class="nav-item admin-only" onclick="goTo('reportes')"><i class="fa-solid fa-file-chart-column"></i><span class="sb-item-label">Reportes</span></div>
+    <div class="nav-item admin-only" onclick="goTo('reportes')"><i class="fa-solid fa-chart-bar"></i><span class="sb-item-label">Reportes</span></div>
 
     <div class="nav-group-label">Academia</div>
     <div class="nav-item" onclick="goTo('academia')"><i class="fa-solid fa-graduation-cap"></i><span class="sb-item-label">Academia MK</span></div>
@@ -503,7 +509,6 @@ tr:hover td{background:var(--blue-faint);}
           <div class="page-sub" id="today-date">Cargando fecha...</div>
         </div>
         <div class="page-header-right">
-          <button class="btn btn-primary" onclick="generatePDF()">📥 Generar Reporte</button>
         </div>
       </div>
 
@@ -1561,7 +1566,7 @@ tr:hover td{background:var(--blue-faint);}
 
 <!-- ══ MODALS ══ -->
 <div class="modal-overlay" id="modal-cobro">
-  <div class="modal" style="max-width:500px">
+  <div class="modal" style="max-width:600px;max-height:92vh;overflow-y:auto">
     <button class="modal-close" onclick="closeModal('modal-cobro')"><i class="fa-solid fa-xmark"></i></button>
     <div class="modal-title"><i class="fa-solid fa-dollar-sign" style="color:var(--blue);margin-right:8px"></i>Registrar Cobro</div>
 
@@ -1634,7 +1639,7 @@ tr:hover td{background:var(--blue-faint);}
     <div id="cobro-mixto-wrap" style="display:none;margin-bottom:12px">
       <div class="form-grid">
         <div class="fg"><label>Efectivo $</label><input type="number" id="cobro-mix-ef" placeholder="0"></div>
-        <div class="fg"><label>Digital $</label><input type="number" id="cobro-mix-qr" placeholder="0"></div>
+        <div class="fg"><label id="cobro-mix-label2">Santander $</label><input type="number" id="cobro-mix-qr" placeholder="0"></div>
       </div>
     </div>
 
@@ -2322,16 +2327,23 @@ function setReportEmp(emp) {
 var egF = document.getElementById('eg-fecha'); if(egF) egF.value = todayVal;
 
 // ══ COBRO LOGIC ══
-var cobroPayMode = 'ef'; // 'ef' | 'san' | 'pp' | 'mix'
-// Excedente por MP (referencia, no impacta en reporte)
-var QR_EXCEDENTE = { ef:0, san:200, pp:200, mix:100 }; // pesos fijos de referencia por servicio
+var cobroPayMode = 'ef';
+var cobroLastDigital = 'san'; // tracks last digital method selected (for mixto label)
 
 function selectPayCobro(el, mode) {
   cobroPayMode = mode;
   var ms = el.closest('.pay-split').querySelectorAll('.pay-m');
   for (var i=0;i<ms.length;i++) ms[i].classList.remove('selected');
   el.classList.add('selected');
-  document.getElementById('cobro-mixto-wrap').style.display = mode==='mix'?'block':'none';
+  // Track last digital for mixto label
+  if (mode === 'san' || mode === 'pp') cobroLastDigital = mode;
+  var isMix = mode === 'mix';
+  document.getElementById('cobro-mixto-wrap').style.display = isMix ? 'block' : 'none';
+  // Update mixto second field label
+  if (isMix) {
+    var lbl = document.getElementById('cobro-mix-label2');
+    if (lbl) lbl.textContent = (cobroLastDigital === 'pp' ? 'Personal Pay' : 'Santander') + ' $';
+  }
   cobroRecalc();
 }
 
