@@ -224,6 +224,9 @@ tr:hover td{background:var(--blue-faint);}
 .action-btn{width:32px;height:32px;border-radius:9px;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:all .18s;}
 .ab-blue{background:var(--blue-pale);color:var(--blue);}
 .ab-blue:hover{background:var(--blue);color:#fff;}
+td .action-btn ~ .action-btn { margin-left:0; }
+td > .action-btn, td > div > .action-btn { display:inline-flex; }
+td { vertical-align:middle; }
 .ab-red{background:var(--red-bg);color:var(--red);}
 .ab-red:hover{background:var(--red);color:#fff;}
 .ab-green{background:var(--green-bg);color:var(--green);}
@@ -1017,87 +1020,101 @@ tr:hover td{background:var(--blue-faint);}
       </div>
 
       <!-- ── COMPARATIVA MENSUAL ── -->
-      <div style="margin-top:28px">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px">
-          <div>
-            <div class="page-title" style="font-size:18px">Comparativa Mensual de Egresos</div>
-            <div class="page-sub">Variación de gastos respecto al mes anterior</div>
-          </div>
-          <div class="tabs-pill" id="egr-comp-tabs">
-            <div class="tab-pill active" onclick="setEgrComp('feb','mar',this)">Feb vs Mar</div>
-            <div class="tab-pill" onclick="setEgrComp('ene','feb',this)">Ene vs Feb</div>
-            <div class="tab-pill" onclick="setEgrComp('dic','ene',this)">Dic vs Ene</div>
-          </div>
-        </div>
+      <div style="margin-top:36px" id="egr-comparativa">
 
-        <!-- KPI cards comparativa -->
-        <div class="stat-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:20px">
-          <div class="stat-card featured">
-            <div class="stat-label">Total mes anterior</div>
-            <div class="stat-value" id="egr-total-ant">$148.500</div>
-            <div class="stat-sub" id="egr-label-ant">Febrero 2026</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-label">Total mes actual</div>
-            <div class="stat-value v-red" id="egr-total-act">$163.200</div>
-            <div class="stat-sub" id="egr-label-act">Marzo 2026</div>
-          </div>
-          <div class="stat-card" id="egr-var-card">
-            <div class="stat-label">Variación total</div>
-            <div class="stat-value v-red" id="egr-var-val">▲ +$14.700</div>
-            <div class="stat-sub" id="egr-var-pct">+9,9% respecto al anterior</div>
-          </div>
-          <div class="stat-card">
-            <div class="stat-label">Mayor aumento</div>
-            <div class="stat-value" id="egr-mayor-aumento" style="font-size:14px;margin-top:4px">Alquiler</div>
-            <div class="stat-sub" id="egr-mayor-aumento-val">+$8.000 · +16%</div>
-          </div>
-        </div>
-
-        <!-- Tabla comparativa: Fijos -->
-        <div class="table-card" style="margin-bottom:16px">
-          <div class="table-header">
-            <div><div class="table-title">Egresos Fijos — Comparativa</div></div>
-            <div style="display:flex;gap:8px;align-items:center">
-              <span style="font-size:11px;font-weight:700;color:var(--text-light)" id="egr-fijo-ant-label">Feb</span>
-              <span style="font-size:11px;color:var(--text-light)">→</span>
-              <span style="font-size:11px;font-weight:700;color:var(--blue)" id="egr-fijo-act-label">Mar</span>
+        <!-- Section header -->
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:10px">
+          <div style="display:flex;align-items:center;gap:12px">
+            <div style="width:4px;height:36px;background:linear-gradient(180deg,var(--blue),var(--blue2));border-radius:4px"></div>
+            <div>
+              <div style="font-size:17px;font-weight:800;color:var(--text);letter-spacing:-.3px">Comparativa de Egresos</div>
+              <div style="font-size:12px;color:var(--text-light);margin-top:2px" id="egr-comp-subtitle">Feb 2026 → Mar 2026</div>
             </div>
           </div>
-          <table>
-            <thead>
-              <tr>
-                <th>Concepto</th>
-                <th id="egr-th-ant">Mes anterior</th>
-                <th id="egr-th-act">Mes actual</th>
-                <th>Variación $</th>
-                <th>Variación %</th>
-                <th>Tendencia</th>
-              </tr>
-            </thead>
-            <tbody id="tbody-egr-fijos-comp"></tbody>
-          </table>
+          <button class="btn btn-primary btn-sm" onclick="downloadEgrPDF()">
+            <i class="fa-solid fa-file-arrow-down"></i>&nbsp; Descargar reporte
+          </button>
         </div>
 
-        <!-- Tabla comparativa: Variables -->
-        <div class="table-card">
-          <div class="table-header">
-            <div><div class="table-title">Egresos Variables — Comparativa</div></div>
+        <!-- Banner principal -->
+        <div style="background:linear-gradient(135deg,#1a3a6e 0%,#1e4d9e 100%);border-radius:16px;padding:28px 28px 24px;margin-bottom:16px;position:relative;overflow:hidden">
+          <!-- decorative circles -->
+          <div style="position:absolute;top:-30px;right:-30px;width:160px;height:160px;background:rgba(255,255,255,.05);border-radius:50%"></div>
+          <div style="position:absolute;bottom:-40px;right:60px;width:100px;height:100px;background:rgba(255,255,255,.04);border-radius:50%"></div>
+
+          <div style="display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px;position:relative;z-index:1">
+
+            <!-- Mes anterior -->
+            <div style="background:rgba(255,255,255,.1);border-radius:12px;padding:18px 20px">
+              <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,.6);text-transform:uppercase;letter-spacing:1.4px;margin-bottom:10px" id="egr-hero-ant-label">FEBRERO 2026</div>
+              <div style="font-size:26px;font-weight:800;color:#fff;letter-spacing:-.5px" id="egr-hero-ant-val">$0</div>
+              <div style="font-size:10px;color:rgba(255,255,255,.5);margin-top:6px;font-weight:600;text-transform:uppercase;letter-spacing:.8px">Mes anterior</div>
+            </div>
+
+            <!-- Badge variación central -->
+            <div style="text-align:center;padding:0 8px">
+              <div id="egr-hero-badge" style="display:inline-flex;flex-direction:column;align-items:center;background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.2);border-radius:14px;padding:12px 18px;min-width:80px">
+                <div id="egr-hero-arrow" style="font-size:20px;line-height:1;margin-bottom:4px">—</div>
+                <div id="egr-hero-pct" style="font-size:15px;font-weight:800;color:#fff;white-space:nowrap">0%</div>
+                <div id="egr-hero-diff" style="font-size:10px;font-weight:600;color:rgba(255,255,255,.65);margin-top:2px;white-space:nowrap">$0</div>
+              </div>
+            </div>
+
+            <!-- Mes actual -->
+            <div style="background:rgba(255,255,255,.13);border:1.5px solid rgba(255,255,255,.2);border-radius:12px;padding:18px 20px">
+              <div style="font-size:10px;font-weight:700;color:rgba(255,255,255,.7);text-transform:uppercase;letter-spacing:1.4px;margin-bottom:10px" id="egr-hero-act-label">MARZO 2026</div>
+              <div style="font-size:26px;font-weight:800;letter-spacing:-.5px" id="egr-hero-act-val">$0</div>
+              <div style="font-size:10px;color:rgba(255,255,255,.5);margin-top:6px;font-weight:600;text-transform:uppercase;letter-spacing:.8px">Mes actual</div>
+            </div>
           </div>
-          <table>
-            <thead>
-              <tr>
-                <th>Concepto</th>
-                <th>Mes anterior</th>
-                <th>Mes actual</th>
-                <th>Variación $</th>
-                <th>Variación %</th>
-                <th>Tendencia</th>
-              </tr>
-            </thead>
-            <tbody id="tbody-egr-vars-comp"></tbody>
-          </table>
+
+          <!-- Sub-row fijos/variables -->
+          <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-top:16px;position:relative;z-index:1">
+            <div style="background:rgba(255,255,255,.07);border-radius:10px;padding:11px 14px;display:flex;align-items:center;justify-content:space-between">
+              <div>
+                <div style="font-size:9px;font-weight:700;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.8px;margin-bottom:3px">Fijos</div>
+                <div style="font-size:13px;font-weight:800;color:#fff" id="egr-kpi-fijos">$0</div>
+              </div>
+              <div id="egr-kpi-fijos-pill" style="font-size:10px;font-weight:700;background:rgba(255,255,255,.12);border-radius:20px;padding:2px 8px;color:rgba(255,255,255,.7)" id="egr-kpi-fijos-pct">0%</div>
+            </div>
+            <div style="background:rgba(255,255,255,.07);border-radius:10px;padding:11px 14px;display:flex;align-items:center;justify-content:space-between">
+              <div>
+                <div style="font-size:9px;font-weight:700;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.8px;margin-bottom:3px">Variables</div>
+                <div style="font-size:13px;font-weight:800;color:#fff" id="egr-kpi-vars">$0</div>
+              </div>
+              <div id="egr-kpi-vars-pill" style="font-size:10px;font-weight:700;background:rgba(255,255,255,.12);border-radius:20px;padding:2px 8px;color:rgba(255,255,255,.7)" id="egr-kpi-vars-pct">0%</div>
+            </div>
+            <div style="background:rgba(255,255,255,.07);border-radius:10px;padding:11px 14px">
+              <div style="font-size:9px;font-weight:700;color:rgba(255,255,255,.5);text-transform:uppercase;letter-spacing:.8px;margin-bottom:3px">Mayor aumento</div>
+              <div style="font-size:12px;font-weight:700;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis" id="egr-kpi-top-name">—</div>
+              <div style="font-size:10px;color:rgba(255,255,255,.5);margin-top:1px" id="egr-kpi-top-val"></div>
+            </div>
+          </div>
         </div>
+
+        <!-- Detalle Fijos -->
+        <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:12px;box-shadow:var(--shadow)">
+          <div style="padding:14px 20px 12px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between">
+            <div style="display:flex;align-items:center;gap:8px">
+              <div style="width:7px;height:7px;border-radius:50%;background:var(--blue)"></div>
+              <span style="font-size:13px;font-weight:700;color:var(--text)">Egresos Fijos</span>
+              <span style="font-size:11px;color:var(--text-light)">· Conceptos que se repiten cada mes</span>
+            </div>
+            <span style="font-size:11px;font-weight:700;color:var(--text-light);background:var(--bg);border-radius:8px;padding:3px 9px" id="egr-det-months-label">Feb → Mar</span>
+          </div>
+          <div id="egr-rows-fijos"></div>
+        </div>
+
+        <!-- Detalle Variables -->
+        <div style="background:var(--white);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow)">
+          <div style="padding:14px 20px 12px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px">
+            <div style="width:7px;height:7px;border-radius:50%;background:var(--amber)"></div>
+            <span style="font-size:13px;font-weight:700;color:var(--text)">Egresos Variables</span>
+            <span style="font-size:11px;color:var(--text-light)">· Insumos, publicidad y otros</span>
+          </div>
+          <div id="egr-rows-vars"></div>
+        </div>
+
       </div>
     </div>
 
@@ -3288,11 +3305,11 @@ function renderStock() {
       '<td class="fw7">'+b.nombre+'</td>'+
       '<td class="fw7 v-blue">$'+fmtN(b.precio)+'</td>'+
       '<td><div style="font-size:12px;font-weight:600">'+b.stock+' unid.<div class="stock-bar"><div class="stock-fill '+cls+'" style="width:'+pct+'%"></div></div></div></td>'+
-      '<td style="white-space:nowrap">'+
-        '<button class="action-btn ab-blue" title="Agregar unidad" onclick="stockAjuste(\'beb\','+i+',1)" style="margin-right:3px">+</button>'+
-        '<button class="action-btn" title="Quitar unidad" onclick="stockAjuste(\'beb\','+i+',-1)" style="margin-right:3px;background:var(--red-bg);color:var(--red);border-color:var(--red)">−</button>'+
+      '<td><div style="display:flex;gap:4px;align-items:center">'+
+        '<button class="action-btn ab-blue" title="Agregar unidad" onclick="stockAjuste(\'beb\','+i+',1)">+</button>'+
+        '<button class="action-btn" title="Quitar unidad" onclick="stockAjuste(\'beb\','+i+',-1)" style="background:var(--red-bg);color:var(--red)">−</button>'+
         '<button class="action-btn ab-blue" title="Editar" onclick="openEditStock(\'beb\','+i+')"><i class="fa-solid fa-pen"></i></button>'+
-      '</td></tr>';
+      '</div></td></tr>';
   }
   tProd.innerHTML = '';
   for (var j=0;j<PRODUCTOS_VENTA.length;j++) {
@@ -3305,11 +3322,11 @@ function renderStock() {
       '<td class="fw7">'+p.nombre+'</td>'+
       '<td class="fw7 v-blue">$'+fmtN(p.precio)+'</td>'+
       '<td><div style="font-size:12px;font-weight:600">'+p.stock+' unid.<div class="stock-bar"><div class="stock-fill '+pcls+'" style="width:'+ppct+'%"></div></div></div></td>'+
-      '<td style="white-space:nowrap">'+
-        '<button class="action-btn ab-blue" title="Agregar unidad" onclick="stockAjuste(\'prod\','+j+',1)" style="margin-right:3px">+</button>'+
-        '<button class="action-btn" title="Quitar unidad" onclick="stockAjuste(\'prod\','+j+',-1)" style="margin-right:3px;background:var(--red-bg);color:var(--red);border-color:var(--red)">−</button>'+
+      '<td><div style="display:flex;gap:4px;align-items:center">'+
+        '<button class="action-btn ab-blue" title="Agregar unidad" onclick="stockAjuste(\'prod\','+j+',1)">+</button>'+
+        '<button class="action-btn" title="Quitar unidad" onclick="stockAjuste(\'prod\','+j+',-1)" style="background:var(--red-bg);color:var(--red)">−</button>'+
         '<button class="action-btn ab-blue" title="Editar" onclick="openEditStock(\'prod\','+j+')"><i class="fa-solid fa-pen"></i></button>'+
-      '</td></tr>';
+      '</div></td></tr>';
   }
   set('stock-total-items', totalBeb + totalProd);
   set('stock-total-beb', totalBeb);
@@ -3422,121 +3439,183 @@ function stockFilter(el, tipo) { /* futuro */ }
 
 // ══ COMPARATIVA MENSUAL EGRESOS ══
 var EGR_DATA = {
-  // [mes]: { fijos: {concepto: monto}, vars: {concepto: monto} }
-  dic: {
-    label: 'Dic 2025',
-    fijos: { 'Alquiler':42000,'Municipal':3500,'Edenor':8200,'Monotributo':12000,'Contador':6000,'Claro':1800,'Movistar':1600,'Agenda pro':2500,'Espacio publicitario fijo':5000,'Insumos':4000,'Personal limpieza':3000,'Personal administrativo':0 },
-    vars:  { 'Cuellos':1200,'Coolcare':800,'Filos navaja':600,'Gel shaving':500,'After shave':700,'Crema / Algodón / Guantes':900,'Publicidad Oviedo':3000,'Tarjetas / Folletos / Digital':2000,'Merchandising':1500,'Agua / Yerba / Sahumerio':800,'Alacena / Bebidas / Productos':4500,'Inversión salón / herramientas':0,'Educación / Reuniones':1000,'Gastos X':500 }
-  },
-  ene: {
-    label: 'Ene 2026',
-    fijos: { 'Alquiler':45000,'Municipal':3500,'Edenor':9100,'Monotributo':12000,'Contador':6000,'Claro':1800,'Movistar':1600,'Agenda pro':2500,'Espacio publicitario fijo':5000,'Insumos':4200,'Personal limpieza':3000,'Personal administrativo':0 },
-    vars:  { 'Cuellos':1400,'Coolcare':900,'Filos navaja':600,'Gel shaving':500,'After shave':700,'Crema / Algodón / Guantes':950,'Publicidad Oviedo':3000,'Tarjetas / Folletos / Digital':2500,'Merchandising':0,'Agua / Yerba / Sahumerio':850,'Alacena / Bebidas / Productos':5200,'Inversión salón / herramientas':3000,'Educación / Reuniones':0,'Gastos X':800 }
-  },
   feb: {
-    label: 'Feb 2026',
-    fijos: { 'Alquiler':50000,'Municipal':3800,'Edenor':9500,'Monotributo':12500,'Contador':6000,'Claro':1900,'Movistar':1700,'Agenda pro':2500,'Espacio publicitario fijo':5000,'Insumos':4500,'Personal limpieza':3200,'Personal administrativo':0 },
-    vars:  { 'Cuellos':1500,'Coolcare':950,'Filos navaja':700,'Gel shaving':600,'After shave':750,'Crema / Algodón / Guantes':1000,'Publicidad Oviedo':3500,'Tarjetas / Folletos / Digital':2000,'Merchandising':1800,'Agua / Yerba / Sahumerio':900,'Alacena / Bebidas / Productos':6000,'Inversión salón / herramientas':0,'Educación / Reuniones':1500,'Gastos X':600 }
+    label:'Febrero 2026', short:'Feb',
+    fijos:{'Alquiler':50000,'Municipal':3800,'Edenor':9500,'Monotributo':12500,'Contador':6000,'Claro':1900,'Movistar':1700,'Agenda pro':2500,'Espacio publicitario fijo':5000,'Insumos':4500,'Personal limpieza':3200},
+    vars: {'Cuellos':1500,'Coolcare':950,'Filos navaja':700,'Gel shaving':600,'After shave':750,'Crema / Algodón / Guantes':1000,'Publicidad Oviedo':3500,'Tarjetas / Folletos / Digital':2000,'Merchandising':1800,'Agua / Yerba / Sahumerio':900,'Alacena / Bebidas / Productos':6000,'Inversión salón / herramientas':0,'Educación / Reuniones':1500,'Gastos X':600}
   },
   mar: {
-    label: 'Mar 2026',
-    fijos: { 'Alquiler':58000,'Municipal':3800,'Edenor':10200,'Monotributo':13500,'Contador':6000,'Claro':2000,'Movistar':1800,'Agenda pro':2500,'Espacio publicitario fijo':5000,'Insumos':4800,'Personal limpieza':3500,'Personal administrativo':0 },
-    vars:  { 'Cuellos':1600,'Coolcare':1000,'Filos navaja':700,'Gel shaving':650,'After shave':800,'Crema / Algodón / Guantes':1100,'Publicidad Oviedo':4000,'Tarjetas / Folletos / Digital':2200,'Merchandising':2000,'Agua / Yerba / Sahumerio':1000,'Alacena / Bebidas / Productos':6800,'Inversión salón / herramientas':5000,'Educación / Reuniones':0,'Gastos X':750 }
+    label:'Marzo 2026', short:'Mar',
+    fijos:{'Alquiler':58000,'Municipal':3800,'Edenor':10200,'Monotributo':13500,'Contador':6000,'Claro':2000,'Movistar':1800,'Agenda pro':2500,'Espacio publicitario fijo':5000,'Insumos':4800,'Personal limpieza':3500},
+    vars: {'Cuellos':1600,'Coolcare':1000,'Filos navaja':700,'Gel shaving':650,'After shave':800,'Crema / Algodón / Guantes':1100,'Publicidad Oviedo':4000,'Tarjetas / Folletos / Digital':2200,'Merchandising':2000,'Agua / Yerba / Sahumerio':1000,'Alacena / Bebidas / Productos':6800,'Inversión salón / herramientas':5000,'Educación / Reuniones':0,'Gastos X':750}
   }
 };
-
-var egrCompAnt = 'feb', egrCompAct = 'mar';
-
-function setEgrComp(ant, act, el) {
-  egrCompAnt = ant; egrCompAct = act;
-  var pills = document.querySelectorAll('#egr-comp-tabs .tab-pill');
-  for (var i=0;i<pills.length;i++) pills[i].classList.remove('active');
-  if (el) el.classList.add('active');
-  renderEgrComp();
-}
+var EGR_ANT='feb', EGR_ACT='mar';
 
 function renderEgrComp() {
-  var dAnt = EGR_DATA[egrCompAnt];
-  var dAct = EGR_DATA[egrCompAct];
-  if (!dAnt || !dAct) return;
+  var dA=EGR_DATA[EGR_ANT], dB=EGR_DATA[EGR_ACT];
+  if(!dA||!dB) return;
+  function s(id,v){var e=document.getElementById(id);if(e)e.textContent=v;}
+  function h(id,v){var e=document.getElementById(id);if(e)e.innerHTML=v;}
+  function css(id,prop,v){var e=document.getElementById(id);if(e)e.style[prop]=v;}
+  function sumObj(o){return Object.values(o).reduce(function(a,b){return a+b;},0);}
 
-  function set(id, v){ var e=document.getElementById(id);if(e)e.textContent=v; }
-  function setH(id, v){ var e=document.getElementById(id);if(e)e.innerHTML=v; }
+  var totAntF=sumObj(dA.fijos), totAntV=sumObj(dA.vars);
+  var totActF=sumObj(dB.fijos), totActV=sumObj(dB.vars);
+  var totAnt=totAntF+totAntV, totAct=totActF+totActV;
+  var totDiff=totAct-totAnt, totPct=totAnt>0?((totDiff/totAnt)*100).toFixed(1):'0.0';
+  var subio=totDiff>0;
+  var diffColor=subio?'#ff6b6b':'#51cf66';
 
-  // Totals
-  var totAnt=0, totAct=0;
-  Object.values(dAnt.fijos).forEach(function(v){totAnt+=v;});
-  Object.values(dAnt.vars).forEach(function(v){totAnt+=v;});
-  Object.values(dAct.fijos).forEach(function(v){totAct+=v;});
-  Object.values(dAct.vars).forEach(function(v){totAct+=v;});
-  var totDiff = totAct - totAnt;
-  var totPct  = totAnt>0 ? ((totDiff/totAnt)*100).toFixed(1) : '0.0';
-  var subio   = totDiff > 0;
+  // Header subtitle
+  s('egr-comp-subtitle', dA.short+' 2026 → '+dB.short+' 2026');
 
-  set('egr-total-ant', '$'+fmtN(totAnt));
-  set('egr-total-act', '$'+fmtN(totAct));
-  set('egr-label-ant', dAnt.label);
-  set('egr-label-act', dAct.label);
-  setH('egr-var-val', (subio?'<span style="color:var(--red)">▲ +$'+fmtN(totDiff)+'</span>':'<span style="color:var(--green)">▼ -$'+fmtN(Math.abs(totDiff))+'</span>'));
-  set('egr-var-pct', (subio?'+':'')+totPct+'% respecto al anterior');
+  // Banner mes anterior
+  s('egr-hero-ant-label', dA.label.toUpperCase());
+  s('egr-hero-ant-val',   '$'+fmtN(totAnt));
 
-  // Find biggest increase across all items
-  var biggestName='—', biggestDiff=0, biggestPct=0;
-  function checkItems(antObj, actObj) {
-    Object.keys(actObj).forEach(function(k) {
-      var a=antObj[k]||0, b=actObj[k]||0, d=b-a;
-      if (d>biggestDiff) { biggestDiff=d; biggestName=k; biggestPct=a>0?Math.round((d/a)*100):100; }
+  // Banner mes actual
+  s('egr-hero-act-label', dB.label.toUpperCase());
+  s('egr-hero-act-val',   '$'+fmtN(totAct));
+  css('egr-hero-act-val','color', subio?diffColor:'#51cf66');
+
+  // Badge central
+  h('egr-hero-arrow', subio
+    ? '<span style="color:#ff6b6b;font-size:20px">▲</span>'
+    : '<span style="color:#51cf66;font-size:20px">▼</span>');
+  s('egr-hero-pct', (subio?'+':'')+totPct+'%');
+  s('egr-hero-diff', (subio?'+':'-')+'$'+fmtN(Math.abs(totDiff)));
+  var badge=document.getElementById('egr-hero-badge');
+  if(badge) badge.style.borderColor = subio?'rgba(255,107,107,.4)':'rgba(81,207,102,.4)';
+
+  // Sub-row fijos
+  var fDiff=totActF-totAntF, fPct=totAntF>0?((fDiff/totAntF)*100).toFixed(1):'0.0';
+  s('egr-kpi-fijos', (fDiff>0?'+':'')+( fDiff!==0?'$'+fmtN(fDiff):'Sin cambio'));
+  var fPillEl=document.getElementById('egr-kpi-fijos-pill');
+  if(fPillEl){fPillEl.textContent=(fDiff>0?'+':'')+fPct+'%';fPillEl.style.background=fDiff>0?'rgba(255,107,107,.25)':(fDiff<0?'rgba(81,207,102,.25)':'rgba(255,255,255,.1)');fPillEl.style.color=fDiff>0?'#ff9999':(fDiff<0?'#8fefab':'rgba(255,255,255,.6)');}
+
+  // Sub-row vars
+  var vDiff=totActV-totAntV, vPct=totAntV>0?((vDiff/totAntV)*100).toFixed(1):'0.0';
+  s('egr-kpi-vars', (vDiff>0?'+':'')+( vDiff!==0?'$'+fmtN(vDiff):'Sin cambio'));
+  var vPillEl=document.getElementById('egr-kpi-vars-pill');
+  if(vPillEl){vPillEl.textContent=(vDiff>0?'+':'')+vPct+'%';vPillEl.style.background=vDiff>0?'rgba(255,107,107,.25)':(vDiff<0?'rgba(81,207,102,.25)':'rgba(255,255,255,.1)');vPillEl.style.color=vDiff>0?'#ff9999':(vDiff<0?'#8fefab':'rgba(255,255,255,.6)');}
+
+  // Mayor aumento
+  var bigName='—',bigDiff=0,bigPct=0;
+  function chk(aO,bO){Object.keys(bO).forEach(function(k){var a=aO[k]||0,b=bO[k]||0,d=b-a;if(d>bigDiff){bigDiff=d;bigName=k;bigPct=a>0?Math.round((d/a)*100):100;}});}
+  chk(dA.fijos,dB.fijos); chk(dA.vars,dB.vars);
+  s('egr-kpi-top-name', bigName);
+  s('egr-kpi-top-val', bigDiff>0?'+$'+fmtN(bigDiff)+' · +'+bigPct+'%':'Sin variación');
+
+  // Month labels on cards
+  s('egr-det-months-label', dA.short+' → '+dB.short);
+
+  // Row builder
+  function buildRows(aO, bO) {
+    var html='';
+    // Column headers
+    html += '<div style="display:grid;grid-template-columns:1fr 108px 108px 90px;gap:0;padding:7px 20px;background:var(--bg);border-bottom:1px solid var(--border)">'
+      +'<div style="font-size:10px;font-weight:700;color:var(--text-light);text-transform:uppercase;letter-spacing:.8px">Concepto</div>'
+      +'<div style="font-size:10px;font-weight:700;color:var(--text-light);text-transform:uppercase;text-align:right">'+dA.short+'</div>'
+      +'<div style="font-size:10px;font-weight:700;color:var(--blue);text-transform:uppercase;text-align:right">'+dB.short+'</div>'
+      +'<div style="font-size:10px;font-weight:700;color:var(--text-light);text-transform:uppercase;text-align:right">Variación</div>'
+      +'</div>';
+    Object.keys(bO).forEach(function(k){
+      var a=aO[k]||0, b=bO[k]||0;
+      if(a===0&&b===0) return;
+      var diff=b-a, pct=a>0?((diff/a)*100).toFixed(1):null;
+      var up=diff>0, same=diff===0;
+      // left accent border color
+      var accent=same?'transparent':up?'var(--red)':'var(--green)';
+      var bgRow=same?'var(--white)':up?'rgba(229,62,62,.025)':'rgba(30,140,90,.025)';
+      // pill
+      var pillBg=same?'var(--bg)':up?'var(--red-bg)':'var(--green-bg)';
+      var pillColor=same?'var(--text-light)':up?'var(--red)':'var(--green)';
+      var pillText=same?'—':(up?'▲ +':'▼ ')+(pct!==null?Math.abs(parseFloat(pct)).toFixed(1)+'%':'nuevo');
+      html+='<div style="display:grid;grid-template-columns:1fr 108px 108px 90px;gap:0;padding:11px 20px;background:'+bgRow+';border-bottom:1px solid var(--border);border-left:3px solid '+accent+';align-items:center">'
+        +'<div style="font-size:13px;font-weight:600;color:var(--text)">'+k+'</div>'
+        +'<div style="font-size:12px;color:var(--text-light);text-align:right;font-variant-numeric:tabular-nums">$'+fmtN(a)+'</div>'
+        +'<div style="font-size:13px;font-weight:700;color:var(--text);text-align:right;font-variant-numeric:tabular-nums">$'+fmtN(b)+'</div>'
+        +'<div style="text-align:right"><span style="font-size:11px;font-weight:700;background:'+pillBg+';color:'+pillColor+';border-radius:20px;padding:3px 10px;white-space:nowrap">'+pillText+'</span></div>'
+        +'</div>';
     });
-  }
-  checkItems(dAnt.fijos, dAct.fijos);
-  checkItems(dAnt.vars,  dAct.vars);
-  set('egr-mayor-aumento', biggestName);
-  set('egr-mayor-aumento-val', (biggestDiff>0?'+$'+fmtN(biggestDiff)+' · +'+biggestPct+'%':'Sin variación'));
-
-  // Column labels
-  var shortAnt = dAnt.label.split(' ')[0];
-  var shortAct = dAct.label.split(' ')[0];
-  set('egr-th-ant',  dAnt.label);
-  set('egr-th-act',  dAct.label);
-  set('egr-fijo-ant-label', shortAnt);
-  set('egr-fijo-act-label', shortAct);
-
-  function buildRows(antObj, actObj) {
-    var html = '';
-    var keys = Object.keys(actObj);
-    keys.forEach(function(k) {
-      var a = antObj[k]||0, b = actObj[k]||0;
-      if (a===0 && b===0) return; // skip zero-zero rows
-      var diff = b - a;
-      var pct  = a>0 ? ((diff/a)*100).toFixed(1) : (b>0?'nuevo':'0.0');
-      var up   = diff > 0, same = diff === 0;
-      var varColor = same?'var(--text-light)':(up?'var(--red)':'var(--green)');
-      var arrow    = same?'—':(up?'▲':'▼');
-      var barW     = Math.min(Math.abs(parseFloat(pct)||0), 100);
-      html += '<tr>'+
-        '<td class="fw7">'+k+'</td>'+
-        '<td style="color:var(--text-mid)">$'+fmtN(a)+'</td>'+
-        '<td class="fw7 v-red">$'+fmtN(b)+'</td>'+
-        '<td style="font-weight:700;color:'+varColor+'">'+(diff>0?'+':'')+( diff!==0?'$'+fmtN(diff):'—')+'</td>'+
-        '<td>'+
-          '<div style="display:flex;align-items:center;gap:6px">'+
-            '<span style="font-weight:700;color:'+varColor+';font-size:12px">'+(typeof pct==='string'&&pct==='nuevo'?'nuevo':(diff!==0?(up?'+':'')+pct+'%':'—'))+'</span>'+
-            '<div style="flex:1;background:var(--border);border-radius:4px;height:5px;min-width:50px">'+
-              '<div style="width:'+barW+'%;height:100%;border-radius:4px;background:'+varColor+'"></div>'+
-            '</div>'+
-          '</div>'+
-        '</td>'+
-        '<td style="font-size:14px;color:'+varColor+'">'+arrow+'</td>'+
-      '</tr>';
-    });
-    return html || '<tr><td colspan="6" style="text-align:center;padding:14px;color:var(--text-light);font-size:13px">Sin datos para este período</td></tr>';
+    return html;
   }
 
-  var tF = document.getElementById('tbody-egr-fijos-comp');
-  var tV = document.getElementById('tbody-egr-vars-comp');
-  if (tF) tF.innerHTML = buildRows(dAnt.fijos, dAct.fijos);
-  if (tV) tV.innerHTML = buildRows(dAnt.vars,  dAct.vars);
+  var rF=document.getElementById('egr-rows-fijos');
+  var rV=document.getElementById('egr-rows-vars');
+  if(rF) rF.innerHTML=buildRows(dA.fijos,dB.fijos);
+  if(rV) rV.innerHTML=buildRows(dA.vars,dB.vars);
 }
+
+function downloadEgrPDF(){
+  try{
+    var jsPDF=window.jspdf.jsPDF;
+    var doc=new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});
+    var W=210,M=16,y=0;
+    var dA=EGR_DATA[EGR_ANT],dB=EGR_DATA[EGR_ACT];
+    // Header band
+    doc.setFillColor(27,58,107);doc.rect(0,0,W,36,'F');
+    doc.setFillColor(58,108,200);doc.rect(0,34,W,3,'F');
+    doc.setTextColor(255,255,255);
+    doc.setFontSize(18);doc.setFont('helvetica','bold');doc.text('BarberPro',M,14);
+    doc.setFontSize(8);doc.setFont('helvetica','normal');doc.setTextColor(180,200,235);doc.text('SISTEMA DE GESTIÓN',M,20);
+    doc.setFontSize(12);doc.setFont('helvetica','bold');doc.setTextColor(255,255,255);
+    doc.text('Comparativa de Egresos — '+dA.short+' vs '+dB.short,W-M,14,{align:'right'});
+    doc.setFontSize(8);doc.setFont('helvetica','normal');doc.setTextColor(180,200,235);
+    doc.text('Generado: '+new Date().toLocaleDateString('es-AR'),W-M,20,{align:'right'});
+    y=44;
+    function sumObj(o){return Object.values(o).reduce(function(a,b){return a+b;},0);}
+    var totAnt=sumObj(dA.fijos)+sumObj(dA.vars),totAct=sumObj(dB.fijos)+sumObj(dB.vars);
+    var diff=totAct-totAnt,pct=totAnt>0?((diff/totAnt)*100).toFixed(1):'0';var subio=diff>0;
+    // Summary boxes
+    var bw=(W-2*M-8)/3;
+    function miniBox(lbl,val,x,r,g,b){
+      doc.setFillColor(255,255,255);doc.setDrawColor(214,223,240);doc.roundedRect(x,y,bw,20,2,2,'FD');
+      doc.setFillColor(r,g,b);doc.roundedRect(x,y,bw,2.5,2,2,'F');doc.rect(x,y+1,bw,1.5,'F');
+      doc.setFontSize(6.5);doc.setFont('helvetica','normal');doc.setTextColor(120,135,160);doc.text(lbl.toUpperCase(),x+3,y+7);
+      doc.setFontSize(11);doc.setFont('helvetica','bold');doc.setTextColor(r,g,b);doc.text(val,x+3,y+16);
+    }
+    miniBox(dA.label,'$'+fmtN(totAnt),M,120,135,160);
+    miniBox(dB.label,'$'+fmtN(totAct),M+bw+4,subio?229:30,subio?62:140,subio?62:90);
+    miniBox('Variación total',(subio?'+':'-')+'$'+fmtN(Math.abs(diff))+' ('+pct+'%)',M+2*(bw+4),subio?229:30,subio?62:140,subio?62:90);
+    y+=28;
+    function pdfSection(title,aO,bO){
+      doc.setFillColor(242,245,252);doc.roundedRect(M,y,W-2*M,7,1,1,'F');
+      doc.setFontSize(8);doc.setFont('helvetica','bold');doc.setTextColor(27,58,107);doc.text(title,M+4,y+4.8);y+=12;
+      doc.setFillColor(27,58,107);doc.rect(M,y-4,W-2*M,7,'F');
+      var ws=[64,28,28,22,22],xx=M+2;
+      ['Concepto',dA.short,dB.short,'Dif.','%'].forEach(function(c,i){doc.setFontSize(7);doc.setFont('helvetica','bold');doc.setTextColor(255,255,255);doc.text(c,xx,y);xx+=ws[i];});
+      y+=8;var alt=false;
+      Object.keys(bO).forEach(function(k){
+        var a=aO[k]||0,b=bO[k]||0;if(a===0&&b===0)return;
+        var d=b-a,p=a>0?((d/a)*100).toFixed(1):'—';
+        if(alt){doc.setFillColor(248,250,255);doc.rect(M,y-4,W-2*M,7,'F');}alt=!alt;
+        var dc=d>0?[229,62,62]:(d<0?[30,140,90]:[120,135,160]);
+        // accent line
+        doc.setFillColor(dc[0],dc[1],dc[2]);doc.rect(M,y-4,1.5,7,'F');
+        xx=M+3;
+        [[k,'bold',50,60,80],[('$'+fmtN(a)),'normal',120,135,160],[('$'+fmtN(b)),'normal',50,60,80],[(d>0?'+':d!==0?'-':'')+(d!==0?'$'+fmtN(Math.abs(d)):'—'),'bold',dc[0],dc[1],dc[2]],[(p==='—'?'—':(d>0?'+':'')+p+'%'),'bold',dc[0],dc[1],dc[2]]].forEach(function(it,i){
+          doc.setFontSize(7.5);doc.setFont('helvetica',it[1]);doc.setTextColor(it[2],it[3],it[4]);doc.text(String(it[0]),xx,y);xx+=ws[i];
+        });
+        doc.setDrawColor(230,235,245);doc.line(M,y+2,W-M,y+2);y+=8;
+        if(y>270){doc.addPage();y=20;}
+      });y+=6;
+    }
+    pdfSection('EGRESOS FIJOS',dA.fijos,dB.fijos);
+    pdfSection('EGRESOS VARIABLES',dA.vars,dB.vars);
+    var pH=doc.internal.pageSize.getHeight();
+    doc.setFillColor(27,58,107);doc.rect(0,pH-12,W,12,'F');
+    doc.setFontSize(7.5);doc.setFont('helvetica','normal');doc.setTextColor(180,200,235);
+    doc.text('BarberPro — Comparativa de Egresos',M,pH-4);
+    doc.text('Generado: '+new Date().toLocaleString('es-AR'),W-M,pH-4,{align:'right'});
+    doc.save('BarberPro_Egresos_'+dA.short+'_vs_'+dB.short+'.pdf');
+    showToast('Reporte descargado ✓');
+  }catch(e){alert('Error: '+e.message);}
+}
+
+function setEgrComp(ant,act,el){}
+
 
 // ══ INIT COBRO MODAL ══
 function initCobroModal() {
