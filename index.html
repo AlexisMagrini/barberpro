@@ -1015,6 +1015,90 @@ tr:hover td{background:var(--blue-faint);}
           </tbody>
         </table>
       </div>
+
+      <!-- ── COMPARATIVA MENSUAL ── -->
+      <div style="margin-top:28px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:10px">
+          <div>
+            <div class="page-title" style="font-size:18px">Comparativa Mensual de Egresos</div>
+            <div class="page-sub">Variación de gastos respecto al mes anterior</div>
+          </div>
+          <div class="tabs-pill" id="egr-comp-tabs">
+            <div class="tab-pill active" onclick="setEgrComp('feb','mar',this)">Feb vs Mar</div>
+            <div class="tab-pill" onclick="setEgrComp('ene','feb',this)">Ene vs Feb</div>
+            <div class="tab-pill" onclick="setEgrComp('dic','ene',this)">Dic vs Ene</div>
+          </div>
+        </div>
+
+        <!-- KPI cards comparativa -->
+        <div class="stat-grid" style="grid-template-columns:repeat(4,1fr);margin-bottom:20px">
+          <div class="stat-card featured">
+            <div class="stat-label">Total mes anterior</div>
+            <div class="stat-value" id="egr-total-ant">$148.500</div>
+            <div class="stat-sub" id="egr-label-ant">Febrero 2026</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Total mes actual</div>
+            <div class="stat-value v-red" id="egr-total-act">$163.200</div>
+            <div class="stat-sub" id="egr-label-act">Marzo 2026</div>
+          </div>
+          <div class="stat-card" id="egr-var-card">
+            <div class="stat-label">Variación total</div>
+            <div class="stat-value v-red" id="egr-var-val">▲ +$14.700</div>
+            <div class="stat-sub" id="egr-var-pct">+9,9% respecto al anterior</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-label">Mayor aumento</div>
+            <div class="stat-value" id="egr-mayor-aumento" style="font-size:14px;margin-top:4px">Alquiler</div>
+            <div class="stat-sub" id="egr-mayor-aumento-val">+$8.000 · +16%</div>
+          </div>
+        </div>
+
+        <!-- Tabla comparativa: Fijos -->
+        <div class="table-card" style="margin-bottom:16px">
+          <div class="table-header">
+            <div><div class="table-title">Egresos Fijos — Comparativa</div></div>
+            <div style="display:flex;gap:8px;align-items:center">
+              <span style="font-size:11px;font-weight:700;color:var(--text-light)" id="egr-fijo-ant-label">Feb</span>
+              <span style="font-size:11px;color:var(--text-light)">→</span>
+              <span style="font-size:11px;font-weight:700;color:var(--blue)" id="egr-fijo-act-label">Mar</span>
+            </div>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Concepto</th>
+                <th id="egr-th-ant">Mes anterior</th>
+                <th id="egr-th-act">Mes actual</th>
+                <th>Variación $</th>
+                <th>Variación %</th>
+                <th>Tendencia</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-egr-fijos-comp"></tbody>
+          </table>
+        </div>
+
+        <!-- Tabla comparativa: Variables -->
+        <div class="table-card">
+          <div class="table-header">
+            <div><div class="table-title">Egresos Variables — Comparativa</div></div>
+          </div>
+          <table>
+            <thead>
+              <tr>
+                <th>Concepto</th>
+                <th>Mes anterior</th>
+                <th>Mes actual</th>
+                <th>Variación $</th>
+                <th>Variación %</th>
+                <th>Tendencia</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-egr-vars-comp"></tbody>
+          </table>
+        </div>
+      </div>
     </div>
 
     <!-- ══ REPORTES ══ -->
@@ -3336,6 +3420,124 @@ function saveEditServicio() {
 
 function stockFilter(el, tipo) { /* futuro */ }
 
+// ══ COMPARATIVA MENSUAL EGRESOS ══
+var EGR_DATA = {
+  // [mes]: { fijos: {concepto: monto}, vars: {concepto: monto} }
+  dic: {
+    label: 'Dic 2025',
+    fijos: { 'Alquiler':42000,'Municipal':3500,'Edenor':8200,'Monotributo':12000,'Contador':6000,'Claro':1800,'Movistar':1600,'Agenda pro':2500,'Espacio publicitario fijo':5000,'Insumos':4000,'Personal limpieza':3000,'Personal administrativo':0 },
+    vars:  { 'Cuellos':1200,'Coolcare':800,'Filos navaja':600,'Gel shaving':500,'After shave':700,'Crema / Algodón / Guantes':900,'Publicidad Oviedo':3000,'Tarjetas / Folletos / Digital':2000,'Merchandising':1500,'Agua / Yerba / Sahumerio':800,'Alacena / Bebidas / Productos':4500,'Inversión salón / herramientas':0,'Educación / Reuniones':1000,'Gastos X':500 }
+  },
+  ene: {
+    label: 'Ene 2026',
+    fijos: { 'Alquiler':45000,'Municipal':3500,'Edenor':9100,'Monotributo':12000,'Contador':6000,'Claro':1800,'Movistar':1600,'Agenda pro':2500,'Espacio publicitario fijo':5000,'Insumos':4200,'Personal limpieza':3000,'Personal administrativo':0 },
+    vars:  { 'Cuellos':1400,'Coolcare':900,'Filos navaja':600,'Gel shaving':500,'After shave':700,'Crema / Algodón / Guantes':950,'Publicidad Oviedo':3000,'Tarjetas / Folletos / Digital':2500,'Merchandising':0,'Agua / Yerba / Sahumerio':850,'Alacena / Bebidas / Productos':5200,'Inversión salón / herramientas':3000,'Educación / Reuniones':0,'Gastos X':800 }
+  },
+  feb: {
+    label: 'Feb 2026',
+    fijos: { 'Alquiler':50000,'Municipal':3800,'Edenor':9500,'Monotributo':12500,'Contador':6000,'Claro':1900,'Movistar':1700,'Agenda pro':2500,'Espacio publicitario fijo':5000,'Insumos':4500,'Personal limpieza':3200,'Personal administrativo':0 },
+    vars:  { 'Cuellos':1500,'Coolcare':950,'Filos navaja':700,'Gel shaving':600,'After shave':750,'Crema / Algodón / Guantes':1000,'Publicidad Oviedo':3500,'Tarjetas / Folletos / Digital':2000,'Merchandising':1800,'Agua / Yerba / Sahumerio':900,'Alacena / Bebidas / Productos':6000,'Inversión salón / herramientas':0,'Educación / Reuniones':1500,'Gastos X':600 }
+  },
+  mar: {
+    label: 'Mar 2026',
+    fijos: { 'Alquiler':58000,'Municipal':3800,'Edenor':10200,'Monotributo':13500,'Contador':6000,'Claro':2000,'Movistar':1800,'Agenda pro':2500,'Espacio publicitario fijo':5000,'Insumos':4800,'Personal limpieza':3500,'Personal administrativo':0 },
+    vars:  { 'Cuellos':1600,'Coolcare':1000,'Filos navaja':700,'Gel shaving':650,'After shave':800,'Crema / Algodón / Guantes':1100,'Publicidad Oviedo':4000,'Tarjetas / Folletos / Digital':2200,'Merchandising':2000,'Agua / Yerba / Sahumerio':1000,'Alacena / Bebidas / Productos':6800,'Inversión salón / herramientas':5000,'Educación / Reuniones':0,'Gastos X':750 }
+  }
+};
+
+var egrCompAnt = 'feb', egrCompAct = 'mar';
+
+function setEgrComp(ant, act, el) {
+  egrCompAnt = ant; egrCompAct = act;
+  var pills = document.querySelectorAll('#egr-comp-tabs .tab-pill');
+  for (var i=0;i<pills.length;i++) pills[i].classList.remove('active');
+  if (el) el.classList.add('active');
+  renderEgrComp();
+}
+
+function renderEgrComp() {
+  var dAnt = EGR_DATA[egrCompAnt];
+  var dAct = EGR_DATA[egrCompAct];
+  if (!dAnt || !dAct) return;
+
+  function set(id, v){ var e=document.getElementById(id);if(e)e.textContent=v; }
+  function setH(id, v){ var e=document.getElementById(id);if(e)e.innerHTML=v; }
+
+  // Totals
+  var totAnt=0, totAct=0;
+  Object.values(dAnt.fijos).forEach(function(v){totAnt+=v;});
+  Object.values(dAnt.vars).forEach(function(v){totAnt+=v;});
+  Object.values(dAct.fijos).forEach(function(v){totAct+=v;});
+  Object.values(dAct.vars).forEach(function(v){totAct+=v;});
+  var totDiff = totAct - totAnt;
+  var totPct  = totAnt>0 ? ((totDiff/totAnt)*100).toFixed(1) : '0.0';
+  var subio   = totDiff > 0;
+
+  set('egr-total-ant', '$'+fmtN(totAnt));
+  set('egr-total-act', '$'+fmtN(totAct));
+  set('egr-label-ant', dAnt.label);
+  set('egr-label-act', dAct.label);
+  setH('egr-var-val', (subio?'<span style="color:var(--red)">▲ +$'+fmtN(totDiff)+'</span>':'<span style="color:var(--green)">▼ -$'+fmtN(Math.abs(totDiff))+'</span>'));
+  set('egr-var-pct', (subio?'+':'')+totPct+'% respecto al anterior');
+
+  // Find biggest increase across all items
+  var biggestName='—', biggestDiff=0, biggestPct=0;
+  function checkItems(antObj, actObj) {
+    Object.keys(actObj).forEach(function(k) {
+      var a=antObj[k]||0, b=actObj[k]||0, d=b-a;
+      if (d>biggestDiff) { biggestDiff=d; biggestName=k; biggestPct=a>0?Math.round((d/a)*100):100; }
+    });
+  }
+  checkItems(dAnt.fijos, dAct.fijos);
+  checkItems(dAnt.vars,  dAct.vars);
+  set('egr-mayor-aumento', biggestName);
+  set('egr-mayor-aumento-val', (biggestDiff>0?'+$'+fmtN(biggestDiff)+' · +'+biggestPct+'%':'Sin variación'));
+
+  // Column labels
+  var shortAnt = dAnt.label.split(' ')[0];
+  var shortAct = dAct.label.split(' ')[0];
+  set('egr-th-ant',  dAnt.label);
+  set('egr-th-act',  dAct.label);
+  set('egr-fijo-ant-label', shortAnt);
+  set('egr-fijo-act-label', shortAct);
+
+  function buildRows(antObj, actObj) {
+    var html = '';
+    var keys = Object.keys(actObj);
+    keys.forEach(function(k) {
+      var a = antObj[k]||0, b = actObj[k]||0;
+      if (a===0 && b===0) return; // skip zero-zero rows
+      var diff = b - a;
+      var pct  = a>0 ? ((diff/a)*100).toFixed(1) : (b>0?'nuevo':'0.0');
+      var up   = diff > 0, same = diff === 0;
+      var varColor = same?'var(--text-light)':(up?'var(--red)':'var(--green)');
+      var arrow    = same?'—':(up?'▲':'▼');
+      var barW     = Math.min(Math.abs(parseFloat(pct)||0), 100);
+      html += '<tr>'+
+        '<td class="fw7">'+k+'</td>'+
+        '<td style="color:var(--text-mid)">$'+fmtN(a)+'</td>'+
+        '<td class="fw7 v-red">$'+fmtN(b)+'</td>'+
+        '<td style="font-weight:700;color:'+varColor+'">'+(diff>0?'+':'')+( diff!==0?'$'+fmtN(diff):'—')+'</td>'+
+        '<td>'+
+          '<div style="display:flex;align-items:center;gap:6px">'+
+            '<span style="font-weight:700;color:'+varColor+';font-size:12px">'+(typeof pct==='string'&&pct==='nuevo'?'nuevo':(diff!==0?(up?'+':'')+pct+'%':'—'))+'</span>'+
+            '<div style="flex:1;background:var(--border);border-radius:4px;height:5px;min-width:50px">'+
+              '<div style="width:'+barW+'%;height:100%;border-radius:4px;background:'+varColor+'"></div>'+
+            '</div>'+
+          '</div>'+
+        '</td>'+
+        '<td style="font-size:14px;color:'+varColor+'">'+arrow+'</td>'+
+      '</tr>';
+    });
+    return html || '<tr><td colspan="6" style="text-align:center;padding:14px;color:var(--text-light);font-size:13px">Sin datos para este período</td></tr>';
+  }
+
+  var tF = document.getElementById('tbody-egr-fijos-comp');
+  var tV = document.getElementById('tbody-egr-vars-comp');
+  if (tF) tF.innerHTML = buildRows(dAnt.fijos, dAct.fijos);
+  if (tV) tV.innerHTML = buildRows(dAnt.vars,  dAct.vars);
+}
+
 // ══ INIT COBRO MODAL ══
 function initCobroModal() {
   var bSel = document.getElementById('cobro-bebida');
@@ -3697,6 +3899,7 @@ function renderInscriptos(){
 // Run on load
 renderServiciosPage();
 renderStock();
+renderEgrComp();
 initCobroModal();
 renderClientes();
 updateClienteStats();
