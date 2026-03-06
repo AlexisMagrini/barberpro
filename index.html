@@ -669,7 +669,7 @@ td { vertical-align:middle; }
         </div>
         <div style="display:flex;gap:10px">
           <button class="btn btn-outline" onclick="toggleRecordatorios(this)">🔔 Recordatorios mañana</button>
-          <button class="btn btn-primary" onclick="openModal('modal-turno')">+ Nuevo Turno</button>
+          <button class="btn btn-primary" onclick="openModalTurno()">+ Nuevo Turno</button>
         </div>
       </div>
 
@@ -2052,46 +2052,92 @@ td { vertical-align:middle; }
 </div>
 
 <div class="modal-overlay" id="modal-turno">
-  <div class="modal">
-    <button class="modal-close" onclick="closeModal('modal-turno')">✕</button>
+  <div class="modal" style="max-width:520px">
+    <button class="modal-close" onclick="closeModal('modal-turno')"><i class="fa-solid fa-xmark"></i></button>
     <div class="modal-title">📅 Nuevo Turno</div>
-    <div class="form-grid">
-      <div class="fg"><label>Cliente</label><input type="text" placeholder="Nombre"></div>
-      <div class="fg"><label>Teléfono</label><input type="text" placeholder="11-XXXX-XXXX"></div>
+
+    <!-- Buscador de cliente -->
+    <div class="fg" style="margin-bottom:6px;position:relative">
+      <label>Cliente</label>
+      <div style="position:relative">
+        <input type="text" id="turno-cl-search" placeholder="Buscar cliente por nombre o teléfono..."
+          oninput="buscarClienteTurno(this.value)" autocomplete="off"
+          style="padding-right:36px">
+        <i class="fa-solid fa-search" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);color:var(--text-light);font-size:12px"></i>
+      </div>
+      <!-- Dropdown resultados -->
+      <div id="turno-cl-dropdown" style="display:none;position:absolute;z-index:999;width:100%;background:var(--white);border:1.5px solid var(--blue);border-radius:12px;box-shadow:var(--shadow);margin-top:4px;max-height:200px;overflow-y:auto"></div>
     </div>
-    <div class="form-grid">
-      <div class="fg"><label>Fecha</label><input type="date"></div>
-      <div class="fg"><label>Hora</label><input type="time"></div>
+
+    <!-- Card cliente seleccionado -->
+    <div id="turno-cl-seleccionado" style="display:none;margin-bottom:14px;padding:10px 14px;background:var(--blue-faint);border-radius:12px;border:1.5px solid var(--blue);display:none;align-items:center;justify-content:space-between">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div id="turno-cl-avatar" style="width:32px;height:32px;border-radius:8px;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700"></div>
+        <div>
+          <div id="turno-cl-nombre-label" style="font-weight:700;font-size:13px"></div>
+          <div id="turno-cl-tel-label" style="font-size:11px;color:var(--text-light)"></div>
+        </div>
+      </div>
+      <button onclick="limpiarClienteTurno()" style="background:none;border:none;cursor:pointer;color:var(--text-light);font-size:16px">✕</button>
     </div>
-    <div class="form-grid">
+
+    <!-- Inputs ocultos con datos del cliente -->
+    <input type="hidden" id="turno-cl-id">
+    <input type="hidden" id="turno-cl-nombre">
+    <input type="hidden" id="turno-cl-tel">
+
+    <!-- Opción nuevo cliente inline -->
+    <div id="turno-nuevo-cl-toggle" style="margin-bottom:14px">
+      <button class="btn btn-outline btn-sm" onclick="toggleNuevoClienteTurno()" style="font-size:11px">
+        <i class="fa-solid fa-user-plus"></i> Agregar nuevo cliente
+      </button>
+    </div>
+    <div id="turno-nuevo-cl-form" style="display:none;margin-bottom:14px;padding:14px;background:var(--bg);border-radius:12px;border:1px dashed var(--blue)">
+      <div style="font-size:11px;font-weight:700;color:var(--blue);margin-bottom:10px;text-transform:uppercase;letter-spacing:.5px">Nuevo cliente</div>
+      <div class="form-grid" style="margin-bottom:8px">
+        <div class="fg"><label>Nombre</label><input type="text" id="turno-new-nombre" placeholder="Nombre completo"></div>
+        <div class="fg"><label>Teléfono</label><input type="text" id="turno-new-tel" placeholder="11-XXXX-XXXX"></div>
+      </div>
+      <div class="form-grid">
+        <div class="fg"><label>Categoría</label>
+          <select id="turno-new-cat">
+            <option value="Nuevo">Nuevo</option>
+            <option value="Regular">Regular</option>
+            <option value="VIP">VIP</option>
+          </select>
+        </div>
+        <div class="fg" style="display:flex;align-items:flex-end">
+          <button class="btn btn-primary btn-sm" style="width:100%;justify-content:center" onclick="guardarNuevoClienteTurno()">
+            <i class="fa-solid fa-check"></i> Crear y seleccionar
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fecha, hora, servicio, empleado -->
+    <div class="form-grid" style="margin-bottom:12px">
+      <div class="fg"><label>Fecha</label><input type="date" id="turno-fecha"></div>
+      <div class="fg"><label>Hora</label><input type="time" id="turno-hora"></div>
+    </div>
+    <div class="form-grid" style="margin-bottom:12px">
       <div class="fg"><label>Servicio</label>
-        <select>
-          <option>Corte</option>
-          <option>Corte + Perfilado</option>
-          <option>Corte y barba</option>
-          <option>Corte y barba + perfilado</option>
-          <option>Corte y barba VIP</option>
-          <option>Corte y barba VIP + perfilado</option>
-          <option>Perfilado</option>
-          <option>Global</option>
-          <option>Claritos</option>
-          <option>Corte y barba VIP + perfilado + lavado</option>
-          <option>Corte y barba + perfilado + lavado</option>
-          <option>Corte + perfilado + lavado</option>
-          <option>Barba</option>
+        <select id="turno-servicio">
+          <option value="">Seleccionar servicio...</option>
         </select>
       </div>
       <div class="fg"><label>Empleado</label>
-        <select>
-          <option>Franco</option>
-          <option>Simón</option>
-          <option>Tomás</option>
-          <option>Marcos</option>
+        <select id="turno-empleado">
+          <option value="">Seleccionar empleado...</option>
         </select>
       </div>
     </div>
-    <div class="fg" style="margin-bottom:14px"><label>Notas</label><textarea rows="2" placeholder="Observaciones..."></textarea></div>
-    <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="closeModal('modal-turno');showToast('Turno guardado ✓')">✓ Guardar Turno</button>
+    <div class="fg" style="margin-bottom:16px"><label>Notas</label>
+      <textarea id="turno-notas" rows="2" placeholder="Observaciones..." style="resize:none"></textarea>
+    </div>
+    <div style="display:flex;gap:10px">
+      <button class="btn btn-outline" style="flex:1;justify-content:center" onclick="closeModal('modal-turno')">Cancelar</button>
+      <button class="btn btn-primary" style="flex:1;justify-content:center" onclick="saveTurno()"><i class="fa-solid fa-check"></i> Guardar Turno</button>
+    </div>
   </div>
 </div>
 
@@ -2578,11 +2624,12 @@ async function loadClientes(){
   var { data } = await supa.from('clientes').select('*').order('nombre');
   if(data) CLIENTES = data.map(function(c){ return {
     id: c.id, nombre: c.nombre, tel: c.telefono || '', email: c.email || '',
-    barbero: c.barbero_preferido || '', cat: c.categoria || 'Nuevo',
+    barbero: c.barbero_preferido || '', cat: (c.categoria||'Nuevo').toLowerCase(),
     visitas: c.visitas || 0, ultimaVisita: c.ultima_visita || '—',
     birthday: c.cumpleanos || '', notas: c.notas || ''
   };});
   renderClientes();
+  updateClienteStats();
 }
 
 async function loadEmpleados(){
@@ -2597,7 +2644,6 @@ async function loadEmpleados(){
         anio:{ing:'$0',serv:'0',sueldo:'$0',dias:'0',prom:'0',total:'$0'}
       };
     });
-    // Re-render report employee tabs
     var vt = document.getElementById('view-tabs');
     if(vt){
       var btns = '<button class="btn btn-primary btn-sm" onclick="setReportView(\'local\',this)">🏪 Salón MK</button>';
@@ -2780,19 +2826,166 @@ async function loadCursos(){
   }
 }
 
-// ── AGENDA ────────────────────────────────────────────────────
+// ── MODAL TURNO ──────────────────────────────────────────────
+
+async function openModalTurno(){
+  // Resetear estado
+  limpiarClienteTurno();
+  document.getElementById('turno-nuevo-cl-form').style.display = 'none';
+  document.getElementById('turno-nuevo-cl-toggle').style.display = 'block';
+  ['turno-new-nombre','turno-new-tel'].forEach(function(id){ var e=document.getElementById(id); if(e) e.value=''; });
+  document.getElementById('turno-notas').value = '';
+
+  // Fecha: si hay día seleccionado en calendario usarlo, sino hoy
+  var fecha = calSelDate || new Date().toISOString().split('T')[0];
+  document.getElementById('turno-fecha').value = fecha;
+
+  // Hora: próxima hora redonda
+  var now = new Date();
+  now.setMinutes(0); now.setSeconds(0);
+  now.setHours(now.getHours() + 1);
+  document.getElementById('turno-hora').value = String(now.getHours()).padStart(2,'0')+':00';
+
+  // Cargar servicios dinámicos
+  var selServ = document.getElementById('turno-servicio');
+  selServ.innerHTML = '<option value="">Seleccionar servicio...</option>';
+  SERVICIOS.forEach(function(s){
+    selServ.innerHTML += '<option value="'+s.nombre+'">'+s.nombre+'</option>';
+  });
+
+  // Cargar empleados dinámicos
+  var selEmp = document.getElementById('turno-empleado');
+  selEmp.innerHTML = '<option value="">Seleccionar empleado...</option>';
+  Object.keys(empData).forEach(function(k){
+    selEmp.innerHTML += '<option value="'+empData[k].name+'">'+empData[k].name+'</option>';
+  });
+
+  openModal('modal-turno');
+}
+
+// Búsqueda de clientes
+function buscarClienteTurno(q){
+  var dd = document.getElementById('turno-cl-dropdown');
+  if(!q || q.length < 1){ dd.style.display='none'; return; }
+  var norm = q.toLowerCase();
+  var results = CLIENTES.filter(function(c){
+    return c.nombre.toLowerCase().indexOf(norm) !== -1 || c.tel.indexOf(q) !== -1;
+  }).slice(0, 6);
+
+  if(results.length === 0){
+    dd.innerHTML = '<div style="padding:12px 14px;font-size:12px;color:var(--text-light)">Sin resultados — podés agregar un nuevo cliente</div>';
+    dd.style.display = 'block';
+    return;
+  }
+  dd.innerHTML = results.map(function(c){
+    var initials = c.nombre.split(' ').map(function(w){return w[0];}).join('').substring(0,2).toUpperCase();
+    return '<div onclick="seleccionarClienteTurno(\''+c.id+'\')" style="padding:10px 14px;cursor:pointer;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border)" '+
+      'onmouseover="this.style.background=\'var(--blue-faint)\'" onmouseout="this.style.background=\'\'">'+
+      '<div style="width:30px;height:30px;border-radius:8px;background:var(--blue);color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0">'+initials+'</div>'+
+      '<div><div style="font-weight:600;font-size:13px">'+c.nombre+'</div>'+
+      '<div style="font-size:11px;color:var(--text-light)">'+c.tel+(c.barbero?' · '+c.barbero:'')+'</div></div>'+
+    '</div>';
+  }).join('');
+  dd.style.display = 'block';
+}
+
+function seleccionarClienteTurno(id){
+  var c = CLIENTES.find(function(x){ return x.id == id; });
+  if(!c) return;
+  document.getElementById('turno-cl-id').value = c.id;
+  document.getElementById('turno-cl-nombre').value = c.nombre;
+  document.getElementById('turno-cl-tel').value = c.tel;
+  document.getElementById('turno-cl-search').value = '';
+  document.getElementById('turno-cl-dropdown').style.display = 'none';
+
+  // Mostrar card seleccionado
+  var initials = c.nombre.split(' ').map(function(w){return w[0];}).join('').substring(0,2).toUpperCase();
+  document.getElementById('turno-cl-avatar').textContent = initials;
+  document.getElementById('turno-cl-nombre-label').textContent = c.nombre;
+  document.getElementById('turno-cl-tel-label').textContent = c.tel + (c.barbero ? ' · Barbero: '+c.barbero : '');
+  var card = document.getElementById('turno-cl-seleccionado');
+  card.style.display = 'flex';
+
+  // Ocultar buscador y botón nuevo
+  document.getElementById('turno-cl-search').parentElement.parentElement.style.display = 'none';
+  document.getElementById('turno-nuevo-cl-toggle').style.display = 'none';
+  document.getElementById('turno-nuevo-cl-form').style.display = 'none';
+
+  // Pre-seleccionar barbero preferido si existe
+  if(c.barbero){
+    var selEmp = document.getElementById('turno-empleado');
+    for(var i=0; i<selEmp.options.length; i++){
+      if(selEmp.options[i].value === c.barbero){ selEmp.selectedIndex = i; break; }
+    }
+  }
+}
+
+function limpiarClienteTurno(){
+  document.getElementById('turno-cl-id').value = '';
+  document.getElementById('turno-cl-nombre').value = '';
+  document.getElementById('turno-cl-tel').value = '';
+  document.getElementById('turno-cl-search').value = '';
+  document.getElementById('turno-cl-dropdown').style.display = 'none';
+  document.getElementById('turno-cl-seleccionado').style.display = 'none';
+  var searchWrap = document.getElementById('turno-cl-search').parentElement.parentElement;
+  searchWrap.style.display = 'block';
+  document.getElementById('turno-nuevo-cl-toggle').style.display = 'block';
+}
+
+function toggleNuevoClienteTurno(){
+  var form = document.getElementById('turno-nuevo-cl-form');
+  form.style.display = form.style.display === 'none' ? 'block' : 'none';
+}
+
+async function guardarNuevoClienteTurno(){
+  var nombre = (document.getElementById('turno-new-nombre').value||'').trim();
+  var tel    = (document.getElementById('turno-new-tel').value||'').trim();
+  var cat    = document.getElementById('turno-new-cat').value;
+  if(!nombre){ showToast('Ingresá el nombre'); return; }
+
+  var { data, error } = await supa.from('clientes').insert({
+    nombre, telefono: tel||null, categoria: cat, visitas: 0
+  }).select().single();
+
+  if(error){ showToast('Error: '+error.message); return; }
+
+  var newC = { id: data.id, nombre, tel: tel||'—', email:'', birthday:'', barbero:'', cat: cat.toLowerCase(), visitas:0, ultimaVisita:'—', notas:'' };
+  CLIENTES.push(newC);
+  updateClienteStats();
+  document.getElementById('turno-nuevo-cl-form').style.display = 'none';
+  seleccionarClienteTurno(data.id);
+  showToast('"'+nombre+'" creado y seleccionado ✓');
+}
+
+async function saveTurno(){
+  var nombre  = document.getElementById('turno-cl-nombre').value.trim();
+  var tel     = document.getElementById('turno-cl-tel').value.trim();
+  var fecha   = document.getElementById('turno-fecha').value;
+  var hora    = document.getElementById('turno-hora').value;
+  var servicio= document.getElementById('turno-servicio').value;
+  var empleado= document.getElementById('turno-empleado').value;
+  var notas   = document.getElementById('turno-notas').value.trim();
+
+  if(!nombre){ showToast('Seleccioná o agregá un cliente'); return; }
+  if(!fecha || !hora){ showToast('Indicá fecha y hora'); return; }
+  if(!servicio){ showToast('Seleccioná un servicio'); return; }
+
+  var { error } = await supa.from('turnos').insert({
+    fecha, hora, cliente_nombre: nombre, cliente_tel: tel||null,
+    servicio, empleado_nombre: empleado||null, estado: 'pendiente', notas: notas||null
+  });
+
+  if(error){ showToast('Error: '+error.message); return; }
+
+  closeModal('modal-turno');
+  showToast('Turno agendado ✓');
+  await loadAgendaDia(fecha);
+  // Actualizar badge sidebar
+  if(fecha === new Date().toISOString().split('T')[0]) await loadAgendaDia(fecha);
+}
 var TURNOS_HOY = [];
 var agendaFiltro = 'todos';
 
-async function loadAgenda(){
-  var today = new Date().toISOString().split('T')[0];
-  var { data } = await supa.from('turnos')
-    .select('*')
-    .eq('fecha', today)
-    .order('hora');
-  TURNOS_HOY = data || [];
-  renderAgenda();
-}
 
 function renderAgenda(){
   var tb = document.getElementById('agenda-tbody');
